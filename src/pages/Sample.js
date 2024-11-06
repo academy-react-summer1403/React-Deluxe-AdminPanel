@@ -2,7 +2,7 @@ import React from "react";
 import { Card, CardBody } from "reactstrap";
 import RippleButton from "../@core/components/ripple-button";
 
-const Sample = () => {
+const Sample2 = () => {
 
   return (
     <Card>
@@ -13,4 +13,4 @@ const Sample = () => {
   );
 };
 
-export default Sample;
+export default Sample2;
