@@ -1,4 +1,4 @@
-import { Mail, Home, Airplay, Circle } from "react-feather";
+import { Mail, Home, Airplay, Circle , User, Book, BookOpen } from "react-feather";
 
 export default [
   {
@@ -9,9 +9,15 @@ export default [
   },
   {
     id: "secondPage",
-    title: "Second Page",
-    icon: <Mail size={20} />,
+    title: "مدیریت کاربران",
+    icon: <User size={20} />,
     navLink: "/second-page",
+  },
+  {
+    id: "secondPage2",
+    title: "مدیریت دوره ها",
+    icon: <Mail size={20} />,
+    navLink: "/second-page2",
   },
   {
     id: "smaplePage",

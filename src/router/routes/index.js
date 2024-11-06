@@ -26,12 +26,17 @@ const TemplateTitle = "%s - Vuexy React Admin Template";
 const DefaultRoute = "/home";
 
 const Home = lazy(() => import("../../pages/Home"));
+
 const SecondPage = lazy(() => import("../../pages/SecondPage"));
 const Login = lazy(() => import("../../pages/Login"));
 const Register = lazy(() => import("../../pages/Register"));
 const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
+
+// const UserList = lazy(() => import('../../views/apps/user/list'))
+
+
 
 // ** Merge Routes
 const Routes = [
@@ -44,6 +49,7 @@ const Routes = [
     path: "/home",
     element: <Home />,
   },
+ 
   {
     path: "/sample",
     element: <Sample />,
@@ -52,6 +58,7 @@ const Routes = [
     path: "/second-page",
     element: <SecondPage />,
   },
+
   {
     path: "/login",
     element: <Login />,
@@ -66,6 +73,7 @@ const Routes = [
       layout: "blank",
     },
   },
+
   {
     path: "/forgot-password",
     element: <ForgotPassword />,
