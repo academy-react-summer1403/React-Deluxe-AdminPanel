@@ -55,7 +55,7 @@ const Routes = [
     element: <Sample />,
   },
   {
-    path: "/second-page",
+    path: "/userManage",
     element: <SecondPage />,
   },
 

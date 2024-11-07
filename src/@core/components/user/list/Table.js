@@ -5,6 +5,8 @@ import Avatar from '@components/avatar'
 
 
 import Pic from '@src/assets/images/avatars/1.png'
+import Pic2 from '@src/assets/images/raty/star-on-2.png'
+
 
 
 
@@ -349,8 +351,10 @@ const UsersList = () => {
 
  const Data = [{ fname : 'ghonche' , lname : 'ataee' , Email : 'ghonche.ataee@gmail.com' , teacher : 'shayan'},
   { fname : 'ghonche' , lname : 'ataee' , Email : 'ghonche.ataee@gmail.com' , teacher : 'shayan'},
+  { fname : 'ghonche' , lname : 'ataee' , Email : 'ghonche.ataee@gmail.com' , teacher : 'shayan'},
   { fname : 'ghonche' , lname : 'ataee' , Email : 'ghonche.ataee@gmail.com' , teacher : 'shayan'}
- ]
+ 
+]
 
 
 
@@ -367,9 +371,9 @@ const UsersList = () => {
         {/* {renderClient(row)} */}
         <div className='d-flex flex-column'>
           <Link
-            className='user_name text-truncate text-body'
+            className='user_name text-truncate text-body  p-1'
           >
-            <span className='fw-bolder'>{row.fname}</span>
+            {/* <span className='fw-bolder'>{row.fname}</span> */}
           </Link>
           <small className='text-truncate text-muted mb-0'>{row.Email}</small>
         </div>
@@ -380,11 +384,24 @@ const UsersList = () => {
   sortable: true,
   minWidth: '172px',
   sortField: 'role',
-  selector: row => row.fname
+  selector: row => row.fname,
+  cell: row => (
+    <div className='d-flex justify-content-left align-items-center'>
+      <Avatar img={Pic2}/>
+      {/* {renderClient(row)} */}
+      <div className='d-flex flex-column'>
+        <Link
+          className='user_name text-truncate text-body p-1'
+        >
+          <span className='fw-bolder'>{row.fname}</span>
+        </Link>
+        {/* <small className='text-truncate text-muted mb-0'>{row.Email}</small> */}
+      </div>
+    </div>)
   // cell: row => renderRole(row)
 },
 {
-  name: 'Role',
+  name: 'PLAN',
   sortable: true,
   minWidth: '172px',
   sortField: 'role',
@@ -392,7 +409,7 @@ const UsersList = () => {
   // cell: row => renderRole(row)
 },
 {
-  name: 'Role',
+  name: 'BILING',
   sortable: true,
   minWidth: '172px',
   sortField: 'role',
@@ -400,7 +417,7 @@ const UsersList = () => {
   // cell: row => renderRole(row)
 },
 {
-  name: 'Role',
+  name: 'STATUS',
   sortable: true,
   minWidth: '172px',
   sortField: 'role',
@@ -452,7 +469,6 @@ const UsersList = () => {
 ]
   return ( 
     <Fragment>
-      <div>dsfsdefwe</div>
       <Card>
         <CardHeader>
           <CardTitle tag='h4'>Filters</CardTitle>

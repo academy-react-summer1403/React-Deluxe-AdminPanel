@@ -8,10 +8,10 @@ export default [
     navLink: "/home",
   },
   {
-    id: "secondPage",
+    id: "userManage",
     title: "مدیریت کاربران",
     icon: <User size={20} />,
-    navLink: "/second-page",
+    navLink: "/userManage",
   },
   {
     id: "secondPage2",
