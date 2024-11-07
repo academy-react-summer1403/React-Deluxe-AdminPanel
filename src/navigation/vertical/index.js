@@ -3,7 +3,7 @@ import { Mail, Home, Airplay, Circle , User, Book, BookOpen } from "react-feathe
 export default [
   {
     id: "home",
-    title: "Home",
+    title: "داشبورد",
     icon: <Home size={20} />,
     navLink: "/home",
   },
@@ -12,17 +12,7 @@ export default [
     title: "مدیریت کاربران",
     icon: <User size={20} />,
     navLink: "/userManage",
-  }
-  // {
-  //   id: "courseManage",
-  //   title: "مدیریت دوره ها",
-  //   icon: <Mail size={20} />,
-  //   navLink: "/courseManage",
-  // },
- 
-
-
-  ,
+  },
   {
     id: "courseManage",
     title: "مدیریت دوره ها",
@@ -64,7 +54,7 @@ export default [
   {
     id: "comments",
     title: "مدیریت کامنت ها",
-    icon: <User size={20} />,
+    icon: <BookOpen size={20} />,
     navLink: "/comments",
   },
 ];
