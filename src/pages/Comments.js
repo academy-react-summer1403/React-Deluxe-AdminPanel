@@ -4,7 +4,10 @@ import { Fragment } from "react";
 import UsersList from "../@core/components/user/list";
 
 const SecondPage = () => {
-  return <div>اکاوادو</div>;
+  return(
+    <UsersList />
+
+  )
 };
 
 export default SecondPage;
