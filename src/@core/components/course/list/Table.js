@@ -180,7 +180,8 @@ import { Link } from "react-router-dom";
 //     </div>
 //   )
 // }
-
+import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
+import { useQuery } from "@tanstack/react-query";
 const UsersList = () => {
   // ** Store Vars
   // const dispatch = useDispatch()
@@ -207,6 +208,13 @@ const UsersList = () => {
     number: 0,
   });
 
+  getQuery("courses", "/Home/GetCoursesWithPagination");
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ["courses"],
+  });
+  if (isLoading) return <div>Loading</div>;
+  if (isError) return <div>کوفت</div>;
+  const { courseFilterDtos } = data;
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
@@ -401,7 +409,7 @@ const UsersList = () => {
       sortable: true,
       minWidth: "300px",
       sortField: "fname",
-      selector: (row) => row.fname,
+      selector: (courseFilterDtos) => courseFilterDtos.title,
       cell: (row) => (
         <div className="d-flex justify-content-left align-items-center">
           <Avatar img={Pic} />
@@ -505,6 +513,7 @@ const UsersList = () => {
       ),
     },
   ];
+
   return (
     <Fragment>
       <Card>
