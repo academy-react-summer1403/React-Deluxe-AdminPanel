@@ -14,10 +14,10 @@ export default [
     navLink: "/userManage",
   },
   {
-    id: "secondPage2",
+    id: "courseManage",
     title: "مدیریت دوره ها",
     icon: <Mail size={20} />,
-    navLink: "/second-page2",
+    navLink: "/courseManage",
   },
   {
     id: "smaplePage",
