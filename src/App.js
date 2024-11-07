@@ -1,13 +1,19 @@
 import React, { Suspense } from "react";
-
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 // ** Router Import
 import Router from "./router/Router";
 
+const queryClient = new QueryClient();
+
 const App = () => {
   return (
-    <Suspense fallback={null}>
-      <Router />
-    </Suspense>
+    <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools />
+      <Suspense fallback={null}>
+        <Router />
+      </Suspense>
+    </QueryClientProvider>
   );
 };
 
