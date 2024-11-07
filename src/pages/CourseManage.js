@@ -8,7 +8,7 @@ import TableStriped from "../@core/components/course/TableStriped";
 const CourseManage = () => {
   return (
     <Fragment>
-      <h2>لیست کاربران</h2>
+      <h2>لیست دوره ها</h2>
       {/* <RoleCards /> */}
       {/* <UsersList /> */}
 

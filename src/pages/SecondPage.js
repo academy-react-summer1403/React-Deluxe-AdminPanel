@@ -12,7 +12,7 @@ const SecondPage = () => {
       {/* <RoleCards /> */}
       <UsersList />
 
-      <TableStriped />
+      {/* <TableStriped /> */}
 
 
      
