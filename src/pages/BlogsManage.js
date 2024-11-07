@@ -5,19 +5,15 @@ import UsersList from "../@core/components/user/list";
 import TableStriped from "../@core/components/course/TableStriped";
 
 
-const SecondPage = () => {
+const BlogsManage = () => {
   return (
     <Fragment>
-      <h2>لیست کاربران</h2>
-      {/* <RoleCards /> */}
-      <UsersList />
-
-      {/* <TableStriped /> */}
-
-
+      <h2>لیست  مقالات</h2>
      
+      <TableStriped />
+
     </Fragment>
   );
 };
 
-export default SecondPage;
+export default BlogsManage;

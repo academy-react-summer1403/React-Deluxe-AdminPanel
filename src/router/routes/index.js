@@ -26,12 +26,25 @@ const TemplateTitle = "%s - Vuexy React Admin Template";
 const DefaultRoute = "/home";
 
 const Home = lazy(() => import("../../pages/Home"));
+
 const SecondPage = lazy(() => import("../../pages/SecondPage"));
+const CourseManage = lazy(() => import("../../pages/CourseManage"));
+
+
+const AddCourse = lazy(() => import("../../pages/AddCourse"));
+const BlogsManage = lazy(() => import("../../pages/BlogsManage"));
+const AddBlogs = lazy(() => import("../../pages/AddBlogs"));
+const Comments = lazy(() => import("../../pages/Comments"));
+
 const Login = lazy(() => import("../../pages/Login"));
 const Register = lazy(() => import("../../pages/Register"));
 const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
+
+// const UserList = lazy(() => import('../../views/apps/user/list'))
+
+
 
 // ** Merge Routes
 const Routes = [
@@ -44,14 +57,41 @@ const Routes = [
     path: "/home",
     element: <Home />,
   },
+ 
   {
     path: "/sample",
     element: <Sample />,
   },
   {
-    path: "/second-page",
+    path: "/userManage",
     element: <SecondPage />,
   },
+  {
+    path: "/coursemanage",
+    element: <CourseManage />,
+  },
+  {
+    path: "/addcourse",
+    element: <AddCourse />,
+  },
+  {
+    path: "/blogsManage",
+    element: <BlogsManage />,
+  },
+  {
+    path: "/addBlogs",
+    element: <AddBlogs />,
+  },
+
+  {
+    path: "/comments",
+    element: <Comments />,
+  },
+
+
+
+
+
   {
     path: "/login",
     element: <Login />,
@@ -66,6 +106,7 @@ const Routes = [
       layout: "blank",
     },
   },
+
   {
     path: "/forgot-password",
     element: <ForgotPassword />,

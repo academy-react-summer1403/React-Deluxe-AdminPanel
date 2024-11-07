@@ -5,14 +5,14 @@ import UsersList from "../@core/components/user/list";
 import TableStriped from "../@core/components/course/TableStriped";
 
 
-const SecondPage = () => {
+const CourseManage = () => {
   return (
     <Fragment>
-      <h2>لیست کاربران</h2>
+      <h2>لیست دوره ها</h2>
       {/* <RoleCards /> */}
-      <UsersList />
+      {/* <UsersList /> */}
 
-      {/* <TableStriped /> */}
+      <TableStriped />
 
 
      
@@ -20,4 +20,4 @@ const SecondPage = () => {
   );
 };
 
-export default SecondPage;
+export default CourseManage;
