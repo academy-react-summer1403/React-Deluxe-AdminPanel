@@ -3,11 +3,11 @@ import RoleCards from "../@core/components/roles-permissions/roles/RoleCards";
 import { Fragment } from "react";
 import UsersList from "../@core/components/user/list";
 
-const SecondPage = () => {
+const Comments = () => {
   return(
     <UsersList />
 
   )
 };
 
-export default SecondPage;
+export default Comments;
