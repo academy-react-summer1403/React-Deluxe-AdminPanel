@@ -208,10 +208,12 @@ const UsersList = () => {
     number: 0,
   });
 
-  getQuery("courses", "/Home/GetCoursesWithPagination");
+  getQuery("courses", "/Course/CourseList");
   const { data, isError, isLoading } = useQuery({
     queryKey: ["courses"],
   });
+  console.log(data?.courseDtos);
+
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>کوفت</div>;
   const { courseFilterDtos } = data;
@@ -405,113 +407,96 @@ const UsersList = () => {
 
   const column = [
     {
-      name: "User",
+      name: "نام دوره",
       sortable: true,
       minWidth: "300px",
-      sortField: "fname",
-      selector: (courseFilterDtos) => courseFilterDtos.title,
-      cell: (row) => (
+      sortField: "title",
+      // selector: (data) => data?.fullName,
+      cell: (data) => (
         <div className="d-flex justify-content-left align-items-center">
           <Avatar img={Pic} />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column">
-            <Link className="user_name text-truncate text-body  p-1">
-              {/* <span className='fw-bolder'>{row.fname}</span> */}
+            <Link className="user_name text-truncate text-body  p-0">
+              <span className="fw-bolder">{data?.fullName}</span>
             </Link>
-            <small className="text-truncate text-muted mb-0">{row.Email}</small>
+            <small className="text-truncate text-muted mb-0">
+              {data?.title}
+            </small>
           </div>
         </div>
       ),
     },
+
     {
-      name: "Role",
+      name: "نوع دوره",
       sortable: true,
       minWidth: "172px",
-      sortField: "role",
-      selector: (row) => row.fname,
-      cell: (row) => (
-        <div className="d-flex justify-content-left align-items-center">
-          <Avatar img={Pic2} />
-          {/* {renderClient(row)} */}
-          <div className="d-flex flex-column">
-            <Link className="user_name text-truncate text-body p-1">
-              <span className="fw-bolder">{row.fname}</span>
-            </Link>
-            {/* <small className='text-truncate text-muted mb-0'>{row.Email}</small> */}
-          </div>
-        </div>
-      ),
+      sortField: "typeName",
+      selector: (row) => row.typeName,
       // cell: row => renderRole(row)
     },
-    {
-      name: "PLAN",
-      sortable: true,
-      minWidth: "172px",
-      sortField: "role",
-      selector: (row) => row.lname,
-      // cell: row => renderRole(row)
-    },
-    {
-      name: "BILING",
-      sortable: true,
-      minWidth: "172px",
-      sortField: "role",
-      selector: (row) => row.Email,
-      // cell: row => renderRole(row)
-    },
-    {
-      name: "STATUS",
-      sortable: true,
-      minWidth: "172px",
-      sortField: "role",
-      selector: (row) => row.teacher,
-      // cell: row => renderRole(row)
-    },
-    {
-      name: "Actions",
-      minWidth: "100px",
-      cell: (row) => (
-        <div className="column-action">
-          <UncontrolledDropdown>
-            <DropdownToggle tag="div" className="btn btn-sm">
-              <MoreVertical size={14} className="cursor-pointer" />
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem
-                tag={Link}
-                className="w-100"
-                to={`/apps/user/view/${row.id}`}
-                // onClick={() => store.dispatch(getUser(row.id))}
-              >
-                <FileText size={14} className="me-50" />
-                <span className="align-middle">Details</span>
-              </DropdownItem>
-              <DropdownItem
-                tag="a"
-                href="/"
-                className="w-100"
-                // onClick={e => e.preventDefault()}
-              >
-                <Archive size={14} className="me-50" />
-                <span className="align-middle">Edit</span>
-              </DropdownItem>
-              <DropdownItem
-                tag="a"
-                href="/"
-                className="w-100"
-                // onClick={e => {
-                //   e.preventDefault()
-                //   store.dispatch(deleteUser(row.id))
-                // }}
-              >
-                <Trash2 size={14} className="me-50" />
-                <span className="align-middle">Delete</span>
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
-        </div>
-      ),
-    },
+    // {
+    //   name: "BILING",
+    //   sortable: true,
+    //   minWidth: "172px",
+    //   sortField: "role",
+    //   selector: (row) => row.Email,
+    //   // cell: row => renderRole(row)
+    // },
+    // {
+    //   name: "STATUS",
+    //   sortable: true,
+    //   minWidth: "172px",
+    //   sortField: "role",
+    //   selector: (row) => row.teacher,
+    //   // cell: row => renderRole(row)
+    // },
+    // {
+    //   name: "Actions",
+    //   minWidth: "100px",
+    //   cell: (row) => (
+    //     <div className="column-action">
+    //       <UncontrolledDropdown>
+    //         <DropdownToggle tag="div" className="btn btn-sm">
+    //           <MoreVertical size={14} className="cursor-pointer" />
+    //         </DropdownToggle>
+    //         <DropdownMenu>
+    //           <DropdownItem
+    //             tag={Link}
+    //             className="w-100"
+    //             to={`/apps/user/view/${row.id}`}
+    //             // onClick={() => store.dispatch(getUser(row.id))}
+    //           >
+    //             <FileText size={14} className="me-50" />
+    //             <span className="align-middle">Details</span>
+    //           </DropdownItem>
+    //           <DropdownItem
+    //             tag="a"
+    //             href="/"
+    //             className="w-100"
+    //             // onClick={e => e.preventDefault()}
+    //           >
+    //             <Archive size={14} className="me-50" />
+    //             <span className="align-middle">Edit</span>
+    //           </DropdownItem>
+    //           <DropdownItem
+    //             tag="a"
+    //             href="/"
+    //             className="w-100"
+    //             // onClick={e => {
+    //             //   e.preventDefault()
+    //             //   store.dispatch(deleteUser(row.id))
+    //             // }}
+    //           >
+    //             <Trash2 size={14} className="me-50" />
+    //             <span className="align-middle">Delete</span>
+    //           </DropdownItem>
+    //         </DropdownMenu>
+    //       </UncontrolledDropdown>
+    //     </div>
+    //   ),
+    // },
   ];
 
   return (
@@ -605,6 +590,85 @@ const UsersList = () => {
       </Card>
 
       <Card className="overflow-hidden">
+        <Row className="ltr">
+          <Col xl="6" className="d-flex align-items-center p-0">
+            <div className="d-flex align-items-center w-100">
+              <label htmlFor="rows-per-page">Show</label>
+              <Input
+                className="mx-50"
+                type="select"
+                id="rows-per-page"
+                value={rowsPerPage}
+                onChange={handlePerPage}
+                style={{ width: "5rem" }}
+              >
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </Input>
+              <label htmlFor="rows-per-page">Entries</label>
+            </div>
+          </Col>
+          <Col
+            xl="6"
+            className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
+          >
+            <div className="d-flex align-items-center mb-sm-0 mb-1 me-1">
+              <label className="mb-0" htmlFor="search-invoice">
+                Search:
+              </label>
+              <Input
+                id="search-invoice"
+                className="ms-50 w-100"
+                type="text"
+                value={searchTerm}
+                onChange={(e) => handleFilter(e.target.value)}
+              />
+            </div>
+
+            <div className="d-flex align-items-center table-header-actions">
+              <UncontrolledDropdown className="me-1">
+                <DropdownToggle color="secondary" caret outline>
+                  <Share className="font-small-4 me-50" />
+                  <span className="align-middle">Export</span>
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem className="w-100">
+                    <Printer className="font-small-4 me-50" />
+                    <span className="align-middle">Print</span>
+                  </DropdownItem>
+                  <DropdownItem
+                    className="w-100"
+                    onClick={() => downloadCSV(store.data)}
+                  >
+                    <FileText className="font-small-4 me-50" />
+                    <span className="align-middle">CSV</span>
+                  </DropdownItem>
+                  <DropdownItem className="w-100">
+                    <Grid className="font-small-4 me-50" />
+                    <span className="align-middle">Excel</span>
+                  </DropdownItem>
+                  <DropdownItem className="w-100">
+                    <File className="font-small-4 me-50" />
+                    <span className="align-middle">PDF</span>
+                  </DropdownItem>
+                  <DropdownItem className="w-100">
+                    <Copy className="font-small-4 me-50" />
+                    <span className="align-middle">Copy</span>
+                  </DropdownItem>
+                </DropdownMenu>
+              </UncontrolledDropdown>
+
+              <Button
+                className="add-new-user"
+                color="primary"
+                onClick={toggleSidebar}
+              >
+                Add New User
+              </Button>
+            </div>
+          </Col>
+        </Row>
         <div className="react-dataTable">
           <DataTable
             noHeader
@@ -618,7 +682,7 @@ const UsersList = () => {
             // sortIcon={<ChevronDown />}
             className="react-dataTable"
             // paginationComponent={CustomPagination}
-            data={Data}
+            data={data?.courseDtos}
             // subHeaderComponent={
             //   <CustomHeader
             //     store={store}

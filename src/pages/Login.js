@@ -26,8 +26,28 @@ import illustrationsDark from "@src/assets/images/pages/login-v2-dark.svg";
 
 // ** Styles
 import "@styles/react/pages/page-authentication.scss";
+import { useState } from "react";
+import { SignIn } from "../core/services/api/logIn/LogIn";
 
 const Login = () => {
+  const [userName, setUserName] = useState("");
+
+  const [passWord, setPassWord] = useState("");
+
+  const onSubmit = async () => {
+    // setItem("phoneNumber", values.phoneNumber);
+    console.log("started");
+
+    try {
+      const result = await SignIn(userName, passWord, false);
+      console.log(result);
+
+      // notify("📨 SMS sent successfully");
+    } catch (error) {
+      console.error("Error sending SMS", error);
+    }
+  };
+
   const { skin } = useSkin();
 
   const source = skin === "dark" ? illustrationsDark : illustrationsLight;
@@ -130,6 +150,8 @@ const Login = () => {
                   Email
                 </Label>
                 <Input
+                  value={userName}
+                  onChange={(e) => setUserName(e.target.value)}
                   type="email"
                   id="login-email"
                   placeholder="john@example.com"
@@ -146,6 +168,8 @@ const Login = () => {
                   </Link>
                 </div>
                 <InputPasswordToggle
+                  passWord={passWord}
+                  setPassWord={setPassWord}
                   className="input-group-merge"
                   id="login-password"
                 />
@@ -156,7 +180,13 @@ const Login = () => {
                   Remember Me
                 </Label>
               </div>
-              <Button tag={Link} to="/" color="primary" block>
+              <Button
+                onClick={onSubmit}
+                tag={Link}
+                to="/"
+                color="primary"
+                block
+              >
                 Sign in
               </Button>
             </Form>
