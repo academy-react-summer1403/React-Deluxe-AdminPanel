@@ -413,8 +413,8 @@ const UsersList = () => {
       sortField: "title",
       // selector: (data) => data?.fullName,
       cell: (data) => (
-        <div className="d-flex justify-content-left align-items-center">
-          <Avatar img={Pic} />
+        <div className="d-flex gap-1 justify-content-left align-items-center">
+          <Avatar img={data.tumbImageAddress} />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column">
             <Link className="user_name text-truncate text-body  p-0">
@@ -436,67 +436,83 @@ const UsersList = () => {
       selector: (row) => row.typeName,
       // cell: row => renderRole(row)
     },
-    // {
-    //   name: "BILING",
-    //   sortable: true,
-    //   minWidth: "172px",
-    //   sortField: "role",
-    //   selector: (row) => row.Email,
-    //   // cell: row => renderRole(row)
-    // },
-    // {
-    //   name: "STATUS",
-    //   sortable: true,
-    //   minWidth: "172px",
-    //   sortField: "role",
-    //   selector: (row) => row.teacher,
-    //   // cell: row => renderRole(row)
-    // },
-    // {
-    //   name: "Actions",
-    //   minWidth: "100px",
-    //   cell: (row) => (
-    //     <div className="column-action">
-    //       <UncontrolledDropdown>
-    //         <DropdownToggle tag="div" className="btn btn-sm">
-    //           <MoreVertical size={14} className="cursor-pointer" />
-    //         </DropdownToggle>
-    //         <DropdownMenu>
-    //           <DropdownItem
-    //             tag={Link}
-    //             className="w-100"
-    //             to={`/apps/user/view/${row.id}`}
-    //             // onClick={() => store.dispatch(getUser(row.id))}
-    //           >
-    //             <FileText size={14} className="me-50" />
-    //             <span className="align-middle">Details</span>
-    //           </DropdownItem>
-    //           <DropdownItem
-    //             tag="a"
-    //             href="/"
-    //             className="w-100"
-    //             // onClick={e => e.preventDefault()}
-    //           >
-    //             <Archive size={14} className="me-50" />
-    //             <span className="align-middle">Edit</span>
-    //           </DropdownItem>
-    //           <DropdownItem
-    //             tag="a"
-    //             href="/"
-    //             className="w-100"
-    //             // onClick={e => {
-    //             //   e.preventDefault()
-    //             //   store.dispatch(deleteUser(row.id))
-    //             // }}
-    //           >
-    //             <Trash2 size={14} className="me-50" />
-    //             <span className="align-middle">Delete</span>
-    //           </DropdownItem>
-    //         </DropdownMenu>
-    //       </UncontrolledDropdown>
-    //     </div>
-    //   ),
-    // },
+    {
+      name: "سطح",
+      sortable: true,
+      minWidth: "172px",
+      sortField: "levelName",
+      selector: (row) => row.levelName,
+      // cell: row => renderRole(row)
+    },
+    {
+      name: "وضعیت",
+      sortable: true,
+      minWidth: "172px",
+      sortField: "statusName",
+      selector: (row) => row.statusName,
+      // cell: row => renderRole(row)
+    },
+    {
+      name: "تعداد رزرو",
+      sortable: true,
+      minWidth: "172px",
+      sortField: "reserveCount ",
+      selector: (row) => row.reserveCount,
+      // cell: row => renderRole(row)
+    },
+    {
+      name: "فعالیت",
+      sortable: true,
+      minWidth: "172px",
+      sortField: "isActive ",
+      selector: (row) => <div> {row.isActive ? "فعال" : "غیر فعال"}</div>,
+      // cell: row => renderRole(row)
+    },
+    {
+      name: "اقدامات",
+      minWidth: "100px",
+      cell: (row) => (
+        <div className="column-action">
+          <UncontrolledDropdown>
+            <DropdownToggle tag="div" className="btn btn-sm">
+              <MoreVertical size={14} className="cursor-pointer" />
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem
+                tag={Link}
+                className="w-100"
+                to={`/apps/user/view/${row.id}`}
+                // onClick={() => store.dispatch(getUser(row.id))}
+              >
+                <FileText size={14} className="me-50" />
+                <span className="align-middle">Details</span>
+              </DropdownItem>
+              <DropdownItem
+                tag="a"
+                href="/"
+                className="w-100"
+                // onClick={e => e.preventDefault()}
+              >
+                <Archive size={14} className="me-50" />
+                <span className="align-middle">Edit</span>
+              </DropdownItem>
+              <DropdownItem
+                tag="a"
+                href="/"
+                className="w-100"
+                // onClick={e => {
+                //   e.preventDefault()
+                //   store.dispatch(deleteUser(row.id))
+                // }}
+              >
+                <Trash2 size={14} className="me-50" />
+                <span className="align-middle">Delete</span>
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+        </div>
+      ),
+    },
   ];
 
   return (
