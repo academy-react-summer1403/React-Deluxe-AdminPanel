@@ -1,10 +1,11 @@
 import React, { Fragment } from "react";
-// import TODO from "../@core/components/addNewBlogs/todo/index"
+import MultipleColumnForm  from "../@core/components/addNewBlogs/form-layouts/MultipleColumnForm"
+
 
 const AddBlogs = () => {
   return (
     <Fragment>
-    {/* <TODO/> */}
+      <MultipleColumnForm />
   </Fragment>
   
   )
