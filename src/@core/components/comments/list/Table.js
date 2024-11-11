@@ -208,16 +208,34 @@ const UsersList = () => {
     number: 0,
   });
 
-  getQuery("news", "/News/AdminNewsFilterList?PageNumber=1&RowsOfPage=10&SortingCol=InsertDate&SortType=DESC&Query=&IsActive=true");
+  getQuery("courses", "/Course/CourseList");
   const { data, isError, isLoading } = useQuery({
-    queryKey: ["news"],
+    queryKey: ["courses"],
   });
+  console.log(data?.courseDtos);
 
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>کوفت</div>;
   const { courseFilterDtos } = data;
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+
+  // ** Get data on mount
+  // useEffect(() => {
+  //   dispatch(getAllData())
+  //   dispatch(
+  //     getData({
+  //       sort,
+  //       sortColumn,
+  //       q: searchTerm,
+  //       page: currentPage,
+  //       perPage: rowsPerPage,
+  //       role: currentRole.value,
+  //       status: currentStatus.value,
+  //       currentPlan: currentPlan.value
+  //     })
+  //   )
+  // }, [dispatch, store.data.length, sort, sortColumn, currentPage])
 
   // ** User filter options
   const roleOptions = [
@@ -389,9 +407,9 @@ const UsersList = () => {
 
   const column = [
     {
-      name: "نویسنده",
+      name: "نام دوره",
       sortable: true,
-      minWidth: "130px",
+      minWidth: "300px",
       sortField: "title",
       // selector: (data) => data?.fullName,
       cell: (data) => (
@@ -400,106 +418,164 @@ const UsersList = () => {
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column">
             <Link className="user_name text-truncate text-body  p-0">
-              <span className="fw-bolder">{data?.addUserFullName}</span>
+              <span className="fw-bolder">{data?.fullName}</span>
             </Link>
-           
+            <small className="text-truncate text-muted mb-0">
+              {data?.title}
+            </small>
           </div>
         </div>
       ),
     },
 
     {
-      name: " عنوان خبر",
+      name: "نوع دوره",
       sortable: true,
-      minWidth: "130px",
+      minWidth: "172px",
       sortField: "typeName",
-      selector: (row) => row.miniDescribe,
+      selector: (row) => row.typeName,
+      // cell: row => renderRole(row)
     },
-    {
-      name: "دسته بندی خبر",
-      sortable: true,
-      minWidth: "130px",
-      sortField: "role",
-      selector: (row) => row.title,
-    },
-    {
-      name: "توضیحات کوتاه",
-      sortable: true,
-      minWidth: "130px",
-      sortField: "role",
-      selector: (row) => row.miniDescribe,
-    },
-    {
-      name: " وضعیت",
-      sortable: true,
-      minWidth: "152px",
-      sortField: "role",
-      selector: (row) => row.isActive,
-    },
-    {
-      name: "اقدام",
-      minWidth: "100px",
-      cell: (row) => (
-        <div className="column-action">
-          <UncontrolledDropdown>
-            <DropdownToggle tag="div" className="btn btn-sm">
-              <MoreVertical size={14} className="cursor-pointer" />
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem
-                tag={Link}
-                className="w-100"
-                to={`/apps/user/view/${row.id}`}
-                // onClick={() => store.dispatch(getUser(row.id))}
-              >
-                <FileText size={14} className="me-50" />
-                <span className="align-middle">Details</span>
-              </DropdownItem>
-              <DropdownItem
-                tag="a"
-                href="/"
-                className="w-100"
-                // onClick={e => e.preventDefault()}
-              >
-                <Archive size={14} className="me-50" />
-                <span className="align-middle">Edit</span>
-              </DropdownItem>
-              <DropdownItem
-                tag="a"
-                href="/"
-                className="w-100"
-                // onClick={e => {
-                //   e.preventDefault()
-                //   store.dispatch(deleteUser(row.id))
-                // }}
-              >
-                <Trash2 size={14} className="me-50" />
-                <span className="align-middle">Delete</span>
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown>
-        </div>
-      ),
-    },
+    // {
+    //   name: "BILING",
+    //   sortable: true,
+    //   minWidth: "172px",
+    //   sortField: "role",
+    //   selector: (row) => row.Email,
+    //   // cell: row => renderRole(row)
+    // },
+    // {
+    //   name: "STATUS",
+    //   sortable: true,
+    //   minWidth: "172px",
+    //   sortField: "role",
+    //   selector: (row) => row.teacher,
+    //   // cell: row => renderRole(row)
+    // },
+    // {
+    //   name: "Actions",
+    //   minWidth: "100px",
+    //   cell: (row) => (
+    //     <div className="column-action">
+    //       <UncontrolledDropdown>
+    //         <DropdownToggle tag="div" className="btn btn-sm">
+    //           <MoreVertical size={14} className="cursor-pointer" />
+    //         </DropdownToggle>
+    //         <DropdownMenu>
+    //           <DropdownItem
+    //             tag={Link}
+    //             className="w-100"
+    //             to={`/apps/user/view/${row.id}`}
+    //             // onClick={() => store.dispatch(getUser(row.id))}
+    //           >
+    //             <FileText size={14} className="me-50" />
+    //             <span className="align-middle">Details</span>
+    //           </DropdownItem>
+    //           <DropdownItem
+    //             tag="a"
+    //             href="/"
+    //             className="w-100"
+    //             // onClick={e => e.preventDefault()}
+    //           >
+    //             <Archive size={14} className="me-50" />
+    //             <span className="align-middle">Edit</span>
+    //           </DropdownItem>
+    //           <DropdownItem
+    //             tag="a"
+    //             href="/"
+    //             className="w-100"
+    //             // onClick={e => {
+    //             //   e.preventDefault()
+    //             //   store.dispatch(deleteUser(row.id))
+    //             // }}
+    //           >
+    //             <Trash2 size={14} className="me-50" />
+    //             <span className="align-middle">Delete</span>
+    //           </DropdownItem>
+    //         </DropdownMenu>
+    //       </UncontrolledDropdown>
+    //     </div>
+    //   ),
+    // },
   ];
 
   return (
     <Fragment>
-     
+      <Card>
+      
+        <CardBody>
+          <Row>
+            <Col md="4">
+              <Label for="role-select">وضعیت</Label>
+              <Select
+                isClearable={false}
+                value={currentRole}
+                options={roleOptions}
+                className="react-select"
+                classNamePrefix="select"
+                theme={selectThemeColors}
+                onChange={(data) => {
+                  setCurrentRole(data);
+                  dispatch(
+                    getData({
+                      sort,
+                      sortColumn,
+                      q: searchTerm,
+                      role: data.value,
+                      page: currentPage,
+                      perPage: rowsPerPage,
+                      status: currentStatus.value,
+                      currentPlan: currentPlan.value,
+                    })
+                  );
+                }}
+              />
+            </Col>
+            <Col className="my-md-0 my-1" md="4">
+              <Label for="plan-select">وضعیت</Label>
+              <Select
+                theme={selectThemeColors}
+                isClearable={false}
+                className="react-select"
+                classNamePrefix="select"
+                options={planOptions}
+                value={currentPlan}
+                onChange={(data) => {
+                  setCurrentPlan(data);
+                  dispatch(
+                    getData({
+                      sort,
+                      sortColumn,
+                      q: searchTerm,
+                      page: currentPage,
+                      perPage: rowsPerPage,
+                      role: currentRole.value,
+                      currentPlan: data.value,
+                      status: currentStatus.value,
+                    })
+                  );
+                }}
+              />
+            </Col>
+           
+          </Row>
+        </CardBody>
+      </Card>
 
-      <Card className="overflow-hidden ">
+      <Card className="overflow-hidden">
         <Row className="ltr">
           <Col xl="6" className="d-flex align-items-center p-0">
-            <div className="d-flex align-items-center w-300">
+            <div className="d-flex align-items-center w-100">
+              <label htmlFor="rows-per-page">نمایش</label>
               <Input
-                className="mx-50 "
+                className="mx-50"
                 type="select"
                 id="rows-per-page"
                 value={rowsPerPage}
                 onChange={handlePerPage}
-                style={{ width: "20rem" }}
+                style={{ width: "5rem" }}
               >
-                <option value="10">فعال</option>
+                <option value="10">10</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
               </Input>
@@ -510,20 +586,21 @@ const UsersList = () => {
             className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
           >
             <div className="d-flex align-items-center mb-sm-0 mb-1 me-1">
-              
+         
               <Input
                 id="search-invoice"
                 className="ms-50 w-100"
                 type="text"
-                value={searchTerm}
                 placeholder="جستجو"
+
+                value={searchTerm}
                 onChange={(e) => handleFilter(e.target.value)}
               />
             </div>
 
             <div className="d-flex align-items-center table-header-actions">
               <UncontrolledDropdown className="me-1">
-           
+          
                 <DropdownMenu>
                   <DropdownItem className="w-100">
                     <Printer className="font-small-4 me-50" />
@@ -561,10 +638,10 @@ const UsersList = () => {
             </div>
           </Col>
         </Row>
-        <div className="react-dataTable ">
+        <div className="react-dataTable">
           <DataTable
             noHeader
-            // subHeader
+            subHeader
             sortServer
             pagination
             responsive
@@ -574,7 +651,7 @@ const UsersList = () => {
             // sortIcon={<ChevronDown />}
             className="react-dataTable"
             // paginationComponent={CustomPagination}
-            data={data?.news}
+            data={data?.courseDtos}
             // subHeaderComponent={
             //   <CustomHeader
             //     store={store}
