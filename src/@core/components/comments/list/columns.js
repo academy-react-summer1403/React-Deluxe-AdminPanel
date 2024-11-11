@@ -140,7 +140,7 @@ export const columns = [
             <MoreVertical size={14} className='cursor-pointer' />
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem
+            <DropdownItem 
               tag={Link}
               className='w-100'
               to={`/apps/user/view/${row.id}`}
