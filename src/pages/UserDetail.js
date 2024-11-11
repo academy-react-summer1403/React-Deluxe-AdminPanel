@@ -1,10 +1,14 @@
-import { Card, CardHeader, CardBody, CardTitle, CardText } from "reactstrap";
-import RoleCards from "../@core/components/roles-permissions/roles/RoleCards";
 import { Fragment } from "react";
-import UsersList from "../@core/components/user/list";
+import UserProjectsList from "../@core/components/user/view/UserProjectsList"
+import UserInfoCard from "../@core/components/user/view/UserInfoCard";
 
 const UserDetail = () => {
-  return <div>یوزر</div>;
+  return (
+    <div className="d-flex justify-content-between align-items-start">
+      {/* <UserInfoCard /> */}
+      <UserProjectsList />
+    </div>
+  )
 };
 
 export default UserDetail;

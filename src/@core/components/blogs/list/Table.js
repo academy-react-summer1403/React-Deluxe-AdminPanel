@@ -487,8 +487,8 @@ const UsersList = () => {
     <Fragment>
      
 
-      <Card className="overflow-hidden ">
-        <Row className="ltr mt-2">
+      <Card className="overflow-hidden "  >
+        <Row className="ltr mt-2" >
           <Col xl="6" className="d-flex align-items-center p-0">
             <div className="d-flex align-items-center w-300  ml-20 "  >
               <Input

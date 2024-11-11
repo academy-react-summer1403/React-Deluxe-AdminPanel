@@ -1,7 +1,13 @@
-import React from "react";
+import React, { Fragment } from "react";
+// import TODO from "../@core/components/addNewBlogs/todo/index"
 
-const AddCourse = () => {
-  return <div>موز</div>;
+const AddBlogs = () => {
+  return (
+    <Fragment>
+    {/* <TODO/> */}
+  </Fragment>
+  
+  )
 };
 
-export default AddCourse;
+export default AddBlogs;

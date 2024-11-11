@@ -71,15 +71,15 @@ const UsersList = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentRole, setCurrentRole] = useState({
     value: "",
-    label: "Select Role",
+    label: "انتخاب کنید ...",
   });
   const [currentPlan, setCurrentPlan] = useState({
     value: "",
-    label: "Select Plan",
+    label: "انتخاب کنید ...",
   });
   const [currentStatus, setCurrentStatus] = useState({
     value: "",
-    label: "Select Status",
+    label: "انتخاب کنید ...",
     number: 0,
   });
 
@@ -354,12 +354,12 @@ const UsersList = () => {
     <Fragment>
       <Card>
         <CardHeader>
-          <CardTitle tag="h4">Filters</CardTitle>
+          <CardTitle tag="h4">فیلتر ها</CardTitle>
         </CardHeader>
         <CardBody>
           <Row>
             <Col md="4">
-              <Label for="role-select">Role</Label>
+              <Label for="role-select">نقش</Label>
               <Select
                 isClearable={false}
                 value={currentRole}
@@ -385,7 +385,7 @@ const UsersList = () => {
               />
             </Col>
             <Col className="my-md-0 my-1" md="4">
-              <Label for="plan-select">Plan</Label>
+              <Label for="plan-select">وضعیت</Label>
               <Select
                 theme={selectThemeColors}
                 isClearable={false}
@@ -411,7 +411,7 @@ const UsersList = () => {
               />
             </Col>
             <Col md="4">
-              <Label for="status-select">Status</Label>
+              <Label for="status-select">مرتب سازی</Label>
               <Select
                 theme={selectThemeColors}
                 isClearable={false}

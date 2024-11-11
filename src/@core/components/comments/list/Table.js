@@ -196,23 +196,17 @@ const UsersList = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentRole, setCurrentRole] = useState({
     value: "",
-    label: "Select Role",
+    label: "انتخاب کنید ...",
   });
   const [currentPlan, setCurrentPlan] = useState({
     value: "",
-    label: "Select Plan",
-  });
-  const [currentStatus, setCurrentStatus] = useState({
-    value: "",
-    label: "Select Status",
-    number: 0,
+    label: "انتخاب کنید ...",
   });
 
   getQuery("courses", "/Course/CourseList");
   const { data, isError, isLoading } = useQuery({
     queryKey: ["courses"],
   });
-  console.log(data?.courseDtos);
 
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>کوفت</div>;
