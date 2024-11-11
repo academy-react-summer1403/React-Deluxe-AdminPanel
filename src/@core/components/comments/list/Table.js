@@ -566,7 +566,7 @@ const UsersList = () => {
         <Row className="ltr">
           <Col xl="6" className="d-flex align-items-center p-0">
             <div className="d-flex align-items-center w-100">
-              <label htmlFor="rows-per-page">نمایش</label>
+              <label htmlFor="rows-per-page" style={{ marginRight: "20px" }}>نمایش</label>
               <Input
                 className="mx-50"
                 type="select"
@@ -596,6 +596,13 @@ const UsersList = () => {
                 value={searchTerm}
                 onChange={(e) => handleFilter(e.target.value)}
               />
+                 <Button
+                className="add-new-user"
+                color="primary"
+                onClick={toggleSidebar}
+              >
+                جستجو
+              </Button>
             </div>
 
             <div className="d-flex align-items-center table-header-actions">
@@ -628,13 +635,7 @@ const UsersList = () => {
                 </DropdownMenu>
               </UncontrolledDropdown>
 
-              <Button
-                className="add-new-user"
-                color="primary"
-                onClick={toggleSidebar}
-              >
-                جستجو
-              </Button>
+           
             </div>
           </Col>
         </Row>

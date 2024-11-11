@@ -244,7 +244,7 @@ const UsersList = () => {
       sortField: "gmail",
       // selector: (data) => data?.fullName,
       cell: (data) => (
-        <div className="d-flex justify-content-left align-items-center">
+        <div className="d-flex justify-content-left align-items-center gap-1">
           <Avatar img={Pic} />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column">
@@ -443,46 +443,47 @@ const UsersList = () => {
       <Card className="overflow-hidden">
         <Row className="ltr">
           <Col xl="6" className="d-flex align-items-center p-0">
-            <div className="d-flex align-items-center w-100">
-              <label htmlFor="rows-per-page">Show</label>
-              <Input
-                className="mx-50"
-                type="select"
-                id="rows-per-page"
-                value={rowsPerPage}
-                onChange={handlePerPage}
-                style={{ width: "5rem" }}
-              >
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-              </Input>
-              <label htmlFor="rows-per-page">Entries</label>
-            </div>
+          <div className="d-flex align-items-center w-100">
+  <label htmlFor="rows-per-page" style={{ marginRight: "25px" }}>نمایش</label>
+  <Input
+    className="mx-50"
+    type="select"
+    id="rows-per-page"
+    value={rowsPerPage}
+    onChange={handlePerPage}
+    style={{ width: "5rem" }}
+  >
+    <option value="10">10</option>
+    <option value="25">25</option>
+    <option value="50">50</option>
+  </Input>
+</div>
+
           </Col>
           <Col
             xl="6"
             className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
           >
-            <div className="d-flex align-items-center mb-sm-0 mb-1 me-1">
-              <label className="mb-0" htmlFor="search-invoice">
-                Search:
-              </label>
+            <div className="d-flex align-items-center mb-sm-0 ">
               <Input
                 id="search-invoice"
-                className="ms-50 w-100"
+                className=" w-100"
                 type="text"
+                placeholder="...جستجو"
                 value={searchTerm}
                 onChange={(e) => handleFilter(e.target.value)}
               />
             </div>
+            <Button
+                className="add-new-user"
+                color="primary"
+                onClick={toggleSidebar}
+              >
+                جستجو
+              </Button>
 
             <div className="d-flex align-items-center table-header-actions">
               <UncontrolledDropdown className="me-1">
-                <DropdownToggle color="secondary" caret outline>
-                  <Share className="font-small-4 me-50" />
-                  <span className="align-middle">Export</span>
-                </DropdownToggle>
                 <DropdownMenu>
                   <DropdownItem className="w-100">
                     <Printer className="font-small-4 me-50" />
@@ -509,13 +510,13 @@ const UsersList = () => {
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-
+          
               <Button
                 className="add-new-user"
                 color="primary"
                 onClick={toggleSidebar}
               >
-                Add New User
+                افزودن کاربر جدید
               </Button>
             </div>
           </Col>
