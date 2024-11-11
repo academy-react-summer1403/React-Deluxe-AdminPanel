@@ -196,23 +196,17 @@ const UsersList = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentRole, setCurrentRole] = useState({
     value: "",
-    label: "Select Role",
+    label: "انتخاب کنید ...",
   });
   const [currentPlan, setCurrentPlan] = useState({
     value: "",
-    label: "Select Plan",
-  });
-  const [currentStatus, setCurrentStatus] = useState({
-    value: "",
-    label: "Select Status",
-    number: 0,
+    label: "انتخاب کنید ...",
   });
 
   getQuery("courses", "/Course/CourseList");
   const { data, isError, isLoading } = useQuery({
     queryKey: ["courses"],
   });
-  console.log(data?.courseDtos);
 
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>کوفت</div>;
@@ -566,7 +560,7 @@ const UsersList = () => {
         <Row className="ltr">
           <Col xl="6" className="d-flex align-items-center p-0">
             <div className="d-flex align-items-center w-100">
-              <label htmlFor="rows-per-page">نمایش</label>
+              <label htmlFor="rows-per-page" style={{ marginRight: "20px" }}>نمایش</label>
               <Input
                 className="mx-50"
                 type="select"
@@ -596,6 +590,13 @@ const UsersList = () => {
                 value={searchTerm}
                 onChange={(e) => handleFilter(e.target.value)}
               />
+                 <Button
+                className="add-new-user"
+                color="primary"
+                onClick={toggleSidebar}
+              >
+                جستجو
+              </Button>
             </div>
 
             <div className="d-flex align-items-center table-header-actions">
@@ -628,13 +629,7 @@ const UsersList = () => {
                 </DropdownMenu>
               </UncontrolledDropdown>
 
-              <Button
-                className="add-new-user"
-                color="primary"
-                onClick={toggleSidebar}
-              >
-                جستجو
-              </Button>
+           
             </div>
           </Col>
         </Row>

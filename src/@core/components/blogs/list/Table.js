@@ -395,11 +395,11 @@ const UsersList = () => {
       sortField: "title",
       // selector: (data) => data?.fullName,
       cell: (data) => (
-        <div className="d-flex justify-content-left align-items-center">
+        <div className="d-flex justify-content-left align-items-center gap-1 ">
           <Avatar img={Pic} />
           {/* {renderClient(row)} */}
-          <div className="d-flex flex-column">
-            <Link className="user_name text-truncate text-body  p-0">
+          <div className="d-flex flex-column ">
+            <Link className="user_name text-truncate text-body  p-0 ">
               <span className="fw-bolder">{data?.addUserFullName}</span>
             </Link>
            
@@ -487,17 +487,17 @@ const UsersList = () => {
     <Fragment>
      
 
-      <Card className="overflow-hidden ">
-        <Row className="ltr">
+      <Card className="overflow-hidden "  >
+        <Row className="ltr mt-2" >
           <Col xl="6" className="d-flex align-items-center p-0">
-            <div className="d-flex align-items-center w-300">
+            <div className="d-flex align-items-center w-300  ml-20 "  >
               <Input
-                className="mx-50 "
+                className="mx-50 " 
                 type="select"
                 id="rows-per-page"
                 value={rowsPerPage}
                 onChange={handlePerPage}
-                style={{ width: "20rem" }}
+                style={{ width: "20rem"}}
               >
                 <option value="10">فعال</option>
                 <option value="25">25</option>
@@ -519,7 +519,16 @@ const UsersList = () => {
                 placeholder="جستجو"
                 onChange={(e) => handleFilter(e.target.value)}
               />
+                
+            <Button
+                className="add-new-user"
+                color="primary"
+                onClick={toggleSidebar}
+              >
+                جستجو
+              </Button>
             </div>
+          
 
             <div className="d-flex align-items-center table-header-actions">
               <UncontrolledDropdown className="me-1">
@@ -551,17 +560,10 @@ const UsersList = () => {
                 </DropdownMenu>
               </UncontrolledDropdown>
 
-              <Button
-                className="add-new-user"
-                color="primary"
-                onClick={toggleSidebar}
-              >
-                جستجو
-              </Button>
             </div>
           </Col>
         </Row>
-        <div className="react-dataTable ">
+        <div className="react-dataTable mt-5">
           <DataTable
             noHeader
             // subHeader
