@@ -58,80 +58,80 @@ const languageOptions = [
 
 const MySwal = withReactContent(Swal)
 
-const UserInfoCard = ({ selectedUser }) => {
+const UserInfoCard = () => {
   // ** State
   const [show, setShow] = useState(false)
 
   // ** Hook
-  const {
-    reset,
-    control,
-    setError,
-    handleSubmit,
-    formState: { errors }
-  } = useForm({
-    defaultValues: {
-      username: selectedUser.username,
-      lastName: selectedUser.fullName.split(' ')[1],
-      firstName: selectedUser.fullName.split(' ')[0]
-    }
-  })
+  // const {
+  //   reset,
+  //   control,
+  //   setError,
+  //   handleSubmit,
+  //   formState: { errors }
+  // } = useForm({
+  //   defaultValues: {
+  //     username: selectedUser.username,
+  //     lastName: selectedUser.fullName.split(' ')[1],
+  //     firstName: selectedUser.fullName.split(' ')[0]
+  //   }
+  // })
 
   // ** render user img
-  const renderUserImg = () => {
-    if (selectedUser !== null && selectedUser.avatar.length) {
-      return (
-        <img
-          height='110'
-          width='110'
-          alt='user-avatar'
-          src={selectedUser.avatar}
-          className='img-fluid rounded mt-3 mb-2'
-        />
-      )
-    } else {
-      return (
-        <Avatar
-          initials
-          color={selectedUser.avatarColor || 'light-primary'}
-          className='rounded mt-3 mb-2'
-          content={selectedUser.fullName}
-          contentStyles={{
-            borderRadius: 0,
-            fontSize: 'calc(48px)',
-            width: '100%',
-            height: '100%'
-          }}
-          style={{
-            height: '110px',
-            width: '110px'
-          }}
-        />
-      )
-    }
-  }
+  // const renderUserImg = () => {
+  //   if (selectedUser !== null && selectedUser.avatar.length) {
+  //     return (
+  //       <img
+  //         height='110'
+  //         width='110'
+  //         alt='user-avatar'
+  //         src={selectedUser.avatar}
+  //         className='img-fluid rounded mt-3 mb-2'
+  //       />
+  //     )
+  //   } else {
+  //     return (
+  //       <Avatar
+  //         initials
+  //         color={selectedUser.avatarColor || 'light-primary'}
+  //         className='rounded mt-3 mb-2'
+  //         content={selectedUser.fullName}
+  //         contentStyles={{
+  //           borderRadius: 0,
+  //           fontSize: 'calc(48px)',
+  //           width: '100%',
+  //           height: '100%'
+  //         }}
+  //         style={{
+  //           height: '110px',
+  //           width: '110px'
+  //         }}
+  //       />
+  //     )
+  //   }
+  // }
 
-  const onSubmit = data => {
-    if (Object.values(data).every(field => field.length > 0)) {
-      setShow(false)
-    } else {
-      for (const key in data) {
-        if (data[key].length === 0) {
-          setError(key, {
-            type: 'manual'
-          })
-        }
-      }
-    }
-  }
+  // const onSubmit = data => {
+  //   if (Object.values(data).every(field => field.length > 0)) {
+  //     setShow(false)
+  //   } else {
+  //     for (const key in data) {
+  //       if (data[key].length === 0) {
+  //         setError(key, {
+  //           type: 'manual'
+  //         })
+  //       }
+  //     }
+  //   }
+  // }
 
-  const handleReset = () => {
-    reset({
-      username: selectedUser.username,
-      lastName: selectedUser.fullName.split(' ')[1],
-      firstName: selectedUser.fullName.split(' ')[0]
-    })
-  }
+  // const handleReset = () => {
+  //   reset({
+  //     username: selectedUser.username,
+  //     lastName: selectedUser.fullName.split(' ')[1],
+  //     firstName: selectedUser.fullName.split(' ')[0]
+  //   })
+  // }
 
   const handleSuspendedClick = () => {
     return MySwal.fire({
@@ -171,18 +171,22 @@ const UserInfoCard = ({ selectedUser }) => {
   return (
     <Fragment>
       <Card>
-        <CardBody>
-          <div className='user-avatar-section'>
+        <CardBody className="w-100"  style={{ width: '400px' }}>
+          <div className='user-avatar-section d-flex' >
             <div className='d-flex align-items-center flex-column'>
-              {renderUserImg()}
+              {/* {renderUserImg()} */}
               <div className='d-flex flex-column align-items-center text-center'>
                 <div className='user-info'>
-                  <h4>{selectedUser !== null ? selectedUser.fullName : 'Eleanor Aguilar'}</h4>
-                  {selectedUser !== null ? (
+                  <h4>
+
+                    {/* {selectedUser !== null ? selectedUser.fullName : 'Eleanor Aguilar'} */}
+                    fhytfvyv
+                    </h4>
+                  {/* {selectedUser !== null ? (
                     <Badge color={roleColors[selectedUser.role]} className='text-capitalize'>
                       {selectedUser.role}
                     </Badge>
-                  ) : null}
+                  ) : null} */}
                 </div>
               </div>
             </div>
@@ -209,33 +213,45 @@ const UserInfoCard = ({ selectedUser }) => {
           </div>
           <h4 className='fw-bolder border-bottom pb-50 mb-1'>Details</h4>
           <div className='info-container'>
-            {selectedUser !== null ? (
+            {/* {selectedUser !== null ? ( */}
               <ul className='list-unstyled'>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>Username:</span>
-                  <span>{selectedUser.username}</span>
+                  <span>
+                    {/* {selectedUser.username} */}
+                    </span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>Billing Email:</span>
-                  <span>{selectedUser.email}</span>
+                  <span>
+                    {/* {selectedUser.email} */}
+                    </span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>Status:</span>
-                  <Badge className='text-capitalize' color={statusColors[selectedUser.status]}>
-                    {selectedUser.status}
+                  <Badge className='text-capitalize' 
+                  // color={statusColors[selectedUser.status]}
+                  >
+                    {/* {selectedUser.status} */}
                   </Badge>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>Role:</span>
-                  <span className='text-capitalize'>{selectedUser.role}</span>
+                  <span className='text-capitalize'>
+                    {/* {selectedUser.role} */}
+                    </span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>Tax ID:</span>
-                  <span>Tax-{selectedUser.contact.substr(selectedUser.contact.length - 4)}</span>
+                  <span>Tax-
+                    {/* {selectedUser.contact.substr(selectedUser.contact.length - 4)} */}
+                    </span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>Contact:</span>
-                  <span>{selectedUser.contact}</span>
+                  <span>
+                    {/* {selectedUser.contact} */}
+                    </span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>Language:</span>
@@ -246,7 +262,7 @@ const UserInfoCard = ({ selectedUser }) => {
                   <span>England</span>
                 </li>
               </ul>
-            ) : null}
+            {/* ) : null} */}
           </div>
           <div className='d-flex justify-content-center pt-2'>
             <Button color='primary' onClick={() => setShow(true)}>
@@ -258,7 +274,7 @@ const UserInfoCard = ({ selectedUser }) => {
           </div>
         </CardBody>
       </Card>
-      <Modal isOpen={show} toggle={() => setShow(!show)} className='modal-dialog-centered modal-lg'>
+      {/* <Modal isOpen={show} toggle={() => setShow(!show)} className='modal-dialog-centered modal-lg'>
         <ModalHeader className='bg-transparent' toggle={() => setShow(!show)}></ModalHeader>
         <ModalBody className='px-sm-5 pt-50 pb-5'>
           <div className='text-center mb-2'>
@@ -415,7 +431,7 @@ const UserInfoCard = ({ selectedUser }) => {
             </Row>
           </Form>
         </ModalBody>
-      </Modal>
+      </Modal> */}
     </Fragment>
   )
 }

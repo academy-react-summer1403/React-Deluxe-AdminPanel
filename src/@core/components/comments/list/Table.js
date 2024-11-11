@@ -203,33 +203,18 @@ const UsersList = () => {
     label: "انتخاب کنید ...",
   });
 
-  getQuery("courses", "/Course/CourseList");
+  getQuery("comments", "/Course/CommentManagment");
   const { data, isError, isLoading } = useQuery({
-    queryKey: ["courses"],
+    queryKey: ["comments"],
   });
 
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>کوفت</div>;
-  const { courseFilterDtos } = data;
+ 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
-  // ** Get data on mount
-  // useEffect(() => {
-  //   dispatch(getAllData())
-  //   dispatch(
-  //     getData({
-  //       sort,
-  //       sortColumn,
-  //       q: searchTerm,
-  //       page: currentPage,
-  //       perPage: rowsPerPage,
-  //       role: currentRole.value,
-  //       status: currentStatus.value,
-  //       currentPlan: currentPlan.value
-  //     })
-  //   )
-  // }, [dispatch, store.data.length, sort, sortColumn, currentPage])
+  
 
   // ** User filter options
   const roleOptions = [
@@ -401,7 +386,7 @@ const UsersList = () => {
 
   const column = [
     {
-      name: "نام دوره",
+      name: " کاربر",
       sortable: true,
       minWidth: "300px",
       sortField: "title",
@@ -412,85 +397,83 @@ const UsersList = () => {
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column">
             <Link className="user_name text-truncate text-body  p-0">
-              <span className="fw-bolder">{data?.fullName}</span>
+              <span className="fw-bolder">{data?.userFullName}</span>
             </Link>
-            <small className="text-truncate text-muted mb-0">
-              {data?.title}
-            </small>
+          
           </div>
         </div>
       ),
     },
 
     {
-      name: "نوع دوره",
+      name: " عنوان کامنت",
       sortable: true,
       minWidth: "172px",
       sortField: "typeName",
-      selector: (row) => row.typeName,
+      selector: (row) => row.courseTitle,
       // cell: row => renderRole(row)
     },
-    // {
-    //   name: "BILING",
-    //   sortable: true,
-    //   minWidth: "172px",
-    //   sortField: "role",
-    //   selector: (row) => row.Email,
-    //   // cell: row => renderRole(row)
-    // },
-    // {
-    //   name: "STATUS",
-    //   sortable: true,
-    //   minWidth: "172px",
-    //   sortField: "role",
-    //   selector: (row) => row.teacher,
-    //   // cell: row => renderRole(row)
-    // },
-    // {
-    //   name: "Actions",
-    //   minWidth: "100px",
-    //   cell: (row) => (
-    //     <div className="column-action">
-    //       <UncontrolledDropdown>
-    //         <DropdownToggle tag="div" className="btn btn-sm">
-    //           <MoreVertical size={14} className="cursor-pointer" />
-    //         </DropdownToggle>
-    //         <DropdownMenu>
-    //           <DropdownItem
-    //             tag={Link}
-    //             className="w-100"
-    //             to={`/apps/user/view/${row.id}`}
-    //             // onClick={() => store.dispatch(getUser(row.id))}
-    //           >
-    //             <FileText size={14} className="me-50" />
-    //             <span className="align-middle">Details</span>
-    //           </DropdownItem>
-    //           <DropdownItem
-    //             tag="a"
-    //             href="/"
-    //             className="w-100"
-    //             // onClick={e => e.preventDefault()}
-    //           >
-    //             <Archive size={14} className="me-50" />
-    //             <span className="align-middle">Edit</span>
-    //           </DropdownItem>
-    //           <DropdownItem
-    //             tag="a"
-    //             href="/"
-    //             className="w-100"
-    //             // onClick={e => {
-    //             //   e.preventDefault()
-    //             //   store.dispatch(deleteUser(row.id))
-    //             // }}
-    //           >
-    //             <Trash2 size={14} className="me-50" />
-    //             <span className="align-middle">Delete</span>
-    //           </DropdownItem>
-    //         </DropdownMenu>
-    //       </UncontrolledDropdown>
-    //     </div>
-    //   ),
-    // },
+    {
+      name: "نمایش کامنت",
+      sortable: true,
+      minWidth: "172px",
+      sortField: "role",
+      selector: (row) => row.describe,
+      // cell: row => renderRole(row)
+    },
+    {
+      name: "وضعیت",
+      sortable: true,
+      minWidth: "172px",
+      sortField: "accept",
+      selector: (row) =><div> {row.accept ? "تایید شده" : "تایید نشده"}</div>
+      // cell: row => renderRole(row)
+    },
+    {
+      name: "اقدام",
+      minWidth: "100px",
+      cell: (row) => (
+        <div className="column-action">
+          <UncontrolledDropdown>
+            <DropdownToggle tag="div" className="btn btn-sm">
+              <MoreVertical size={14} className="cursor-pointer" />
+            </DropdownToggle>
+            <DropdownMenu>
+              <DropdownItem
+                tag={Link}
+                className="w-100"
+                to={`/apps/user/view/${row.id}`}
+                // onClick={() => store.dispatch(getUser(row.id))}
+              >
+                <FileText size={14} className="me-50" />
+                <span className="align-middle">Details</span>
+              </DropdownItem>
+              <DropdownItem
+                tag="a"
+                href="/"
+                className="w-100"
+                // onClick={e => e.preventDefault()}
+              >
+                <Archive size={14} className="me-50" />
+                <span className="align-middle">Edit</span>
+              </DropdownItem>
+              <DropdownItem
+                tag="a"
+                href="/"
+                className="w-100"
+                // onClick={e => {
+                //   e.preventDefault()
+                //   store.dispatch(deleteUser(row.id))
+                // }}
+              >
+                <Trash2 size={14} className="me-50" />
+                <span className="align-middle">Delete</span>
+              </DropdownItem>
+            </DropdownMenu>
+          </UncontrolledDropdown>
+        </div>
+      ),
+    },
   ];
 
   return (
@@ -646,7 +629,7 @@ const UsersList = () => {
             // sortIcon={<ChevronDown />}
             className="react-dataTable"
             // paginationComponent={CustomPagination}
-            data={data?.courseDtos}
+            data={data?.comments}
             // subHeaderComponent={
             //   <CustomHeader
             //     store={store}

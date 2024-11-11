@@ -83,7 +83,7 @@ const UsersList = () => {
     number: 0,
   });
 
-  getQuery("users", "/User/UserMannage?PageNumber=1&RowsOfPage=20&SortingCol=DESC&SortType=InsertDate&Query=&IsActiveUser=true&IsDeletedUser=true&roleId=2");
+  getQuery("users", "/User/UserMannage");
   const { data, isError, isLoading } = useQuery({
     queryKey: ["users"],
   });
