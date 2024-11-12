@@ -10,10 +10,6 @@ import { Label, Row, Col, Input, Form, Button } from 'reactstrap'
 const Address = ({ stepper, type }) => {
   return (
     <Fragment>
-      <div className='content-header'>
-        <h5 className='mb-0'>Address</h5>
-        <small>Enter Your Address.</small>
-      </div>
       <Form onSubmit={e => e.preventDefault()}>
         <Row>
           <Col md='6' className='mb-1'>

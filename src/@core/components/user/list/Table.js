@@ -272,7 +272,7 @@ const UsersList = () => {
           <Link
             className='user_name text-truncate text-body p-1'
           >
-            <span className='fw-bolder'>{row.userRoles}</span>
+            <span className='fw-bolder'>{row.userRoles ? "Teacher" : "Student"}</span>
           </Link>
           {/* <small className='text-truncate text-muted mb-0'>{row.Email}</small> */}
         </div>
@@ -290,7 +290,7 @@ const UsersList = () => {
     {
       name: "درصد تکمیل پروفایل",
       sortable: true,
-      minWidth: "172px",
+      minWidth: "162px",
       sortField: "role",
       selector: (row) => row.profileCompletionPercentage,
       // cell: row => renderRole(row)
@@ -300,7 +300,7 @@ const UsersList = () => {
       sortable: true,
       minWidth: "172px",
       sortField: "role",
-      selector: (row) => row.active,
+      selector: (row) => <div> {row.active ? "Female" : "Male"} </div>
       // cell: row => renderRole(row)
     },
     {

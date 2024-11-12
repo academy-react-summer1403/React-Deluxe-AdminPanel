@@ -1,17 +1,12 @@
-import { Fragment } from "react";
-import UserProjectsList from "../@core/components/user/view/UserProjectsList"
 import UserInfoCard from "../@core/components/user/view/UserInfoCard";
 import UserTabs from "../@core/components/user/view/Tabs";
-// import SecurityTab from "../@core/components/user/view/SecurityTab";
 
 const UserDetail = () => {
   return (
-    < >
+    <div className="d-flex justify-content-between gap-4">
       <UserInfoCard />
-      {/* <SecurityTab/> */}
       <UserTabs />
-      {/* <UserProjectsList /> */}
-    </>
+    </div>
   )
 };
 
