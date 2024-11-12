@@ -17,8 +17,8 @@ import sketchLabel from '@src/assets/images/icons/brands/sketch-label.png'
 
 // ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
-
-
+import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
+import { useQuery } from "@tanstack/react-query";
 
 
 
@@ -28,7 +28,7 @@ const projectsArr = [
     hours: '210:30h',
     progressColor: 'info',
     totalTasks: '233/240',
-    subtitle: 'React Project',
+    // subtitle: 'React Project',
     title: 'BGC',
     img: reactLabel
   },
@@ -37,7 +37,7 @@ const projectsArr = [
     progress: 15,
     totalTasks: '9/50',
     progressColor: 'danger',
-    subtitle: 'UI/UX Project',
+    // subtitle: 'UI/UX Project',
     title: 'Falcon',
     img: xdLabel
   },
@@ -46,7 +46,7 @@ const projectsArr = [
     hours: '129:45h',
     totalTasks: '100/190',
     progressColor: 'success',
-    subtitle: 'Vuejs Project',
+    // subtitle: 'Vuejs Project',
     title: 'Dashboard',
     img: vueLabel
   },
@@ -55,7 +55,7 @@ const projectsArr = [
     progress: 49,
     totalTasks: '12/86',
     progressColor: 'warning',
-    subtitle: 'iPhone Project',
+    // subtitle: 'iPhone Project',
     title: 'Foodista',
     img: sketchLabel
   },
@@ -65,7 +65,7 @@ const projectsArr = [
     hours: '67:10h',
     totalTasks: '234/378',
     progressColor: 'info',
-    subtitle: 'React Project',
+    // subtitle: 'React Project',
     title: 'Doj',
     img: reactLabel
   },
@@ -75,7 +75,7 @@ const projectsArr = [
     totalTasks: '264/537',
     title: 'HTML',
     progressColor: 'success',
-    subtitle: 'Crypto Website',
+    // subtitle: 'Crypto Website',
     img: htmlLabel
   },
   {
@@ -83,17 +83,19 @@ const projectsArr = [
     hours: '88:19h',
     totalTasks: '214/627',
     progressColor: 'success',
-    subtitle: 'Vuejs',
+    // subtitle: 'Vuejs',
     // title: 'Vue Admin template',
     img: vueLabel
   }
 ]
 
+
+
 export const columns = [
   {
     sortable: true,
-    minWidth: '100px',
-    name: 'Project',
+    minWidth: '130px',
+    name: 'نام دوره',
     selector: row => row.fName,
     cell: row => {
       return (
@@ -110,28 +112,28 @@ export const columns = [
     }
   },
   {
-    name: 'Total Tasks',
+    name: 'توضیحات دوره',
     selector: row => row.totalTasks
   },
-  // {
-  //   name: 'Progress',
-  //   selector: row => row.progress,
-  //   sortable: true,
-  //   cell: row => {
-      // return (
-      //   <div className='d-flex flex-column w-100'>
-      //     <small className='mb-1'>{`${row.progress}%`}</small>
-      //     <Progress
-      //       value={row.progress}
-      //       style={{ height: '6px' }}
-      //       className={`w-100 progress-bar-${row.progressColor}`}
-      //     />
-      //   </div>
-      // )
-  //   }
-  // },
   {
-    name: 'Hours',
+    name: 'درصدتکمیل پروفایل',
+    selector: row => row.progress,
+    sortable: true,
+    cell: row => {
+      return (
+        <div className='d-flex flex-column w-100'>
+          <small className='mb-1'>{`${row.progress}%`}</small>
+          <Progress
+            value={row.progress}
+            style={{ height: '6px' }}
+            className={`w-100 progress-bar-${row.progressColor}`}
+          />
+        </div>
+      )
+    }
+  },
+  {
+    name: 'تاریخ آخرین بروزرسانی',
     selector: row => row.hours
   }
 ]
@@ -142,7 +144,7 @@ const UserProjectsList = () => {
  
 
 
-    <Card style={{ width: '500px' }}>
+    <Card style={{ width: '620px' }}>
       {/* <CardHeader tag='h4'>User's Projects List</CardHeader> */}
       <div className='react-dataTable user-view-account-projects '>
         <DataTable
