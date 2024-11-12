@@ -30,7 +30,7 @@ const WizardModern = () => {
     },
     {
       id: 'personal-info',
-      title: 'Personal Info',
+      title: 'Personal ',
       subtitle: 'Add Personal Info',
       icon: <User size={18} />,
       content: <PersonalInfo stepper={stepper} type='wizard-modern' />

@@ -62,76 +62,6 @@ const UserInfoCard = () => {
   // ** State
   const [show, setShow] = useState(false)
 
-  // ** Hook
-  // const {
-  //   reset,
-  //   control,
-  //   setError,
-  //   handleSubmit,
-  //   formState: { errors }
-  // } = useForm({
-  //   defaultValues: {
-  //     username: selectedUser.username,
-  //     lastName: selectedUser.fullName.split(' ')[1],
-  //     firstName: selectedUser.fullName.split(' ')[0]
-  //   }
-  // })
-
-  // ** render user img
-  // const renderUserImg = () => {
-  //   if (selectedUser !== null && selectedUser.avatar.length) {
-  //     return (
-  //       <img
-  //         height='110'
-  //         width='110'
-  //         alt='user-avatar'
-  //         src={selectedUser.avatar}
-  //         className='img-fluid rounded mt-3 mb-2'
-  //       />
-  //     )
-  //   } else {
-  //     return (
-  //       <Avatar
-  //         initials
-  //         color={selectedUser.avatarColor || 'light-primary'}
-  //         className='rounded mt-3 mb-2'
-  //         content={selectedUser.fullName}
-  //         contentStyles={{
-  //           borderRadius: 0,
-  //           fontSize: 'calc(48px)',
-  //           width: '100%',
-  //           height: '100%'
-  //         }}
-  //         style={{
-  //           height: '110px',
-  //           width: '110px'
-  //         }}
-  //       />
-  //     )
-  //   }
-  // }
-
-  // const onSubmit = data => {
-  //   if (Object.values(data).every(field => field.length > 0)) {
-  //     setShow(false)
-  //   } else {
-  //     for (const key in data) {
-  //       if (data[key].length === 0) {
-  //         setError(key, {
-  //           type: 'manual'
-  //         })
-  //       }
-  //     }
-  //   }
-  // }
-
-  // const handleReset = () => {
-  //   reset({
-  //     username: selectedUser.username,
-  //     lastName: selectedUser.fullName.split(' ')[1],
-  //     firstName: selectedUser.fullName.split(' ')[0]
-  //   })
-  // }
 
   const handleSuspendedClick = () => {
     return MySwal.fire({
@@ -169,19 +99,19 @@ const UserInfoCard = () => {
   }
 
   return (
-    <Fragment>
-      <Card>
-        <CardBody className="w-100"  style={{ width: '400px' }}>
+    <Fragment className="d-flex justify-content-between">
+      <Card  style={{ width: '300px' }}>
+        <CardBody className="w-100" >
           <div className='user-avatar-section d-flex' >
             <div className='d-flex align-items-center flex-column'>
               {/* {renderUserImg()} */}
+              <div>sdcsd</div>
               <div className='d-flex flex-column align-items-center text-center'>
                 <div className='user-info'>
-                  <h4>
+                  
 
                     {/* {selectedUser !== null ? selectedUser.fullName : 'Eleanor Aguilar'} */}
-                    fhytfvyv
-                    </h4>
+                   
                   {/* {selectedUser !== null ? (
                     <Badge color={roleColors[selectedUser.role]} className='text-capitalize'>
                       {selectedUser.role}
@@ -198,7 +128,7 @@ const UserInfoCard = () => {
               </Badge>
               <div className='ms-75'>
                 <h4 className='mb-0'>1.23k</h4>
-                <small>Tasks Done</small>
+                <small>دوره ها</small>
               </div>
             </div>
             <div className='d-flex align-items-start'>
@@ -207,28 +137,28 @@ const UserInfoCard = () => {
               </Badge>
               <div className='ms-75'>
                 <h4 className='mb-0'>568</h4>
-                <small>Projects Done</small>
+                <small>دوره رزروشده</small>
               </div>
             </div>
           </div>
-          <h4 className='fw-bolder border-bottom pb-50 mb-1'>Details</h4>
+          <h4 className='fw-bolder border-bottom pb-50 mb-1'>جزئیات</h4>
           <div className='info-container'>
             {/* {selectedUser !== null ? ( */}
               <ul className='list-unstyled'>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>Username:</span>
+                  <span className='fw-bolder me-25'>نام کاربری:</span>
                   <span>
                     {/* {selectedUser.username} */}
                     </span>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>Billing Email:</span>
+                  <span className='fw-bolder me-25'>ایمیل:</span>
                   <span>
                     {/* {selectedUser.email} */}
                     </span>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>Status:</span>
+                  <span className='fw-bolder me-25'>وضعیت:</span>
                   <Badge className='text-capitalize' 
                   // color={statusColors[selectedUser.status]}
                   >
@@ -236,40 +166,40 @@ const UserInfoCard = () => {
                   </Badge>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>Role:</span>
+                  <span className='fw-bolder me-25'>درصد تکمیل پروفایل:</span>
                   <span className='text-capitalize'>
                     {/* {selectedUser.role} */}
                     </span>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>Tax ID:</span>
-                  <span>Tax-
+                  <span className='fw-bolder me-25'> جنسیت:</span>
+                  <span>
                     {/* {selectedUser.contact.substr(selectedUser.contact.length - 4)} */}
                     </span>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>Contact:</span>
+                  <span className='fw-bolder me-25'>کدملی:</span>
                   <span>
                     {/* {selectedUser.contact} */}
                     </span>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>Language:</span>
-                  <span>English</span>
+                  <span className='fw-bolder me-25'>شماره موبایل:</span>
+                  <span>091111111</span>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>Country:</span>
-                  <span>England</span>
+                  <span className='fw-bolder me-25'>کشور:</span>
+                  <span>ایران</span>
                 </li>
               </ul>
             {/* ) : null} */}
           </div>
           <div className='d-flex justify-content-center pt-2'>
             <Button color='primary' onClick={() => setShow(true)}>
-              Edit
+              ویرایش
             </Button>
             <Button className='ms-1' color='danger' outline onClick={handleSuspendedClick}>
-              Suspended
+              غیرفعال کردن
             </Button>
           </div>
         </CardBody>
