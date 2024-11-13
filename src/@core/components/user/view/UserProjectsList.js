@@ -17,8 +17,8 @@ import sketchLabel from '@src/assets/images/icons/brands/sketch-label.png'
 
 // ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
-
-
+import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
+import { useQuery } from "@tanstack/react-query";
 
 
 
@@ -28,7 +28,7 @@ const projectsArr = [
     hours: '210:30h',
     progressColor: 'info',
     totalTasks: '233/240',
-    subtitle: 'React Project',
+    // subtitle: 'React Project',
     title: 'BGC',
     img: reactLabel
   },
@@ -37,7 +37,7 @@ const projectsArr = [
     progress: 15,
     totalTasks: '9/50',
     progressColor: 'danger',
-    subtitle: 'UI/UX Project',
+    // subtitle: 'UI/UX Project',
     title: 'Falcon',
     img: xdLabel
   },
@@ -46,7 +46,7 @@ const projectsArr = [
     hours: '129:45h',
     totalTasks: '100/190',
     progressColor: 'success',
-    subtitle: 'Vuejs Project',
+    // subtitle: 'Vuejs Project',
     title: 'Dashboard',
     img: vueLabel
   },
@@ -55,7 +55,7 @@ const projectsArr = [
     progress: 49,
     totalTasks: '12/86',
     progressColor: 'warning',
-    subtitle: 'iPhone Project',
+    // subtitle: 'iPhone Project',
     title: 'Foodista',
     img: sketchLabel
   },
@@ -65,7 +65,7 @@ const projectsArr = [
     hours: '67:10h',
     totalTasks: '234/378',
     progressColor: 'info',
-    subtitle: 'React Project',
+    // subtitle: 'React Project',
     title: 'Doj',
     img: reactLabel
   },
@@ -75,7 +75,7 @@ const projectsArr = [
     totalTasks: '264/537',
     title: 'HTML',
     progressColor: 'success',
-    subtitle: 'Crypto Website',
+    // subtitle: 'Crypto Website',
     img: htmlLabel
   },
   {
@@ -83,18 +83,30 @@ const projectsArr = [
     hours: '88:19h',
     totalTasks: '214/627',
     progressColor: 'success',
-    subtitle: 'Vuejs',
+    // subtitle: 'Vuejs',
     // title: 'Vue Admin template',
     img: vueLabel
   }
 ]
 
+
+// getQuery("courses", "/Course/CourseList");
+// const { data, isError, isLoading } = useQuery({
+//   queryKey: ["courses"],
+// });
+
+
+// if (isLoading) return <div>Loading</div>;
+// if (isError) return <div>کوفت</div>;
+// const { courseFilterDtos } = data;
+
+
 export const columns = [
   {
     sortable: true,
-    minWidth: '100px',
-    name: 'Project',
-    selector: row => row.fName,
+    minWidth: '130px',
+    name: 'نام دوره',
+    selector: row => row.title,
     cell: row => {
       return (
         <div className='d-flex justify-content-left align-items-center'>
@@ -103,47 +115,41 @@ export const columns = [
           </div>
           <div className='d-flex flex-column'>
             <span className='text-truncate fw-bolder'>{row.title}</span>
-            <small className='text-muted'>{row.subtitle}</small>
           </div>
         </div>
       )
     }
   },
   {
-    name: 'Total Tasks',
+    name: ' تاریخ رزرو دوره',
     selector: row => row.totalTasks
   },
-  // {
-  //   name: 'Progress',
-  //   selector: row => row.progress,
-  //   sortable: true,
-  //   cell: row => {
-      // return (
-      //   <div className='d-flex flex-column w-100'>
-      //     <small className='mb-1'>{`${row.progress}%`}</small>
-      //     <Progress
-      //       value={row.progress}
-      //       style={{ height: '6px' }}
-      //       className={`w-100 progress-bar-${row.progressColor}`}
-      //     />
-      //   </div>
-      // )
-  //   }
-  // },
   {
-    name: 'Hours',
+    name: 'وضعیت دوره ',
+    selector: row => row.progress,
+    sortable: true,
+    cell: row => {
+      return (
+        <div className='d-flex flex-column w-100'>
+          <small className='mb-1'>{`${row.progress}%`}</small>
+          <Progress
+            value={row.progress}
+            style={{ height: '6px' }}
+            className={`w-100 progress-bar-${row.progressColor}`}
+          />
+        </div>
+      )
+    }
+  },
+  {
+    name: ' عملیات',
     selector: row => row.hours
   }
 ]
 
 const UserProjectsList = () => {
   return (
-
- 
-
-
-    <Card style={{ width: '500px' }}>
-      {/* <CardHeader tag='h4'>User's Projects List</CardHeader> */}
+    <Card style={{ width: '620px' }}>
       <div className='react-dataTable user-view-account-projects '>
         <DataTable
           noHeader
