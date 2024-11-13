@@ -248,7 +248,9 @@ const UsersList = () => {
           <Avatar img={Pic} />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column">
-            <Link className="user_name text-truncate text-body  p-0">
+            <Link className="user_name text-truncate text-body  p-0"
+            to={`/userdetail`} 
+            >
               <span className="fw-bolder">{data?.fname}</span>
             </Link>
             <small className="text-truncate text-muted mb-0">
@@ -270,6 +272,8 @@ const UsersList = () => {
         {/* {renderClient(row)} */}
         <div className='d-flex flex-column'>
           <Link
+            to={`/userdetail`} 
+
             className='user_name text-truncate text-body p-1'
           >
             <span className='fw-bolder'>{row.userRoles ? "Teacher" : "Student"}</span>
@@ -307,7 +311,7 @@ const UsersList = () => {
       name: "وضعیت",
       minWidth: "100px",
       cell: (row) => (
-        <div className="column-action">
+        <div className="column-action" >
           <UncontrolledDropdown>
             <DropdownToggle tag="div" className="btn btn-sm">
               <MoreVertical size={14} className="cursor-pointer" />
@@ -320,9 +324,10 @@ const UsersList = () => {
                 // onClick={() => store.dispatch(getUser(row.id))}
               >
                 <FileText size={14} className="me-50" />
-                <span className="align-middle">Details</span>
+                
+                <span className="align-middle">جزئیات</span>
               </DropdownItem>
-              <DropdownItem
+              {/* <DropdownItem
                 tag="a"
                 href="/"
                 className="w-100"
@@ -330,7 +335,7 @@ const UsersList = () => {
               >
                 <Archive size={14} className="me-50" />
                 <span className="align-middle">Edit</span>
-              </DropdownItem>
+              </DropdownItem> */}
               <DropdownItem
                 tag="a"
                 href="/"
@@ -341,7 +346,7 @@ const UsersList = () => {
                 // }}
               >
                 <Trash2 size={14} className="me-50" />
-                <span className="align-middle">Delete</span>
+                <span className="align-middle">حذف</span>
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
@@ -351,8 +356,8 @@ const UsersList = () => {
   ];
 
   return (
-    <Fragment>
-      <Card>
+    <Fragment style={{ width: '600px' }}>
+      <Card >
         <CardHeader>
           <CardTitle tag="h4">فیلتر ها</CardTitle>
         </CardHeader>

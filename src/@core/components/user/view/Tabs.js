@@ -7,6 +7,8 @@ import { Nav, NavItem, NavLink } from 'reactstrap';
 // ** Icons Imports
 import { User, Lock, Bookmark, Bell } from 'react-feather';
 import UserProjectsList from './UserProjectsList';
+import UsersList from '../../comments/list/Table';
+import Connections from './Connections';
 
 const UserTabs = () => {
   const [active, setActive] = useState('1');
@@ -45,12 +47,12 @@ const UserTabs = () => {
             <span className="fw-bold">سایر اطلاعات کاربر</span>
           </NavLink>
         </NavItem>
-        <NavItem>
+        {/* <NavItem>
           <NavLink active={active === '5'} onClick={() => toggle('5')}>
             <Bell className="font-medium-3 me-50" />
-            <span className="fw-bold">سایر  </span>
+            <span className="fw-bold">ارتباط</span>
           </NavLink>
-        </NavItem>
+        </NavItem> */}
       </Nav>
 
       {/* محتوای تب دوره‌ها */}
@@ -64,6 +66,22 @@ const UserTabs = () => {
           <UserProjectsList />
         </div>
       )}
+           {active === '3' && (
+        <div style={{ position: 'absolute', top: '157px', right: '350px', width: '100%' }}>
+          <UsersList />
+        </div>
+      )}
+         {active === '4' && (
+        <div style={{ position: 'absolute', top: '157px', right: '350px', width: '100%' }}>
+          <Connections />
+        </div>
+      )}
+       {/* {active === '4' && (
+        <div style={{ position: 'absolute', top: '157px', right: '350px', width: '100%' }}>
+       
+
+        </div>
+      )} */}
     </Fragment>
   );
 };

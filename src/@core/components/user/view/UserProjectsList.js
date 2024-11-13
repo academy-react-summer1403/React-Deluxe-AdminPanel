@@ -90,6 +90,15 @@ const projectsArr = [
 ]
 
 
+// getQuery("courses", "/Course/CourseList");
+// const { data, isError, isLoading } = useQuery({
+//   queryKey: ["courses"],
+// });
+
+
+// if (isLoading) return <div>Loading</div>;
+// if (isError) return <div>کوفت</div>;
+// const { courseFilterDtos } = data;
 
 
 export const columns = [
@@ -97,7 +106,7 @@ export const columns = [
     sortable: true,
     minWidth: '130px',
     name: 'نام دوره',
-    selector: row => row.fName,
+    selector: row => row.title,
     cell: row => {
       return (
         <div className='d-flex justify-content-left align-items-center'>
@@ -106,18 +115,17 @@ export const columns = [
           </div>
           <div className='d-flex flex-column'>
             <span className='text-truncate fw-bolder'>{row.title}</span>
-            <small className='text-muted'>{row.subtitle}</small>
           </div>
         </div>
       )
     }
   },
   {
-    name: 'توضیحات دوره',
+    name: ' تاریخ رزرو دوره',
     selector: row => row.totalTasks
   },
   {
-    name: 'درصدتکمیل پروفایل',
+    name: 'وضعیت دوره ',
     selector: row => row.progress,
     sortable: true,
     cell: row => {
@@ -134,19 +142,14 @@ export const columns = [
     }
   },
   {
-    name: 'تاریخ آخرین بروزرسانی',
+    name: ' عملیات',
     selector: row => row.hours
   }
 ]
 
 const UserProjectsList = () => {
   return (
-
- 
-
-
     <Card style={{ width: '620px' }}>
-      {/* <CardHeader tag='h4'>User's Projects List</CardHeader> */}
       <div className='react-dataTable user-view-account-projects '>
         <DataTable
           noHeader
