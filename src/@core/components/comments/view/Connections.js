@@ -55,57 +55,96 @@ const connectedAccounts = [
 const socialAccounts = [
   {
     linked: false,
-    title: 'درباره کاربر',
+    title: 'Facebook',
     logo: facebookIcon
   },
   {
     linked: true,
-    title: 'آدرس محل سکونت',
+    title: 'Twitter',
     url: 'https://twitter.com/pixinvent',
     logo: twitterIcon
   },
   {
     linked: true,
-    title: 'تاریخ تولد',
+    title: 'Linkedin',
     url: 'https://www.linkedin.com/company/pixinvent/',
     logo: linkedinIcon
   },
   {
     linked: false,
-    title: 'آی دی کاربر',
+    title: 'Dribbble',
     logo: dribbbleIcon
   },
   {
     linked: false,
-    title: 'ایمیل بازبابی',
+    title: 'Behance',
     logo: behanceIcon
   }
 ]
 
-const Connections = () => {
+const connections = () => {
   return (
     <Fragment>
-      <Card style={{ width: '620px' }}>
+      <Card>
         <CardBody>
-          <CardTitle className='mb-75'>سایر اطلاعات کاربری</CardTitle>
+          <CardTitle className='mb-75'>Connected accounts</CardTitle>
+          <p>Display content from your connected accounts on your site</p>
+          {connectedAccounts.map((item, index) => {
+            return (
+              <div key={index} className='d-flex mt-2'>
+                <div className='flex-shrink-0'>
+                  <img className='me-1' src={item.logo} alt={item.title} height='38' width='38' />
+                </div>
+                <div className='d-flex align-item-center justify-content-between flex-grow-1'>
+                  <div className='me-1'>
+                    <p className='fw-bolder mb-0'>{item.title}</p>
+                    <span>{item.subtitle}</span>
+                  </div>
+                  <div className='mt-50 mt-sm-0'>
+                    <div className='form-switch'>
+                      <Input type='switch' defaultChecked={item.checked} id={`account-${item.title}`} />
+                      <Label className='form-check-label' for={`account-${item.title}`}>
+                        <span className='switch-icon-left'>
+                          <Check size={14} />
+                        </span>
+                        <span className='switch-icon-right'>
+                          <X size={14} />
+                        </span>
+                      </Label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )
+          })}
+        </CardBody>
+      </Card>
+      <Card>
+        <CardBody>
+          <CardTitle className='mb-75'>Social accounts</CardTitle>
+          <p>Display content from social accounts on your site</p>
           {socialAccounts.map((item, index) => {
             return (
               <div key={index} className='d-flex mt-2'>
                 <div className='flex-shrink-0'>
-                  <img className='me-1' src={item.logo} height='38' width='38' />
+                  <img className='me-1' src={item.logo} alt={item.title} height='38' width='38' />
                 </div>
                 <div className='d-flex align-item-center justify-content-between flex-grow-1'>
                   <div className='me-1'>
                     <p className='fw-bolder mb-0'>{item.title}</p>
                     {item.linked ? (
                       <a href={item.url} target='_blank'>
-                        ghonche.ataee@gmail.com
+                        @pixinvent
                       </a>
                     ) : (
-                      <span>member of react-deluxe developer</span>
+                      <span>Not Connected</span>
                     )}
                   </div>
-               
+                  <div className='mt-50 mt-sm-0'>
+                    <Button outline className='btn-icon'>
+                      {item.linked ? <X className='font-medium-3' /> : <Link className='font-medium-3' />}
+                    </Button>
+                  </div>
                 </div>
               </div>
             )
@@ -116,4 +155,4 @@ const Connections = () => {
   )
 }
 
-export default Connections
+export default connections

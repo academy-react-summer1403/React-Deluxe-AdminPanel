@@ -60,7 +60,9 @@ import { Link } from "react-router-dom";
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
 import { useQuery } from "@tanstack/react-query";
 const UsersList = () => {
-
+  // ** Store Vars
+  // const dispatch = useDispatch()
+  // const store = useSelector(state => state.users)
 
   // ** States
   const [sort, setSort] = useState("desc");
@@ -77,22 +79,19 @@ const UsersList = () => {
     value: "",
     label: "انتخاب کنید ...",
   });
-  const [currentStatus, setCurrentStatus] = useState({
-    value: "",
-    label: "انتخاب کنید ...",
-    number: 0,
-  });
 
-  getQuery("users", "/User/UserMannage");
+  getQuery("comments", "/Course/CommentManagment");
   const { data, isError, isLoading } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["comments"],
   });
 
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>کوفت</div>;
-
+ 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+
+  
 
   // ** User filter options
   const roleOptions = [
@@ -235,83 +234,83 @@ const UsersList = () => {
     );
   };
 
+  const Data = [
+    {
+      fname: "ghonche",
+      lname: "ataee",
+      Email: "ghonche.ataee@gmail.com",
+      teacher: "shayan",
+    },
+    {
+      fname: "ghonche",
+      lname: "ataee",
+      Email: "ghonche.ataee@gmail.com",
+      teacher: "shayan",
+    },
+    {
+      fname: "ghonche",
+      lname: "ataee",
+      Email: "ghonche.ataee@gmail.com",
+      teacher: "shayan",
+    },
+    {
+      fname: "ghonche",
+      lname: "ataee",
+      Email: "ghonche.ataee@gmail.com",
+      teacher: "shayan",
+    },
+  ];
 
   const column = [
     {
-      name: "نام کاربر",
+      name: " کاربر",
       sortable: true,
       minWidth: "300px",
-      sortField: "gmail",
+      sortField: "title",
       // selector: (data) => data?.fullName,
       cell: (data) => (
-        <div className="d-flex justify-content-left align-items-center gap-1">
+        <div className="d-flex justify-content-left align-items-center">
           <Avatar img={Pic} />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column">
-            <Link className="user_name text-truncate text-body  p-0"
-            to={`/userdetail`} 
-            >
-              <span className="fw-bolder">{data?.fname}</span>
+            <Link className="user_name text-truncate text-body  p-0">
+              <span className="fw-bolder">{data?.userFullName}</span>
             </Link>
-            <small className="text-truncate text-muted mb-0">
-              {data?.gmail}
-            </small>
+          
           </div>
         </div>
       ),
     },
-    {
-    name: 'نقش',
-    sortable: true,
-    minWidth: '172px',
-    sortField: 'role',
-    // selector: data => data?.userRoles,
-    cell: row => (
-      <div className='d-flex justify-content-left align-items-center'>
-        {/* <Avatar img={Pic2}/> */}
-        {/* {renderClient(row)} */}
-        <div className='d-flex flex-column'>
-          <Link
-            to={`/userdetail`} 
 
-            className='user_name text-truncate text-body p-1'
-          >
-            <span className='fw-bolder'>{row.userRoles ? "Teacher" : "Student"}</span>
-          </Link>
-          {/* <small className='text-truncate text-muted mb-0'>{row.Email}</small> */}
-        </div>
-      </div>)
-    // cell: row => renderRole(row)
-  },
     {
-      name: " شماره تماس",
+      name: " عنوان کامنت",
       sortable: true,
       minWidth: "172px",
       sortField: "typeName",
-      selector: (row) => row.phoneNumber,
+      selector: (row) => row.courseTitle,
       // cell: row => renderRole(row)
     },
     {
-      name: "درصد تکمیل پروفایل",
-      sortable: true,
-      minWidth: "162px",
-      sortField: "role",
-      selector: (row) => row.profileCompletionPercentage,
-      // cell: row => renderRole(row)
-    },
-    {
-      name: "جنسیت",
+      name: "نمایش کامنت",
       sortable: true,
       minWidth: "172px",
       sortField: "role",
-      selector: (row) => <div> {row.active ? "Female" : "Male"} </div>
+      selector: (row) => row.describe,
       // cell: row => renderRole(row)
     },
     {
       name: "وضعیت",
+      sortable: true,
+      minWidth: "172px",
+      sortField: "accept",
+      selector: (row) =><div> {row.accept ? "تایید شده" : "تایید نشده"}</div>
+      // cell: row => renderRole(row)
+    },
+    {
+      name: "اقدام",
       minWidth: "100px",
       cell: (row) => (
-        <div className="column-action" >
+        <div className="column-action">
           <UncontrolledDropdown>
             <DropdownToggle tag="div" className="btn btn-sm">
               <MoreVertical size={14} className="cursor-pointer" />
@@ -324,10 +323,9 @@ const UsersList = () => {
                 // onClick={() => store.dispatch(getUser(row.id))}
               >
                 <FileText size={14} className="me-50" />
-                
-                <span className="align-middle">جزئیات</span>
+                <span className="align-middle">Details</span>
               </DropdownItem>
-              {/* <DropdownItem
+              <DropdownItem
                 tag="a"
                 href="/"
                 className="w-100"
@@ -335,7 +333,7 @@ const UsersList = () => {
               >
                 <Archive size={14} className="me-50" />
                 <span className="align-middle">Edit</span>
-              </DropdownItem> */}
+              </DropdownItem>
               <DropdownItem
                 tag="a"
                 href="/"
@@ -346,7 +344,7 @@ const UsersList = () => {
                 // }}
               >
                 <Trash2 size={14} className="me-50" />
-                <span className="align-middle">حذف</span>
+                <span className="align-middle">Delete</span>
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>
@@ -356,15 +354,13 @@ const UsersList = () => {
   ];
 
   return (
-    <Fragment style={{ width: '600px' }}>
-      <Card >
-        <CardHeader>
-          <CardTitle tag="h4">فیلتر ها</CardTitle>
-        </CardHeader>
+    <Fragment>
+      <Card>
+      
         <CardBody>
           <Row>
             <Col md="4">
-              <Label for="role-select">نقش</Label>
+              <Label for="role-select">وضعیت</Label>
               <Select
                 isClearable={false}
                 value={currentRole}
@@ -415,32 +411,7 @@ const UsersList = () => {
                 }}
               />
             </Col>
-            <Col md="4">
-              <Label for="status-select">مرتب سازی</Label>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className="react-select"
-                classNamePrefix="select"
-                options={statusOptions}
-                value={currentStatus}
-                onChange={(data) => {
-                  setCurrentStatus(data);
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      page: currentPage,
-                      status: data.value,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: currentPlan.value,
-                    })
-                  );
-                }}
-              />
-            </Col>
+           
           </Row>
         </CardBody>
       </Card>
@@ -448,47 +419,49 @@ const UsersList = () => {
       <Card className="overflow-hidden">
         <Row className="ltr">
           <Col xl="6" className="d-flex align-items-center p-0">
-          <div className="d-flex align-items-center w-100">
-  <label htmlFor="rows-per-page" style={{ marginRight: "25px" }}>نمایش</label>
-  <Input
-    className="mx-50"
-    type="select"
-    id="rows-per-page"
-    value={rowsPerPage}
-    onChange={handlePerPage}
-    style={{ width: "5rem" }}
-  >
-    <option value="10">10</option>
-    <option value="25">25</option>
-    <option value="50">50</option>
-  </Input>
-</div>
-
+            <div className="d-flex align-items-center w-100">
+              <label htmlFor="rows-per-page" style={{ marginRight: "20px" }}>نمایش</label>
+              <Input
+                className="mx-50"
+                type="select"
+                id="rows-per-page"
+                value={rowsPerPage}
+                onChange={handlePerPage}
+                style={{ width: "5rem" }}
+              >
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </Input>
+            </div>
           </Col>
           <Col
             xl="6"
             className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
           >
-            <div className="d-flex align-items-center mb-sm-0 ">
+            <div className="d-flex align-items-center mb-sm-0 mb-1 me-1">
+         
               <Input
                 id="search-invoice"
-                className=" w-100"
+                className="ms-50 w-100"
                 type="text"
-                placeholder="...جستجو"
+                placeholder="جستجو"
+
                 value={searchTerm}
                 onChange={(e) => handleFilter(e.target.value)}
               />
-            </div>
-            <Button
+                 <Button
                 className="add-new-user"
                 color="primary"
                 onClick={toggleSidebar}
               >
                 جستجو
               </Button>
+            </div>
 
             <div className="d-flex align-items-center table-header-actions">
               <UncontrolledDropdown className="me-1">
+          
                 <DropdownMenu>
                   <DropdownItem className="w-100">
                     <Printer className="font-small-4 me-50" />
@@ -515,14 +488,8 @@ const UsersList = () => {
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-          
-              <Button
-                className="add-new-user"
-                color="primary"
-                onClick={toggleSidebar}
-              >
-                افزودن کاربر جدید
-              </Button>
+
+           
             </div>
           </Col>
         </Row>
@@ -539,7 +506,7 @@ const UsersList = () => {
             // sortIcon={<ChevronDown />}
             className="react-dataTable"
             // paginationComponent={CustomPagination}
-            data={data?.listUser}
+            data={data?.comments}
             // subHeaderComponent={
             //   <CustomHeader
             //     store={store}

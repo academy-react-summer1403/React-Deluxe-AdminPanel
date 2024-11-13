@@ -13,14 +13,23 @@ import { User, UserPlus, UserCheck, UserX } from 'react-feather'
 // ** Styles
 import '@styles/react/apps/app-users.scss'
 
+
+
+
+
+
+
 const UsersList = () => {
+
+
+
   return ( 
     <div className='app-user-list'>
       <Row>
         <Col lg='3' sm='6'>
           <StatsHorizontal
             color='primary'
-            statTitle='Total Users'
+            statTitle='کل کاربران'
             icon={<User size={20} />}
             renderStats={<h3 className='fw-bolder mb-75'>21,459</h3>}
           />
@@ -28,7 +37,7 @@ const UsersList = () => {
         <Col lg='3' sm='6'>
           <StatsHorizontal
             color='danger'
-            statTitle='Paid Users'
+            statTitle='ادمین ها'
             icon={<UserPlus size={20} />}
             renderStats={<h3 className='fw-bolder mb-75'>4,567</h3>}
           />
@@ -36,7 +45,7 @@ const UsersList = () => {
         <Col lg='3' sm='6'>
           <StatsHorizontal
             color='success'
-            statTitle='Active Users'
+            statTitle='اساتید'
             icon={<UserCheck size={20} />}
             renderStats={<h3 className='fw-bolder mb-75'>19,860</h3>}
           />
@@ -44,7 +53,7 @@ const UsersList = () => {
         <Col lg='3' sm='6'>
           <StatsHorizontal
             color='warning'
-            statTitle='Pending Users'
+            statTitle='دانشجویان'
             icon={<UserX size={20} />}
             renderStats={<h3 className='fw-bolder mb-75'>237</h3>}
           />

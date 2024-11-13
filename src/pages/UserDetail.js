@@ -1,10 +1,13 @@
-import { Card, CardHeader, CardBody, CardTitle, CardText } from "reactstrap";
-import RoleCards from "../@core/components/roles-permissions/roles/RoleCards";
-import { Fragment } from "react";
-import UsersList from "../@core/components/user/list";
+import UserInfoCard from "../@core/components/user/view/UserInfoCard";
+import UserTabs from "../@core/components/user/view/Tabs";
 
 const UserDetail = () => {
-  return <div>یوزر</div>;
+  return (
+    <div className="d-flex justify-content-between gap-3">
+      <UserInfoCard />
+      <UserTabs />
+    </div>
+  )
 };
 
 export default UserDetail;

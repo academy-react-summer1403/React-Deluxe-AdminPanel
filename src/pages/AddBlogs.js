@@ -1,7 +1,14 @@
-import React from "react";
+import React, { Fragment } from "react";
+import MultipleColumnForm  from "../@core/components/addNewBlogs/form-layouts/MultipleColumnForm"
 
-const AddCourse = () => {
-  return <div>موز</div>;
+
+const AddBlogs = () => {
+  return (
+    <Fragment>
+      <MultipleColumnForm />
+  </Fragment>
+  
+  )
 };
 
-export default AddCourse;
+export default AddBlogs;

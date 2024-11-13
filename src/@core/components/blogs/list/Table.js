@@ -12,9 +12,6 @@ import Sidebar from "./Sidebar";
 // ** Table Columns
 import { columns } from "./columns";
 
-// ** Store & Actions
-// import { getAllData, getData } from '../store'
-// import { useDispatch, useSelector } from 'react-redux'
 
 // ** Third Party Components
 import Select from "react-select";
@@ -57,135 +54,10 @@ import {
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { Link } from "react-router-dom";
-
-// ** Table Header
-// const CustomHeader = ({ store, toggleSidebar, handlePerPage, rowsPerPage, handleFilter, searchTerm }) => {
-//   // ** Converts table to CSV
-//   function convertArrayOfObjectsToCSV(array) {
-//     let result
-
-//     const columnDelimiter = ','
-//     const lineDelimiter = '\n'
-//     const keys = Object.keys(store.data[0])
-
-//     result = ''
-//     result += keys.join(columnDelimiter)
-//     result += lineDelimiter
-
-//     array.forEach(item => {
-//       let ctr = 0
-//       keys.forEach(key => {
-//         if (ctr > 0) result += columnDelimiter
-
-//         result += item[key]
-
-//         ctr++
-//       })
-//       result += lineDelimiter
-//     })
-
-//     return result
-//   }
-
-//   // ** Downloads CSV
-//   function downloadCSV(array) {
-//     const link = document.createElement('a')
-//     let csv = convertArrayOfObjectsToCSV(array)
-//     if (csv === null) return
-
-//     const filename = 'export.csv'
-
-//     if (!csv.match(/^data:text\/csv/i)) {
-//       csv = `data:text/csv;charset=utf-8,${csv}`
-//     }
-
-//     link.setAttribute('href', encodeURI(csv))
-//     link.setAttribute('download', filename)
-//     link.click()
-//   }
-//   return (
-//     <div className='invoice-list-table-header w-100 me-1 ms-50 mt-2 mb-75'>
-//       <Row>
-//         <Col xl='6' className='d-flex align-items-center p-0'>
-//           <div className='d-flex align-items-center w-100'>
-//             <label htmlFor='rows-per-page'>Show</label>
-//             <Input
-//               className='mx-50'
-//               type='select'
-//               id='rows-per-page'
-//               value={rowsPerPage}
-//               onChange={handlePerPage}
-//               style={{ width: '5rem' }}
-//             >
-//               <option value='10'>10</option>
-//               <option value='25'>25</option>
-//               <option value='50'>50</option>
-//             </Input>
-//             <label htmlFor='rows-per-page'>Entries</label>
-//           </div>
-//         </Col>
-//         <Col
-//           xl='6'
-//           className='d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1'
-//         >
-//           <div className='d-flex align-items-center mb-sm-0 mb-1 me-1'>
-//             <label className='mb-0' htmlFor='search-invoice'>
-//               Search:
-//             </label>
-//             <Input
-//               id='search-invoice'
-//               className='ms-50 w-100'
-//               type='text'
-//               value={searchTerm}
-//               onChange={e => handleFilter(e.target.value)}
-//             />
-//           </div>
-
-//           <div className='d-flex align-items-center table-header-actions'>
-//             <UncontrolledDropdown className='me-1'>
-//               <DropdownToggle color='secondary' caret outline>
-//                 <Share className='font-small-4 me-50' />
-//                 <span className='align-middle'>Export</span>
-//               </DropdownToggle>
-//               <DropdownMenu>
-//                 <DropdownItem className='w-100'>
-//                   <Printer className='font-small-4 me-50' />
-//                   <span className='align-middle'>Print</span>
-//                 </DropdownItem>
-//                 <DropdownItem className='w-100' onClick={() => downloadCSV(store.data)}>
-//                   <FileText className='font-small-4 me-50' />
-//                   <span className='align-middle'>CSV</span>
-//                 </DropdownItem>
-//                 <DropdownItem className='w-100'>
-//                   <Grid className='font-small-4 me-50' />
-//                   <span className='align-middle'>Excel</span>
-//                 </DropdownItem>
-//                 <DropdownItem className='w-100'>
-//                   <File className='font-small-4 me-50' />
-//                   <span className='align-middle'>PDF</span>
-//                 </DropdownItem>
-//                 <DropdownItem className='w-100'>
-//                   <Copy className='font-small-4 me-50' />
-//                   <span className='align-middle'>Copy</span>
-//                 </DropdownItem>
-//               </DropdownMenu>
-//             </UncontrolledDropdown>
-
-//             <Button className='add-new-user' color='primary' onClick={toggleSidebar}>
-//               Add New User
-//             </Button>
-//           </div>
-//         </Col>
-//       </Row>
-//     </div>
-//   )
-// }
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
 import { useQuery } from "@tanstack/react-query";
 const UsersList = () => {
-  // ** Store Vars
-  // const dispatch = useDispatch()
-  // const store = useSelector(state => state.users)
+
 
   // ** States
   const [sort, setSort] = useState("desc");
@@ -391,15 +263,15 @@ const UsersList = () => {
     {
       name: "نویسنده",
       sortable: true,
-      minWidth: "300px",
+      minWidth: "130px",
       sortField: "title",
       // selector: (data) => data?.fullName,
       cell: (data) => (
-        <div className="d-flex justify-content-left align-items-center">
+        <div className="d-flex justify-content-left align-items-center gap-1 ">
           <Avatar img={Pic} />
           {/* {renderClient(row)} */}
-          <div className="d-flex flex-column">
-            <Link className="user_name text-truncate text-body  p-0">
+          <div className="d-flex flex-column ">
+            <Link className="user_name text-truncate text-body  p-0 ">
               <span className="fw-bolder">{data?.addUserFullName}</span>
             </Link>
            
@@ -411,28 +283,28 @@ const UsersList = () => {
     {
       name: " عنوان خبر",
       sortable: true,
-      minWidth: "172px",
+      minWidth: "130px",
       sortField: "typeName",
       selector: (row) => row.miniDescribe,
     },
     {
       name: "دسته بندی خبر",
       sortable: true,
-      minWidth: "172px",
+      minWidth: "130px",
       sortField: "role",
       selector: (row) => row.title,
     },
     {
       name: "توضیحات کوتاه",
       sortable: true,
-      minWidth: "172px",
+      minWidth: "130px",
       sortField: "role",
       selector: (row) => row.miniDescribe,
     },
     {
       name: " وضعیت",
       sortable: true,
-      minWidth: "172px",
+      minWidth: "152px",
       sortField: "role",
       selector: (row) => row.isActive,
     },
@@ -484,20 +356,18 @@ const UsersList = () => {
   ];
 
   return (
-    <Fragment>
-     
-
-      <Card className="overflow-hidden ">
-        <Row className="ltr">
+    <Fragment >
+      <Card className="overflow-hidden "    >
+        <Row className="ltr mt-2"  >
           <Col xl="6" className="d-flex align-items-center p-0">
-            <div className="d-flex align-items-center w-300">
+            <div className="d-flex align-items-center w-300  ml-20 "  >
               <Input
-                className="mx-50 "
+                className="mx-50 " 
                 type="select"
                 id="rows-per-page"
                 value={rowsPerPage}
                 onChange={handlePerPage}
-                style={{ width: "20rem" }}
+                style={{ width: "20rem"}}
               >
                 <option value="10">فعال</option>
                 <option value="25">25</option>
@@ -519,7 +389,16 @@ const UsersList = () => {
                 placeholder="جستجو"
                 onChange={(e) => handleFilter(e.target.value)}
               />
+                
+            <Button
+                className="add-new-user"
+                color="primary"
+                onClick={toggleSidebar}
+              >
+                جستجو
+              </Button>
             </div>
+          
 
             <div className="d-flex align-items-center table-header-actions">
               <UncontrolledDropdown className="me-1">
@@ -551,17 +430,10 @@ const UsersList = () => {
                 </DropdownMenu>
               </UncontrolledDropdown>
 
-              <Button
-                className="add-new-user"
-                color="primary"
-                onClick={toggleSidebar}
-              >
-                جستجو
-              </Button>
             </div>
           </Col>
         </Row>
-        <div className="react-dataTable ">
+        <div className="react-dataTable mt-5">
           <DataTable
             noHeader
             // subHeader

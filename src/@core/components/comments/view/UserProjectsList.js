@@ -17,10 +17,6 @@ import sketchLabel from '@src/assets/images/icons/brands/sketch-label.png'
 
 // ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
-import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
-import { useQuery } from "@tanstack/react-query";
-
-
 
 const projectsArr = [
   {
@@ -28,8 +24,8 @@ const projectsArr = [
     hours: '210:30h',
     progressColor: 'info',
     totalTasks: '233/240',
-    // subtitle: 'React Project',
-    title: 'BGC',
+    subtitle: 'React Project',
+    title: 'BGC eCommerce App',
     img: reactLabel
   },
   {
@@ -37,8 +33,8 @@ const projectsArr = [
     progress: 15,
     totalTasks: '9/50',
     progressColor: 'danger',
-    // subtitle: 'UI/UX Project',
-    title: 'Falcon',
+    subtitle: 'UI/UX Project',
+    title: 'Falcon Logo Design',
     img: xdLabel
   },
   {
@@ -46,8 +42,8 @@ const projectsArr = [
     hours: '129:45h',
     totalTasks: '100/190',
     progressColor: 'success',
-    // subtitle: 'Vuejs Project',
-    title: 'Dashboard',
+    subtitle: 'Vuejs Project',
+    title: 'Dashboard Design',
     img: vueLabel
   },
   {
@@ -55,8 +51,8 @@ const projectsArr = [
     progress: 49,
     totalTasks: '12/86',
     progressColor: 'warning',
-    // subtitle: 'iPhone Project',
-    title: 'Foodista',
+    subtitle: 'iPhone Project',
+    title: 'Foodista mobile app',
     img: sketchLabel
   },
 
@@ -65,17 +61,17 @@ const projectsArr = [
     hours: '67:10h',
     totalTasks: '234/378',
     progressColor: 'info',
-    // subtitle: 'React Project',
-    title: 'Doj',
+    subtitle: 'React Project',
+    title: 'Dojo React Project',
     img: reactLabel
   },
   {
     progress: 81,
     hours: '108:39h',
     totalTasks: '264/537',
-    title: 'HTML',
+    title: 'HTML Project',
     progressColor: 'success',
-    // subtitle: 'Crypto Website',
+    subtitle: 'Crypto Website',
     img: htmlLabel
   },
   {
@@ -83,49 +79,38 @@ const projectsArr = [
     hours: '88:19h',
     totalTasks: '214/627',
     progressColor: 'success',
-    // subtitle: 'Vuejs',
-    // title: 'Vue Admin template',
+    subtitle: 'Vuejs Project',
+    title: 'Vue Admin template',
     img: vueLabel
   }
 ]
 
-
-// getQuery("courses", "/Course/CourseList");
-// const { data, isError, isLoading } = useQuery({
-//   queryKey: ["courses"],
-// });
-
-
-// if (isLoading) return <div>Loading</div>;
-// if (isError) return <div>کوفت</div>;
-// const { courseFilterDtos } = data;
-
-
 export const columns = [
   {
     sortable: true,
-    minWidth: '130px',
-    name: 'نام دوره',
+    minWidth: '300px',
+    name: 'Project',
     selector: row => row.title,
     cell: row => {
       return (
         <div className='d-flex justify-content-left align-items-center'>
           <div className='avatar-wrapper'>
-            {/* <Avatar className='me-1' img={row.img} alt={row.title} imgWidth='32' /> */}
+            <Avatar className='me-1' img={row.img} alt={row.title} imgWidth='32' />
           </div>
           <div className='d-flex flex-column'>
             <span className='text-truncate fw-bolder'>{row.title}</span>
+            <small className='text-muted'>{row.subtitle}</small>
           </div>
         </div>
       )
     }
   },
   {
-    name: ' تاریخ رزرو دوره',
+    name: 'Total Tasks',
     selector: row => row.totalTasks
   },
   {
-    name: 'وضعیت دوره ',
+    name: 'Progress',
     selector: row => row.progress,
     sortable: true,
     cell: row => {
@@ -142,15 +127,16 @@ export const columns = [
     }
   },
   {
-    name: ' عملیات',
+    name: 'Hours',
     selector: row => row.hours
   }
 ]
 
 const UserProjectsList = () => {
   return (
-    <Card style={{ width: '620px' }}>
-      <div className='react-dataTable user-view-account-projects '>
+    <Card>
+      <CardHeader tag='h4'>User's Projects List</CardHeader>
+      <div className='react-dataTable user-view-account-projects'>
         <DataTable
           noHeader
           responsive
