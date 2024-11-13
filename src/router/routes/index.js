@@ -65,7 +65,7 @@ const Routes = [
     element: <SecondPage />,
   },
   {
-    path: "/userDetail",
+    path: "/userDetail/:id",
     element: <UserDetail />,
   },
   {

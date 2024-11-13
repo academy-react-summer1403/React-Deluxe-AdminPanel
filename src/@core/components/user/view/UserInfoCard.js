@@ -1,5 +1,6 @@
 // ** React Imports
 import { useState, Fragment } from 'react'
+import { useParams } from "react-router-dom";
 
 // ** Reactstrap Imports
 import { Row, Col, Card, Form, CardBody, Button, Badge, Modal, Input, Label, ModalBody, ModalHeader } from 'reactstrap'
@@ -10,6 +11,8 @@ import Select from 'react-select'
 import { Check, Briefcase, X } from 'react-feather'
 import { useForm, Controller } from 'react-hook-form'
 import withReactContent from 'sweetalert2-react-content'
+import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
+import { useQuery } from "@tanstack/react-query";
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -98,6 +101,16 @@ const UserInfoCard = () => {
       }
     })
   }
+  
+const {id}= useParams ();
+
+  getQuery("userdetail", `/User/UserDetails/${id}`);
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ["userdetail"],
+  });
+
+  if (isLoading) return <div>Loading</div>;
+  if (isError) return <div>کوفت</div>;
 
   return (
     <Fragment className="d-flex justify-content-between">
@@ -149,44 +162,45 @@ const UserInfoCard = () => {
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>نام کاربری:</span>
                   <span>
-                    {/* {selectedUser.username} */}
+                    {data.fName}
+                    </span>
+                </li>
+                <li className='mb-75'>
+                  <span className='fw-bolder me-25'>  فامیلی:</span>
+                  <span className='text-capitalize'>
+                    {data.lName}
                     </span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>ایمیل:</span>
                   <span>
-                    {/* {selectedUser.email} */}
+                    {data.gmail}
                     </span>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>وضعیت:</span>
+                  <span className='fw-bolder me-25'>شماره تماس:</span>
                   <Badge className='text-capitalize' 
-                  // color={statusColors[selectedUser.status]}
+                  color={statusColors[data.phoneNumber]}
                   >
-                    {/* {selectedUser.status} */}
+                    {data.phoneNumber}
                   </Badge>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>درصد تکمیل پروفایل:</span>
-                  <span className='text-capitalize'>
-                    {/* {selectedUser.role} */}
-                    </span>
-                </li>
-                <li className='mb-75'>
-                  <span className='fw-bolder me-25'> جنسیت:</span>
+                  <span className='fw-bolder me-25'>درصد تکمیل پروفایل :</span>
                   <span>
-                    {/* {selectedUser.contact.substr(selectedUser.contact.length - 4)} */}
+                    {data.profileCompletionPercentage}
                     </span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>کدملی:</span>
                   <span>
-                    {/* {selectedUser.contact} */}
+                    {data.nationalCode}
                     </span>
                 </li>
                 <li className='mb-75'>
-                  <span className='fw-bolder me-25'>شماره موبایل:</span>
-                  <span>091111111</span>
+                  <span className='fw-bolder me-25'> توضیحات:</span>
+                  <span> {data.userAbout}
+                  </span>
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>کشور:</span>
