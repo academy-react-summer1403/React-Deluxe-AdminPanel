@@ -5,6 +5,7 @@ import Avatar from "@components/avatar";
 
 import Pic from "@src/assets/images/avatars/1.png";
 import Pic2 from "@src/assets/images/raty/star-on-2.png";
+import Logo from "@src/assets/images/logo/reactdeluxe.png";
 
 // ** Invoice List Sidebar
 import Sidebar from "./Sidebar";
@@ -414,7 +415,7 @@ const UsersList = () => {
       // selector: (data) => data?.fullName,
       cell: (data) => (
         <div className="d-flex gap-1 justify-content-left align-items-center">
-          <Avatar img={data.tumbImageAddress} />
+          <Avatar img={data.tumbImageAddress ?? Logo} />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column">
             <Link className="user_name text-truncate text-body  p-0">
@@ -606,7 +607,7 @@ const UsersList = () => {
       </Card>
 
       <Card className="overflow-hidden">
-        <Row className="ltr">
+        <Row className="ltr py-1 px-2">
           <Col xl="6" className="d-flex align-items-center p-0">
             <div className="d-flex align-items-center w-100">
               <label htmlFor="rows-per-page">Show</label>
