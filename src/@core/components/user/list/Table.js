@@ -249,7 +249,7 @@ const UsersList = () => {
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column">
             <Link className="user_name text-truncate text-body  p-0"
-            to={`/userdetail`} 
+            to={`/userdetail/${data?.id}`} 
             >
               <span className="fw-bolder">{data?.fname}</span>
             </Link>
@@ -272,7 +272,7 @@ const UsersList = () => {
         {/* {renderClient(row)} */}
         <div className='d-flex flex-column'>
           <Link
-            to={`/userdetail`} 
+            to={`/userdetail/${data?.id}`} 
 
             className='user_name text-truncate text-body p-1'
           >
@@ -283,14 +283,14 @@ const UsersList = () => {
       </div>)
     // cell: row => renderRole(row)
   },
-    {
-      name: " شماره تماس",
-      sortable: true,
-      minWidth: "172px",
-      sortField: "typeName",
-      selector: (row) => row.phoneNumber,
-      // cell: row => renderRole(row)
-    },
+    // {
+    //   name: " شماره تماس",
+    //   sortable: true,
+    //   minWidth: "172px",
+    //   sortField: "typeName",
+    //   selector: (row) => row.phoneNumber,
+    //   // cell: row => renderRole(row)
+    // },
     {
       name: "درصد تکمیل پروفایل",
       sortable: true,
