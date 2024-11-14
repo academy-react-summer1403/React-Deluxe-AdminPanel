@@ -13,9 +13,6 @@ import Sidebar from "./Sidebar";
 // ** Table Columns
 import { columns } from "./columns";
 
-// ** Store & Actions
-// import { getAllData, getData } from '../store'
-// import { useDispatch, useSelector } from 'react-redux'
 
 // ** Third Party Components
 import Select from "react-select";
@@ -90,7 +87,7 @@ const UsersList = () => {
   });
 
   if (isLoading) return <div>Loading</div>;
-  if (isError) return <div>کوفت</div>;
+  if (isError) return <div>اطلاعات دریافت نشد</div>;
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
@@ -284,14 +281,6 @@ const UsersList = () => {
       </div>)
     // cell: row => renderRole(row)
   },
-    // {
-    //   name: " شماره تماس",
-    //   sortable: true,
-    //   minWidth: "172px",
-    //   sortField: "typeName",
-    //   selector: (row) => row.phoneNumber,
-    //   // cell: row => renderRole(row)
-    // },
     {
       name: "درصد تکمیل پروفایل",
       sortable: true,
@@ -321,22 +310,13 @@ const UsersList = () => {
               <DropdownItem
                 tag={Link}
                 className="w-100"
-                to={`/apps/user/view/${row.id}`}
+                to={`/userdetail/${row.id}`}
                 onClick={() => store.dispatch(getUser(row.id))}
               >
                 <FileText size={14} className="me-50" />
                 
                 <span className="align-middle">جزئیات</span>
               </DropdownItem>
-              {/* <DropdownItem
-                tag="a"
-                href="/"
-                className="w-100"
-                // onClick={e => e.preventDefault()}
-              >
-                <Archive size={14} className="me-50" />
-                <span className="align-middle">Edit</span>
-              </DropdownItem> */}
               <DropdownItem
                 tag="a"
                 href="/"
@@ -346,7 +326,6 @@ const UsersList = () => {
                   store.dispatch(deleteUser(row.id))
                 }}
               >
-                
                 <Trash2 size={14} className="me-50" />
                 <span className="align-middle">حذف</span>
               </DropdownItem>
