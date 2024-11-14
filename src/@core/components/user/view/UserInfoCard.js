@@ -110,7 +110,7 @@ const {id}= useParams ();
   });
 
   if (isLoading) return <div>Loading</div>;
-  if (isError) return <div>کوفت</div>;
+  if (isError) return <div>اطلاعات یافت نشد</div>;
 
   return (
     <Fragment className="d-flex justify-content-between">

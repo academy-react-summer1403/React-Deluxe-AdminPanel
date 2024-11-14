@@ -325,16 +325,7 @@ const UsersList = () => {
                 // onClick={() => store.dispatch(getUser(row.id))}
               >
                 <FileText size={14} className="me-50" />
-                <span className="align-middle">Details</span>
-              </DropdownItem>
-              <DropdownItem
-                tag="a"
-                href="/"
-                className="w-100"
-                // onClick={e => e.preventDefault()}
-              >
-                <Archive size={14} className="me-50" />
-                <span className="align-middle">Edit</span>
+                <span className="align-middle">جزئیات</span>
               </DropdownItem>
               <DropdownItem
                 tag="a"
@@ -346,7 +337,7 @@ const UsersList = () => {
                 // }}
               >
                 <Trash2 size={14} className="me-50" />
-                <span className="align-middle">Delete</span>
+                <span className="align-middle">حذف</span>
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>

@@ -6,6 +6,7 @@ import Avatar from "@components/avatar";
 import Pic from "@src/assets/images/avatars/1.png";
 import Pic2 from "@src/assets/images/raty/star-on-2.png";
 
+
 // ** Invoice List Sidebar
 import Sidebar from "./Sidebar";
 
@@ -321,7 +322,7 @@ const UsersList = () => {
                 tag={Link}
                 className="w-100"
                 to={`/apps/user/view/${row.id}`}
-                // onClick={() => store.dispatch(getUser(row.id))}
+                onClick={() => store.dispatch(getUser(row.id))}
               >
                 <FileText size={14} className="me-50" />
                 
@@ -340,11 +341,12 @@ const UsersList = () => {
                 tag="a"
                 href="/"
                 className="w-100"
-                // onClick={e => {
-                //   e.preventDefault()
-                //   store.dispatch(deleteUser(row.id))
-                // }}
+                onClick={e => {
+                  e.preventDefault()
+                  store.dispatch(deleteUser(row.id))
+                }}
               >
+                
                 <Trash2 size={14} className="me-50" />
                 <span className="align-middle">حذف</span>
               </DropdownItem>

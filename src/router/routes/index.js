@@ -32,8 +32,11 @@ const CourseManage = lazy(() => import("../../pages/CourseManage"));
 
 const AddCourse = lazy(() => import("../../pages/AddCourse"));
 const BlogsManage = lazy(() => import("../../pages/BlogsManage"));
+const BlogsDetail = lazy(() => import("../../pages/BlogsDetail"));
+
 const AddBlogs = lazy(() => import("../../pages/AddBlogs"));
 const Comments = lazy(() => import("../../pages/Comments"));
+
 
 const Login = lazy(() => import("../../pages/Login"));
 const Register = lazy(() => import("../../pages/Register"));
@@ -83,6 +86,10 @@ const Routes = [
   {
     path: "/addBlogs",
     element: <AddBlogs />,
+  },
+  {
+    path: "/blogsdetail",
+    element: <BlogsDetail />,
   },
 
   {
