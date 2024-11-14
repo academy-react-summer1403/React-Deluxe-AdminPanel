@@ -44,6 +44,7 @@ const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
 const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 const UserDetail = lazy(() => import("../../pages/UserDetail"));
+const CourseDetail = lazy(() => import("../../pages/CourseDetail"));
 
 // const UserList = lazy(() => import('../../views/apps/user/list'))
 
@@ -74,6 +75,10 @@ const Routes = [
   {
     path: "/coursemanage",
     element: <CourseManage />,
+  },
+  {
+    path: "/courseDetail",
+    element: <CourseDetail />,
   },
   {
     path: "/addcourse",
