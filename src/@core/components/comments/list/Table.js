@@ -307,7 +307,7 @@ const UsersList = () => {
       // cell: row => renderRole(row)
     },
     {
-      name: "اقدام",
+      name: "اقدامات",
       minWidth: "100px",
       cell: (row) => (
         <div className="column-action">
@@ -319,20 +319,24 @@ const UsersList = () => {
               <DropdownItem
                 tag={Link}
                 className="w-100"
-                to={`/apps/user/view/${row.id}`}
+                // to={`/apps/user/view/${row.id}`}
                 // onClick={() => store.dispatch(getUser(row.id))}
               >
                 <FileText size={14} className="me-50" />
-                <span className="align-middle">Details</span>
+                <span className="align-middle">رد کردن</span>
               </DropdownItem>
+             
               <DropdownItem
                 tag="a"
                 href="/"
                 className="w-100"
-                // onClick={e => e.preventDefault()}
+                // onClick={e => {
+                //   e.preventDefault()
+                //   store.dispatch(deleteUser(row.id))
+                // }}
               >
-                <Archive size={14} className="me-50" />
-                <span className="align-middle">Edit</span>
+                <Trash2 size={14} className="me-50" />
+                <span className="align-middle">حذف</span>
               </DropdownItem>
               <DropdownItem
                 tag="a"
@@ -344,7 +348,7 @@ const UsersList = () => {
                 // }}
               >
                 <Trash2 size={14} className="me-50" />
-                <span className="align-middle">Delete</span>
+                <span className="align-middle">پاسخ</span>
               </DropdownItem>
             </DropdownMenu>
           </UncontrolledDropdown>

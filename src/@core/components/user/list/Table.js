@@ -89,6 +89,18 @@ const UsersList = () => {
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>اطلاعات دریافت نشد</div>;
 
+
+  const userdelete = async (formData) => {
+    try {
+      const res = await http.delete("/User/DeleteUser" , {
+        data: formData,
+      });
+      return res;
+    } catch (error){
+      console.log("Error in userdelete:", error);
+      throw error;
+    }
+  }
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
