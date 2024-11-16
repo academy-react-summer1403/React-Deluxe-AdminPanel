@@ -186,6 +186,7 @@ const SecurityTab = () => {
       <Card style={{ width: '620px' }}>
         <Table className='text-nowrap text-center' responsive>
           <thead>
+            
             <tr>
               <th className='text-start'>نام دوره</th>
               <th>عنوان کامنت</th>
