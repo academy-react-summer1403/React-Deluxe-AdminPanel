@@ -59,10 +59,7 @@ import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { Link } from "react-router-dom";
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
 import { useQuery } from "@tanstack/react-query";
-const UsersList = () => {
-  // ** Store Vars
-  // const dispatch = useDispatch()
-  // const store = useSelector(state => state.users)
+const Comments = () => {
 
   // ** States
   const [sort, setSort] = useState("desc");
@@ -120,36 +117,12 @@ const UsersList = () => {
 
   // ** Function in get data on page change
   const handlePagination = (page) => {
-    dispatch(
-      getData({
-        sort,
-        sortColumn,
-        q: searchTerm,
-        perPage: rowsPerPage,
-        page: page.selected + 1,
-        role: currentRole.value,
-        status: currentStatus.value,
-        currentPlan: currentPlan.value,
-      })
-    );
     setCurrentPage(page.selected + 1);
   };
 
   // ** Function in get data on rows per page
   const handlePerPage = (e) => {
     const value = parseInt(e.currentTarget.value);
-    dispatch(
-      getData({
-        sort,
-        sortColumn,
-        q: searchTerm,
-        perPage: value,
-        page: currentPage,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
-      })
-    );
     setRowsPerPage(value);
   };
 
@@ -220,46 +193,35 @@ const UsersList = () => {
   const handleSort = (column, sortDirection) => {
     setSort(sortDirection);
     setSortColumn(column.sortField);
-    dispatch(
-      getData({
-        sort,
-        sortColumn,
-        q: searchTerm,
-        page: currentPage,
-        perPage: rowsPerPage,
-        role: currentRole.value,
-        status: currentStatus.value,
-        currentPlan: currentPlan.value,
-      })
-    );
+   
   };
 
-  const Data = [
-    {
-      fname: "ghonche",
-      lname: "ataee",
-      Email: "ghonche.ataee@gmail.com",
-      teacher: "shayan",
-    },
-    {
-      fname: "ghonche",
-      lname: "ataee",
-      Email: "ghonche.ataee@gmail.com",
-      teacher: "shayan",
-    },
-    {
-      fname: "ghonche",
-      lname: "ataee",
-      Email: "ghonche.ataee@gmail.com",
-      teacher: "shayan",
-    },
-    {
-      fname: "ghonche",
-      lname: "ataee",
-      Email: "ghonche.ataee@gmail.com",
-      teacher: "shayan",
-    },
-  ];
+  // const Data = [
+  //   {
+  //     fname: "ghonche",
+  //     lname: "ataee",
+  //     Email: "ghonche.ataee@gmail.com",
+  //     teacher: "shayan",
+  //   },
+  //   {
+  //     fname: "ghonche",
+  //     lname: "ataee",
+  //     Email: "ghonche.ataee@gmail.com",
+  //     teacher: "shayan",
+  //   },
+  //   {
+  //     fname: "ghonche",
+  //     lname: "ataee",
+  //     Email: "ghonche.ataee@gmail.com",
+  //     teacher: "shayan",
+  //   },
+  //   {
+  //     fname: "ghonche",
+  //     lname: "ataee",
+  //     Email: "ghonche.ataee@gmail.com",
+  //     teacher: "shayan",
+  //   },
+  // ];
 
   const column = [
     {
@@ -530,4 +492,4 @@ const UsersList = () => {
   );
 };
 
-export default UsersList;
+export default Comments;

@@ -1,3 +1,5 @@
+
+
 // ** React Imports
 import { Fragment, useState, useEffect } from "react";
 
@@ -63,6 +65,7 @@ const UsersList = () => {
   // ** States
   const [sort, setSort] = useState("desc");
   const [searchTerm, setSearchTerm] = useState("");
+  console.log(searchTerm)
   const [currentPage, setCurrentPage] = useState(1);
   const [sortColumn, setSortColumn] = useState("id");
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -84,23 +87,50 @@ const UsersList = () => {
   getQuery("users", "/User/UserMannage");
   const { data, isError, isLoading } = useQuery({
     queryKey: ["users"],
+    queryFn: async(searchValue) => await http.get("/User/UserMannage",  { params: filters })
   });
 
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>اطلاعات دریافت نشد</div>;
 
-
-  const userdelete = async (formData) => {
-    try {
-      const res = await http.delete("/User/DeleteUser" , {
-        data: formData,
-      });
-      return res;
-    } catch (error){
-      console.log("Error in userdelete:", error);
-      throw error;
-    }
+  const handleSearch = (searchValue) => {
+    console.log(searchValue)
   }
+
+
+
+  // const { data, isError, isLoading } = useQuery({
+  //   queryKey: ["users", searchTerm, currentRole, currentPlan, currentStatus],
+  //   queryFn: async () => {
+  //     const filters = {
+  //       q: searchTerm,
+  //       role: currentRole.value,
+  //       plan: currentPlan.value,
+  //       status: currentStatus.value
+  //     };
+  //     const res = await http.get("/User/UserMannage", { params: filters });
+  //     return res.data;
+  //   }
+  // });
+
+
+
+
+
+//   const searchMutation = useMutation({
+//     mutationKey: ["Searchuser"],
+//     mutationFn:
+//   }) 
+
+// const serachBlog = async(searchValue) => {
+//   try {
+//     const res = await http.post("") 
+//   } catch (error) {
+//     console.log("error in searchuser",error)
+//     throw error
+//   }
+// }
+
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
@@ -131,56 +161,22 @@ const UsersList = () => {
 
   // ** Function in get data on page change
   const handlePagination = (page) => {
-    dispatch(
-      getData({
-        sort,
-        sortColumn,
-        q: searchTerm,
-        perPage: rowsPerPage,
-        page: page.selected + 1,
-        role: currentRole.value,
-        status: currentStatus.value,
-        currentPlan: currentPlan.value,
-      })
-    );
+  
     setCurrentPage(page.selected + 1);
   };
 
   // ** Function in get data on rows per page
   const handlePerPage = (e) => {
     const value = parseInt(e.currentTarget.value);
-    dispatch(
-      getData({
-        sort,
-        sortColumn,
-        q: searchTerm,
-        perPage: value,
-        page: currentPage,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
-      })
-    );
+  
     setRowsPerPage(value);
   };
 
   // ** Function in get data on search query change
   const handleFilter = (val) => {
     setSearchTerm(val);
-    dispatch(
-      getData({
-        sort,
-        q: val,
-        sortColumn,
-        page: currentPage,
-        perPage: rowsPerPage,
-        role: currentRole.value,
-        status: currentStatus.value,
-        currentPlan: currentPlan.value,
-      })
-    );
+   
   };
-
   // ** Custom Pagination
   const CustomPagination = () => {
     const count = Number(Math.ceil(store.total / rowsPerPage));
@@ -231,18 +227,7 @@ const UsersList = () => {
   const handleSort = (column, sortDirection) => {
     setSort(sortDirection);
     setSortColumn(column.sortField);
-    dispatch(
-      getData({
-        sort,
-        sortColumn,
-        q: searchTerm,
-        page: currentPage,
-        perPage: rowsPerPage,
-        role: currentRole.value,
-        status: currentStatus.value,
-        currentPlan: currentPlan.value,
-      })
-    );
+   
   };
 
 
@@ -288,10 +273,8 @@ const UsersList = () => {
           >
             <span className='fw-bolder'>{row.userRoles ? "Teacher" : "Student"}</span>
           </Link>
-          {/* <small className='text-truncate text-muted mb-0'>{row.Email}</small> */}
         </div>
       </div>)
-    // cell: row => renderRole(row)
   },
     {
       name: "درصد تکمیل پروفایل",
@@ -299,7 +282,6 @@ const UsersList = () => {
       minWidth: "162px",
       sortField: "role",
       selector: (row) => row.profileCompletionPercentage,
-      // cell: row => renderRole(row)
     },
     {
       name: "جنسیت",
@@ -307,7 +289,6 @@ const UsersList = () => {
       minWidth: "172px",
       sortField: "role",
       selector: (row) => <div> {row.active ? "Female" : "Male"} </div>
-      // cell: row => renderRole(row)
     },
     {
       name: "وضعیت",
@@ -367,18 +348,7 @@ const UsersList = () => {
                 theme={selectThemeColors}
                 onChange={(data) => {
                   setCurrentRole(data);
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      role: data.value,
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      status: currentStatus.value,
-                      currentPlan: currentPlan.value,
-                    })
-                  );
+                  
                 }}
               />
             </Col>
@@ -393,18 +363,7 @@ const UsersList = () => {
                 value={currentPlan}
                 onChange={(data) => {
                   setCurrentPlan(data);
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: data.value,
-                      status: currentStatus.value,
-                    })
-                  );
+                 
                 }}
               />
             </Col>
@@ -419,18 +378,7 @@ const UsersList = () => {
                 value={currentStatus}
                 onChange={(data) => {
                   setCurrentStatus(data);
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      page: currentPage,
-                      status: data.value,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: currentPlan.value,
-                    })
-                  );
+                 
                 }}
               />
             </Col>
@@ -468,14 +416,14 @@ const UsersList = () => {
                 className=" w-100"
                 type="text"
                 placeholder="...جستجو"
-                value={searchTerm}
-                onChange={(e) => handleFilter(e.target.value)}
+                // value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
             <Button
                 className="add-new-user"
                 color="primary"
-                onClick={toggleSidebar}
+                // onClick={toggleSidebar}
               >
                 جستجو
               </Button>

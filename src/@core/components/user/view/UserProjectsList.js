@@ -90,16 +90,6 @@ const projectsArr = [
 ]
 
 
-// getQuery("courses", "/Course/CourseList");
-// const { data, isError, isLoading } = useQuery({
-//   queryKey: ["courses"],
-// });
-
-
-// if (isLoading) return <div>Loading</div>;
-// if (isError) return <div>کوفت</div>;
-// const { courseFilterDtos } = data;
-
 
 export const columns = [
   {
@@ -122,32 +112,32 @@ export const columns = [
   },
   {
     name: ' تاریخ رزرو دوره',
-    selector: row => row.totalTasks
+    selector: row => row.title
   },
   {
     name: 'وضعیت دوره ',
-    selector: row => row.progress,
+    selector: row => row.title,
     sortable: true,
-    cell: row => {
-      return (
-        <div className='d-flex flex-column w-100'>
-          <small className='mb-1'>{`${row.progress}%`}</small>
-          <Progress
-            value={row.progress}
-            style={{ height: '6px' }}
-            className={`w-100 progress-bar-${row.progressColor}`}
-          />
-        </div>
-      )
-    }
-  },
+  
+    },
   {
     name: ' عملیات',
-    selector: row => row.hours
+    selector: row => row.title
   }
 ]
 
 const UserProjectsList = () => {
+  
+getQuery("courses", "/Course/CourseList");
+const { data, isError, isLoading } = useQuery({
+  queryKey: ["courses"],
+});
+
+
+if (isLoading) return <div>Loading</div>;
+if (isError) return <div>اطلاعات یافت نشد</div>;
+const { courseDtos } = data;
+
   return (
     <Card style={{ width: '620px' }}>
       <div className='react-dataTable user-view-account-projects '>

@@ -32,9 +32,8 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useForm, Controller } from 'react-hook-form'
 import { Edit, Trash, Settings, MessageSquare, ChevronRight } from 'react-feather'
 
-// ** Images
-import qrCode from '@src/assets/images/icons/qrcode.png'
-import chromeLogo from '@src/assets/images/icons/google-chrome.png'
+import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
+import { useQuery } from "@tanstack/react-query";
 
 const SignupSchema = yup.object().shape({
   password: yup.string().min(8).required(),
@@ -81,7 +80,9 @@ const AppAuthComponent = ({ setShow, setShowDetailModal }) => {
     setShow(false)
     setShowDetailModal(false)
   }
+  
 
+    
   return (
     <Fragment>
       <h1 className='text-center mb-2 pb-50'>Add Authenticator App</h1>
@@ -170,107 +171,26 @@ const SecurityTab = () => {
     setShowDetailModal(true)
   }
 
+  // getQuery("courses", "/Course/CommentManagment");
+  // const { data, isError, isLoading } = useQuery({
+  //   queryKey: ["courses"],
+  // });
+  
+  
+  // if (isLoading) return <div>Loading</div>;
+  // if (isError) return <div>اطلاعات یافت نشد</div>;
+ 
+
   return (
     <Fragment>
-      <Card>
-        <CardHeader>
-          <CardTitle tag='h4'>Change Password</CardTitle>
-        </CardHeader>
-        <CardBody>
-          <Form onSubmit={handleSubmit(onSubmit)}>
-            <Alert color='warning' className='mb-2'>
-              <h4 className='alert-heading'>Ensure that these requirements are met</h4>
-              <div className='alert-body'>Minimum 8 characters long, uppercase & symbol</div>
-            </Alert>
-            <Row>
-              <Col className='mb-2' md={6}>
-                <Controller
-                  id='password'
-                  name='password'
-                  control={control}
-                  render={({ field }) => (
-                    <InputPasswordToggle
-                      label='New Password'
-                      htmlFor='password'
-                      className='input-group-merge'
-                      invalid={errors.password && true}
-                      {...field}
-                    />
-                  )}
-                />
-                {errors.password && <FormFeedback className='d-block'>{errors.password.message}</FormFeedback>}
-              </Col>
-              <Col className='mb-2' md={6}>
-                <Controller
-                  control={control}
-                  id='confirmPassword'
-                  name='confirmPassword'
-                  render={({ field }) => (
-                    <InputPasswordToggle
-                      label='Confirm New Password'
-                      htmlFor='confirmPassword'
-                      className='input-group-merge'
-                      invalid={errors.confirmPassword && true}
-                      {...field}
-                    />
-                  )}
-                />
-                {errors.confirmPassword && (
-                  <FormFeedback className='d-block'>{errors.confirmPassword.message}</FormFeedback>
-                )}
-              </Col>
-              <Col xs={12}>
-                <Button type='submit' color='primary'>
-                  Change Password
-                </Button>
-              </Col>
-            </Row>
-          </Form>
-        </CardBody>
-      </Card>
-      <Card>
-        <CardBody>
-          <CardTitle className='mb-50'>Two-steps verification</CardTitle>
-          <span>Keep your account secure with authentication step.</span>
-          <h6 className='fw-bolder mt-2'>SMS</h6>
-          <div className='d-flex justify-content-between border-bottom mb-1 pb-1'>
-            <span>+1(968) 945-8832</span>
-            <div className='action-icons'>
-              <Link
-                to='/'
-                className='text-body'
-                onClick={e => {
-                  setShow(true)
-                  e.preventDefault()
-                }}
-              >
-                <Edit className='font-medium-3 me-1 cursor-pointer' />
-              </Link>
-              <Link to='/' className='text-body' onClick={e => e.preventDefault()}>
-                <Trash className='font-medium-3 cursor-pointer' />
-              </Link>
-            </div>
-          </div>
-          <p className='mb-0'>
-            Two-factor authentication adds an additional layer of security to your account by requiring more than just a
-            password to log in.{' '}
-            <a href='#' onClick={e => e.preventDefault()}>
-              Learn more.
-            </a>
-          </p>
-        </CardBody>
-      </Card>
-      <Card>
-        <CardHeader>
-          <CardTitle tag='h4'>Recent devices</CardTitle>
-        </CardHeader>
+      <Card style={{ width: '620px' }}>
         <Table className='text-nowrap text-center' responsive>
           <thead>
             <tr>
-              <th className='text-start'>Browser</th>
-              <th>Device</th>
-              <th>Location</th>
-              <th>Recent Activity</th>
+              <th className='text-start'>نام دوره</th>
+              <th>عنوان کامنت</th>
+              <th>متن کامنت</th>
+              <th>وضعیت</th>
             </tr>
           </thead>
           <tbody>
@@ -278,12 +198,12 @@ const SecurityTab = () => {
               return (
                 <tr key={index}>
                   <td className='text-start'>
-                    <img className='me-50' src={chromeLogo} alt={item.device} width='20' height='20' />
                     <span className='fw-bolder'>{item.browser}</span>
                   </td>
                   <td>{item.device}</td>
                   <td>{item.location}</td>
                   <td>{item.activity}</td>
+
                 </tr>
               )
             })}

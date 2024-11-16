@@ -136,8 +136,8 @@ export const columns = [
 
 const UserProjectsList = () => {
 
-  // getQuery("blogsdetail", "");
-  // const { data, isError, isLoading } = useQuery({
+  // getQuery("blogsdetail",);
+  // const { commentDtos, isError, isLoading } = useQuery({
   //   queryKey: ["blogsdetail"],
   // });
 

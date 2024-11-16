@@ -11,8 +11,8 @@ import Select from 'react-select'
 import { Check, Briefcase, X } from 'react-feather'
 import { useForm, Controller } from 'react-hook-form'
 import withReactContent from 'sweetalert2-react-content'
-// import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
-// import { useQuery } from "@tanstack/react-query";
+import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
+import { useQuery } from "@tanstack/react-query";
 
 // ** Custom Components
 import Avatar from '@components/avatar'
@@ -94,38 +94,52 @@ const UserInfoCard = ({ selectedUser }) => {
         />
       )
     // } else {
-      return (
-        <Avatar
-          initials
-          // color={selectedUser.avatarColor || 'light-primary'}
-          className='rounded mt-3 mb-2'
-          // content={selectedUser.fullName}
-          contentStyles={{
-            borderRadius: 0,
-            fontSize: 'calc(48px)',
-            width: '100%',
-            height: '100%'
-          }}
-          style={{
-            height: '110px',
-            width: '110px'
-          }}
-        />
-      )
+      // return (
+      //   <Avatar
+      //     initials
+      //     // color={selectedUser.avatarColor || 'light-primary'}
+      //     className='rounded mt-3 mb-2'
+      //     // content={selectedUser.fullName}
+      //     contentStyles={{
+      //       borderRadius: 0,
+      //       fontSize: 'calc(48px)',
+      //       width: '100%',
+      //       height: '100%'
+      //     }}
+      //     style={{
+      //       height: '110px',
+      //       width: '110px'
+      //     }}
+      //   />
+      // )
     }
   }
-
-  // const {id}= useParams ();
-
-  // getQuery("blogsdetail", "");
+  // getQuery("newsdetail", `news/${id}`);
   // const { data, isError, isLoading } = useQuery({
-  //   queryKey: ["blogsdetail"],
+  //   queryKey: ["newsdetail"],
   // });
 
   // if (isLoading) return <div>Loading</div>;
   // if (isError) return <div>اطلاعات یافت نشد</div>;
 
+  // const UserInfoCard = () => {
+  //   const { id } = useParams();
+  
+  //   if (!id) {
+  //     return <div>شناسه معتبر نیست</div>;
+  //   }
+  
+  //   const { data, isError, isLoading } = useQuery({
+  //     queryKey: ["newsdetail", id],
+  //     queryFn: () => getQuery(`news/${id}`),
+  //     onError: (error) => console.error('Error fetching data:', error),
+  //   });
+  
+  //   if (isLoading) return <div>Loading...</div>;
+  //   if (isError) return <div>اطلاعات یافت نشد</div>;
+  
   return (
+    
     <Fragment>
       <Card>
         <CardBody>
@@ -173,7 +187,7 @@ const UserInfoCard = ({ selectedUser }) => {
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>نام نویسنده:</span>
                   ییییییییییییییییییییزززززززززززززززززززز
-                  {/* <span>{selectedUser.username}</span> */}
+                  {/* <span>{data.googleTitle}</span> */}
                 </li>
                 <li className='mb-75'>
                   <span className='fw-bolder me-25'>دسته بندی :</span>

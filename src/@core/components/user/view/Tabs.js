@@ -7,8 +7,8 @@ import { Nav, NavItem, NavLink } from 'reactstrap';
 // ** Icons Imports
 import { User, Lock, Bookmark, Bell } from 'react-feather';
 import UserProjectsList from './UserProjectsList';
-import UsersList from '../../comments/list/Table';
 import Connections from './Connections';
+import SecurityTab from './SecurityTab';
 
 const UserTabs = () => {
   const [active, setActive] = useState('1');
@@ -68,7 +68,7 @@ const UserTabs = () => {
       )}
            {active === '3' && (
         <div style={{ position: 'absolute', top: '157px', right: '350px', width: '100%' }}>
-          <UsersList />
+          <SecurityTab />
         </div>
       )}
          {active === '4' && (
