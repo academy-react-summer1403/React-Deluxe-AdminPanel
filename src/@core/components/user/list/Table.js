@@ -57,8 +57,7 @@ import {
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { Link } from "react-router-dom";
-import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
-import { useQuery } from "@tanstack/react-query";
+import useUserList from "../../"
 const UsersList = () => {
 
 
@@ -84,52 +83,14 @@ const UsersList = () => {
     number: 0,
   });
 
-  getQuery("users", "/User/UserMannage");
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ["users"],
-    queryFn: async(searchValue) => await http.get("/User/UserMannage",  { params: filters })
-  });
+const {data} = useUserList()
 
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>اطلاعات دریافت نشد</div>;
 
-  const handleSearch = (searchValue) => {
-    console.log(searchValue)
-  }
 
 
 
-  // const { data, isError, isLoading } = useQuery({
-  //   queryKey: ["users", searchTerm, currentRole, currentPlan, currentStatus],
-  //   queryFn: async () => {
-  //     const filters = {
-  //       q: searchTerm,
-  //       role: currentRole.value,
-  //       plan: currentPlan.value,
-  //       status: currentStatus.value
-  //     };
-  //     const res = await http.get("/User/UserMannage", { params: filters });
-  //     return res.data;
-  //   }
-  // });
-
-
-
-
-
-//   const searchMutation = useMutation({
-//     mutationKey: ["Searchuser"],
-//     mutationFn:
-//   }) 
-
-// const serachBlog = async(searchValue) => {
-//   try {
-//     const res = await http.post("") 
-//   } catch (error) {
-//     console.log("error in searchuser",error)
-//     throw error
-//   }
-// }
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);

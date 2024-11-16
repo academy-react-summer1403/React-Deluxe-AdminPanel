@@ -61,7 +61,39 @@ const languageOptions = [
 
 const MySwal = withReactContent(Swal)
 
-
+ // ** render user img
+//  const renderUserImg = () => {
+//   if (selectedUser !== null && selectedUser.avatar.length) {
+//     return (
+//       <img
+//         height='110'
+//         width='110'
+//         alt='user-avatar'
+//         src={selectedUser.avatar}
+//         className='img-fluid rounded mt-3 mb-2'
+//       />
+//     )
+//   } else {
+//     return (
+//       <Avatar
+//         initials
+//         color={selectedUser.avatarColor || 'light-primary'}
+//         className='rounded mt-3 mb-2'
+//         content={selectedUser.fullName}
+//         contentStyles={{
+//           borderRadius: 0,
+//           fontSize: 'calc(48px)',
+//           width: '100%',
+//           height: '100%'
+//         }}
+//         style={{
+//           height: '110px',
+//           width: '110px'
+//         }}
+//       />
+//     )
+//   }
+// }
 const UserInfoCard = () => {
   // ** State
   const [show, setShow] = useState(false)
@@ -119,6 +151,21 @@ const {id}= useParams ();
           <div className='user-avatar-section d-flex' >
             <div className='d-flex align-items-center flex-column'>
               {/* {renderUserImg()} */}
+                <div className='user-avatar-section'>
+            {/* <div className='d-flex align-items-center flex-column'>
+              {renderUserImg()}
+              <div className='d-flex flex-column align-items-center text-center'>
+                <div className='user-info'>
+                  <h4>{selectedUser !== null ? selectedUser.fullName : 'Eleanor Aguilar'}</h4>
+                  {selectedUser !== null ? (
+                    <Badge color={roleColors[selectedUser.role]} className='text-capitalize'>
+                      {selectedUser.role}
+                    </Badge>
+                  ) : null}
+                </div>
+              </div>
+            </div> */}
+          </div>
               <div>sdcsd</div>
               <div className='d-flex flex-column align-items-center text-center'>
                 <div className='user-info'>

@@ -60,7 +60,7 @@ const socialAccounts = [
   },
   {
     linked: true,
-    title: 'آدرس محل سکونت',
+    title: 'آدرس  ایمیل',
     url: 'https://twitter.com/pixinvent',
     logo: twitterIcon
   },

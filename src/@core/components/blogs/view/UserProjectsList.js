@@ -97,7 +97,7 @@ export const columns = [
       return (
         <div className='d-flex justify-content-left align-items-center'>
           <div className='d-flex flex-column'>
-            <span className='text-truncate fw-bolder'>{row.title}</span>
+            <span className='text-truncate fw-bolder'>{row.courseTitle}</span>
           </div>
         </div>
       )
@@ -136,7 +136,7 @@ export const columns = [
 
 const UserProjectsList = () => {
 
-  // getQuery("blogsdetail",);
+  // getQuery("blogsdetail","");
   // const { commentDtos, isError, isLoading } = useQuery({
   //   queryKey: ["blogsdetail"],
   // });
