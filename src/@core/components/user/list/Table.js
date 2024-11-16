@@ -77,7 +77,8 @@ const UsersList = () => {
     number: 0,
   });
 
-  const data = useUserList();
+  const { data } = useUserList(searchTerm);
+
   console.log(data);
 
   // if (isLoading) return <div>Loading</div>;
@@ -124,9 +125,9 @@ const UsersList = () => {
   };
 
   // ** Function in get data on search query change
-  const handleFilter = (val) => {
-    setSearchTerm(val);
-  };
+  // const handleFilter = (val) => {
+  //   setSearchTerm(val);
+  // };
   // ** Custom Pagination
   const CustomPagination = () => {
     const count = Number(Math.ceil(store.total / rowsPerPage));
@@ -424,12 +425,12 @@ const UsersList = () => {
             pagination
             responsive
             // paginationServer
-            // columns={column}
+            columns={column}
             // onSort={handleSort}
             // sortIcon={<ChevronDown />}
             className="react-dataTable"
             // paginationComponent={CustomPagination}
-            // data={data?.listUser}
+            data={data?.listUser}
             // subHeaderComponent={
             //   <CustomHeader
             //     store={store}
