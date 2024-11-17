@@ -226,7 +226,7 @@ const UsersList = () => {
               className="user_name text-truncate text-body p-1"
             >
               <span className="fw-bolder">
-                {row.userRoles ? "Teacher" : "Student"}
+                {row.userRoles ? "استاد" : "دانشجو"}
               </span>
             </Link>
           </div>
