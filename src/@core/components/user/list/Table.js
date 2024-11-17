@@ -6,6 +6,7 @@ import Avatar from "@components/avatar";
 import Pic from "@src/assets/images/avatars/1.png";
 import Pic2 from "@src/assets/images/raty/star-on-2.png";
 
+import Logo from "@src/assets/images/logo/reactdeluxe.png";
 // ** Invoice List Sidebar
 import Sidebar from "./Sidebar";
 
@@ -77,9 +78,9 @@ const UsersList = () => {
     number: 0,
   });
 
-  const { data } = useUserList(searchTerm);
+  const { data } = useUserList(searchTerm, currentRole.id);
 
-  console.log(data);
+  console.log(currentRole);
 
   // if (isLoading) return <div>Loading</div>;
   // if (isError) return <div>اطلاعات دریافت نشد</div>;
@@ -89,12 +90,10 @@ const UsersList = () => {
 
   // ** User filter options
   const roleOptions = [
-    { value: "", label: "Select Role" },
-    { value: "admin", label: "Admin" },
-    { value: "author", label: "Author" },
-    { value: "editor", label: "Editor" },
-    { value: "maintainer", label: "Maintainer" },
-    { value: "subscriber", label: "Subscriber" },
+    { value: "", label: "انتخاب کنید", id: null },
+    { value: "", label: "ادمین", id: 1 },
+    { value: "", label: "استاد", id: 2 },
+    { value: "", label: "دانشجو", id: 5 },
   ];
 
   const planOptions = [
@@ -189,7 +188,13 @@ const UsersList = () => {
       // selector: (data) => data?.fullName,
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
-          <Avatar img={Pic} />
+          <Avatar
+            img={
+              data.pictureAddress !== null && data.pictureAddress !== "Not-set"
+                ? data.pictureAddress
+                : Logo
+            }
+          />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column">
             <Link
@@ -240,7 +245,7 @@ const UsersList = () => {
       sortable: true,
       minWidth: "172px",
       sortField: "role",
-      selector: (row) => <div> {row.active ? "Female" : "Male"} </div>,
+      selector: (row) => <div> {row.gender ? "مرد" : "زن"} </div>,
     },
     {
       name: "وضعیت",
