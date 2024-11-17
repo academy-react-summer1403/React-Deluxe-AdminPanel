@@ -6,15 +6,12 @@ import Avatar from "@components/avatar";
 import Pic from "@src/assets/images/avatars/1.png";
 import Pic2 from "@src/assets/images/raty/star-on-2.png";
 
+import Logo from "@src/assets/images/logo/reactdeluxe.png";
 // ** Invoice List Sidebar
 import Sidebar from "./Sidebar";
 
 // ** Table Columns
 import { columns } from "./columns";
-
-// ** Store & Actions
-// import { getAllData, getData } from '../store'
-// import { useDispatch, useSelector } from 'react-redux'
 
 // ** Third Party Components
 import Select from "react-select";
@@ -57,14 +54,12 @@ import {
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { Link } from "react-router-dom";
-import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
-import { useQuery } from "@tanstack/react-query";
+import { useUserList } from "../../../../core/services/api/userList";
 const UsersList = () => {
-
-
   // ** States
   const [sort, setSort] = useState("desc");
   const [searchTerm, setSearchTerm] = useState("");
+  console.log(searchTerm);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortColumn, setSortColumn] = useState("id");
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -83,25 +78,22 @@ const UsersList = () => {
     number: 0,
   });
 
-  getQuery("users", "/User/UserMannage");
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ["users"],
-  });
+  const { data } = useUserList(searchTerm, currentRole.id);
 
-  if (isLoading) return <div>Loading</div>;
-  if (isError) return <div>کوفت</div>;
+  console.log(currentRole);
+
+  // if (isLoading) return <div>Loading</div>;
+  // if (isError) return <div>اطلاعات دریافت نشد</div>;
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   // ** User filter options
   const roleOptions = [
-    { value: "", label: "Select Role" },
-    { value: "admin", label: "Admin" },
-    { value: "author", label: "Author" },
-    { value: "editor", label: "Editor" },
-    { value: "maintainer", label: "Maintainer" },
-    { value: "subscriber", label: "Subscriber" },
+    { value: "", label: "انتخاب کنید", id: null },
+    { value: "", label: "ادمین", id: 1 },
+    { value: "", label: "استاد", id: 2 },
+    { value: "", label: "دانشجو", id: 5 },
   ];
 
   const planOptions = [
@@ -121,56 +113,20 @@ const UsersList = () => {
 
   // ** Function in get data on page change
   const handlePagination = (page) => {
-    dispatch(
-      getData({
-        sort,
-        sortColumn,
-        q: searchTerm,
-        perPage: rowsPerPage,
-        page: page.selected + 1,
-        role: currentRole.value,
-        status: currentStatus.value,
-        currentPlan: currentPlan.value,
-      })
-    );
     setCurrentPage(page.selected + 1);
   };
 
   // ** Function in get data on rows per page
   const handlePerPage = (e) => {
     const value = parseInt(e.currentTarget.value);
-    dispatch(
-      getData({
-        sort,
-        sortColumn,
-        q: searchTerm,
-        perPage: value,
-        page: currentPage,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
-      })
-    );
+
     setRowsPerPage(value);
   };
 
   // ** Function in get data on search query change
-  const handleFilter = (val) => {
-    setSearchTerm(val);
-    dispatch(
-      getData({
-        sort,
-        q: val,
-        sortColumn,
-        page: currentPage,
-        perPage: rowsPerPage,
-        role: currentRole.value,
-        status: currentStatus.value,
-        currentPlan: currentPlan.value,
-      })
-    );
-  };
-
+  // const handleFilter = (val) => {
+  //   setSearchTerm(val);
+  // };
   // ** Custom Pagination
   const CustomPagination = () => {
     const count = Number(Math.ceil(store.total / rowsPerPage));
@@ -221,20 +177,7 @@ const UsersList = () => {
   const handleSort = (column, sortDirection) => {
     setSort(sortDirection);
     setSortColumn(column.sortField);
-    dispatch(
-      getData({
-        sort,
-        sortColumn,
-        q: searchTerm,
-        page: currentPage,
-        perPage: rowsPerPage,
-        role: currentRole.value,
-        status: currentStatus.value,
-        currentPlan: currentPlan.value,
-      })
-    );
   };
-
 
   const column = [
     {
@@ -245,11 +188,18 @@ const UsersList = () => {
       // selector: (data) => data?.fullName,
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
-          <Avatar img={Pic} />
+          <Avatar
+            img={
+              data.pictureAddress !== null && data.pictureAddress !== "Not-set"
+                ? data.pictureAddress
+                : Logo
+            }
+          />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column">
-            <Link className="user_name text-truncate text-body  p-0"
-            to={`/userdetail`} 
+            <Link
+              className="user_name text-truncate text-body  p-0"
+              to={`/userdetail/${data?.id}`}
             >
               <span className="fw-bolder">{data?.fname}</span>
             </Link>
@@ -261,35 +211,27 @@ const UsersList = () => {
       ),
     },
     {
-    name: 'نقش',
-    sortable: true,
-    minWidth: '172px',
-    sortField: 'role',
-    // selector: data => data?.userRoles,
-    cell: row => (
-      <div className='d-flex justify-content-left align-items-center'>
-        {/* <Avatar img={Pic2}/> */}
-        {/* {renderClient(row)} */}
-        <div className='d-flex flex-column'>
-          <Link
-            to={`/userdetail`} 
-
-            className='user_name text-truncate text-body p-1'
-          >
-            <span className='fw-bolder'>{row.userRoles ? "Teacher" : "Student"}</span>
-          </Link>
-          {/* <small className='text-truncate text-muted mb-0'>{row.Email}</small> */}
-        </div>
-      </div>)
-    // cell: row => renderRole(row)
-  },
-    {
-      name: " شماره تماس",
+      name: "نقش",
       sortable: true,
       minWidth: "172px",
-      sortField: "typeName",
-      selector: (row) => row.phoneNumber,
-      // cell: row => renderRole(row)
+      sortField: "role",
+      // selector: data => data?.userRoles,
+      cell: (row) => (
+        <div className="d-flex justify-content-left align-items-center">
+          {/* <Avatar img={Pic2}/> */}
+          {/* {renderClient(row)} */}
+          <div className="d-flex flex-column">
+            <Link
+              to={`/userdetail/${data?.id}`}
+              className="user_name text-truncate text-body p-1"
+            >
+              <span className="fw-bolder">
+                {row.userRoles ? "Teacher" : "Student"}
+              </span>
+            </Link>
+          </div>
+        </div>
+      ),
     },
     {
       name: "درصد تکمیل پروفایل",
@@ -297,21 +239,19 @@ const UsersList = () => {
       minWidth: "162px",
       sortField: "role",
       selector: (row) => row.profileCompletionPercentage,
-      // cell: row => renderRole(row)
     },
     {
       name: "جنسیت",
       sortable: true,
       minWidth: "172px",
       sortField: "role",
-      selector: (row) => <div> {row.active ? "Female" : "Male"} </div>
-      // cell: row => renderRole(row)
+      selector: (row) => <div> {row.gender ? "مرد" : "زن"} </div>,
     },
     {
       name: "وضعیت",
       minWidth: "100px",
       cell: (row) => (
-        <div className="column-action" >
+        <div className="column-action">
           <UncontrolledDropdown>
             <DropdownToggle tag="div" className="btn btn-sm">
               <MoreVertical size={14} className="cursor-pointer" />
@@ -320,30 +260,21 @@ const UsersList = () => {
               <DropdownItem
                 tag={Link}
                 className="w-100"
-                to={`/apps/user/view/${row.id}`}
-                // onClick={() => store.dispatch(getUser(row.id))}
+                to={`/userdetail/${row.id}`}
+                onClick={() => store.dispatch(getUser(row.id))}
               >
                 <FileText size={14} className="me-50" />
-                
+
                 <span className="align-middle">جزئیات</span>
               </DropdownItem>
-              {/* <DropdownItem
-                tag="a"
-                href="/"
-                className="w-100"
-                // onClick={e => e.preventDefault()}
-              >
-                <Archive size={14} className="me-50" />
-                <span className="align-middle">Edit</span>
-              </DropdownItem> */}
               <DropdownItem
                 tag="a"
                 href="/"
                 className="w-100"
-                // onClick={e => {
-                //   e.preventDefault()
-                //   store.dispatch(deleteUser(row.id))
-                // }}
+                onClick={(e) => {
+                  e.preventDefault();
+                  store.dispatch(deleteUser(row.id));
+                }}
               >
                 <Trash2 size={14} className="me-50" />
                 <span className="align-middle">حذف</span>
@@ -356,8 +287,8 @@ const UsersList = () => {
   ];
 
   return (
-    <Fragment style={{ width: '600px' }}>
-      <Card >
+    <Fragment style={{ width: "600px" }}>
+      <Card>
         <CardHeader>
           <CardTitle tag="h4">فیلتر ها</CardTitle>
         </CardHeader>
@@ -374,18 +305,6 @@ const UsersList = () => {
                 theme={selectThemeColors}
                 onChange={(data) => {
                   setCurrentRole(data);
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      role: data.value,
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      status: currentStatus.value,
-                      currentPlan: currentPlan.value,
-                    })
-                  );
                 }}
               />
             </Col>
@@ -400,18 +319,6 @@ const UsersList = () => {
                 value={currentPlan}
                 onChange={(data) => {
                   setCurrentPlan(data);
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: data.value,
-                      status: currentStatus.value,
-                    })
-                  );
                 }}
               />
             </Col>
@@ -426,18 +333,6 @@ const UsersList = () => {
                 value={currentStatus}
                 onChange={(data) => {
                   setCurrentStatus(data);
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      page: currentPage,
-                      status: data.value,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: currentPlan.value,
-                    })
-                  );
                 }}
               />
             </Col>
@@ -448,22 +343,23 @@ const UsersList = () => {
       <Card className="overflow-hidden">
         <Row className="ltr">
           <Col xl="6" className="d-flex align-items-center p-0">
-          <div className="d-flex align-items-center w-100">
-  <label htmlFor="rows-per-page" style={{ marginRight: "25px" }}>نمایش</label>
-  <Input
-    className="mx-50"
-    type="select"
-    id="rows-per-page"
-    value={rowsPerPage}
-    onChange={handlePerPage}
-    style={{ width: "5rem" }}
-  >
-    <option value="10">10</option>
-    <option value="25">25</option>
-    <option value="50">50</option>
-  </Input>
-</div>
-
+            <div className="d-flex align-items-center w-100">
+              <label htmlFor="rows-per-page" style={{ marginRight: "25px" }}>
+                نمایش
+              </label>
+              <Input
+                className="mx-50"
+                type="select"
+                id="rows-per-page"
+                value={rowsPerPage}
+                onChange={handlePerPage}
+                style={{ width: "5rem" }}
+              >
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </Input>
+            </div>
           </Col>
           <Col
             xl="6"
@@ -475,17 +371,17 @@ const UsersList = () => {
                 className=" w-100"
                 type="text"
                 placeholder="...جستجو"
-                value={searchTerm}
-                onChange={(e) => handleFilter(e.target.value)}
+                // value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
             <Button
-                className="add-new-user"
-                color="primary"
-                onClick={toggleSidebar}
-              >
-                جستجو
-              </Button>
+              className="add-new-user"
+              color="primary"
+              // onClick={toggleSidebar}
+            >
+              جستجو
+            </Button>
 
             <div className="d-flex align-items-center table-header-actions">
               <UncontrolledDropdown className="me-1">
@@ -515,7 +411,7 @@ const UsersList = () => {
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-          
+
               <Button
                 className="add-new-user"
                 color="primary"

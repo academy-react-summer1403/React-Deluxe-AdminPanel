@@ -102,7 +102,7 @@ const ForgotPassword = () => {
               </g>
             </g>
           </svg>
-          <h2 className="brand-text text-primary ms-1">Vuexy</h2>
+          <h2 className="brand-text text-primary ms-1">React Deluxe</h2>
         </Link>
         <Col className="d-none d-lg-flex align-items-center p-5" lg="8" sm="12">
           <div className="w-100 d-lg-flex align-items-center justify-content-center px-5">
@@ -115,12 +115,11 @@ const ForgotPassword = () => {
           sm="12"
         >
           <Col className="px-xl-2 mx-auto" sm="8" md="6" lg="12">
-            <CardTitle tag="h2" className="fw-bold mb-1">
-              Forgot Password? 🔒
+            <CardTitle tag="h4" className="fw-bold mb-1">
+                 🔒آرمز خودرا فراموش کرده اید ؟ 
             </CardTitle>
             <CardText className="mb-2">
-              Enter your email and we'll send you instructions to reset your
-              password
+              برای بازیابی رمز لطفت ایمیل خود را وارد کنید
             </CardText>
             <Form
               className="auth-forgot-password-form mt-2"
@@ -128,7 +127,7 @@ const ForgotPassword = () => {
             >
               <div className="mb-1">
                 <Label className="form-label" for="login-email">
-                  Email
+                  ایمیل
                 </Label>
                 <Input
                   type="email"
@@ -138,13 +137,13 @@ const ForgotPassword = () => {
                 />
               </div>
               <Button color="primary" block>
-                Send reset link
+                ارسال  
               </Button>
             </Form>
             <p className="text-center mt-2">
               <Link to="/login">
                 <ChevronLeft className="rotate-rtl me-25" size={14} />
-                <span className="align-middle">Back to login</span>
+                <span className="align-middle">بازگشت  </span>
               </Link>
             </p>
           </Col>

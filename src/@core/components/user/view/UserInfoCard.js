@@ -1,5 +1,7 @@
 // ** React Imports
 import { useState, Fragment } from "react";
+import { useParams } from "react-router-dom";
+import Logo from "@src/assets/images/logo/reactdeluxe.png";
 
 // ** Reactstrap Imports
 import {
@@ -23,6 +25,8 @@ import Select from "react-select";
 import { Check, Briefcase, X } from "react-feather";
 import { useForm, Controller } from "react-hook-form";
 import withReactContent from "sweetalert2-react-content";
+import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
+import { useQuery } from "@tanstack/react-query";
 
 // ** Custom Components
 import Avatar from "@components/avatar";
@@ -71,6 +75,39 @@ const languageOptions = [
 
 const MySwal = withReactContent(Swal);
 
+// ** render user img
+//  const renderUserImg = () => {
+//   if (selectedUser !== null && selectedUser.avatar.length) {
+//     return (
+//       <img
+//         height='110'
+//         width='110'
+//         alt='user-avatar'
+//         src={selectedUser.avatar}
+//         className='img-fluid rounded mt-3 mb-2'
+//       />
+//     )
+//   } else {
+//     return (
+//       <Avatar
+//         initials
+//         color={selectedUser.avatarColor || 'light-primary'}
+//         className='rounded mt-3 mb-2'
+//         content={selectedUser.fullName}
+//         contentStyles={{
+//           borderRadius: 0,
+//           fontSize: 'calc(48px)',
+//           width: '100%',
+//           height: '100%'
+//         }}
+//         style={{
+//           height: '110px',
+//           width: '110px'
+//         }}
+//       />
+//     )
+//   }
+// }
 const UserInfoCard = () => {
   // ** State
   const [show, setShow] = useState(false);
@@ -110,15 +147,50 @@ const UserInfoCard = () => {
     });
   };
 
+  const { id } = useParams();
+
+  getQuery("userdetail", `/User/UserDetails/${id}`);
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ["userdetail"],
+  });
+
+  if (isLoading) return <div>Loading</div>;
+  if (isError) return <div>اطلاعات یافت نشد</div>;
+
   return (
     <Fragment className="d-flex justify-content-between">
       <Card style={{ width: "300px" }}>
         <CardBody className="w-100">
-          <div className="user-avatar-section d-flex">
-            <div className="d-flex align-items-center flex-column">
+          <div className="user-avatar-section  justify-content-center d-flex">
+            <div className="d-flex   flex-column">
               {/* {renderUserImg()} */}
-
-              <div>sdcsd</div>
+              <img
+                height="210"
+                width="210"
+                alt="user-avatar"
+                src={
+                  data.currentPictureAddress !== null &&
+                  data.currentPictureAddress !== "Not-set"
+                    ? data.currentPictureAddress
+                    : Logo
+                }
+                className=" rounded  mb-2"
+              />
+              <div className="user-avatar-section">
+                {/* <div className='d-flex align-items-center flex-column'>
+              {renderUserImg()}
+              <div className='d-flex flex-column align-items-center text-center'>
+                <div className='user-info'>
+                  <h4>{selectedUser !== null ? selectedUser.fullName : 'Eleanor Aguilar'}</h4>
+                  {selectedUser !== null ? (
+                    <Badge color={roleColors[selectedUser.role]} className='text-capitalize'>
+                      {selectedUser.role}
+                    </Badge>
+                  ) : null}
+                </div>
+              </div>
+            </div> */}
+              </div>
               <div className="d-flex flex-column align-items-center text-center">
                 <div className="user-info">
                   {/* {selectedUser !== null ? selectedUser.fullName : 'Eleanor Aguilar'} */}
@@ -158,40 +230,36 @@ const UserInfoCard = () => {
             <ul className="list-unstyled">
               <li className="mb-75">
                 <span className="fw-bolder me-25">نام کاربری:</span>
-                <span>{/* {selectedUser.username} */}</span>
+                <span>{data.fName}</span>
+              </li>
+              <li className="mb-75">
+                <span className="fw-bolder me-25"> فامیلی:</span>
+                <span className="text-capitalize">{data.lName}</span>
               </li>
               <li className="mb-75">
                 <span className="fw-bolder me-25">ایمیل:</span>
-                <span>{/* {selectedUser.email} */}</span>
+                <span>{data.gmail}</span>
               </li>
               <li className="mb-75">
-                <span className="fw-bolder me-25">وضعیت:</span>
+                <span className="fw-bolder me-25">شماره تماس:</span>
                 <Badge
                   className="text-capitalize"
-                  // color={statusColors[selectedUser.status]}
+                  color={statusColors[data.phoneNumber]}
                 >
-                  {/* {selectedUser.status} */}
+                  {data.phoneNumber}
                 </Badge>
               </li>
               <li className="mb-75">
-                <span className="fw-bolder me-25">درصد تکمیل پروفایل:</span>
-                <span className="text-capitalize">
-                  {/* {selectedUser.role} */}
-                </span>
-              </li>
-              <li className="mb-75">
-                <span className="fw-bolder me-25"> جنسیت:</span>
-                <span>
-                  {/* {selectedUser.contact.substr(selectedUser.contact.length - 4)} */}
-                </span>
+                <span className="fw-bolder me-25">درصد تکمیل پروفایل :</span>
+                <span>{data.profileCompletionPercentage}</span>
               </li>
               <li className="mb-75">
                 <span className="fw-bolder me-25">کدملی:</span>
-                <span>{/* {selectedUser.contact} */}</span>
+                <span>{data.nationalCode}</span>
               </li>
               <li className="mb-75">
-                <span className="fw-bolder me-25">شماره موبایل:</span>
-                <span>091111111</span>
+                <span className="fw-bolder me-25"> توضیحات:</span>
+                <span> {data.userAbout}</span>
               </li>
               <li className="mb-75">
                 <span className="fw-bolder me-25">کشور:</span>

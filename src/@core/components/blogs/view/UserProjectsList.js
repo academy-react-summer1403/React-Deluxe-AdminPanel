@@ -17,6 +17,8 @@ import sketchLabel from '@src/assets/images/icons/brands/sketch-label.png'
 
 // ** Styles
 import '@styles/react/libs/tables/react-dataTable-component.scss'
+import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
+import { useQuery } from "@tanstack/react-query";
 
 const projectsArr = [
   {
@@ -88,29 +90,29 @@ const projectsArr = [
 export const columns = [
   {
     sortable: true,
-    minWidth: '300px',
-    name: 'Project',
+    minWidth: '200px',
+    name: 'کاربر',
     selector: row => row.title,
     cell: row => {
       return (
         <div className='d-flex justify-content-left align-items-center'>
-          <div className='avatar-wrapper'>
-            <Avatar className='me-1' img={row.img} alt={row.title} imgWidth='32' />
-          </div>
           <div className='d-flex flex-column'>
-            <span className='text-truncate fw-bolder'>{row.title}</span>
-            <small className='text-muted'>{row.subtitle}</small>
+            <span className='text-truncate fw-bolder'>{row.courseTitle}</span>
           </div>
         </div>
       )
     }
   },
   {
-    name: 'Total Tasks',
+    name: 'عنوان کامنت',
+    minWidth: '130px',
+
     selector: row => row.totalTasks
   },
   {
-    name: 'Progress',
+    name: 'متن کامنت',
+    minWidth: '180px',
+
     selector: row => row.progress,
     sortable: true,
     cell: row => {
@@ -127,15 +129,25 @@ export const columns = [
     }
   },
   {
-    name: 'Hours',
+    name: 'پاسخ ها',
     selector: row => row.hours
   }
 ]
 
 const UserProjectsList = () => {
+
+  // getQuery("blogsdetail","");
+  // const { commentDtos, isError, isLoading } = useQuery({
+  //   queryKey: ["blogsdetail"],
+  // });
+
+  // if (isLoading) return <div>Loading</div>;
+  // if (isError) return <div>اطلاعات یافت نشد</div>;
+
+
   return (
     <Card>
-      <CardHeader tag='h4'>User's Projects List</CardHeader>
+      <CardHeader tag='h4'>کامنت ها</CardHeader>
       <div className='react-dataTable user-view-account-projects'>
         <DataTable
           noHeader
