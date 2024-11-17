@@ -12,10 +12,6 @@ import Sidebar from "./Sidebar";
 // ** Table Columns
 import { columns } from "./columns";
 
-// ** Store & Actions
-// import { getAllData, getData } from '../store'
-// import { useDispatch, useSelector } from 'react-redux'
-
 // ** Third Party Components
 import Select from "react-select";
 import ReactPaginate from "react-paginate";
@@ -57,8 +53,10 @@ import {
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { Link } from "react-router-dom";
-import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
-import { useQuery } from "@tanstack/react-query";
+import { useComments } from "../../../../core/services/api/Comments";
+
+
+
 const Comments = () => {
 
   // ** States
@@ -77,14 +75,10 @@ const Comments = () => {
     label: "انتخاب کنید ...",
   });
 
-  getQuery("comments", "/Course/CommentManagment");
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ["comments"],
-  });
 
-  if (isLoading) return <div>Loading</div>;
-  if (isError) return <div>کوفت</div>;
- 
+  const { data } = useComments(searchTerm,currentRole.id);
+
+  console.log(currentRole);
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
@@ -129,18 +123,7 @@ const Comments = () => {
   // ** Function in get data on search query change
   const handleFilter = (val) => {
     setSearchTerm(val);
-    dispatch(
-      getData({
-        sort,
-        q: val,
-        sortColumn,
-        page: currentPage,
-        perPage: rowsPerPage,
-        role: currentRole.value,
-        status: currentStatus.value,
-        currentPlan: currentPlan.value,
-      })
-    );
+   
   };
 
   // ** Custom Pagination
@@ -195,33 +178,6 @@ const Comments = () => {
     setSortColumn(column.sortField);
    
   };
-
-  // const Data = [
-  //   {
-  //     fname: "ghonche",
-  //     lname: "ataee",
-  //     Email: "ghonche.ataee@gmail.com",
-  //     teacher: "shayan",
-  //   },
-  //   {
-  //     fname: "ghonche",
-  //     lname: "ataee",
-  //     Email: "ghonche.ataee@gmail.com",
-  //     teacher: "shayan",
-  //   },
-  //   {
-  //     fname: "ghonche",
-  //     lname: "ataee",
-  //     Email: "ghonche.ataee@gmail.com",
-  //     teacher: "shayan",
-  //   },
-  //   {
-  //     fname: "ghonche",
-  //     lname: "ataee",
-  //     Email: "ghonche.ataee@gmail.com",
-  //     teacher: "shayan",
-  //   },
-  // ];
 
   const column = [
     {
@@ -413,8 +369,8 @@ const Comments = () => {
                 type="text"
                 placeholder="جستجو"
 
-                value={searchTerm}
-                onChange={(e) => handleFilter(e.target.value)}
+                // value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
                  <Button
                 className="add-new-user"

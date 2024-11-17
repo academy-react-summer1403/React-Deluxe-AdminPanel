@@ -82,8 +82,6 @@ const UsersList = () => {
 
   console.log(currentRole);
 
-  // if (isLoading) return <div>Loading</div>;
-  // if (isError) return <div>اطلاعات دریافت نشد</div>;
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
