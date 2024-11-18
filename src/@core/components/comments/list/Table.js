@@ -5,6 +5,8 @@ import Avatar from "@components/avatar";
 
 import Pic from "@src/assets/images/avatars/1.png";
 import Pic2 from "@src/assets/images/raty/star-on-2.png";
+import Logo from "@src/assets/images/logo/reactdeluxe.png";
+
 
 // ** Invoice List Sidebar
 import Sidebar from "./Sidebar";
@@ -184,9 +186,8 @@ const Comments = () => {
       sortField: "title",
       // selector: (data) => data?.fullName,
       cell: (data) => (
-        <div className="d-flex justify-content-left align-items-center">
-          <Avatar img={Pic} />
-          {/* {renderClient(row)} */}
+        <div className="d-flex justify-content-left align-items-center gap-1">
+          <Avatar img={ Logo} />
           <div className="d-flex flex-column">
             <Link className="user_name text-truncate text-body  p-0">
               <span className="fw-bolder">{data?.userFullName}</span>
@@ -198,7 +199,7 @@ const Comments = () => {
     },
 
     {
-      name: " عنوان کامنت",
+      name: "  نام دوره",
       sortable: true,
       minWidth: "172px",
       sortField: "typeName",

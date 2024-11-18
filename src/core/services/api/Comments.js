@@ -7,7 +7,7 @@ export const useComments = (search, role) => {
       const query = {};
       if (search !== "" && search !== null) query.Query = search;
 
-      if (role !== "" && role !== null) query.roleId = role;
+      // if (role !== "" && role !== null) query.roleId = role;
 
       const result = await http.get("/Course/CommentManagment", { params: query });
       console.log(result);

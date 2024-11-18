@@ -221,22 +221,6 @@ const UsersList = () => {
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
-  // ** Get data on mount
-  // useEffect(() => {
-  //   dispatch(getAllData())
-  //   dispatch(
-  //     getData({
-  //       sort,
-  //       sortColumn,
-  //       q: searchTerm,
-  //       page: currentPage,
-  //       perPage: rowsPerPage,
-  //       role: currentRole.value,
-  //       status: currentStatus.value,
-  //       currentPlan: currentPlan.value
-  //     })
-  //   )
-  // }, [dispatch, store.data.length, sort, sortColumn, currentPage])
 
   // ** User filter options
   const roleOptions = [
@@ -379,32 +363,6 @@ const UsersList = () => {
     );
   };
 
-  const Data = [
-    {
-      fname: "ghonche",
-      lname: "ataee",
-      Email: "ghonche.ataee@gmail.com",
-      teacher: "shayan",
-    },
-    {
-      fname: "ghonche",
-      lname: "ataee",
-      Email: "ghonche.ataee@gmail.com",
-      teacher: "shayan",
-    },
-    {
-      fname: "ghonche",
-      lname: "ataee",
-      Email: "ghonche.ataee@gmail.com",
-      teacher: "shayan",
-    },
-    {
-      fname: "ghonche",
-      lname: "ataee",
-      Email: "ghonche.ataee@gmail.com",
-      teacher: "shayan",
-    },
-  ];
 
   const column = [
     {
@@ -610,16 +568,15 @@ const UsersList = () => {
         <Row className="ltr py-1 px-2">
           <Col xl="6" className="d-flex align-items-center p-0">
             <div className="d-flex align-items-center w-100">
-              <label htmlFor="rows-per-page">Show</label>
               <Input
                 className="mx-50"
                 type="select"
                 id="rows-per-page"
                 value={rowsPerPage}
                 onChange={handlePerPage}
-                style={{ width: "5rem" }}
+                style={{ width: "15rem" }}
               >
-                <option value="10">10</option>
+                <option value="10">مرتب سازی</option>
                 <option value="25">25</option>
                 <option value="50">50</option>
               </Input>
@@ -630,10 +587,8 @@ const UsersList = () => {
             xl="6"
             className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
           >
-            <div className="d-flex align-items-center mb-sm-0 mb-1 me-1">
-              <label className="mb-0" htmlFor="search-invoice">
-                Search:
-              </label>
+            <div className="d-flex align-items-center mb-sm-0 mb-1 me-1 ">
+             
               <Input
                 id="search-invoice"
                 className="ms-50 w-100"
@@ -645,10 +600,7 @@ const UsersList = () => {
 
             <div className="d-flex align-items-center table-header-actions">
               <UncontrolledDropdown className="me-1">
-                <DropdownToggle color="secondary" caret outline>
-                  <Share className="font-small-4 me-50" />
-                  <span className="align-middle">Export</span>
-                </DropdownToggle>
+              
                 <DropdownMenu>
                   <DropdownItem className="w-100">
                     <Printer className="font-small-4 me-50" />
@@ -681,7 +633,7 @@ const UsersList = () => {
                 color="primary"
                 onClick={toggleSidebar}
               >
-                Add New User
+              جستجو
               </Button>
             </div>
           </Col>
