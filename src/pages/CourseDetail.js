@@ -1,10 +1,15 @@
-import { Card, CardHeader, CardBody, CardTitle, CardText } from "reactstrap";
-import RoleCards from "../@core/components/roles-permissions/roles/RoleCards";
-import { Fragment } from "react";
-import UsersList from "../@core/components/user/list";
+import UserInfoCard from "../@core/components/course/view/UserInfoCard";
+import UserTabs from "../@core/components/course/view/Tabs";
 
-const UserDetail = () => {
-  return <div>کورس</div>;
+
+
+const CourseDetail = () => {
+  return (
+    <div className="d-flex gap-1">
+      <UserInfoCard />
+      <UserTabs />
+    </div>
+  );
 };
 
-export default UserDetail;
+export default CourseDetail;

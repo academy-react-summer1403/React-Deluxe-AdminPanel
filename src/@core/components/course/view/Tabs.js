@@ -1,76 +1,97 @@
 // ** React Imports
-import { Fragment } from 'react'
+import { Fragment, useState } from "react";
 
 // ** Reactstrap Imports
-import { Nav, NavItem, NavLink, TabContent, TabPane } from 'reactstrap'
+import { Nav, NavItem, NavLink } from "reactstrap";
 
 // ** Icons Imports
-import { User, Lock, Bookmark, Bell, Link } from 'react-feather'
+import { User, Lock, Bookmark, Bell } from "react-feather";
+import UserProjectsList from "./UserProjectsList";
+import Connections from "./Connections";
+import SecurityTab from "./SecurityTab";
 
-// ** User Components
-import InvoiceList from './InvoiceList'
-import SecurityTab from './SecurityTab'
-import Connections from './Connections'
-import BillingPlanTab from './BillingTab'
-import UserTimeline from './UserTimeline'
-import Notifications from './Notifications'
-import UserProjectsList from './UserProjectsList'
+const UserTabs = () => {
+  const [active, setActive] = useState("1");
 
-const UserTabs = ({ active, toggleTab }) => {
+  const toggle = (tab) => {
+    if (active !== tab) {
+      setActive(tab);
+    }
+  };
+
   return (
     <Fragment>
-      <Nav pills className='mb-2'>
-        <NavItem>
-          <NavLink active={active === '1'} onClick={() => toggleTab('1')}>
-            <User className='font-medium-3 me-50' />
-            <span className='fw-bold'>Account</span>
+      {/* تب‌ها */}
+      <div className="d-flex flex-column border" style={{ width: "80%" }}>
+        <Nav
+          pills
+          className="mb-2"
+          // style={{ width: "700px", position: "relative" }}
+        >
+          <NavItem>
+            <NavLink active={active === "1"} onClick={() => toggle("1")}>
+              <User className="font-medium-3 me-50" />
+              <span className="fw-bold">دوره ها</span>
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink active={active === "2"} onClick={() => toggle("2")}>
+              <Lock className="font-medium-3 me-50" />
+              <span className="fw-bold">دوره های رزرو</span>
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink active={active === "3"} onClick={() => toggle("3")}>
+              <Bookmark className="font-medium-3 me-50" />
+              <span className="fw-bold">کامنت ها</span>
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink active={active === "4"} onClick={() => toggle("4")}>
+              <Bell className="font-medium-3 me-50" />
+              <span className="fw-bold">سایر اطلاعات کاربر</span>
+            </NavLink>
+          </NavItem>
+          {/* <NavItem>
+          <NavLink active={active === '5'} onClick={() => toggle('5')}>
+            <Bell className="font-medium-3 me-50" />
+            <span className="fw-bold">ارتباط</span>
           </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink active={active === '2'} onClick={() => toggleTab('2')}>
-            <Lock className='font-medium-3 me-50' />
-            <span className='fw-bold'>Security</span>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink active={active === '3'} onClick={() => toggleTab('3')}>
-            <Bookmark className='font-medium-3 me-50' />
-            <span className='fw-bold'>Billing & Plans</span>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink active={active === '4'} onClick={() => toggleTab('4')}>
-            <Bell className='font-medium-3 me-50' />
-            <span className='fw-bold'>Notifications</span>
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink active={active === '5'} onClick={() => toggleTab('5')}>
-            <Link className='font-medium-3 me-50' />
-            <span className='fw-bold'>Connections</span>
-          </NavLink>
-        </NavItem>
-      </Nav>
-      <TabContent activeTab={active}>
-        <TabPane tabId='1'>
-          <UserProjectsList />
-          <UserTimeline />
-          <InvoiceList />
-        </TabPane>
-        <TabPane tabId='2'>
-          <SecurityTab />
-        </TabPane>
-        <TabPane tabId='3'>
-          <BillingPlanTab />
-        </TabPane>
-        <TabPane tabId='4'>
-          <Notifications />
-        </TabPane>
-        <TabPane tabId='5'>
-          <Connections />
-        </TabPane>
-      </TabContent>
+        </NavItem> */}
+        </Nav>
+
+        {/* محتوای تب دوره‌ها */}
+        <div>
+          {active === "1" && (
+            <div style={{ width: "100%" }}>
+              <UserProjectsList />
+            </div>
+          )}
+          {active === "2" && (
+            <div style={{ width: "100%" }}>
+              <UserProjectsList />
+            </div>
+          )}
+          {active === "3" && (
+            <div style={{ width: "100%" }}>
+              <SecurityTab />
+            </div>
+          )}
+          {active === "4" && (
+            <div style={{ width: "100%" }}>
+              <Connections />
+            </div>
+          )}
+        </div>
+      </div>
+      {/* {active === '4' && (
+        <div style={{ position: 'absolute', top: '157px', right: '350px', width: '100%' }}>
+       
+
+        </div>
+      )} */}
     </Fragment>
-  )
-}
-export default UserTabs
+  );
+};
+
+export default UserTabs;
