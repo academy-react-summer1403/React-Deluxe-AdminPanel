@@ -78,7 +78,6 @@ const Comments = () => {
 
   const { data } = useComments(searchTerm,currentRole.id);
 
-  console.log(currentRole);
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
@@ -86,12 +85,10 @@ const Comments = () => {
 
   // ** User filter options
   const roleOptions = [
-    { value: "", label: "Select Role" },
-    { value: "admin", label: "Admin" },
-    { value: "author", label: "Author" },
-    { value: "editor", label: "Editor" },
-    { value: "maintainer", label: "Maintainer" },
-    { value: "subscriber", label: "Subscriber" },
+    { value: "", label: "انتخاب کنید", id: null },
+    { value: "", label: "تایید شده", id: 1 },
+    { value: "", label: "تایید نشده", id: 2 },
+    // { value: "", label: "دانشجو", id: 5 },
   ];
 
   const planOptions = [
