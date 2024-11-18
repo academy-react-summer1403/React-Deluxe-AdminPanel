@@ -5,6 +5,8 @@ import Avatar from "@components/avatar";
 
 import Pic from "@src/assets/images/avatars/1.png";
 import Pic2 from "@src/assets/images/raty/star-on-2.png";
+import Logo from "@src/assets/images/logo/reactdeluxe.png";
+
 
 // ** Invoice List Sidebar
 import Sidebar from "./Sidebar";
@@ -232,32 +234,7 @@ const UsersList = () => {
     );
   };
 
-  const Data = [
-    {
-      fname: "ghonche",
-      lname: "ataee",
-      Email: "ghonche.ataee@gmail.com",
-      teacher: "shayan",
-    },
-    {
-      fname: "ghonche",
-      lname: "ataee",
-      Email: "ghonche.ataee@gmail.com",
-      teacher: "shayan",
-    },
-    {
-      fname: "ghonche",
-      lname: "ataee",
-      Email: "ghonche.ataee@gmail.com",
-      teacher: "shayan",
-    },
-    {
-      fname: "ghonche",
-      lname: "ataee",
-      Email: "ghonche.ataee@gmail.com",
-      teacher: "shayan",
-    },
-  ];
+  
 
   const column = [
     {
@@ -267,8 +244,9 @@ const UsersList = () => {
       sortField: "title",
       // selector: (data) => data?.fullName,
       cell: (data) => (
-        <div className="d-flex justify-content-left align-items-center gap-1 ">
-          <Avatar img={Pic} />
+        <div className="d-flex justify-content-left align-items-center gap-1 px-1">
+         
+          <Avatar img={data.currentImageAddressTumb ?? Logo} />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column ">
             <Link className="user_name text-truncate text-body  p-0 ">

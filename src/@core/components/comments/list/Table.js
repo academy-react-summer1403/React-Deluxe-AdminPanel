@@ -5,6 +5,8 @@ import Avatar from "@components/avatar";
 
 import Pic from "@src/assets/images/avatars/1.png";
 import Pic2 from "@src/assets/images/raty/star-on-2.png";
+import Logo from "@src/assets/images/logo/reactdeluxe.png";
+
 
 // ** Invoice List Sidebar
 import Sidebar from "./Sidebar";
@@ -78,7 +80,6 @@ const Comments = () => {
 
   const { data } = useComments(searchTerm,currentRole.id);
 
-  console.log(currentRole);
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
@@ -86,12 +87,10 @@ const Comments = () => {
 
   // ** User filter options
   const roleOptions = [
-    { value: "", label: "Select Role" },
-    { value: "admin", label: "Admin" },
-    { value: "author", label: "Author" },
-    { value: "editor", label: "Editor" },
-    { value: "maintainer", label: "Maintainer" },
-    { value: "subscriber", label: "Subscriber" },
+    { value: "", label: "انتخاب کنید", id: null },
+    { value: "", label: "تایید شده", id: 1 },
+    { value: "", label: "تایید نشده", id: 2 },
+    // { value: "", label: "دانشجو", id: 5 },
   ];
 
   const planOptions = [
@@ -187,9 +186,8 @@ const Comments = () => {
       sortField: "title",
       // selector: (data) => data?.fullName,
       cell: (data) => (
-        <div className="d-flex justify-content-left align-items-center">
-          <Avatar img={Pic} />
-          {/* {renderClient(row)} */}
+        <div className="d-flex justify-content-left align-items-center gap-1">
+          <Avatar img={ Logo} />
           <div className="d-flex flex-column">
             <Link className="user_name text-truncate text-body  p-0">
               <span className="fw-bolder">{data?.userFullName}</span>
@@ -201,7 +199,7 @@ const Comments = () => {
     },
 
     {
-      name: " عنوان کامنت",
+      name: "  نام دوره",
       sortable: true,
       minWidth: "172px",
       sortField: "typeName",
