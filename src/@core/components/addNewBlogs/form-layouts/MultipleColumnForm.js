@@ -14,6 +14,7 @@ import {
 } from "reactstrap";
 import { useAddBlog } from "../../../../core/services/api/AddBlog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const MultipleColumnForm = () => {
   // const [formValues, setFormValues] = useState({
@@ -28,12 +29,24 @@ const MultipleColumnForm = () => {
     e.preventDefault();
     // Step 2: Collect form data
     const formData = new FormData(formRef.current);
-    const formValues = Object.fromEntries(formData.entries());
+    // const formValues = Object.fromEntries(formData.entries());
 
     console.log(formData);
-    console.log("Form Submitted Values:", formValues);
-
-    await mutation.mutateAsync(formData);
+    // console.log("Form Submitted Values:", formValues);
+    const blogToast = toast.loading("درحال افزودن بلاگ شما...");
+    try {
+      await mutation.mutateAsync(formData);
+      toast.success("بلاگ شما با موفقیت اضافه شد!", { id: blogToast });
+    } catch (error) {
+      toast.error(
+        `افزودن بلاگ شما با خطا مواجه شد:
+        ${error.response.data.title}`,
+        { id: blogToast }
+      );
+    }
+    // {
+    //   mutation.isPending ? (blogToast = toast.loading("Adding...")) : "";
+    // }
   };
   return (
     <Card>
@@ -131,7 +144,7 @@ const MultipleColumnForm = () => {
                   type="submit"
                   // onClick={(e) => e.preventDefault()}
                 >
-                  ثبت
+                  {mutation.isPending ? "درحال افزودن..." : "افزودن"}
                 </Button>
                 <Button outline color="secondary" type="reset">
                   پاک کردن همه
