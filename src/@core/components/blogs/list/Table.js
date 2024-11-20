@@ -56,8 +56,7 @@ import {
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { Link } from "react-router-dom";
-import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
-import { useQuery } from "@tanstack/react-query";
+import { useBlogs } from "../../../../core/services/api/blog";
 const UsersList = () => {
 
 
@@ -82,14 +81,13 @@ const UsersList = () => {
     number: 0,
   });
 
-  getQuery("news", "/News/AdminNewsFilterList?PageNumber=1&RowsOfPage=10&SortingCol=InsertDate&SortType=DESC&Query=&IsActive=true");
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ["news"],
-  });
 
-  if (isLoading) return <div>Loading</div>;
-  if (isError) return <div>کوفت</div>;
-  const { courseFilterDtos } = data;
+  const { data } = useBlogs(searchTerm, currentRole.id);
+
+  console.log(currentRole); 
+
+
+
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
@@ -279,13 +277,13 @@ const UsersList = () => {
     //   sortField: "role",
     //   selector: (row) => row.miniDescribe,
     // },
-    // {
-    //   name: " وضعیت",
-    //   sortable: true,
-    //   minWidth: "152px",
-    //   sortField: "role",
-    //   selector: (row) => row.isActive,
-    // },
+    {
+      name: " وضعیت",
+      sortable: true,
+      minWidth: "152px",
+      sortField: "role",
+      selector: (row) => row.isActive,
+    },
     {
       name: "اقدام",
       minWidth: "100px",
