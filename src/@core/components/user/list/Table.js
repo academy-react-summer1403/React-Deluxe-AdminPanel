@@ -94,12 +94,10 @@ const UsersList = () => {
     { value: "", label: "دانشجو", id: 5 },
   ];
 
-  const planOptions = [
-    { value: "", label: "Select Plan" },
-    { value: "basic", label: "Basic" },
-    { value: "company", label: "Company" },
-    { value: "enterprise", label: "Enterprise" },
-    { value: "team", label: "Team" },
+  const genderOptions = [
+    { value: "", label: " انتخاب کنید" },
+    { value: "", label: "زن" , id:1},
+    { value: "", label: "مرد" , id:2 }
   ];
 
   const statusOptions = [
@@ -316,14 +314,14 @@ const UsersList = () => {
                 isClearable={false}
                 className="react-select"
                 classNamePrefix="select"
-                options={planOptions}
+                options={genderOptions}
                 value={currentPlan}
                 onChange={(data) => {
                   setCurrentPlan(data);
                 }}
               />
             </Col>
-            <Col md="4">
+            {/* <Col md="4">
               <Label for="status-select">مرتب سازی</Label>
               <Select
                 theme={selectThemeColors}
@@ -336,7 +334,7 @@ const UsersList = () => {
                   setCurrentStatus(data);
                 }}
               />
-            </Col>
+            </Col> */}
           </Row>
         </CardBody>
       </Card>

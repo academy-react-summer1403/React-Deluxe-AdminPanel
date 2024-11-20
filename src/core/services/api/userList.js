@@ -1,13 +1,16 @@
 import http from "../interceptor";
 import { useQuery } from "@tanstack/react-query";
 
-export const useUserList = (search, role) => {
+export const useUserList = (search, role , gender) => {
   const UsersList = async () => {
     try {
       const query = {};
       if (search !== "" && search !== null) query.Query = search;
 
       if (role !== "" && role !== null) query.roleId = role;
+
+      if (gender !== "" && gender !== null) query.gender = gender;
+
 
       const result = await http.get("/User/UserMannage", { params: query });
       console.log(result);
@@ -19,7 +22,7 @@ export const useUserList = (search, role) => {
   };
 
   return useQuery({
-    queryKey: ["UserList", search, role],
+    queryKey: ["UserList", search, role, gender],
 
     queryFn: UsersList,
   });
