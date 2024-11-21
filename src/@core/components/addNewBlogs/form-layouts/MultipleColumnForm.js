@@ -40,7 +40,11 @@ const MultipleColumnForm = () => {
     } catch (error) {
       toast.error(
         `افزودن بلاگ شما با خطا مواجه شد:
-        ${error.response.data.title}`,
+        ${
+          error.response.data.title
+            ? error.response.data.title
+            : error.response.data.ErrorMessage
+        }`,
         { id: blogToast }
       );
     }
