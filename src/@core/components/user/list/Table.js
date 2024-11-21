@@ -48,6 +48,9 @@ import {
   DropdownItem,
   DropdownToggle,
   UncontrolledDropdown,
+  Modal,
+  ModalHeader,
+  ModalBody,
 } from "reactstrap";
 
 // ** Styles
@@ -55,6 +58,7 @@ import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { Link } from "react-router-dom";
 import { useUserList } from "../../../../core/services/api/userList";
+import AddUserForm from "./AddUserForm";
 const UsersList = () => {
   // ** States
   const [sort, setSort] = useState("desc");
@@ -68,7 +72,7 @@ const UsersList = () => {
     value: "",
     label: "انتخاب کنید ...",
   });
-  const [currentPlan, setCurrentPlan] = useState({
+  const [isActive, setIsActive] = useState({
     value: "",
     label: "انتخاب کنید ...",
   });
@@ -77,11 +81,11 @@ const UsersList = () => {
     label: "انتخاب کنید ...",
     number: 0,
   });
+  const [show, setShow] = useState(false);
 
-  const { data } = useUserList(searchTerm, currentRole.id);
+  const { data } = useUserList(searchTerm, currentRole.id, isActive.active);
 
   console.log(currentRole);
-
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
@@ -94,10 +98,10 @@ const UsersList = () => {
     { value: "", label: "دانشجو", id: 5 },
   ];
 
-  const genderOptions = [
+  const activeOptions = [
     { value: "", label: " انتخاب کنید" },
-    { value: "", label: "زن" , id:1},
-    { value: "", label: "مرد" , id:2 }
+    { value: "", label: "فعال", active: "True" },
+    { value: "", label: "غیر فعال", active: "false" },
   ];
 
   const statusOptions = [
@@ -152,7 +156,7 @@ const UsersList = () => {
   const dataToRender = () => {
     const filters = {
       role: currentRole.value,
-      currentPlan: currentPlan.value,
+      isActive: isActive.value,
       status: currentStatus.value,
       q: searchTerm,
     };
@@ -222,10 +226,88 @@ const UsersList = () => {
               className="user_name text-truncate text-body p-1"
             >
               <span className="fw-bolder">
-                {row.userRoles == "Teacher" ?<><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-info me-50"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>استاد</> :
-                 row.userRoles == "Administrator" ? <><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-danger me-50"><path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"></path><path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path><path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"></path><path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"></path><path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"></path><path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"></path><path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"></path><path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"></path></svg>ادمین</>:
-                 row.userRoles == "Student" ? <><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary me-50"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>دانشجو</> :<><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-warning me-50"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>نقشی ندارد</>}
-
+                {row.userRoles == "Teacher" ? (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="text-info me-50"
+                    >
+                      <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+                    </svg>
+                    استاد
+                  </>
+                ) : row.userRoles == "Administrator" ? (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="text-danger me-50"
+                    >
+                      <path d="M14.5 10c-.83 0-1.5-.67-1.5-1.5v-5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5z"></path>
+                      <path d="M20.5 10H19V8.5c0-.83.67-1.5 1.5-1.5s1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"></path>
+                      <path d="M9.5 14c.83 0 1.5.67 1.5 1.5v5c0 .83-.67 1.5-1.5 1.5S8 21.33 8 20.5v-5c0-.83.67-1.5 1.5-1.5z"></path>
+                      <path d="M3.5 14H5v1.5c0 .83-.67 1.5-1.5 1.5S2 16.33 2 15.5 2.67 14 3.5 14z"></path>
+                      <path d="M14 14.5c0-.83.67-1.5 1.5-1.5h5c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5h-5c-.83 0-1.5-.67-1.5-1.5z"></path>
+                      <path d="M15.5 19H14v1.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"></path>
+                      <path d="M10 9.5C10 8.67 9.33 8 8.5 8h-5C2.67 8 2 8.67 2 9.5S2.67 11 3.5 11h5c.83 0 1.5-.67 1.5-1.5z"></path>
+                      <path d="M8.5 5H10V3.5C10 2.67 9.33 2 8.5 2S7 2.67 7 3.5 7.67 5 8.5 5z"></path>
+                    </svg>
+                    ادمین
+                  </>
+                ) : row.userRoles == "Student" ? (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="text-primary me-50"
+                    >
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    دانشجو
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="18"
+                      height="18"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="text-warning me-50"
+                    >
+                      <circle cx="12" cy="12" r="3"></circle>
+                      <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    نقشی ندارد
+                  </>
+                )}
               </span>
             </Link>
           </div>
@@ -248,6 +330,15 @@ const UsersList = () => {
     },
     {
       name: "وضعیت",
+      sortable: true,
+      minWidth: "172px",
+      sortField: "role",
+      selector: (row) => (
+        <div> {row.active == "True" ? "فعال" : "غیرفعال"} </div>
+      ),
+    },
+    {
+      name: "عملیات",
       minWidth: "100px",
       cell: (row) => (
         <div className="column-action">
@@ -287,6 +378,210 @@ const UsersList = () => {
 
   return (
     <Fragment style={{ width: "600px" }}>
+      <Modal
+        isOpen={show}
+        toggle={() => setShow(!show)}
+        className="modal-dialog-centered modal-lg"
+      >
+        <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}>
+          {/* <div>header</div> */}
+        </ModalHeader>
+        <ModalBody className="px-sm-5 pt-50 pb-5">
+          {/* <div className="text-center mb-2">
+            <h1 className="mb-1">Edit User Information</h1>
+            <p>Updating user details will receive a privacy audit.</p>
+          </div>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Row className="gy-1 pt-75">
+              <Col md={6} xs={12}>
+                <Label className="form-label" for="firstName">
+                  First Name
+                </Label>
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  id="firstName"
+                  name="firstName"
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      id="firstName"
+                      placeholder="John"
+                      invalid={errors.firstName && true}
+                    />
+                  )}
+                />
+              </Col>
+              <Col md={6} xs={12}>
+                <Label className="form-label" for="lastName">
+                  Last Name
+                </Label>
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  id="lastName"
+                  name="lastName"
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      id="lastName"
+                      placeholder="Doe"
+                      invalid={errors.lastName && true}
+                    />
+                  )}
+                />
+              </Col>
+              <Col xs={12}>
+                <Label className="form-label" for="username">
+                  Username
+                </Label>
+                <Controller
+                  defaultValue=""
+                  control={control}
+                  id="username"
+                  name="username"
+                  render={({ field }) => (
+                    <Input
+                      {...field}
+                      id="username"
+                      placeholder="john.doe.007"
+                      invalid={errors.username && true}
+                    />
+                  )}
+                />
+              </Col>
+              <Col md={6} xs={12}>
+                <Label className="form-label" for="billing-email">
+                  Billing Email
+                </Label>
+                <Input
+                  type="email"
+                  id="billing-email"
+                  defaultValue={selectedUser.email}
+                  placeholder="example@domain.com"
+                />
+              </Col>
+              <Col md={6} xs={12}>
+                <Label className="form-label" for="status">
+                  Status:
+                </Label>
+                <Select
+                  id="status"
+                  isClearable={false}
+                  className="react-select"
+                  classNamePrefix="select"
+                  options={statusOptions}
+                  theme={selectThemeColors}
+                  defaultValue={
+                    statusOptions[
+                      statusOptions.findIndex(
+                        (i) => i.value === selectedUser.status
+                      )
+                    ]
+                  }
+                />
+              </Col>
+              <Col md={6} xs={12}>
+                <Label className="form-label" for="tax-id">
+                  Tax ID
+                </Label>
+                <Input
+                  id="tax-id"
+                  placeholder="Tax-1234"
+                  defaultValue={selectedUser.contact.substr(
+                    selectedUser.contact.length - 4
+                  )}
+                />
+              </Col>
+              <Col md={6} xs={12}>
+                <Label className="form-label" for="contact">
+                  Contact
+                </Label>
+                <Input
+                  id="contact"
+                  defaultValue={selectedUser.contact}
+                  placeholder="+1 609 933 4422"
+                />
+              </Col>
+              <Col md={6} xs={12}>
+                <Label className="form-label" for="language">
+                  language
+                </Label>
+                <Select
+                  id="language"
+                  isClearable={false}
+                  className="react-select"
+                  classNamePrefix="select"
+                  options={languageOptions}
+                  theme={selectThemeColors}
+                  defaultValue={languageOptions[0]}
+                />
+              </Col>
+              <Col md={6} xs={12}>
+                <Label className="form-label" for="country">
+                  Country
+                </Label>
+                <Select
+                  id="country"
+                  isClearable={false}
+                  className="react-select"
+                  classNamePrefix="select"
+                  options={countryOptions}
+                  theme={selectThemeColors}
+                  defaultValue={countryOptions[0]}
+                />
+              </Col>
+              <Col xs={12}>
+                <div className="d-flex align-items-center mt-1">
+                  <div className="form-switch">
+                    <Input
+                      type="switch"
+                      defaultChecked
+                      id="billing-switch"
+                      name="billing-switch"
+                    />
+                    <Label
+                      className="form-check-label"
+                      htmlFor="billing-switch"
+                    >
+                      <span className="switch-icon-left">
+                        <Check size={14} />
+                      </span>
+                      <span className="switch-icon-right">
+                        <X size={14} />
+                      </span>
+                    </Label>
+                  </div>
+                  <Label
+                    className="form-check-label fw-bolder"
+                    for="billing-switch"
+                  >
+                    Use as a billing address?
+                  </Label>
+                </div>
+              </Col>
+              <Col xs={12} className="text-center mt-2 pt-50">
+                <Button type="submit" className="me-1" color="primary">
+                  Submit
+                </Button>
+                <Button
+                  type="reset"
+                  color="secondary"
+                  outline
+                  onClick={() => {
+                    handleReset();
+                    setShow(false);
+                  }}
+                >
+                  Discard
+                </Button>
+              </Col>
+            </Row>
+          </Form> */}
+          {/* <div>testtestt</div> */}
+          <AddUserForm />
+        </ModalBody>
+      </Modal>
       <Card>
         <CardHeader>
           <CardTitle tag="h4">فیلتر ها</CardTitle>
@@ -314,10 +609,10 @@ const UsersList = () => {
                 isClearable={false}
                 className="react-select"
                 classNamePrefix="select"
-                options={genderOptions}
-                value={currentPlan}
+                options={activeOptions}
+                value={isActive}
                 onChange={(data) => {
-                  setCurrentPlan(data);
+                  setIsActive(data);
                 }}
               />
             </Col>
@@ -414,7 +709,8 @@ const UsersList = () => {
               <Button
                 className="add-new-user"
                 color="primary"
-                onClick={toggleSidebar}
+                // onClick={toggleSidebar}
+                onClick={() => setShow(true)}
               >
                 افزودن کاربر جدید
               </Button>

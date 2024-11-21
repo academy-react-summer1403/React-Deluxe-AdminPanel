@@ -1,7 +1,7 @@
 import http from "../interceptor";
 import { useQuery } from "@tanstack/react-query";
 
-export const useUserList = (search, role , gender) => {
+export const useUserList = (search, role, active) => {
   const UsersList = async () => {
     try {
       const query = {};
@@ -9,8 +9,7 @@ export const useUserList = (search, role , gender) => {
 
       if (role !== "" && role !== null) query.roleId = role;
 
-      if (gender !== "" && gender !== null) query.gender = gender;
-
+      if (active !== "" && active !== null) query.IsActiveUser = active;
 
       const result = await http.get("/User/UserMannage", { params: query });
       console.log(result);
@@ -22,7 +21,7 @@ export const useUserList = (search, role , gender) => {
   };
 
   return useQuery({
-    queryKey: ["UserList", search, role, gender],
+    queryKey: ["UserList", search, role, active],
 
     queryFn: UsersList,
   });
