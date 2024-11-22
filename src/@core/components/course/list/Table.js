@@ -183,6 +183,7 @@ import { Link } from "react-router-dom";
 // }
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
 import { useQuery } from "@tanstack/react-query";
+import { useCourseList } from "../../../../core/services/api/courseList";
 const UsersList = () => {
   // ** Store Vars
   // const dispatch = useDispatch()
@@ -209,18 +210,18 @@ const UsersList = () => {
     number: 0,
   });
 
-  getQuery("courses", "/Course/CourseList");
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ["courses"],
-  });
-  console.log(data?.courseDtos);
+  // getQuery("courses", "/Course/CourseList");
+  // const { data, isError, isLoading } = useQuery({
+  //   queryKey: ["courses"],
+  // });
+  const { data, isLoading, isError } = useCourseList(currentPage, rowsPerPage);
+  // console.log(data?.courseDtos);
 
   if (isLoading) return <div>Loading</div>;
-  if (isError) return <div>کوفت</div>;
+  if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
   const { courseFilterDtos } = data;
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
-
 
   // ** User filter options
   const roleOptions = [
@@ -249,37 +250,39 @@ const UsersList = () => {
 
   // ** Function in get data on page change
   const handlePagination = (page) => {
-    dispatch(
-      getData({
-        sort,
-        sortColumn,
-        q: searchTerm,
-        perPage: rowsPerPage,
-        page: page.selected + 1,
-        role: currentRole.value,
-        status: currentStatus.value,
-        currentPlan: currentPlan.value,
-      })
-    );
-    setCurrentPage(page.selected + 1);
+    // dispatch(
+    //   getData({
+    //     sort,
+    //     sortColumn,
+    //     q: searchTerm,
+    //     perPage: rowsPerPage,
+    //     page: page.selected + 1,
+    //     role: currentRole.value,
+    //     status: currentStatus.value,
+    //     currentPlan: currentPlan.value,
+    //   })
+    // );
+    setCurrentPage(page.selected > 0 ? page.selected + 1 : 1);
+    console.log("Page Selected:", page.selected > 0 ? page.selected + 1 : 1);
   };
 
   // ** Function in get data on rows per page
   const handlePerPage = (e) => {
     const value = parseInt(e.currentTarget.value);
-    dispatch(
-      getData({
-        sort,
-        sortColumn,
-        q: searchTerm,
-        perPage: value,
-        page: currentPage,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
-      })
-    );
+    // dispatch(
+    //   getData({
+    //     sort,
+    //     sortColumn,
+    //     q: searchTerm,
+    //     perPage: value,
+    //     page: currentPage,
+    //     role: currentRole.value,
+    //     currentPlan: currentPlan.value,
+    //     status: currentStatus.value,
+    //   })
+    // );
     setRowsPerPage(value);
+    console.log("Per Page: ", value);
   };
 
   // ** Function in get data on search query change
@@ -301,7 +304,7 @@ const UsersList = () => {
 
   // ** Custom Pagination
   const CustomPagination = () => {
-    const count = Number(Math.ceil(store.total / rowsPerPage));
+    const count = Math.ceil(data?.totalCount / rowsPerPage);
 
     return (
       <ReactPaginate
@@ -309,7 +312,8 @@ const UsersList = () => {
         nextLabel={""}
         pageCount={count || 1}
         activeClassName="active"
-        forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+        // forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+        forcePage={currentPage > 0 ? currentPage - 1 : 0} // Adjust for zero-based indexing
         onPageChange={(page) => handlePagination(page)}
         pageClassName={"page-item"}
         nextLinkClassName={"page-link"}
@@ -318,7 +322,7 @@ const UsersList = () => {
         previousLinkClassName={"page-link"}
         pageLinkClassName={"page-link"}
         containerClassName={
-          "pagination react-paginate justify-content-end my-2 pe-1"
+          "pagination react-paginate justify-content-center my-2 pe-1"
         }
       />
     );
@@ -362,7 +366,6 @@ const UsersList = () => {
       })
     );
   };
-
 
   const column = [
     {
@@ -568,19 +571,25 @@ const UsersList = () => {
         <Row className="ltr py-1 px-2">
           <Col xl="6" className="d-flex align-items-center p-0">
             <div className="d-flex align-items-center w-100">
+              <label htmlFor="rows-per-page" style={{ marginRight: "25px" }}>
+                نمایش
+              </label>
               <Input
                 className="mx-50"
                 type="select"
                 id="rows-per-page"
                 value={rowsPerPage}
                 onChange={handlePerPage}
-                style={{ width: "15rem" }}
+                style={{ width: "5rem" }}
               >
-                <option value="10">مرتب سازی</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
+                <option value="10">۱۰</option>
+                <option value="15">۱۵</option>
+                <option value="25">۲۵</option>
+                <option value="50">۵۰</option>
+                <option value="75">۷۵</option>
+                <option value="100">۱۰۰</option>
               </Input>
-              <label htmlFor="rows-per-page">Entries</label>
+              {/* <label htmlFor="rows-per-page">Entries</label> */}
             </div>
           </Col>
           <Col
@@ -588,7 +597,6 @@ const UsersList = () => {
             className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
           >
             <div className="d-flex align-items-center mb-sm-0 mb-1 me-1 ">
-             
               <Input
                 id="search-invoice"
                 className="ms-50 w-100"
@@ -600,7 +608,6 @@ const UsersList = () => {
 
             <div className="d-flex align-items-center table-header-actions">
               <UncontrolledDropdown className="me-1">
-              
                 <DropdownMenu>
                   <DropdownItem className="w-100">
                     <Printer className="font-small-4 me-50" />
@@ -633,7 +640,7 @@ const UsersList = () => {
                 color="primary"
                 onClick={toggleSidebar}
               >
-              جستجو
+                جستجو
               </Button>
             </div>
           </Col>
@@ -645,12 +652,12 @@ const UsersList = () => {
             sortServer
             pagination
             responsive
-            // paginationServer
+            paginationServer
             columns={column}
             // onSort={handleSort}
             // sortIcon={<ChevronDown />}
             className="react-dataTable"
-            // paginationComponent={CustomPagination}
+            paginationComponent={CustomPagination}
             data={data?.courseDtos}
             // subHeaderComponent={
             //   <CustomHeader

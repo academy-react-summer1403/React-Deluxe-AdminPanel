@@ -159,7 +159,7 @@ const UserInfoCard = () => {
   if (isError) return <div>اطلاعات یافت نشد</div>;
 
   return (
-    <Fragment className="d-flex justify-content-between">
+    <div className="d-flex justify-content-between">
       <Card style={{ width: "300px" }}>
         <CardBody className="w-100">
           <div className="user-avatar-section  justify-content-center d-flex">
@@ -489,7 +489,7 @@ const UserInfoCard = () => {
           </Form>
         </ModalBody> */}
       </Modal>
-    </Fragment>
+    </div>
   );
 };
 

@@ -83,7 +83,15 @@ const UsersList = () => {
   });
   const [show, setShow] = useState(false);
 
-  const { data } = useUserList(searchTerm, currentRole.id, isActive.active);
+  const { data, isLoading, isError } = useUserList(
+    searchTerm,
+    currentRole.id,
+    isActive.active,
+    currentPage,
+    rowsPerPage
+  );
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
 
   console.log(currentRole);
 
@@ -113,7 +121,8 @@ const UsersList = () => {
 
   // ** Function in get data on page change
   const handlePagination = (page) => {
-    setCurrentPage(page.selected + 1);
+    setCurrentPage(page.selected > 0 ? page.selected + 1 : 1);
+    console.log("Page Selected:", page.selected > 0 ? page.selected + 1 : 1);
   };
 
   // ** Function in get data on rows per page
@@ -121,6 +130,7 @@ const UsersList = () => {
     const value = parseInt(e.currentTarget.value);
 
     setRowsPerPage(value);
+    console.log(value);
   };
 
   // ** Function in get data on search query change
@@ -129,7 +139,7 @@ const UsersList = () => {
   // };
   // ** Custom Pagination
   const CustomPagination = () => {
-    const count = Number(Math.ceil(store.total / rowsPerPage));
+    const count = Math.ceil(data?.totalCount / rowsPerPage);
 
     return (
       <ReactPaginate
@@ -137,7 +147,8 @@ const UsersList = () => {
         nextLabel={""}
         pageCount={count || 1}
         activeClassName="active"
-        forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+        // forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+        forcePage={currentPage > 0 ? currentPage - 1 : 0} // Adjust for zero-based indexing
         onPageChange={(page) => handlePagination(page)}
         pageClassName={"page-item"}
         nextLinkClassName={"page-link"}
@@ -146,7 +157,7 @@ const UsersList = () => {
         previousLinkClassName={"page-link"}
         pageLinkClassName={"page-link"}
         containerClassName={
-          "pagination react-paginate justify-content-end my-2 pe-1"
+          "pagination react-paginate justify-content-center my-2 pe-1"
         }
       />
     );
@@ -377,7 +388,7 @@ const UsersList = () => {
   ];
 
   return (
-    <Fragment style={{ width: "600px" }}>
+    <Fragment>
       <Modal
         isOpen={show}
         toggle={() => setShow(!show)}
@@ -457,9 +468,12 @@ const UsersList = () => {
                 onChange={handlePerPage}
                 style={{ width: "5rem" }}
               >
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
+                <option value="10">۱۰</option>
+                <option value="15">۱۵</option>
+                <option value="25">۲۵</option>
+                <option value="50">۵۰</option>
+                <option value="75">۷۵</option>
+                <option value="100">۱۰۰</option>
               </Input>
             </div>
           </Col>
@@ -532,12 +546,12 @@ const UsersList = () => {
             sortServer
             pagination
             responsive
-            // paginationServer
+            paginationServer
             columns={column}
             // onSort={handleSort}
             // sortIcon={<ChevronDown />}
             className="react-dataTable"
-            // paginationComponent={CustomPagination}
+            paginationComponent={CustomPagination}
             data={data?.listUser}
             // subHeaderComponent={
             //   <CustomHeader

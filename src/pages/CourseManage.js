@@ -7,7 +7,6 @@ const CourseManage = () => {
   return (
     <Fragment>
       <h2>لیست دوره ها</h2>
-
       <CourseList />
     </Fragment>
   );
