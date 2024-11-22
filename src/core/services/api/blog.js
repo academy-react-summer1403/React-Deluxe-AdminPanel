@@ -1,7 +1,7 @@
 import http from "../interceptor";
 import { useQuery } from "@tanstack/react-query";
 
-export const useBlogs = (search, role) => {
+export const useBlogs = (search, role, currentPage, rowsPerPage) => {
   const Blogs = async () => {
     try {
       const query = {};
@@ -9,7 +9,15 @@ export const useBlogs = (search, role) => {
 
       // if (role !== "" && role !== null) query.roleId = role;
 
-      const result = await http.get("/News/AdminNewsFilterList?PageNumber=1&RowsOfPage=10&SortingCol=InsertDate&SortType=DESC&Query=&IsActive=true", { params: query });
+      if (currentPage !== "" && currentPage !== null)
+        query.PageNumber = currentPage;
+      if (rowsPerPage !== "" && rowsPerPage !== null)
+        query.RowsOfPage = rowsPerPage;
+
+      const result = await http.get(
+        "/News/AdminNewsFilterList?SortingCol=InsertDate&SortType=DESC&Query=&IsActive=true",
+        { params: query }
+      );
       console.log(result);
 
       return result;
@@ -19,8 +27,7 @@ export const useBlogs = (search, role) => {
   };
 
   return useQuery({
-    queryKey: ["Blogs", search, role],
-
+    queryKey: ["Blogs", search, role, currentPage, rowsPerPage],
     queryFn: Blogs,
   });
 };
