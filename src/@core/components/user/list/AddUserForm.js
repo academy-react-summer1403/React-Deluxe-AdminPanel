@@ -34,14 +34,14 @@ const AddUserForm = () => {
   };
   return (
     <Card>
-      {/* <CardHeader>
-        <CardTitle tag="h4">Multiple Column</CardTitle>
-      </CardHeader> */}
+      <CardHeader>
+        <CardTitle tag="h4">افزودن کاربر جدید👤</CardTitle>
+      </CardHeader>
 
       <CardBody>
         <Form onSubmit={handleSubmit} innerRef={formRef}>
           <Row>
-            <Col md="6" sm="12" className="mb-1">
+            <Col md="12" sm="12" className="mb-1">
               <Label className="form-label" for="nameMulti">
                 نام
               </Label>
@@ -52,7 +52,7 @@ const AddUserForm = () => {
                 placeholder="نام"
               />
             </Col>
-            <Col md="6" sm="12" className="mb-1">
+            <Col md="12" sm="12" className="mb-1">
               <Label className="form-label" for="lastNameMulti">
                 نام خانوادگی
               </Label>
@@ -63,7 +63,7 @@ const AddUserForm = () => {
                 placeholder="نام خانوادگی"
               />
             </Col>
-            <Col md="6" sm="12" className="mb-1">
+            <Col md="12" sm="12" className="mb-1">
               <Label className="form-label" for="cityMulti">
                 شماره موبایل
               </Label>
@@ -74,7 +74,7 @@ const AddUserForm = () => {
                 placeholder="شماره موبایل"
               />
             </Col>
-            <Col md="6" sm="12" className="mb-1">
+            <Col md="12" sm="12" className="mb-1">
               <Label className="form-label" for="CountryMulti">
                 ایمیل
               </Label>
@@ -96,7 +96,7 @@ const AddUserForm = () => {
                 placeholder="Company"
               />
             </Col> */}
-            <Col md="6" sm="12" className="mb-1">
+            <Col md="12" sm="12" className="mb-1">
               <Label className="form-label" for="EmailMulti">
                 رمز عبور
               </Label>
