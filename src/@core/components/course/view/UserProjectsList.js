@@ -153,7 +153,7 @@ export const columns = [
 
 const UserProjectsList = () => {
   const { id } = useParams();
-  getQuery("userCourses", `/User/UserDetails/${id}`);
+  getQuery("userCourses", `/Course/${id}`);
   const { data, isError, isLoading } = useQuery({
     queryKey: ["userCourses"],
   });

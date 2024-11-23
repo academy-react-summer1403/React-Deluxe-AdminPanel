@@ -85,7 +85,7 @@ const UsersList = () => {
     rowsPerPage
   );
 
-  if (isLoading) return <FullPageLoading />;
+  // if (isLoading) return <FullPageLoading />;
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
 
   console.log(currentRole);

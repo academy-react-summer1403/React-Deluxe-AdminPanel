@@ -1,12 +1,10 @@
-import UserInfoCard from "../@core/components/course/view/UserInfoCard";
+import CourseInfoCard from "../@core/components/course/view/CourseInfoCard";
 import UserTabs from "../@core/components/course/view/Tabs";
-
-
 
 const CourseDetail = () => {
   return (
     <div className="d-flex gap-1">
-      <UserInfoCard />
+      <CourseInfoCard />
       <UserTabs />
     </div>
   );

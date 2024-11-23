@@ -14,10 +14,9 @@ export const useBlogs = (search, role, currentPage, rowsPerPage) => {
       if (rowsPerPage !== "" && rowsPerPage !== null)
         query.RowsOfPage = rowsPerPage;
 
-      const result = await http.get(
-        "/News/AdminNewsFilterList?SortingCol=InsertDate&SortType=DESC&Query=&IsActive=true",
-        { params: query }
-      );
+      const result = await http.get("/News/AdminNewsFilterList", {
+        params: query,
+      });
       console.log(result);
 
       return result;

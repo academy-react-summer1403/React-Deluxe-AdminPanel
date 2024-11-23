@@ -91,7 +91,7 @@ const UsersList = () => {
     currentPage,
     rowsPerPage
   );
-  if (isLoading) return <FullPageLoading />;
+  // if (isLoading) return <FullPageLoading />;
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
 
   console.log(currentRole);
@@ -488,7 +488,7 @@ const UsersList = () => {
                 className=" w-100"
                 type="text"
                 placeholder="...جستجو"
-                // value={searchTerm}
+                value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
