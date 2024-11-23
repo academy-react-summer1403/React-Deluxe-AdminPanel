@@ -37,7 +37,8 @@ const WizardModernVertical = () => {
       id: "account-details",
       title: "اطلاعات دوره مرحله اول",
       subtitle: "اطلاعات دوره را وارد نمایید.",
-      icon: <FileText size={18} />,
+      icon: 1,
+      // <FileText size={18} />
       content: (
         <AccountDetails
           stepper={stepper}
@@ -51,7 +52,8 @@ const WizardModernVertical = () => {
       id: "personal-info",
       title: "اطلاعات دوره مرحله دوم",
       subtitle: "اطلاعات دوره را وارد نمایید",
-      icon: <User size={18} />,
+      icon: 2,
+      // <User size={18} />
       content: (
         <PersonalInfo
           stepper={stepper}
@@ -65,7 +67,8 @@ const WizardModernVertical = () => {
       id: "step-address",
       title: "اطلاعات دوره مرحله سوم",
       subtitle: "اطلاعات دوره را وارد نمایید",
-      icon: <MapPin size={18} />,
+      icon: 3,
+      //  <MapPin size={18} />
       content: (
         <Address
           stepper={stepper}
@@ -78,7 +81,8 @@ const WizardModernVertical = () => {
       id: "social-links",
       title: "افزودن تکنولوژی",
       subtitle: "تکنولوژی را وارد نمایید",
-      icon: <Link size={18} />,
+      icon: 4,
+      //  <Link size={18} />
       content: (
         <SocialLinks
           stepper={stepper}

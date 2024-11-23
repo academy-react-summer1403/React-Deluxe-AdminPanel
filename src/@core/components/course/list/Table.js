@@ -184,6 +184,7 @@ import { Link } from "react-router-dom";
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
 import { useQuery } from "@tanstack/react-query";
 import { useCourseList } from "../../../../core/services/api/courseList";
+import { FullPageLoading } from "../../../../assets/Loadings/FullPageLoading/FullPageLoading";
 const UsersList = () => {
   // ** Store Vars
   // const dispatch = useDispatch()
@@ -214,10 +215,14 @@ const UsersList = () => {
   // const { data, isError, isLoading } = useQuery({
   //   queryKey: ["courses"],
   // });
-  const { data, isLoading, isError } = useCourseList(currentPage, rowsPerPage);
   // console.log(data?.courseDtos);
+  const { data, isLoading, isError } = useCourseList(
+    currentPage,
+    rowsPerPage,
+    searchTerm
+  );
 
-  if (isLoading) return <div>Loading</div>;
+  if (isLoading) return <FullPageLoading />;
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
   const { courseFilterDtos } = data;
   // ** Function to toggle sidebar
@@ -287,19 +292,20 @@ const UsersList = () => {
 
   // ** Function in get data on search query change
   const handleFilter = (val) => {
+    // dispatch(
+    //   getData({
+    //     sort,
+    //     q: val,
+    //     sortColumn,
+    //     page: currentPage,
+    //     perPage: rowsPerPage,
+    //     role: currentRole.value,
+    //     status: currentStatus.value,
+    //     currentPlan: currentPlan.value,
+    //   })
+    // );
     setSearchTerm(val);
-    dispatch(
-      getData({
-        sort,
-        q: val,
-        sortColumn,
-        page: currentPage,
-        perPage: rowsPerPage,
-        role: currentRole.value,
-        status: currentStatus.value,
-        currentPlan: currentPlan.value,
-      })
-    );
+    console.log("Search Value: ", val);
   };
 
   // ** Custom Pagination
