@@ -385,7 +385,10 @@ const UsersList = () => {
           <Avatar img={data.tumbImageAddress ?? Logo} />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column">
-            <Link className="user_name text-truncate text-body  p-0">
+            <Link
+              className="user_name text-truncate text-body p-0"
+              to={`/courseDetail/${data?.courseId}`}
+            >
               <span className="fw-bolder">{data?.fullName}</span>
             </Link>
             <small className="text-truncate text-muted mb-0">

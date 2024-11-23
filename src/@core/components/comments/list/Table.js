@@ -7,7 +7,6 @@ import Pic from "@src/assets/images/avatars/1.png";
 import Pic2 from "@src/assets/images/raty/star-on-2.png";
 import Logo from "@src/assets/images/logo/reactdeluxe.png";
 
-
 // ** Invoice List Sidebar
 import Sidebar from "./Sidebar";
 
@@ -49,6 +48,7 @@ import {
   DropdownItem,
   DropdownToggle,
   UncontrolledDropdown,
+  Badge,
 } from "reactstrap";
 
 // ** Styles
@@ -57,10 +57,7 @@ import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { Link } from "react-router-dom";
 import { useComments } from "../../../../core/services/api/Comments";
 
-
-
 const Comments = () => {
-
   // ** States
   const [sort, setSort] = useState("desc");
   const [searchTerm, setSearchTerm] = useState("");
@@ -77,19 +74,21 @@ const Comments = () => {
     label: "انتخاب کنید ...",
   });
 
-
-  const { data } = useComments(searchTerm,currentRole.id);
+  const { data } = useComments(
+    searchTerm,
+    currentRole.id,
+    currentPage,
+    rowsPerPage
+  );
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
-  
-
   // ** User filter options
   const roleOptions = [
     { value: "", label: "انتخاب کنید", id: null },
-    { value: "", label: "تایید شده", id: 1 },
-    { value: "", label: "تایید نشده", id: 2 },
+    { value: "", label: "تایید شده", id: true },
+    { value: "", label: "تایید نشده", id: false },
     // { value: "", label: "دانشجو", id: 5 },
   ];
 
@@ -110,7 +109,8 @@ const Comments = () => {
 
   // ** Function in get data on page change
   const handlePagination = (page) => {
-    setCurrentPage(page.selected + 1);
+    setCurrentPage(page.selected > 0 ? page.selected + 1 : 1);
+    console.log("Page Selected:", page.selected > 0 ? page.selected + 1 : 1);
   };
 
   // ** Function in get data on rows per page
@@ -122,12 +122,11 @@ const Comments = () => {
   // ** Function in get data on search query change
   const handleFilter = (val) => {
     setSearchTerm(val);
-   
   };
 
   // ** Custom Pagination
   const CustomPagination = () => {
-    const count = Number(Math.ceil(store.total / rowsPerPage));
+    const count = Math.ceil(data?.totalCount / rowsPerPage);
 
     return (
       <ReactPaginate
@@ -135,7 +134,8 @@ const Comments = () => {
         nextLabel={""}
         pageCount={count || 1}
         activeClassName="active"
-        forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+        // forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+        forcePage={currentPage > 0 ? currentPage - 1 : 0} // Adjust for zero-based indexing
         onPageChange={(page) => handlePagination(page)}
         pageClassName={"page-item"}
         nextLinkClassName={"page-link"}
@@ -144,7 +144,7 @@ const Comments = () => {
         previousLinkClassName={"page-link"}
         pageLinkClassName={"page-link"}
         containerClassName={
-          "pagination react-paginate justify-content-end my-2 pe-1"
+          "pagination react-paginate justify-content-center my-2 pe-1"
         }
       />
     );
@@ -175,7 +175,6 @@ const Comments = () => {
   const handleSort = (column, sortDirection) => {
     setSort(sortDirection);
     setSortColumn(column.sortField);
-   
   };
 
   const column = [
@@ -187,12 +186,11 @@ const Comments = () => {
       // selector: (data) => data?.fullName,
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
-          <Avatar img={ Logo} />
+          <Avatar img={Logo} />
           <div className="d-flex flex-column">
             <Link className="user_name text-truncate text-body  p-0">
               <span className="fw-bolder">{data?.userFullName}</span>
             </Link>
-          
           </div>
         </div>
       ),
@@ -219,7 +217,29 @@ const Comments = () => {
       sortable: true,
       minWidth: "172px",
       sortField: "accept",
-      selector: (row) =><div> {row.accept ? "تایید شده" : "تایید نشده"}</div>
+      selector: (row) => (
+        <div>
+          {" "}
+          {row.accept ? (
+            <Badge
+              color="light-success"
+              className="fs-5"
+              style={{ width: "60px", textAlign: "center" }}
+            >
+              تایید شده
+            </Badge>
+          ) : (
+            <Badge
+              color="light-danger"
+              className="fs-5"
+              style={{ width: "60px", textAlign: "center" }}
+            >
+              {" "}
+              تایید نشده{" "}
+            </Badge>
+          )}
+        </div>
+      ),
       // cell: row => renderRole(row)
     },
     {
@@ -241,7 +261,7 @@ const Comments = () => {
                 <FileText size={14} className="me-50" />
                 <span className="align-middle">رد کردن</span>
               </DropdownItem>
-             
+
               <DropdownItem
                 tag="a"
                 href="/"
@@ -276,7 +296,6 @@ const Comments = () => {
   return (
     <Fragment>
       <Card>
-      
         <CardBody>
           <Row>
             <Col md="4">
@@ -290,18 +309,6 @@ const Comments = () => {
                 theme={selectThemeColors}
                 onChange={(data) => {
                   setCurrentRole(data);
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      role: data.value,
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      status: currentStatus.value,
-                      currentPlan: currentPlan.value,
-                    })
-                  );
                 }}
               />
             </Col>
@@ -331,7 +338,6 @@ const Comments = () => {
                 }}
               />
             </Col>
-           
           </Row>
         </CardBody>
       </Card>
@@ -340,7 +346,9 @@ const Comments = () => {
         <Row className="ltr">
           <Col xl="6" className="d-flex align-items-center p-0">
             <div className="d-flex align-items-center w-100">
-              <label htmlFor="rows-per-page" style={{ marginRight: "20px" }}>نمایش</label>
+              <label htmlFor="rows-per-page" style={{ marginRight: "20px" }}>
+                نمایش
+              </label>
               <Input
                 className="mx-50"
                 type="select"
@@ -349,9 +357,12 @@ const Comments = () => {
                 onChange={handlePerPage}
                 style={{ width: "5rem" }}
               >
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
+                <option value="10">۱۰</option>
+                <option value="15">۱۵</option>
+                <option value="25">۲۵</option>
+                <option value="50">۵۰</option>
+                <option value="75">۷۵</option>
+                <option value="100">۱۰۰</option>
               </Input>
             </div>
           </Col>
@@ -360,17 +371,15 @@ const Comments = () => {
             className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
           >
             <div className="d-flex align-items-center mb-sm-0 mb-1 me-1">
-         
               <Input
                 id="search-invoice"
                 className="ms-50 w-100"
                 type="text"
                 placeholder="جستجو"
-
                 // value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-                 <Button
+              <Button
                 className="add-new-user"
                 color="primary"
                 onClick={toggleSidebar}
@@ -381,7 +390,6 @@ const Comments = () => {
 
             <div className="d-flex align-items-center table-header-actions">
               <UncontrolledDropdown className="me-1">
-          
                 <DropdownMenu>
                   <DropdownItem className="w-100">
                     <Printer className="font-small-4 me-50" />
@@ -408,8 +416,6 @@ const Comments = () => {
                   </DropdownItem>
                 </DropdownMenu>
               </UncontrolledDropdown>
-
-           
             </div>
           </Col>
         </Row>
@@ -420,12 +426,12 @@ const Comments = () => {
             sortServer
             pagination
             responsive
-            // paginationServer
+            paginationServer
             columns={column}
             // onSort={handleSort}
             // sortIcon={<ChevronDown />}
             className="react-dataTable"
-            // paginationComponent={CustomPagination}
+            paginationComponent={CustomPagination}
             data={data?.comments}
             // subHeaderComponent={
             //   <CustomHeader
