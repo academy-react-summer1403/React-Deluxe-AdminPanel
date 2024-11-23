@@ -21,7 +21,11 @@ const AccountDetails = ({ stepper, type, finalFormData, setFinalFormData }) => {
     <Fragment>
       {/* <div className='content-header'>
       </div> */}
-      <Form onSubmit={handleSubmit} innerRef={formRef}>
+      <Form
+        onSubmit={handleSubmit}
+        innerRef={formRef}
+        // className="d-flex flex-column justify-content-between"
+      >
         <Row>
           <Col md="6" className="mb-1">
             <Label className="form-label" for={`username-${type}`}>

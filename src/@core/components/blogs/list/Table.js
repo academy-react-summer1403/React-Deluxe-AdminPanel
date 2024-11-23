@@ -55,6 +55,7 @@ import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { Link } from "react-router-dom";
 import { useBlogs } from "../../../../core/services/api/blog";
+import { FullPageLoading } from "../../../../assets/Loadings/FullPageLoading/FullPageLoading";
 const UsersList = () => {
   // ** States
   const [sort, setSort] = useState("desc");
@@ -84,7 +85,7 @@ const UsersList = () => {
     rowsPerPage
   );
 
-  if (isLoading) return <div>Loading</div>;
+  if (isLoading) return <FullPageLoading />;
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
 
   console.log(currentRole);
