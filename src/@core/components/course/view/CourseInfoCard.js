@@ -22,7 +22,7 @@ import {
 // ** Third Party Components
 import Swal from "sweetalert2";
 import Select from "react-select";
-import { Check, Briefcase, X } from "react-feather";
+import { Check, Briefcase, X, Users, Bookmark } from "react-feather";
 import { useForm, Controller } from "react-hook-form";
 import withReactContent from "sweetalert2-react-content";
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
@@ -231,20 +231,20 @@ const CourseInfoCard = () => {
           <div className="d-flex justify-content-around my-2 pt-75">
             <div className="d-flex align-items-start me-2">
               <Badge color="light-primary" className="rounded p-75">
-                <Check className="font-medium-2" />
+                <Users className="font-medium-2" />
               </Badge>
               <div className="ms-75">
-                <h4 className="mb-0">1.23k</h4>
-                <small>دوره ها</small>
+                <h4 className="mb-0">{data?.courseUserTotal}</h4>
+                <small>کاربر ها</small>
               </div>
             </div>
             <div className="d-flex align-items-start">
               <Badge color="light-primary" className="rounded p-75">
-                <Briefcase className="font-medium-2" />
+                <Bookmark className="font-medium-2" />
               </Badge>
               <div className="ms-75">
-                <h4 className="mb-0">568</h4>
-                <small>دوره رزروشده</small>
+                <h4 className="mb-0">{data?.reserveUserTotal}</h4>
+                <small>رزرو ها</small>
               </div>
             </div>
           </div>

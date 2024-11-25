@@ -5,7 +5,15 @@ import { Fragment, useState } from "react";
 import { Nav, NavItem, NavLink } from "reactstrap";
 
 // ** Icons Imports
-import { User, Lock, Bookmark, Bell } from "react-feather";
+import {
+  User,
+  Lock,
+  Bookmark,
+  Bell,
+  Users,
+  MessageSquare,
+  DollarSign,
+} from "react-feather";
 import UserProjectsList from "./UserProjectsList";
 import Connections from "./Connections";
 import SecurityTab from "./SecurityTab";
@@ -31,25 +39,25 @@ const UserTabs = () => {
           <NavItem>
             <NavLink active={active === "1"} onClick={() => toggle("1")}>
               <User className="font-medium-3 me-50" />
-              <span className="fw-bold">دوره ها</span>
+              <span className="fw-bold">کاربر ها</span>
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink active={active === "2"} onClick={() => toggle("2")}>
-              <Lock className="font-medium-3 me-50" />
-              <span className="fw-bold">دوره های رزرو</span>
+              <Users className="font-medium-3 me-50" />
+              <span className="fw-bold">گروه ها</span>
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink active={active === "3"} onClick={() => toggle("3")}>
-              <Bookmark className="font-medium-3 me-50" />
+              <MessageSquare className="font-medium-3 me-50" />
               <span className="fw-bold">کامنت ها</span>
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink active={active === "4"} onClick={() => toggle("4")}>
-              <Bell className="font-medium-3 me-50" />
-              <span className="fw-bold">سایر اطلاعات کاربر</span>
+              <DollarSign className="font-medium-3 me-50" />
+              <span className="fw-bold">پرداختی ها</span>
             </NavLink>
           </NavItem>
           {/* <NavItem>

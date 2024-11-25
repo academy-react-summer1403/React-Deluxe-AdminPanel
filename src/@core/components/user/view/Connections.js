@@ -18,6 +18,13 @@ import facebookIcon from "@src/assets/images/icons/social/facebook.png";
 import linkedinIcon from "@src/assets/images/icons/social/linkedin.png";
 import dribbbleIcon from "@src/assets/images/icons/social/dribbble.png";
 import mailchimpIcon from "@src/assets/images/icons/social/mailchimp.png";
+import slack from "@src/assets/images/icons/social/slack.png";
+import cake from "@src/assets/images/icons/social/cake.png";
+import user from "@src/assets/images/icons/social/User.png";
+
+import { useParams } from "react-router-dom";
+import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
+import { useQuery } from "@tanstack/react-query";
 
 const connectedAccounts = [
   {
@@ -52,37 +59,49 @@ const connectedAccounts = [
   },
 ];
 
-const socialAccounts = [
-  {
-    linked: false,
-    title: "درباره کاربر",
-    logo: facebookIcon,
-  },
-  {
-    linked: true,
-    title: "آدرس  ایمیل",
-    url: "https://twitter.com/pixinvent",
-    logo: twitterIcon,
-  },
-  {
-    linked: true,
-    title: "تاریخ تولد",
-    url: "https://www.linkedin.com/company/pixinvent/",
-    logo: linkedinIcon,
-  },
-  {
-    linked: false,
-    title: "آی دی کاربر",
-    logo: dribbbleIcon,
-  },
-  {
-    linked: false,
-    title: "ایمیل بازبابی",
-    logo: behanceIcon,
-  },
-];
+const Connections = (data) => {
+  // const { id } = useParams();
+  // getQuery("userCourses", `/User/UserDetails/${id}`);
+  // const { data, isError, isLoading } = useQuery({
+  //   queryKey: ["userCourses"],
+  // });
 
-const Connections = () => {
+  // if (isLoading) return <div>Loading</div>;
+  // if (isError) return <div>اطلاعات یافت نشد</div>;
+
+  const socialAccounts = [
+    {
+      linked: false,
+      title: "درباره کاربر",
+      desc: data?.data.userAbout,
+      logo: user,
+    },
+    {
+      linked: true,
+      title: "آدرس  ایمیل",
+      desc: data?.data.gmail,
+      logo: googleIcon,
+    },
+    {
+      linked: true,
+      title: "تاریخ تولد",
+      desc: data?.data.birthDay.slice(0, 10),
+      logo: cake,
+    },
+    {
+      linked: false,
+      title: "آی دی کاربر",
+      desc: data?.data.id,
+      logo: slack,
+    },
+    {
+      linked: false,
+      title: "ایمیل بازبابی",
+      desc: data?.data.recoveryEmail,
+      logo: googleIcon,
+    },
+  ];
+
   return (
     <Fragment>
       <Card>
@@ -102,13 +121,7 @@ const Connections = () => {
                 <div className="d-flex align-item-center justify-content-between flex-grow-1">
                   <div className="me-1">
                     <p className="fw-bolder mb-0">{item.title}</p>
-                    {item.linked ? (
-                      <a href={item.url} target="_blank">
-                        ghonche.ataee@gmail.com
-                      </a>
-                    ) : (
-                      <span>member of react-deluxe developer</span>
-                    )}
+                    <span>{item.desc}</span>
                   </div>
                 </div>
               </div>

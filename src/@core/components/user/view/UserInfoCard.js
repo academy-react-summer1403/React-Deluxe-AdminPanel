@@ -36,6 +36,7 @@ import { selectThemeColors } from "@utils";
 
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
+import { useUserDetail } from "../../../../core/services/api/UserDetail";
 
 const roleColors = {
   editor: "light-info",
@@ -149,10 +150,11 @@ const UserInfoCard = () => {
 
   const { id } = useParams();
 
-  getQuery("userdetail", `/User/UserDetails/${id}`);
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ["userdetail"],
-  });
+  // getQuery("userdetail", `/User/UserDetails/${id}`);
+  // const { data, isError, isLoading } = useQuery({
+  //   queryKey: ["userdetail"],
+  // });
+  const { data, isError, isLoading } = useUserDetail(id);
 
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>اطلاعات یافت نشد</div>;
@@ -176,25 +178,14 @@ const UserInfoCard = () => {
                 }
                 className=" rounded  mb-2"
               />
-              <div className="user-avatar-section">
-                {/* <div className='d-flex align-items-center flex-column'>
-              {renderUserImg()}
-              <div className='d-flex flex-column align-items-center text-center'>
-                <div className='user-info'>
-                  <h4>{selectedUser !== null ? selectedUser.fullName : 'Eleanor Aguilar'}</h4>
-                  {selectedUser !== null ? (
-                    <Badge color={roleColors[selectedUser.role]} className='text-capitalize'>
-                      {selectedUser.role}
-                    </Badge>
-                  ) : null}
-                </div>
-              </div>
-            </div> */}
-              </div>
+              <div className="user-avatar-section"></div>
               <div className="d-flex flex-column align-items-center text-center">
                 <div className="user-info">
+                  <Badge>
+                    <span className="fs-3">{data.fName} </span>
+                    <span className="fs-3">{data.lName}</span>
+                  </Badge>
                   {/* {selectedUser !== null ? selectedUser.fullName : 'Eleanor Aguilar'} */}
-
                   {/* {selectedUser !== null ? (
                     <Badge color={roleColors[selectedUser.role]} className='text-capitalize'>
                       {selectedUser.role}
@@ -210,7 +201,7 @@ const UserInfoCard = () => {
                 <Check className="font-medium-2" />
               </Badge>
               <div className="ms-75">
-                <h4 className="mb-0">1.23k</h4>
+                <h4 className="mb-0">{data?.courses.length}</h4>
                 <small>دوره ها</small>
               </div>
             </div>
@@ -219,7 +210,7 @@ const UserInfoCard = () => {
                 <Briefcase className="font-medium-2" />
               </Badge>
               <div className="ms-75">
-                <h4 className="mb-0">568</h4>
+                <h4 className="mb-0">{data?.coursesReseves.length}</h4>
                 <small>دوره رزروشده</small>
               </div>
             </div>
@@ -228,14 +219,14 @@ const UserInfoCard = () => {
           <div className="info-container">
             {/* {selectedUser !== null ? ( */}
             <ul className="list-unstyled">
-              <li className="mb-75">
+              {/* <li className="mb-75">
                 <span className="fw-bolder me-25">نام کاربری:</span>
                 <span>{data.fName}</span>
               </li>
               <li className="mb-75">
                 <span className="fw-bolder me-25"> فامیلی:</span>
                 <span className="text-capitalize">{data.lName}</span>
-              </li>
+              </li> */}
               <li className="mb-75">
                 <span className="fw-bolder me-25">ایمیل:</span>
                 <span>{data.gmail}</span>

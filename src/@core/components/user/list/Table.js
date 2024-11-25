@@ -51,6 +51,7 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
+  Badge,
 } from "reactstrap";
 
 // ** Styles
@@ -346,7 +347,26 @@ const UsersList = () => {
       minWidth: "172px",
       sortField: "role",
       selector: (row) => (
-        <div> {row.active == "True" ? "فعال" : "غیرفعال"} </div>
+        <div>
+          {/* {row.active == "True" ? "فعال" : "غیرفعال"}  */}
+          {row.active == "True" ? (
+            <Badge
+              color="light-success"
+              className="fs-5"
+              style={{ width: "35px", textAlign: "center" }}
+            >
+              فعال
+            </Badge>
+          ) : (
+            <Badge
+              color="light-danger"
+              className="fs-5"
+              style={{ width: "70px", textAlign: "center" }}
+            >
+              غیر فعال
+            </Badge>
+          )}
+        </div>
       ),
     },
     {

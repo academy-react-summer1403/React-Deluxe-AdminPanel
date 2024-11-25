@@ -1,6 +1,6 @@
 // ** React Imports
 import { Fragment, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 // ** Reactstrap Imports
 import {
@@ -19,6 +19,7 @@ import {
   CardHeader,
   ModalHeader,
   FormFeedback,
+  Badge,
 } from "reactstrap";
 
 // ** Custom Components
@@ -36,10 +37,13 @@ import {
   Settings,
   MessageSquare,
   ChevronRight,
+  ChevronDown,
 } from "react-feather";
 
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
 import { useQuery } from "@tanstack/react-query";
+import DataTable from "react-data-table-component";
+import { useUserComment } from "../../../../core/services/api/UserComment";
 
 const SignupSchema = yup.object().shape({
   password: yup.string().min(8).required(),
@@ -169,7 +173,104 @@ const AppSMSComponent = ({ setShow, setShowDetailModal }) => {
   );
 };
 
-const SecurityTab = () => {
+export const columns = [
+  {
+    sortable: true,
+    minWidth: "130px",
+    name: "نام دوره",
+    selector: (row) => row.courseTitle,
+    cell: (row) => {
+      return (
+        <div className="d-flex justify-content-left align-items-center">
+          <div className="avatar-wrapper">
+            {/* <Avatar className='me-1' img={row.img} alt={row.courseName} imgWidth='32' /> */}
+          </div>
+          <div className="d-flex flex-column">
+            <span className="text-truncate fw-bolder">{row.courseTitle}</span>
+          </div>
+        </div>
+      );
+    },
+  },
+  {
+    sortable: true,
+    minWidth: "130px",
+    name: "عنوان کامنت",
+    selector: (row) => row.commentTitle,
+    cell: (row) => {
+      return (
+        <div className="d-flex justify-content-left align-items-center">
+          <div className="avatar-wrapper">
+            {/* <Avatar className='me-1' img={row.img} alt={row.courseName} imgWidth='32' /> */}
+          </div>
+          <div className="d-flex flex-column">
+            <span className="text-truncate-1 w-1 fw-bolder">
+              {row.commentTitle}
+            </span>
+          </div>
+        </div>
+      );
+    },
+  },
+  {
+    sortable: true,
+    minWidth: "130px",
+    name: "متن کامنت",
+    selector: (row) => row.describe,
+    cell: (row) => {
+      return (
+        <div className="d-flex justify-content-left align-items-center">
+          <div className="avatar-wrapper">
+            {/* <Avatar className='me-1' img={row.img} alt={row.courseName} imgWidth='32' /> */}
+          </div>
+          <div className="d-flex flex-column">
+            <span className="text-truncate-1 w-1 fw-bolder">
+              {row.describe}
+            </span>
+          </div>
+        </div>
+      );
+    },
+  },
+  {
+    sortable: true,
+    minWidth: "130px",
+    name: "وضعیت",
+    selector: (row) => row.accept,
+    cell: (row) => {
+      return (
+        <div className="d-flex justify-content-left align-items-center">
+          <div className="avatar-wrapper">
+            {/* <Avatar className='me-1' img={row.img} alt={row.courseName} imgWidth='32' /> */}
+          </div>
+          <div className="d-flex flex-column">
+            <span className="text-truncate fw-bolder">
+              {row.accept ? (
+                <Badge
+                  color="light-success"
+                  className="fs-5"
+                  style={{ width: "35px", textAlign: "center" }}
+                >
+                  فعال
+                </Badge>
+              ) : (
+                <Badge
+                  color="light-danger"
+                  className="fs-5"
+                  style={{ width: "70px", textAlign: "center" }}
+                >
+                  غیر فعال
+                </Badge>
+              )}
+            </span>
+          </div>
+        </div>
+      );
+    },
+  },
+];
+
+const CommentTap = () => {
   // ** Hooks
   const [show, setShow] = useState(false);
   const [authType, setAuthType] = useState("authApp");
@@ -190,143 +291,30 @@ const SecurityTab = () => {
     setShowDetailModal(true);
   };
 
-  // getQuery("courses", "/Course/CommentManagment");
+  const { id } = useParams();
+  // getQuery("userCourses", `/Course/CommentManagment?userId=${id}`);
   // const { data, isError, isLoading } = useQuery({
-  //   queryKey: ["courses"],
+  //   queryKey: ["userCourses"],
   // });
+  const { data, isError, isLoading } = useUserComment(id);
 
-  // if (isLoading) return <div>Loading</div>;
-  // if (isError) return <div>اطلاعات یافت نشد</div>;
+  if (isLoading) return <div>Loading</div>;
+  if (isError) return <div>اطلاعات یافت نشد</div>;
 
   return (
-    <Fragment>
-      <Card>
-        <Table className="text-nowrap text-center" responsive>
-          <thead>
-            <tr>
-              <th className="text-start">نام دوره</th>
-              <th>عنوان کامنت</th>
-              <th>متن کامنت</th>
-              <th>وضعیت</th>
-            </tr>
-          </thead>
-          <tbody>
-            {recentDevicesArr.map((item, index) => {
-              return (
-                <tr key={index}>
-                  <td className="text-start">
-                    <span className="fw-bolder">{item.browser}</span>
-                  </td>
-                  <td>{item.device}</td>
-                  <td>{item.location}</td>
-                  <td>{item.activity}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-      </Card>
-      <Modal
-        isOpen={show}
-        toggle={() => setShow(!show)}
-        className="modal-dialog-centered modal-lg"
-      >
-        <ModalHeader
-          className="bg-transparent"
-          toggle={() => setShow(!show)}
-        ></ModalHeader>
-        <ModalBody className="pb-5 px-sm-5 mx-50">
-          <h1 className="text-center mb-1">Select Authentication Method</h1>
-          <p className="text-center mb-3">
-            you also need to select a method by which the proxy
-            <br />
-            authenticates to the directory serve
-          </p>
-          <div className="custom-options-checkable">
-            <input
-              type="radio"
-              id="authApp"
-              name="authType"
-              checked={authType === "authApp"}
-              className="custom-option-item-check"
-              onChange={() => setAuthType("authApp")}
-            />
-            <label
-              htmlFor="authApp"
-              className="custom-option-item d-flex align-items-center flex-column flex-sm-row px-3 py-2 mb-2"
-            >
-              <span>
-                <Settings className="font-large-2 me-sm-2 mb-2 mb-sm-0" />
-              </span>
-              <span>
-                <span className="custom-option-item-title d-block h3">
-                  Authenticator Apps
-                </span>
-                <span className="mt-75">
-                  Get codes from an app like Google Authenticator, Microsoft
-                  Authenticator, Authy or 1Password.
-                </span>
-              </span>
-            </label>
-            <input
-              type="radio"
-              id="authSMS"
-              name="authType"
-              checked={authType === "authSMS"}
-              className="custom-option-item-check"
-              onChange={() => setAuthType("authSMS")}
-            />
-            <label
-              htmlFor="authSMS"
-              className="custom-option-item d-flex align-items-center flex-column flex-sm-row px-3 py-2 mb-2"
-            >
-              <span>
-                <MessageSquare className="font-large-2 me-sm-2 mb-2 mb-sm-0" />
-              </span>
-              <span>
-                <span className="custom-option-item-title d-block h3">SMS</span>
-                <span className="mt-75">
-                  We will send a code via SMS if you need to use your backup
-                  login method.
-                </span>
-              </span>
-            </label>
-          </div>
-          <Button
-            color="primary"
-            className="float-end mt-2"
-            onClick={handleContinue}
-          >
-            <span className="me-50">Continue</span>
-            <ChevronRight size={14} />
-          </Button>
-        </ModalBody>
-      </Modal>
-      <Modal
-        isOpen={showDetailModal}
-        className="modal-dialog-centered modal-lg"
-        toggle={() => setShowDetailModal(!showDetailModal)}
-      >
-        <ModalHeader
-          className="bg-transparent"
-          toggle={() => setShowDetailModal(!showDetailModal)}
-        ></ModalHeader>
-        <ModalBody className="pb-5 px-sm-5 mx-50">
-          {authType === "authApp" ? (
-            <AppAuthComponent
-              setShow={setShow}
-              setShowDetailModal={setShowDetailModal}
-            />
-          ) : (
-            <AppSMSComponent
-              setShow={setShow}
-              setShowDetailModal={setShowDetailModal}
-            />
-          )}
-        </ModalBody>
-      </Modal>
-    </Fragment>
+    <Card>
+      <div className="react-dataTable user-view-account-projects ">
+        <DataTable
+          noHeader
+          responsive
+          columns={columns}
+          data={data?.comments}
+          className="react-dataTable"
+          sortIcon={<ChevronDown size={10} />}
+        />
+      </div>
+    </Card>
   );
 };
 
-export default SecurityTab;
+export default CommentTap;
