@@ -92,7 +92,7 @@ const Routes = [
     element: <AddBlogs />,
   },
   {
-    path: "/blogsdetail",
+    path: "/blogsDetail/:id",
     element: <BlogsDetail />,
   },
 

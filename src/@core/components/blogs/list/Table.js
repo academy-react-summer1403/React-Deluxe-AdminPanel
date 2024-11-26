@@ -49,6 +49,7 @@ import {
   DropdownToggle,
   UncontrolledDropdown,
   Badge,
+  UncontrolledTooltip,
 } from "reactstrap";
 
 // ** Styles
@@ -57,6 +58,8 @@ import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { Link } from "react-router-dom";
 import { useBlogs } from "../../../../core/services/api/blog";
 import { FullPageLoading } from "../../../../assets/Loadings/FullPageLoading/FullPageLoading";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 const UsersList = () => {
   // ** States
   const [sort, setSort] = useState("desc");
@@ -238,6 +241,54 @@ const UsersList = () => {
     );
   };
 
+  const MySwal = withReactContent(Swal);
+
+  // const mutation = useDeleteCourse();
+
+  const handleDelete = async (row) => {
+    console.log(row);
+    return MySwal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert user!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, Suspend user!",
+      customClass: {
+        confirmButton: "btn btn-primary",
+        cancelButton: "btn btn-outline-danger ms-1",
+      },
+      buttonsStyling: false,
+    }).then(async (result) => {
+      if (result.value) {
+        try {
+          await mutation.mutateAsync({
+            CourseId: row.courseId,
+            isActive: row.isActive,
+          });
+        } catch (error) {
+          console.log(error);
+        }
+        MySwal.fire({
+          icon: "success",
+          title: "Suspended!",
+          text: "User has been suspended.",
+          customClass: {
+            confirmButton: "btn btn-success",
+          },
+        });
+      } else if (result.dismiss === MySwal.DismissReason.cancel) {
+        MySwal.fire({
+          title: "Cancelled",
+          text: "Cancelled Suspension :)",
+          icon: "error",
+          customClass: {
+            confirmButton: "btn btn-success",
+          },
+        });
+      }
+    });
+  };
+
   const column = [
     {
       name: "نویسنده",
@@ -250,7 +301,7 @@ const UsersList = () => {
           <Avatar img={data.currentImageAddressTumb ?? Logo} />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column ">
-            <Link className="user_name text-truncate text-body  p-0 ">
+            <Link className="user_name text-truncate text-body p-0">
               <span className="fw-bolder">{data?.addUserFullName}</span>
             </Link>
           </div>
@@ -308,9 +359,41 @@ const UsersList = () => {
     {
       name: "اقدام",
       maxWidth: "100px",
+      style: {
+        textAlign: "center", // Centers the text horizontally
+        verticalAlign: "middle", // Centers the text vertically
+      },
       cell: (row) => (
-        <div className="column-action">
-          <UncontrolledDropdown>
+        <div className="column-action d-flex">
+          <Link
+            className="user_name text-truncate text-body p-0"
+            to={`/blogsDetail/${row?.id}`}
+          >
+            <div className="btn btn-sm">
+              <FileText
+                className="cursor-pointer"
+                size={17}
+                id={`send-tooltip-${row.id}`}
+              />
+              <UncontrolledTooltip
+                placement="top"
+                target={`send-tooltip-${row.id}`}
+                // className="mb-1"
+              >
+                جزییات دوره
+              </UncontrolledTooltip>
+            </div>
+          </Link>
+          <div className="btn btn-sm" onClick={() => handleDelete(row)}>
+            <Trash2 size={17} className="" id={`pw-tooltip-${row.id}`} />
+            <UncontrolledTooltip
+              placement="top"
+              target={`pw-tooltip-${row.id}`}
+            >
+              حذف دوره
+            </UncontrolledTooltip>
+          </div>
+          {/* <UncontrolledDropdown>
             <DropdownToggle tag="div" className="btn btn-sm">
               <MoreVertical size={14} className="cursor-pointer" />
             </DropdownToggle>
@@ -337,7 +420,7 @@ const UsersList = () => {
                 <span className="align-middle">حذف</span>
               </DropdownItem>
             </DropdownMenu>
-          </UncontrolledDropdown>
+          </UncontrolledDropdown> */}
         </div>
       ),
     },

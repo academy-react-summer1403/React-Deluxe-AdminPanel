@@ -61,6 +61,8 @@ import { Link } from "react-router-dom";
 import { useUserList } from "../../../../core/services/api/userList";
 import AddUserForm from "./AddUserForm";
 import { FullPageLoading } from "../../../../assets/Loadings/FullPageLoading/FullPageLoading";
+import Chart from "react-apexcharts";
+
 const UsersList = () => {
   // ** States
   const [sort, setSort] = useState("desc");
@@ -191,6 +193,69 @@ const UsersList = () => {
     setSort(sortDirection);
     setSortColumn(column.sortField);
   };
+
+  const chartOptions = {
+      chart: {
+        sparkline: {
+          enabled: true,
+        },
+        dropShadow: {
+          enabled: true,
+          blur: 3,
+          left: 1,
+          top: 1,
+          opacity: 0.1,
+        },
+      },
+      colors: ["#51e5a8"],
+      plotOptions: {
+        radialBar: {
+          offsetY: 10,
+          startAngle: -150,
+          endAngle: 150,
+          hollow: {
+            size: "77%",
+          },
+          track: {
+            background: "#ebe9f1",
+            strokeWidth: "50%",
+          },
+          dataLabels: {
+            name: {
+              show: false,
+            },
+            value: {
+              color: "#5e5873",
+              fontFamily: "Montserrat",
+              fontSize: "2.86rem",
+              fontWeight: "600",
+            },
+          },
+        },
+      },
+      fill: {
+        type: "gradient",
+        gradient: {
+          shade: "dark",
+          type: "horizontal",
+          shadeIntensity: 0.5,
+          // gradientToColors: [red],
+          inverseColors: true,
+          opacityFrom: 1,
+          opacityTo: 1,
+          stops: [0, 100],
+        },
+      },
+      stroke: {
+        lineCap: "round",
+      },
+      grid: {
+        padding: {
+          bottom: 30,
+        },
+      },
+    },
+    series = [83];
 
   const column = [
     {
@@ -333,6 +398,32 @@ const UsersList = () => {
       minWidth: "162px",
       sortField: "role",
       selector: (row) => row.profileCompletionPercentage,
+      cell: (row) => (
+        // <div
+        //   // key={state.title}
+        //   className="browser-states d-flex justify-content-between align-items-center mb-3"
+        // >
+        //   <div className="progress" style={{ height: "50px", width: "50px" }}>
+        //     <div
+        //       className="progress-bar"
+        //       role="progressbar"
+        //       style={{ width: `${row.profileCompletionPercentage}%` }}
+        //       aria-valuenow={row.profileCompletionPercentage}
+        //       aria-valuemin="0"
+        //       aria-valuemax="100"
+        //     ></div>
+        //   </div>
+        // </div>
+        <div className="ms-2" style={{ width: "50px", height: "50px" }}>
+          <Chart
+            options={chartOptions}
+            series={85}
+            type="radialBar"
+            height={50}
+            width={50}
+          />
+        </div>
+      ),
     },
     {
       name: "جنسیت",

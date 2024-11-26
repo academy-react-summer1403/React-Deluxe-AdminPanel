@@ -38,6 +38,8 @@ import { selectThemeColors } from "@utils";
 import "@styles/react/libs/react-select/_react-select.scss";
 // import { EditModal } from "./EditModal";
 import { DatePersianizer } from "./../../../../utility/utils/DatePersianizer";
+import { useDeleteCourse } from "../../../../core/services/api/DeleteCourse";
+import { usehandleDelete } from "../list/CourseHandleDelete/handleDelete";
 
 const roleColors = {
   editor: "light-info",
@@ -75,7 +77,7 @@ const languageOptions = [
   { value: "dutch", label: "Dutch" },
 ];
 
-const MySwal = withReactContent(Swal);
+// const MySwal = withReactContent(Swal);
 
 // ** render user img
 //  const renderUserImg = () => {
@@ -114,40 +116,44 @@ const CourseInfoCard = () => {
   // ** State
   const [show, setShow] = useState(false);
 
-  const handleSuspendedClick = () => {
-    return MySwal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert user!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonText: "Yes, Suspend user!",
-      customClass: {
-        confirmButton: "btn btn-primary",
-        cancelButton: "btn btn-outline-danger ms-1",
-      },
-      buttonsStyling: false,
-    }).then(function (result) {
-      if (result.value) {
-        MySwal.fire({
-          icon: "success",
-          title: "Suspended!",
-          text: "User has been suspended.",
-          customClass: {
-            confirmButton: "btn btn-success",
-          },
-        });
-      } else if (result.dismiss === MySwal.DismissReason.cancel) {
-        MySwal.fire({
-          title: "Cancelled",
-          text: "Cancelled Suspension :)",
-          icon: "error",
-          customClass: {
-            confirmButton: "btn btn-success",
-          },
-        });
-      }
-    });
-  };
+  // const mutation = useDeleteCourse();
+
+  // const handleSuspendedClick = () => {
+  //   return MySwal.fire({
+  //     title: "Are you sure?",
+  //     text: "You won't be able to revert user!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonText: "Yes, Suspend user!",
+  //     customClass: {
+  //       confirmButton: "btn btn-primary",
+  //       cancelButton: "btn btn-outline-danger ms-1",
+  //     },
+  //     buttonsStyling: false,
+  //   }).then(function (result) {
+  //     if (result.value) {
+  //       MySwal.fire({
+  //         icon: "success",
+  //         title: "Suspended!",
+  //         text: "User has been suspended.",
+  //         customClass: {
+  //           confirmButton: "btn btn-success",
+  //         },
+  //       });
+  //     } else if (result.dismiss === MySwal.DismissReason.cancel) {
+  //       MySwal.fire({
+  //         title: "Cancelled",
+  //         text: "Cancelled Suspension :)",
+  //         icon: "error",
+  //         customClass: {
+  //           confirmButton: "btn btn-success",
+  //         },
+  //       });
+  //     }
+  //   });
+  // };
+  const handleDelete = usehandleDelete();
+
 
   const { id } = useParams();
 
@@ -310,7 +316,7 @@ const CourseInfoCard = () => {
               className="ms-1"
               color="danger"
               outline
-              onClick={handleSuspendedClick}
+              onClick={() => handleDelete(data)}
             >
               غیرفعال کردن
             </Button>
