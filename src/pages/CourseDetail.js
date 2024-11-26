@@ -1,3 +1,4 @@
+
 import CourseInfoCard from "../@core/components/course/view/CourseInfoCard";
 import UserTabs from "../@core/components/course/view/Tabs";
 

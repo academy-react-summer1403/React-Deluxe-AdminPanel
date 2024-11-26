@@ -59,8 +59,12 @@ import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { Link } from "react-router-dom";
 import { useUserList } from "../../../../core/services/api/userList";
+
+import CardBrowserState from "./progress";
+
 import AddUserForm from "./AddUserForm";
 import { FullPageLoading } from "../../../../assets/Loadings/FullPageLoading/FullPageLoading";
+
 const UsersList = () => {
   // ** States
   const [sort, setSort] = useState("desc");
@@ -331,8 +335,9 @@ const UsersList = () => {
       name: "درصد تکمیل پروفایل",
       sortable: true,
       minWidth: "162px",
-      sortField: "role",
-      selector: (row) => row.profileCompletionPercentage,
+      cell: (row) => (
+        <CardBrowserState percent={row.profileCompletionPercentage} />
+      ),
     },
     {
       name: "جنسیت",
