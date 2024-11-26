@@ -26,8 +26,11 @@ import {
 
 // ** Default Avatar Image
 import defaultAvatar from "@src/assets/images/portrait/small/avatar-s-11.jpg";
+import { useCurrentUserInfo } from "../../../../core/services/api/CurrentUserInfo";
 
 const UserDropdown = () => {
+  const { data } = useCurrentUserInfo();
+  console.log(data);
   return (
     <UncontrolledDropdown tag="li" className="dropdown-user nav-item">
       <DropdownToggle
@@ -37,11 +40,13 @@ const UserDropdown = () => {
         onClick={(e) => e.preventDefault()}
       >
         <div className="user-nav d-sm-flex d-none">
-          <span className="user-name fw-bold">John Doe</span>
-          <span className="user-status">Admin</span>
+          <span className="user-name fw-bolder fs-5">
+            {data?.fName} {data?.lName}
+          </span>
+          <span className="user-status">ادمین</span>
         </div>
         <Avatar
-          img={defaultAvatar}
+          img={data?.currentPictureAddress}
           imgHeight="40"
           imgWidth="40"
           status="online"

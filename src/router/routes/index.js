@@ -37,7 +37,6 @@ const BlogsDetail = lazy(() => import("../../pages/BlogsDetail"));
 const AddBlogs = lazy(() => import("../../pages/AddBlogs"));
 const Comments = lazy(() => import("../../pages/Comments"));
 
-
 const Login = lazy(() => import("../../pages/Login"));
 const Register = lazy(() => import("../../pages/Register"));
 const ForgotPassword = lazy(() => import("../../pages/ForgotPassword"));
@@ -77,7 +76,7 @@ const Routes = [
     element: <CourseManage />,
   },
   {
-    path: "/courseDetail",
+    path: "/courseDetail/:id",
     element: <CourseDetail />,
   },
   {

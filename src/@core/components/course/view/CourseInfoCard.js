@@ -22,7 +22,7 @@ import {
 // ** Third Party Components
 import Swal from "sweetalert2";
 import Select from "react-select";
-import { Check, Briefcase, X } from "react-feather";
+import { Check, Briefcase, X, Users, Bookmark } from "react-feather";
 import { useForm, Controller } from "react-hook-form";
 import withReactContent from "sweetalert2-react-content";
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
@@ -36,7 +36,8 @@ import { selectThemeColors } from "@utils";
 
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
-import { useUserDetail } from "../../../../core/services/api/UserDetail";
+// import { EditModal } from "./EditModal";
+import { DatePersianizer } from "./../../../../utility/utils/DatePersianizer";
 
 const roleColors = {
   editor: "light-info",
@@ -109,7 +110,7 @@ const MySwal = withReactContent(Swal);
 //     )
 //   }
 // }
-const UserInfoCard = () => {
+const CourseInfoCard = () => {
   // ** State
   const [show, setShow] = useState(false);
 
@@ -150,11 +151,10 @@ const UserInfoCard = () => {
 
   const { id } = useParams();
 
-  // getQuery("userdetail", `/User/UserDetails/${id}`);
-  // const { data, isError, isLoading } = useQuery({
-  //   queryKey: ["userdetail"],
-  // });
-  const { data, isError, isLoading } = useUserDetail(id);
+  getQuery("userdetail", `/Course/${id}`);
+  const { data, isError, isLoading } = useQuery({
+    queryKey: ["userdetail"],
+  });
 
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>اطلاعات یافت نشد</div>;
@@ -171,21 +171,31 @@ const UserInfoCard = () => {
                 width="210"
                 alt="user-avatar"
                 src={
-                  data.currentPictureAddress !== null &&
-                  data.currentPictureAddress !== "Not-set"
-                    ? data.currentPictureAddress
+                  data.imageAddress !== null && data.imageAddress !== "Not-set"
+                    ? data.imageAddress
                     : Logo
                 }
                 className=" rounded  mb-2"
               />
-              <div className="user-avatar-section"></div>
+              <div className="user-avatar-section">
+                {/* <div className='d-flex align-items-center flex-column'>
+              {renderUserImg()}
+              <div className='d-flex flex-column align-items-center text-center'>
+                <div className='user-info'>
+                  <h4>{selectedUser !== null ? selectedUser.fullName : 'Eleanor Aguilar'}</h4>
+                  {selectedUser !== null ? (
+                    <Badge color={roleColors[selectedUser.role]} className='text-capitalize'>
+                      {selectedUser.role}
+                    </Badge>
+                  ) : null}
+                </div>
+              </div>
+            </div> */}
+              </div>
               <div className="d-flex flex-column align-items-center text-center">
                 <div className="user-info">
-                  <Badge>
-                    <span className="fs-3">{data.fName} </span>
-                    <span className="fs-3">{data.lName}</span>
-                  </Badge>
                   {/* {selectedUser !== null ? selectedUser.fullName : 'Eleanor Aguilar'} */}
+
                   {/* {selectedUser !== null ? (
                     <Badge color={roleColors[selectedUser.role]} className='text-capitalize'>
                       {selectedUser.role}
@@ -193,25 +203,48 @@ const UserInfoCard = () => {
                   ) : null} */}
                 </div>
               </div>
+              <div className="d-flex flex-column justify-content-center align-items-center">
+                <span className="text-center fw-bolder fs-3">
+                  {" "}
+                  {data.title}
+                </span>
+                {data?.isActive ? (
+                  <Badge
+                    color="light-success"
+                    className="fs-5"
+                    style={{ width: "35px", textAlign: "center" }}
+                  >
+                    فعال
+                  </Badge>
+                ) : (
+                  <Badge
+                    color="light-danger"
+                    className="fs-5"
+                    style={{ width: "70px", textAlign: "center" }}
+                  >
+                    غیر فعال
+                  </Badge>
+                )}
+              </div>
             </div>
           </div>
           <div className="d-flex justify-content-around my-2 pt-75">
             <div className="d-flex align-items-start me-2">
               <Badge color="light-primary" className="rounded p-75">
-                <Check className="font-medium-2" />
+                <Users className="font-medium-2" />
               </Badge>
               <div className="ms-75">
-                <h4 className="mb-0">{data?.courses.length}</h4>
-                <small>دوره ها</small>
+                <h4 className="mb-0">{data?.courseUserTotal}</h4>
+                <small>کاربر ها</small>
               </div>
             </div>
             <div className="d-flex align-items-start">
               <Badge color="light-primary" className="rounded p-75">
-                <Briefcase className="font-medium-2" />
+                <Bookmark className="font-medium-2" />
               </Badge>
               <div className="ms-75">
-                <h4 className="mb-0">{data?.coursesReseves.length}</h4>
-                <small>دوره رزروشده</small>
+                <h4 className="mb-0">{data?.reserveUserTotal}</h4>
+                <small>رزرو ها</small>
               </div>
             </div>
           </div>
@@ -220,41 +253,51 @@ const UserInfoCard = () => {
             {/* {selectedUser !== null ? ( */}
             <ul className="list-unstyled">
               {/* <li className="mb-75">
-                <span className="fw-bolder me-25">نام کاربری:</span>
-                <span>{data.fName}</span>
-              </li>
-              <li className="mb-75">
-                <span className="fw-bolder me-25"> فامیلی:</span>
-                <span className="text-capitalize">{data.lName}</span>
+                <span className="fw-bolder me-25">نام دوره:</span>
+                <span> {data.title}</span>
               </li> */}
+
               <li className="mb-75">
-                <span className="fw-bolder me-25">ایمیل:</span>
-                <span>{data.gmail}</span>
+                <span className="fw-bolder me-25">نام استاد:</span>
+                <span> {data.teacherName}</span>
               </li>
               <li className="mb-75">
-                <span className="fw-bolder me-25">شماره تماس:</span>
-                <Badge
+                <span className="fw-bolder me-25">نام کلاس:</span>
+                {/* <Badge
                   className="text-capitalize"
                   color={statusColors[data.phoneNumber]}
-                >
-                  {data.phoneNumber}
-                </Badge>
+                > */}
+                <span> {data.courseClassRoomName}</span>
+
+                {/* </Badge> */}
               </li>
               <li className="mb-75">
-                <span className="fw-bolder me-25">درصد تکمیل پروفایل :</span>
-                <span>{data.profileCompletionPercentage}</span>
+                <span className="fw-bolder me-25">سطح دوره :</span>
+                <span> {data.courseLevelName}</span>
               </li>
               <li className="mb-75">
-                <span className="fw-bolder me-25">کدملی:</span>
-                <span>{data.nationalCode}</span>
+                <span className="fw-bolder me-25">وضعیت دوره :</span>
+                <span>{data.courseStatusName}</span>
+              </li>
+              <li className="mb-75">
+                <span className="fw-bolder me-25"> نوع دوره:</span>
+                <span> {data.courseTypeName}</span>
+              </li>
+              <li className="mb-75">
+                <span className="fw-bolder me-25">قیمت دوره:</span>
+                <span> {data.cost} تومان</span>
+              </li>
+              <li className="mb-75">
+                <span className="fw-bolder me-25">شروع دوره:</span>
+                <span> {DatePersianizer(data.startTime)}</span>
+              </li>
+              <li className="mb-75">
+                <span className="fw-bolder me-25">پایان دوره:</span>
+                <span> {DatePersianizer(data.endTime)}</span>
               </li>
               <li className="mb-75">
                 <span className="fw-bolder me-25"> توضیحات:</span>
-                <span> {data.userAbout}</span>
-              </li>
-              <li className="mb-75">
-                <span className="fw-bolder me-25">کشور:</span>
-                <span>ایران</span>
+                <span className="text-capitalize">{data.describe}</span>
               </li>
             </ul>
             {/* ) : null} */}
@@ -274,17 +317,19 @@ const UserInfoCard = () => {
           </div>
         </CardBody>
       </Card>
+      {/* <EditModal /> */}
       <Modal
         isOpen={show}
         toggle={() => setShow(!show)}
         className="modal-dialog-centered modal-lg"
       >
-        <ModalHeader
+        <div>test</div>
+        {/* <ModalHeader
           className="bg-transparent"
           toggle={() => setShow(!show)}
         ></ModalHeader>
         <ModalBody className="px-sm-5 pt-50 pb-5">
-          {/* <div className="text-center mb-2">
+          <div className="text-center mb-2">
             <h1 className="mb-1">Edit User Information</h1>
             <p>Updating user details will receive a privacy audit.</p>
           </div>
@@ -474,12 +519,11 @@ const UserInfoCard = () => {
                 </Button>
               </Col>
             </Row>
-          </Form> */}
-          <div>testtestt</div>
-        </ModalBody>
+          </Form>
+        </ModalBody> */}
       </Modal>
     </div>
   );
 };
 
-export default UserInfoCard;
+export default CourseInfoCard;

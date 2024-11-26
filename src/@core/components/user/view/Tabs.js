@@ -8,16 +8,27 @@ import { Nav, NavItem, NavLink } from "reactstrap";
 import { User, Lock, Bookmark, Bell } from "react-feather";
 import UserProjectsList from "./UserProjectsList";
 import Connections from "./Connections";
-import SecurityTab from "./SecurityTab";
+import SecurityTab from "./CommentTap";
+import UserCourseReserve from "./UserCourseReserve";
+import CommentTap from "./CommentTap";
+import { useUserDetail } from "../../../../core/services/api/UserDetail";
+import { useParams } from "react-router-dom";
 
 const UserTabs = () => {
   const [active, setActive] = useState("1");
+
+  const { id } = useParams();
 
   const toggle = (tab) => {
     if (active !== tab) {
       setActive(tab);
     }
   };
+
+  const { data, isError, isLoading } = useUserDetail(id);
+  console.log("tabs data:", data);
+  if (isLoading) return <div>Loading</div>;
+  if (isError) return <div>اطلاعات یافت نشد</div>;
 
   return (
     <Fragment>
@@ -64,22 +75,22 @@ const UserTabs = () => {
         <div>
           {active === "1" && (
             <div style={{ width: "100%" }}>
-              <UserProjectsList />
+              <UserProjectsList data={data} />
             </div>
           )}
           {active === "2" && (
             <div style={{ width: "100%" }}>
-              <UserProjectsList />
+              <UserCourseReserve data={data} />
             </div>
           )}
           {active === "3" && (
             <div style={{ width: "100%" }}>
-              <SecurityTab />
+              <CommentTap />
             </div>
           )}
           {active === "4" && (
             <div style={{ width: "100%" }}>
-              <Connections />
+              <Connections data={data} />
             </div>
           )}
         </div>

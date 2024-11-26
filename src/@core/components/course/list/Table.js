@@ -52,6 +52,7 @@ import {
   DropdownItem,
   DropdownToggle,
   UncontrolledDropdown,
+  Badge,
 } from "reactstrap";
 
 // ** Styles
@@ -183,6 +184,8 @@ import { Link } from "react-router-dom";
 // }
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
 import { useQuery } from "@tanstack/react-query";
+import { useCourseList } from "../../../../core/services/api/courseList";
+import { FullPageLoading } from "../../../../assets/Loadings/FullPageLoading/FullPageLoading";
 const UsersList = () => {
   // ** Store Vars
   // const dispatch = useDispatch()
@@ -209,34 +212,22 @@ const UsersList = () => {
     number: 0,
   });
 
-  getQuery("courses", "/Course/CourseList");
-  const { data, isError, isLoading } = useQuery({
-    queryKey: ["courses"],
-  });
-  console.log(data?.courseDtos);
+  // getQuery("courses", "/Course/CourseList");
+  // const { data, isError, isLoading } = useQuery({
+  //   queryKey: ["courses"],
+  // });
+  // console.log(data?.courseDtos);
+  const { data, isLoading, isError } = useCourseList(
+    currentPage,
+    rowsPerPage,
+    searchTerm
+  );
 
-  if (isLoading) return <div>Loading</div>;
-  if (isError) return <div>کوفت</div>;
-  const { courseFilterDtos } = data;
+  // if (isLoading) return <FullPageLoading />;
+  if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
+  // const { courseFilterDtos } = data;
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
-
-  // ** Get data on mount
-  // useEffect(() => {
-  //   dispatch(getAllData())
-  //   dispatch(
-  //     getData({
-  //       sort,
-  //       sortColumn,
-  //       q: searchTerm,
-  //       page: currentPage,
-  //       perPage: rowsPerPage,
-  //       role: currentRole.value,
-  //       status: currentStatus.value,
-  //       currentPlan: currentPlan.value
-  //     })
-  //   )
-  // }, [dispatch, store.data.length, sort, sortColumn, currentPage])
 
   // ** User filter options
   const roleOptions = [
@@ -249,7 +240,7 @@ const UsersList = () => {
   ];
 
   const planOptions = [
-    { value: "", label: "Select Plan" },
+    { value: "", label: "انتخاب کنید..." },
     { value: "basic", label: "Basic" },
     { value: "company", label: "Company" },
     { value: "enterprise", label: "Enterprise" },
@@ -265,59 +256,62 @@ const UsersList = () => {
 
   // ** Function in get data on page change
   const handlePagination = (page) => {
-    dispatch(
-      getData({
-        sort,
-        sortColumn,
-        q: searchTerm,
-        perPage: rowsPerPage,
-        page: page.selected + 1,
-        role: currentRole.value,
-        status: currentStatus.value,
-        currentPlan: currentPlan.value,
-      })
-    );
-    setCurrentPage(page.selected + 1);
+    // dispatch(
+    //   getData({
+    //     sort,
+    //     sortColumn,
+    //     q: searchTerm,
+    //     perPage: rowsPerPage,
+    //     page: page.selected + 1,
+    //     role: currentRole.value,
+    //     status: currentStatus.value,
+    //     currentPlan: currentPlan.value,
+    //   })
+    // );
+    setCurrentPage(page.selected > 0 ? page.selected + 1 : 1);
+    console.log("Page Selected:", page.selected > 0 ? page.selected + 1 : 1);
   };
 
   // ** Function in get data on rows per page
   const handlePerPage = (e) => {
     const value = parseInt(e.currentTarget.value);
-    dispatch(
-      getData({
-        sort,
-        sortColumn,
-        q: searchTerm,
-        perPage: value,
-        page: currentPage,
-        role: currentRole.value,
-        currentPlan: currentPlan.value,
-        status: currentStatus.value,
-      })
-    );
+    // dispatch(
+    //   getData({
+    //     sort,
+    //     sortColumn,
+    //     q: searchTerm,
+    //     perPage: value,
+    //     page: currentPage,
+    //     role: currentRole.value,
+    //     currentPlan: currentPlan.value,
+    //     status: currentStatus.value,
+    //   })
+    // );
     setRowsPerPage(value);
+    console.log("Per Page: ", value);
   };
 
   // ** Function in get data on search query change
   const handleFilter = (val) => {
+    // dispatch(
+    //   getData({
+    //     sort,
+    //     q: val,
+    //     sortColumn,
+    //     page: currentPage,
+    //     perPage: rowsPerPage,
+    //     role: currentRole.value,
+    //     status: currentStatus.value,
+    //     currentPlan: currentPlan.value,
+    //   })
+    // );
     setSearchTerm(val);
-    dispatch(
-      getData({
-        sort,
-        q: val,
-        sortColumn,
-        page: currentPage,
-        perPage: rowsPerPage,
-        role: currentRole.value,
-        status: currentStatus.value,
-        currentPlan: currentPlan.value,
-      })
-    );
+    console.log("Search Value: ", val);
   };
 
   // ** Custom Pagination
   const CustomPagination = () => {
-    const count = Number(Math.ceil(store.total / rowsPerPage));
+    const count = Math.ceil(data?.totalCount / rowsPerPage);
 
     return (
       <ReactPaginate
@@ -325,7 +319,8 @@ const UsersList = () => {
         nextLabel={""}
         pageCount={count || 1}
         activeClassName="active"
-        forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+        // forcePage={currentPage !== 0 ? currentPage - 1 : 0}
+        forcePage={currentPage > 0 ? currentPage - 1 : 0} // Adjust for zero-based indexing
         onPageChange={(page) => handlePagination(page)}
         pageClassName={"page-item"}
         nextLinkClassName={"page-link"}
@@ -334,7 +329,7 @@ const UsersList = () => {
         previousLinkClassName={"page-link"}
         pageLinkClassName={"page-link"}
         containerClassName={
-          "pagination react-paginate justify-content-end my-2 pe-1"
+          "pagination react-paginate justify-content-center my-2 pe-1"
         }
       />
     );
@@ -379,33 +374,6 @@ const UsersList = () => {
     );
   };
 
-  const Data = [
-    {
-      fname: "ghonche",
-      lname: "ataee",
-      Email: "ghonche.ataee@gmail.com",
-      teacher: "shayan",
-    },
-    {
-      fname: "ghonche",
-      lname: "ataee",
-      Email: "ghonche.ataee@gmail.com",
-      teacher: "shayan",
-    },
-    {
-      fname: "ghonche",
-      lname: "ataee",
-      Email: "ghonche.ataee@gmail.com",
-      teacher: "shayan",
-    },
-    {
-      fname: "ghonche",
-      lname: "ataee",
-      Email: "ghonche.ataee@gmail.com",
-      teacher: "shayan",
-    },
-  ];
-
   const column = [
     {
       name: "نام دوره",
@@ -418,11 +386,14 @@ const UsersList = () => {
           <Avatar img={data.tumbImageAddress ?? Logo} />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column">
-            <Link className="user_name text-truncate text-body  p-0">
-              <span className="fw-bolder">{data?.fullName}</span>
+            <Link
+              className="user_name text-truncate text-body p-0"
+              to={`/courseDetail/${data?.courseId}`}
+            >
+              <span className="fw-bolder">{data?.title}</span>
             </Link>
             <small className="text-truncate text-muted mb-0">
-              {data?.title}
+              {data?.fullName}
             </small>
           </div>
         </div>
@@ -466,7 +437,30 @@ const UsersList = () => {
       sortable: true,
       minWidth: "172px",
       sortField: "isActive ",
-      selector: (row) => <div> {row.isActive ? "فعال" : "غیر فعال"}</div>,
+      selector: (row) => (
+        <div>
+          {" "}
+          {row.isActive ? (
+            <Badge
+              color="light-success"
+              className="fs-5"
+              style={{ width: "60px", textAlign: "center" }}
+            >
+              تایید شده
+            </Badge>
+          ) : (
+            <Badge
+              color="light-danger"
+              className="fs-5"
+              style={{ width: "60px", textAlign: "center" }}
+            >
+              {" "}
+              تایید نشده{" "}
+            </Badge>
+          )}
+        </div>
+      ),
+      //<div> {row.isActive ? "فعال" : "غیر فعال"}</div>,
       // cell: row => renderRole(row)
     },
     {
@@ -520,12 +514,12 @@ const UsersList = () => {
     <Fragment>
       <Card>
         <CardHeader>
-          <CardTitle tag="h4">Filters</CardTitle>
+          <CardTitle tag="h4">فیلتر ها</CardTitle>
         </CardHeader>
         <CardBody>
           <Row>
             <Col md="4">
-              <Label for="role-select">Role</Label>
+              <Label for="role-select">مرتب سازی</Label>
               <Select
                 isClearable={false}
                 value={currentRole}
@@ -551,7 +545,7 @@ const UsersList = () => {
               />
             </Col>
             <Col className="my-md-0 my-1" md="4">
-              <Label for="plan-select">Plan</Label>
+              <Label for="plan-select">نوع مرتب سازی</Label>
               <Select
                 theme={selectThemeColors}
                 isClearable={false}
@@ -561,44 +555,6 @@ const UsersList = () => {
                 value={currentPlan}
                 onChange={(data) => {
                   setCurrentPlan(data);
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: data.value,
-                      status: currentStatus.value,
-                    })
-                  );
-                }}
-              />
-            </Col>
-            <Col md="4">
-              <Label for="status-select">Status</Label>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className="react-select"
-                classNamePrefix="select"
-                options={statusOptions}
-                value={currentStatus}
-                onChange={(data) => {
-                  setCurrentStatus(data);
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      page: currentPage,
-                      status: data.value,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: currentPlan.value,
-                    })
-                  );
                 }}
               />
             </Col>
@@ -610,7 +566,9 @@ const UsersList = () => {
         <Row className="ltr py-1 px-2">
           <Col xl="6" className="d-flex align-items-center p-0">
             <div className="d-flex align-items-center w-100">
-              <label htmlFor="rows-per-page">Show</label>
+              <label htmlFor="rows-per-page" style={{ marginRight: "25px" }}>
+                نمایش
+              </label>
               <Input
                 className="mx-50"
                 type="select"
@@ -619,21 +577,21 @@ const UsersList = () => {
                 onChange={handlePerPage}
                 style={{ width: "5rem" }}
               >
-                <option value="10">10</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
+                <option value="10">۱۰</option>
+                <option value="15">۱۵</option>
+                <option value="25">۲۵</option>
+                <option value="50">۵۰</option>
+                <option value="75">۷۵</option>
+                <option value="100">۱۰۰</option>
               </Input>
-              <label htmlFor="rows-per-page">Entries</label>
+              {/* <label htmlFor="rows-per-page">Entries</label> */}
             </div>
           </Col>
           <Col
             xl="6"
             className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
           >
-            <div className="d-flex align-items-center mb-sm-0 mb-1 me-1">
-              <label className="mb-0" htmlFor="search-invoice">
-                Search:
-              </label>
+            <div className="d-flex align-items-center mb-sm-0 mb-1 me-1 ">
               <Input
                 id="search-invoice"
                 className="ms-50 w-100"
@@ -645,10 +603,6 @@ const UsersList = () => {
 
             <div className="d-flex align-items-center table-header-actions">
               <UncontrolledDropdown className="me-1">
-                <DropdownToggle color="secondary" caret outline>
-                  <Share className="font-small-4 me-50" />
-                  <span className="align-middle">Export</span>
-                </DropdownToggle>
                 <DropdownMenu>
                   <DropdownItem className="w-100">
                     <Printer className="font-small-4 me-50" />
@@ -681,7 +635,7 @@ const UsersList = () => {
                 color="primary"
                 onClick={toggleSidebar}
               >
-                Add New User
+                جستجو
               </Button>
             </div>
           </Col>
@@ -693,12 +647,12 @@ const UsersList = () => {
             sortServer
             pagination
             responsive
-            // paginationServer
+            paginationServer
             columns={column}
             // onSort={handleSort}
             // sortIcon={<ChevronDown />}
             className="react-dataTable"
-            // paginationComponent={CustomPagination}
+            paginationComponent={CustomPagination}
             data={data?.courseDtos}
             // subHeaderComponent={
             //   <CustomHeader
