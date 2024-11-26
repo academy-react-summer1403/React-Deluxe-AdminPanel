@@ -48,6 +48,7 @@ import {
   DropdownItem,
   DropdownToggle,
   UncontrolledDropdown,
+  Badge,
 } from "reactstrap";
 
 // ** Styles
@@ -241,7 +242,7 @@ const UsersList = () => {
     {
       name: "نویسنده",
       sortable: true,
-      minWidth: "130px",
+      maxWidth: "200px",
       sortField: "title",
       // selector: (data) => data?.fullName,
       cell: (data) => (
@@ -260,14 +261,14 @@ const UsersList = () => {
     {
       name: " عنوان خبر",
       sortable: true,
-      minWidth: "130px",
+      maxWidth: "500px",
       sortField: "typeName",
       selector: (row) => row.miniDescribe,
     },
     {
       name: "دسته بندی خبر",
       sortable: true,
-      minWidth: "100px",
+      maxWidth: "300px",
       sortField: "role",
       selector: (row) => row.title,
     },
@@ -281,13 +282,32 @@ const UsersList = () => {
     {
       name: " وضعیت",
       sortable: true,
-      minWidth: "152px",
+      // minWidth: "40px",
+      maxWidth: "40px",
+      // width: "40px",
       sortField: "role",
-      selector: (row) => row.isActive,
+      selector: (row) =>
+        row.isActive ? (
+          <Badge
+            color="light-success"
+            className="fs-5"
+            style={{ width: "35px", textAlign: "center" }}
+          >
+            فعال
+          </Badge>
+        ) : (
+          <Badge
+            color="light-danger"
+            className="fs-5"
+            style={{ width: "70px", textAlign: "center" }}
+          >
+            غیر فعال
+          </Badge>
+        ),
     },
     {
       name: "اقدام",
-      minWidth: "100px",
+      maxWidth: "100px",
       cell: (row) => (
         <div className="column-action">
           <UncontrolledDropdown>

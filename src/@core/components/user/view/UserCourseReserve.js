@@ -1,5 +1,5 @@
 // ** Reactstrap Imports
-import { Card, CardHeader, Progress } from "reactstrap";
+import { Badge, Card, CardHeader, Progress } from "reactstrap";
 
 // ** Third Party Components
 import { ChevronDown } from "react-feather";
@@ -91,49 +91,30 @@ import { useParams } from "react-router-dom";
 
 export const columns = [
   {
-    width: "70px",
-    name: " عکس",
-    selector: (row) => row.tumbImageAddress,
-    cell: (row) => {
-      return (
-        <Avatar
-          img={
-            row.tumbImageAddress !== null && row.tumbImageAddress !== "Not-set"
-              ? row.tumbImageAddress
-              : Logo
-          }
-        />
-      );
-    },
-  },
-  {
     sortable: true,
     minWidth: "130px",
-    maxWidth: "280px",
     name: "نام دوره",
-    selector: (row) => row.title,
+    selector: (row) => row.courseName,
     cell: (row) => {
       return (
         <div className="d-flex justify-content-left align-items-center">
           <div className="avatar-wrapper">
-            {/* <Avatar className='me-1' img={row.img} alt={row.title} imgWidth='32' /> */}
+            {/* <Avatar className='me-1' img={row.img} alt={row.courseName} imgWidth='32' /> */}
           </div>
           <div className="d-flex flex-column">
-            <span className="text-truncate fw-bolder">{row.title}</span>
+            <span className="text-truncate fw-bolder">{row.courseName}</span>
           </div>
         </div>
       );
     },
   },
   {
-    width: "150px",
     name: " تاریخ رزرو دوره",
-    selector: (row) => row.lastUpdate.slice(0, 10),
+    selector: (row) => row.reserverDate.slice(0, 10),
   },
   {
-    // width: "300px",
     name: "وضعیت دوره ",
-    selector: (row) => row.describe,
+    selector: (row) => row.accept,
     sortable: true,
     cell: (row) => {
       return (
@@ -144,18 +125,49 @@ export const columns = [
           <div className="d-flex flex-column">
             <span
               className="text-truncate fw-bolder"
-              style={{ width: "450px" }}
+              style={{ width: "250px" }}
             >
-              {row.describe}
+              {row.accept ? (
+                <Badge
+                  color="light-success"
+                  className="fs-5"
+                  style={{ width: "35px", textAlign: "center" }}
+                >
+                  فعال
+                </Badge>
+              ) : (
+                <Badge
+                  color="light-danger"
+                  className="fs-5"
+                  style={{ width: "70px", textAlign: "center" }}
+                >
+                  غیر فعال
+                </Badge>
+              )}
             </span>
           </div>
         </div>
       );
     },
   },
+  // {
+  //   name: " عکس",
+  //   selector: (row) => row.tumbImageAddress,
+  //   cell: (row) => {
+  //     return (
+  //       <Avatar
+  //         img={
+  //           row.tumbImageAddress !== null && row.tumbImageAddress !== "Not-set"
+  //             ? row.tumbImageAddress
+  //             : Logo
+  //         }
+  //       />
+  //     );
+  //   },
+  // },
 ];
 
-const UserProjectsList = (data) => {
+const UserCourseReserve = (data) => {
   // const { id } = useParams();
   // getQuery("userCourses", `/User/UserDetails/${id}`);
   // const { data, isError, isLoading } = useQuery({
@@ -164,7 +176,6 @@ const UserProjectsList = (data) => {
 
   // if (isLoading) return <div>Loading</div>;
   // if (isError) return <div>اطلاعات یافت نشد</div>;
-  // console.log("1stTab", data);
 
   return (
     <Card>
@@ -173,7 +184,7 @@ const UserProjectsList = (data) => {
           noHeader
           responsive
           columns={columns}
-          data={data.data.courses}
+          data={data.data.coursesReseves}
           className="react-dataTable"
           sortIcon={<ChevronDown size={10} />}
         />
@@ -182,4 +193,4 @@ const UserProjectsList = (data) => {
   );
 };
 
-export default UserProjectsList;
+export default UserCourseReserve;

@@ -52,6 +52,7 @@ import {
   DropdownItem,
   DropdownToggle,
   UncontrolledDropdown,
+  Badge,
 } from "reactstrap";
 
 // ** Styles
@@ -222,9 +223,9 @@ const UsersList = () => {
     searchTerm
   );
 
-  if (isLoading) return <FullPageLoading />;
+  // if (isLoading) return <FullPageLoading />;
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
-  const { courseFilterDtos } = data;
+  // const { courseFilterDtos } = data;
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
@@ -239,7 +240,7 @@ const UsersList = () => {
   ];
 
   const planOptions = [
-    { value: "", label: "Select Plan" },
+    { value: "", label: "انتخاب کنید..." },
     { value: "basic", label: "Basic" },
     { value: "company", label: "Company" },
     { value: "enterprise", label: "Enterprise" },
@@ -389,10 +390,10 @@ const UsersList = () => {
               className="user_name text-truncate text-body p-0"
               to={`/courseDetail/${data?.courseId}`}
             >
-              <span className="fw-bolder">{data?.fullName}</span>
+              <span className="fw-bolder">{data?.title}</span>
             </Link>
             <small className="text-truncate text-muted mb-0">
-              {data?.title}
+              {data?.fullName}
             </small>
           </div>
         </div>
@@ -436,7 +437,30 @@ const UsersList = () => {
       sortable: true,
       minWidth: "172px",
       sortField: "isActive ",
-      selector: (row) => <div> {row.isActive ? "فعال" : "غیر فعال"}</div>,
+      selector: (row) => (
+        <div>
+          {" "}
+          {row.isActive ? (
+            <Badge
+              color="light-success"
+              className="fs-5"
+              style={{ width: "60px", textAlign: "center" }}
+            >
+              تایید شده
+            </Badge>
+          ) : (
+            <Badge
+              color="light-danger"
+              className="fs-5"
+              style={{ width: "60px", textAlign: "center" }}
+            >
+              {" "}
+              تایید نشده{" "}
+            </Badge>
+          )}
+        </div>
+      ),
+      //<div> {row.isActive ? "فعال" : "غیر فعال"}</div>,
       // cell: row => renderRole(row)
     },
     {
@@ -490,12 +514,12 @@ const UsersList = () => {
     <Fragment>
       <Card>
         <CardHeader>
-          <CardTitle tag="h4">Filters</CardTitle>
+          <CardTitle tag="h4">فیلتر ها</CardTitle>
         </CardHeader>
         <CardBody>
           <Row>
             <Col md="4">
-              <Label for="role-select">Role</Label>
+              <Label for="role-select">مرتب سازی</Label>
               <Select
                 isClearable={false}
                 value={currentRole}
@@ -521,7 +545,7 @@ const UsersList = () => {
               />
             </Col>
             <Col className="my-md-0 my-1" md="4">
-              <Label for="plan-select">Plan</Label>
+              <Label for="plan-select">نوع مرتب سازی</Label>
               <Select
                 theme={selectThemeColors}
                 isClearable={false}
@@ -531,44 +555,6 @@ const UsersList = () => {
                 value={currentPlan}
                 onChange={(data) => {
                   setCurrentPlan(data);
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: data.value,
-                      status: currentStatus.value,
-                    })
-                  );
-                }}
-              />
-            </Col>
-            <Col md="4">
-              <Label for="status-select">Status</Label>
-              <Select
-                theme={selectThemeColors}
-                isClearable={false}
-                className="react-select"
-                classNamePrefix="select"
-                options={statusOptions}
-                value={currentStatus}
-                onChange={(data) => {
-                  setCurrentStatus(data);
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      page: currentPage,
-                      status: data.value,
-                      perPage: rowsPerPage,
-                      role: currentRole.value,
-                      currentPlan: currentPlan.value,
-                    })
-                  );
                 }}
               />
             </Col>
