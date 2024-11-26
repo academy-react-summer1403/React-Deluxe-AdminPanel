@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import {
   Card,
   CardHeader,
@@ -8,13 +9,24 @@ import {
 } from "reactstrap";
 
 const Home = () => {
+  const { data } = useQuery({
+    queryKey: ["UserInfo"],
+  });
+  console.log(data);
   return (
     <div>
       <Card>
         <CardHeader>
-          <CardTitle>Kick start your project 🚀</CardTitle>
+          <CardTitle>
+            <span className="fs-3 fw-5">سلام</span>
+            <br />
+            <span className="fs-3 fw-5">{data?.fName} </span>
+            <span className="fs-3 fw-5">{data?.lName}</span>
+            <br />
+            <span className="fs-1 fw-5">خوش اومدی!👋</span>
+          </CardTitle>
         </CardHeader>
-        <CardBody>
+        {/* <CardBody>
           <CardText>All the best for your new project.</CardText>
           <CardText>
             Please make sure to read our{" "}
@@ -26,7 +38,7 @@ const Home = () => {
             </CardLink>{" "}
             to understand where to go from here and how to use our template.
           </CardText>
-        </CardBody>
+        </CardBody> */}
       </Card>
 
       <Card>

@@ -32,6 +32,8 @@ import {
   MoreVertical,
   Trash2,
   Archive,
+  Send,
+  Eye,
 } from "react-feather";
 
 // ** Utils
@@ -53,6 +55,7 @@ import {
   DropdownToggle,
   UncontrolledDropdown,
   Badge,
+  UncontrolledTooltip,
 } from "reactstrap";
 
 // ** Styles
@@ -186,6 +189,10 @@ import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
 import { useQuery } from "@tanstack/react-query";
 import { useCourseList } from "../../../../core/services/api/courseList";
 import { FullPageLoading } from "../../../../assets/Loadings/FullPageLoading/FullPageLoading";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
+import { useDeleteCourse } from "../../../../core/services/api/DeleteCourse";
+import { usehandleDelete } from "./CourseHandleDelete/handleDelete";
 const UsersList = () => {
   // ** Store Vars
   // const dispatch = useDispatch()
@@ -222,7 +229,7 @@ const UsersList = () => {
     rowsPerPage,
     searchTerm
   );
-
+  // console.log("CourseListData: ", data);
   // if (isLoading) return <FullPageLoading />;
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
   // const { courseFilterDtos } = data;
@@ -256,18 +263,6 @@ const UsersList = () => {
 
   // ** Function in get data on page change
   const handlePagination = (page) => {
-    // dispatch(
-    //   getData({
-    //     sort,
-    //     sortColumn,
-    //     q: searchTerm,
-    //     perPage: rowsPerPage,
-    //     page: page.selected + 1,
-    //     role: currentRole.value,
-    //     status: currentStatus.value,
-    //     currentPlan: currentPlan.value,
-    //   })
-    // );
     setCurrentPage(page.selected > 0 ? page.selected + 1 : 1);
     console.log("Page Selected:", page.selected > 0 ? page.selected + 1 : 1);
   };
@@ -374,6 +369,12 @@ const UsersList = () => {
     );
   };
 
+  // const MySwal = withReactContent(Swal);
+
+  // const mutation = useDeleteCourse();
+
+  const handleDelete = usehandleDelete();
+
   const column = [
     {
       name: "نام دوره",
@@ -399,7 +400,6 @@ const UsersList = () => {
         </div>
       ),
     },
-
     {
       name: "نوع دوره",
       sortable: true,
@@ -427,15 +427,15 @@ const UsersList = () => {
     {
       name: "تعداد رزرو",
       sortable: true,
-      minWidth: "172px",
-      sortField: "reserveCount ",
+      maxWidth: "110px",
+      sortField: "reserveCount",
       selector: (row) => row.reserveCount,
       // cell: row => renderRole(row)
     },
     {
       name: "فعالیت",
       sortable: true,
-      minWidth: "172px",
+      maxWidth: "100px",
       sortField: "isActive ",
       selector: (row) => (
         <div>
@@ -467,8 +467,36 @@ const UsersList = () => {
       name: "اقدامات",
       minWidth: "100px",
       cell: (row) => (
-        <div className="column-action">
-          <UncontrolledDropdown>
+        <div className="column-action d-flex">
+          <Link
+            className="user_name text-truncate text-body p-0"
+            to={`/courseDetail/${row?.courseId}`}
+          >
+            <div className="btn btn-sm">
+              <FileText
+                className="cursor-pointer"
+                size={17}
+                id={`send-tooltip-${row.id}`}
+              />
+              <UncontrolledTooltip
+                placement="top"
+                target={`send-tooltip-${row.id}`}
+                // className="mb-1"
+              >
+                جزییات دوره
+              </UncontrolledTooltip>
+            </div>
+          </Link>
+          <div className="btn btn-sm" onClick={() => handleDelete(row)}>
+            <Trash2 size={17} className="" id={`pw-tooltip-${row.id}`} />
+            <UncontrolledTooltip
+              placement="top"
+              target={`pw-tooltip-${row.id}`}
+            >
+              حذف دوره
+            </UncontrolledTooltip>
+          </div>
+          {/* <UncontrolledDropdown>
             <DropdownToggle tag="div" className="btn btn-sm">
               <MoreVertical size={14} className="cursor-pointer" />
             </DropdownToggle>
@@ -504,7 +532,7 @@ const UsersList = () => {
                 <span className="align-middle">Delete</span>
               </DropdownItem>
             </DropdownMenu>
-          </UncontrolledDropdown>
+          </UncontrolledDropdown> */}
         </div>
       ),
     },
