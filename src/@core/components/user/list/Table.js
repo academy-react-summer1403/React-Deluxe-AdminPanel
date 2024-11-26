@@ -59,9 +59,11 @@ import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { Link } from "react-router-dom";
 import { useUserList } from "../../../../core/services/api/userList";
+
+import CardBrowserState from "./progress";
+
 import AddUserForm from "./AddUserForm";
 import { FullPageLoading } from "../../../../assets/Loadings/FullPageLoading/FullPageLoading";
-import Chart from "react-apexcharts";
 
 const UsersList = () => {
   // ** States
@@ -396,33 +398,8 @@ const UsersList = () => {
       name: "درصد تکمیل پروفایل",
       sortable: true,
       minWidth: "162px",
-      sortField: "role",
-      selector: (row) => row.profileCompletionPercentage,
       cell: (row) => (
-        // <div
-        //   // key={state.title}
-        //   className="browser-states d-flex justify-content-between align-items-center mb-3"
-        // >
-        //   <div className="progress" style={{ height: "50px", width: "50px" }}>
-        //     <div
-        //       className="progress-bar"
-        //       role="progressbar"
-        //       style={{ width: `${row.profileCompletionPercentage}%` }}
-        //       aria-valuenow={row.profileCompletionPercentage}
-        //       aria-valuemin="0"
-        //       aria-valuemax="100"
-        //     ></div>
-        //   </div>
-        // </div>
-        <div className="ms-2" style={{ width: "50px", height: "50px" }}>
-          <Chart
-            options={chartOptions}
-            series={85}
-            type="radialBar"
-            height={50}
-            width={50}
-          />
-        </div>
+        <CardBrowserState percent={row.profileCompletionPercentage} />
       ),
     },
     {
