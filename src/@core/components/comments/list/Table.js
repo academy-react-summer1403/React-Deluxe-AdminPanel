@@ -200,6 +200,7 @@ const Comments = () => {
       name: "  نام دوره",
       sortable: true,
       minWidth: "172px",
+      center:true,
       sortField: "typeName",
       selector: (row) => row.courseTitle,
       // cell: row => renderRole(row)
@@ -207,6 +208,7 @@ const Comments = () => {
     {
       name: "نمایش کامنت",
       sortable: true,
+      center:true,
       minWidth: "172px",
       sortField: "role",
       selector: (row) => row.describe,
@@ -214,6 +216,7 @@ const Comments = () => {
     },
     {
       name: "وضعیت",
+      center:true,
       sortable: true,
       minWidth: "172px",
       sortField: "accept",
@@ -244,6 +247,7 @@ const Comments = () => {
     },
     {
       name: "اقدامات",
+      center:true,
       minWidth: "100px",
       cell: (row) => (
         <div className="column-action">
