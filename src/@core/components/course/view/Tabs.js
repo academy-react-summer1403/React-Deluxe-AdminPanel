@@ -17,6 +17,7 @@ import {
 import UserProjectsList from "./UserProjectsList";
 import Connections from "./Connections";
 import SecurityTab from "./SecurityTab";
+import UserGroupsList from "./UserGroupsList";
 
 const UserTabs = () => {
   const [active, setActive] = useState("1");
@@ -77,7 +78,7 @@ const UserTabs = () => {
           )}
           {active === "2" && (
             <div style={{ width: "100%" }}>
-              <UserProjectsList />
+              <UserGroupsList  />
             </div>
           )}
           {active === "3" && (
