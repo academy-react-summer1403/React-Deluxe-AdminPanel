@@ -175,8 +175,9 @@ const AppSMSComponent = ({ setShow, setShowDetailModal }) => {
 
 export const columns = [
   {
-    sortable: true,
+    
     minWidth: "130px",
+    center:true,
     name: "نام دوره",
     selector: (row) => row.courseTitle,
     cell: (row) => {
@@ -193,8 +194,9 @@ export const columns = [
     },
   },
   {
-    sortable: true,
+   
     minWidth: "130px",
+    center:true,
     name: "عنوان کامنت",
     selector: (row) => row.commentTitle,
     cell: (row) => {
@@ -213,7 +215,8 @@ export const columns = [
     },
   },
   {
-    sortable: true,
+    
+    center:true,
     minWidth: "130px",
     name: "متن کامنت",
     selector: (row) => row.describe,
@@ -233,7 +236,8 @@ export const columns = [
     },
   },
   {
-    sortable: true,
+    
+    center:true,
     minWidth: "130px",
     name: "وضعیت",
     selector: (row) => row.accept,

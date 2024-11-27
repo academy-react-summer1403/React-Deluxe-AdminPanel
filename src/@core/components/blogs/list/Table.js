@@ -311,7 +311,7 @@ const UsersList = () => {
 
     {
       name: " عنوان خبر",
-      sortable: true,
+      center:true,
       maxWidth: "500px",
       sortField: "typeName",
       selector: (row) => row.miniDescribe,
@@ -319,17 +319,11 @@ const UsersList = () => {
     {
       name: "دسته بندی خبر",
       sortable: true,
+      center:true,
       maxWidth: "300px",
       sortField: "role",
       selector: (row) => row.title,
     },
-    // {
-    //   name: "توضیحات کوتاه",
-    //   sortable: true,
-    //   minWidth: "130px",
-    //   sortField: "role",
-    //   selector: (row) => row.miniDescribe,
-    // },
     {
       name: " وضعیت",
       sortable: true,
@@ -358,6 +352,7 @@ const UsersList = () => {
     },
     {
       name: "اقدام",
+      center:true,
       maxWidth: "100px",
       style: {
         textAlign: "center", // Centers the text horizontally
