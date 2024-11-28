@@ -378,7 +378,7 @@ const UsersList = () => {
   const column = [
     {
       name: "نام دوره",
-      sortable: true,
+      
       minWidth: "300px",
       sortField: "title",
       // selector: (data) => data?.fullName,
@@ -402,7 +402,7 @@ const UsersList = () => {
     },
     {
       name: "نوع دوره",
-      sortable: true,
+    center:true,
       minWidth: "172px",
       sortField: "typeName",
       selector: (row) => row.typeName,
@@ -410,7 +410,6 @@ const UsersList = () => {
     },
     {
       name: "سطح",
-      sortable: true,
       minWidth: "172px",
       sortField: "levelName",
       selector: (row) => row.levelName,
@@ -418,7 +417,6 @@ const UsersList = () => {
     },
     {
       name: "وضعیت",
-      sortable: true,
       minWidth: "172px",
       sortField: "statusName",
       selector: (row) => row.statusName,
@@ -426,7 +424,6 @@ const UsersList = () => {
     },
     {
       name: "تعداد رزرو",
-      sortable: true,
       maxWidth: "110px",
       sortField: "reserveCount",
       selector: (row) => row.reserveCount,
@@ -466,6 +463,7 @@ const UsersList = () => {
     {
       name: "اقدامات",
       minWidth: "100px",
+    center:true,
       cell: (row) => (
         <div className="column-action d-flex">
           <Link

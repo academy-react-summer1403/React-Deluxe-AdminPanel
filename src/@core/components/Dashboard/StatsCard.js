@@ -20,27 +20,27 @@ const StatsCard = ({ cols }) => {
   const data = [
     {
       title: "230k",
-      subtitle: "Sales",
+      subtitle: "کاربران",
       color: "light-primary",
-      icon: <TrendingUp size={24} />,
+      icon: <TrendingUp size={36} />,
     },
     {
       title: "8.549k",
-      subtitle: "Customers",
+      subtitle: "دوره ها",
       color: "light-info",
-      icon: <User size={24} />,
+      icon: <User size={36} />,
     },
     {
       title: "1.423k",
-      subtitle: "Products",
+      subtitle: "اساتید",
       color: "light-danger",
-      icon: <Box size={24} />,
+      icon: <Box size={36} />,
     },
     {
       title: "$9745",
-      subtitle: "Revenue",
+      subtitle: "کامنت ها",
       color: "light-success",
-      icon: <DollarSign size={24} />,
+      icon: <DollarSign size={36} />,
     },
   ];
 
@@ -60,7 +60,7 @@ const StatsCard = ({ cols }) => {
             <Avatar color={item.color} icon={item.icon} className="me-2" />
             <div className="my-auto">
               <h4 className="fw-bolder mb-0">{item.title}</h4>
-              <CardText className="font-small-3 mb-0">{item.subtitle}</CardText>
+              <CardText className="font-lg-3 mb-0" style={{fontSize:"20px",paddingTop:"3px"}} >{item.subtitle}</CardText>
             </div>
           </div>
         </Col>
@@ -71,7 +71,7 @@ const StatsCard = ({ cols }) => {
   return (
     <Card className="card-statistics d-flex flex-column justify-content-center">
       <CardHeader>
-        <CardTitle tag="h4">Statistics</CardTitle>
+        <CardTitle tag="h4">آمار سایت</CardTitle>
         {/* <CardText className='card-text font-small-2 me-25 mb-0'>Updated 1 month ago</CardText> */}
       </CardHeader>
       <CardBody className="statistics-body d-flex align-items-center">

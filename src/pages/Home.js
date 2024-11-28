@@ -18,6 +18,9 @@ import StatsCard from "../@core/components/Dashboard/StatsCard";
 import GoalOverview from "../@core/components/Dashboard/GoalOverview";
 import { useContext } from "react";
 import { ThemeColors } from "../utility/context/ThemeColors";
+import CardBrowserState from "../@core/components/Dashboard/CardBrowserState";
+import Earnings from "../@core/components/Dashboard/Earnings";
+import CardTransactions from "../@core/components/Dashboard/CardTransactions";
 
 const Home = () => {
   const { data } = useQuery({
@@ -94,6 +97,18 @@ const Home = () => {
           <GoalOverview success={colors.success.main} />
         </Col>
       </Row>
+      <Row>
+      <Col lg="4" md="6" xs="12">
+          <CardBrowserState success={colors.success.main} />
+        </Col>
+        <Col lg="4" md="6" xs="12">
+          <Earnings success={colors.success.main} />
+        </Col>
+        <Col lg="4" md="6" xs="12">
+          <CardTransactions success={colors.success.main} />
+        </Col>
+      </Row>
+
     </div>
   );
 };

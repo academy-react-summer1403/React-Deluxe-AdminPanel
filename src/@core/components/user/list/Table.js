@@ -292,7 +292,8 @@ const UsersList = () => {
     },
     {
       name: "نقش",
-      sortable: true,
+      center:true,
+      // sortable: true,
       minWidth: "172px",
       sortField: "role",
       // selector: data => data?.userRoles,

@@ -9,11 +9,11 @@ export const usehandleDelete = () => {
 
   const handleDelete = async (row) => {
     return MySwal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert user!",
+      title: "آیا مطمئن هستید؟",
+      text: "البته امکان بازگشت نیز وجود دارد",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Yes, Suspend user!",
+      confirmButtonText: "بله",
       customClass: {
         confirmButton: "btn btn-primary",
         cancelButton: "btn btn-outline-danger ms-1",
@@ -31,16 +31,16 @@ export const usehandleDelete = () => {
         }
         MySwal.fire({
           icon: "success",
-          title: "Suspended!",
-          text: "User has been suspended.",
+          title: "حذف شد !",
+          text: "عملیات با موفقیت انجام شد",
           customClass: {
             confirmButton: "btn btn-success",
           },
         });
       } else if (result.dismiss === MySwal.DismissReason.cancel) {
         MySwal.fire({
-          title: "Cancelled",
-          text: "Cancelled Suspension :)",
+          title: "لغو",
+          text: "عملیات لغو شد :)",
           icon: "error",
           customClass: {
             confirmButton: "btn btn-success",

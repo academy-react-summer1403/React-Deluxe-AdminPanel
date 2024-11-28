@@ -48,13 +48,13 @@ export const columns = [
   {
     name: "عنوان کامنت",
     minWidth: "130px",
-
+    center:true,
     selector: (row) => row.title,
   },
   {
     name: "متن کامنت",
     minWidth: "180px",
-
+    // center:true,
     selector: (row) => row.describe,
     sortable: true,
     cell: (row) => {
