@@ -451,7 +451,7 @@ const UsersList = () => {
                 tag={Link}
                 className="w-100"
                 to={`/userdetail/${row.id}`}
-                onClick={() => store.dispatch(getUser(row.id))}
+                // onClick={() => store.dispatch(getUser(row.id))}
               >
                 <FileText size={14} className="me-50" />
 
@@ -463,7 +463,7 @@ const UsersList = () => {
                 className="w-100"
                 onClick={(e) => {
                   e.preventDefault();
-                  store.dispatch(deleteUser(row.id));
+                  // store.dispatch(deleteUser(row.id));
                 }}
               >
                 <Trash2 size={14} className="me-50" />
