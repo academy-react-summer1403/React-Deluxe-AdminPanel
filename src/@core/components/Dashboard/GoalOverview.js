@@ -2,9 +2,7 @@
 import { useEffect, useState } from "react";
 
 // ** Third Party Components
-import axios from "axios";
 import Chart from "react-apexcharts";
-import { HelpCircle } from "react-feather";
 
 // ** Reactstrap Imports
 import {
@@ -20,11 +18,6 @@ import {
 const GoalOverview = (props) => {
   // ** State
   const [data, setData] = useState(null);
-
-  // useEffect(() => {
-  //   axios.get('/card/card-analytics/goal-overview').then(res => setData(res.data))
-  //   return () => setData(null)
-  // }, [])
 
   const options = {
       chart: {
@@ -46,7 +39,7 @@ const GoalOverview = (props) => {
           startAngle: -150,
           endAngle: 150,
           hollow: {
-            size: "77%",
+            size: "72%",
           },
           track: {
             background: "#ebe9f1",
@@ -93,14 +86,13 @@ const GoalOverview = (props) => {
     <Card>
       <CardHeader className="pb-0">
         <CardTitle tag="h4">درصد تکمیل پروفایل ادمین</CardTitle>
-        {/* <HelpCircle size={18} className="text-muted cursor-pointer" /> */}
       </CardHeader>
       <CardBody className="p-0">
         <Chart
           options={options}
           series={series}
           type="radialBar"
-          height={200}
+          height={230}
         />
       </CardBody>
     </Card>
