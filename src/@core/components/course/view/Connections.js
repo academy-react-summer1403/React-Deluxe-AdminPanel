@@ -1,11 +1,32 @@
 // ** React Imports
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 
 // ** Reactstrap Imports
-import { Card, CardBody, CardTitle, Input, Label, Button } from "reactstrap";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  Input,
+  Label,
+  Button,
+  UncontrolledTooltip,
+  Badge,
+  Modal,
+  ModalHeader,
+  ModalBody,
+} from "reactstrap";
 
 // ** Icons Imports
-import { Check, X, Link } from "react-feather";
+import {
+  Check,
+  X,
+  ChevronDown,
+  Trash2,
+  Image,
+  ChevronRight,
+  MessageSquare,
+  Settings,
+} from "react-feather";
 
 // ** Social Icon Imports
 import slackIcon from "@src/assets/images/icons/social/slack.png";
@@ -18,6 +39,11 @@ import facebookIcon from "@src/assets/images/icons/social/facebook.png";
 import linkedinIcon from "@src/assets/images/icons/social/linkedin.png";
 import dribbbleIcon from "@src/assets/images/icons/social/dribbble.png";
 import mailchimpIcon from "@src/assets/images/icons/social/mailchimp.png";
+import { Link, useParams } from "react-router-dom";
+import DataTable from "react-data-table-component";
+import { useCoursePayments } from "../../../../core/services/api/CoursePayments";
+import { FileText } from "react-feather";
+import { DatePersianizer } from "../../../../utility/utils/DatePersianizer";
 
 const connectedAccounts = [
   {
@@ -52,69 +78,209 @@ const connectedAccounts = [
   },
 ];
 
-const socialAccounts = [
-  {
-    linked: false,
-    title: "درباره کاربر",
-    logo: facebookIcon,
-  },
-  {
-    linked: true,
-    title: "آدرس  ایمیل",
-    url: "https://twitter.com/pixinvent",
-    logo: twitterIcon,
-  },
-  {
-    linked: true,
-    title: "تاریخ تولد",
-    url: "https://www.linkedin.com/company/pixinvent/",
-    logo: linkedinIcon,
-  },
-  {
-    linked: false,
-    title: "آی دی کاربر",
-    logo: dribbbleIcon,
-  },
-  {
-    linked: false,
-    title: "ایمیل بازبابی",
-    logo: behanceIcon,
-  },
-];
-
+// const socialAccounts = [
+//   {
+//     linked: false,
+//     title: "درباره کاربر",
+//     logo: facebookIcon,
+//   },
+//   {
+//     linked: true,
+//     title: "آدرس  ایمیل",
+//     url: "https://twitter.com/pixinvent",
+//     logo: twitterIcon,
+//   },
+//   {
+//     linked: true,
+//     title: "تاریخ تولد",
+//     url: "https://www.linkedin.com/company/pixinvent/",
+//     logo: linkedinIcon,
+//   },
+//   {
+//     linked: false,
+//     title: "آی دی کاربر",
+//     logo: dribbbleIcon,
+//   },
+//   {
+//     linked: false,
+//     title: "ایمیل بازبابی",
+//     logo: behanceIcon,
+//   },
+// ];
 const Connections = () => {
+  const [show, setShow] = useState(false);
+
+  const [openModalId, setOpenModalId] = useState(null); // Track which modal is open
+
+  const toggleModal = (id) => {
+    setOpenModalId((prevId) => (prevId === id ? null : id));
+  };
+
+  const columns = [
+    {
+      minWidth: "130px",
+      name: "نام دانشجو",
+      selector: (row) => row.studentName,
+      center: true,
+    },
+    {
+      name: "عنوان تراکنش",
+      selector: (row) => row.title,
+      center: true,
+    },
+    {
+      name: "تاریخ تراکنش",
+      selector: (row) => DatePersianizer(row.peymentDate),
+      center: true,
+    },
+    {
+      name: "تاریخ کامنت",
+      selector: (row) => row.paid,
+      center: true,
+    },
+    {
+      name: "وضعیت",
+      selector: (row) => row.groupId,
+      center: true,
+      cell: (row) => {
+        return row.accept ? (
+          <Badge
+            color="light-success"
+            className="fs-5"
+            style={{ width: "80px", textAlign: "center" }}
+          >
+            پرداخت شده
+          </Badge>
+        ) : (
+          <Badge
+            color="light-danger"
+            className="fs-5"
+            style={{ width: "80px", textAlign: "center" }}
+          >
+            پرداخت نشده
+          </Badge>
+        );
+      },
+    },
+    {
+      name: "اقدامات",
+      // selector: (row) => row.groupId,
+      center: true,
+      cell: (row) => {
+        return (
+          <div className="column-action d-flex">
+            <div className="btn btn-sm" onClick={() => toggleModal(row.id)}>
+              <Image
+                className="cursor-pointer"
+                size={17}
+                id={`send-tooltip-${row.id}`}
+              />
+              <UncontrolledTooltip
+                placement="top"
+                target={`send-tooltip-${row.id}`}
+                // className="mb-1"
+              >
+                رسید تراکنش
+              </UncontrolledTooltip>
+            </div>
+            <Modal
+              isOpen={openModalId === row.id} // Check if this modal should be open
+              toggle={() => toggleModal(row.id)}
+              className="modal-dialog-centered modal-lg"
+            >
+              <ModalHeader
+                className="bg-transparent"
+                toggle={() => toggleModal(row.id)}
+              ></ModalHeader>
+              <ModalBody className="pb-5 px-sm-5 mx-50">
+                <div className="text-center mb-2">
+                  <h1 className="mb-1">رسید تراکنش</h1>
+                </div>
+                <img
+                  src={`${row.paymentInvoiceImage}`}
+                  alt="رسید تراکنش"
+                  className="img-fluid img-container"
+                  style={{
+                    width: "675px",
+                    height: "400px",
+                    borderRadius: "10px",
+                  }}
+                ></img>
+              </ModalBody>
+            </Modal>
+
+            {/* <div className="btn btn-sm" onClick={() => handleDelete(row)}>
+              <Trash2 size={17} className="" id={`pw-tooltip-${row.id}`} />
+              <UncontrolledTooltip
+                placement="top"
+                target={`pw-tooltip-${row.id}`}
+              >
+                حذف دوره
+              </UncontrolledTooltip>
+            </div> */}
+            {/* <UncontrolledDropdown>
+          <DropdownToggle tag="div" className="btn btn-sm">
+            <MoreVertical size={14} className="cursor-pointer" />
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem
+              tag={Link}
+              className="w-100"
+              to={`/apps/user/view/${row.id}`}
+              // onClick={() => store.dispatch(getUser(row.id))}
+            >
+              <FileText size={14} className="me-50" />
+              <span className="align-middle">Details</span>
+            </DropdownItem>
+            <DropdownItem
+              tag="a"
+              href="/"
+              className="w-100"
+              // onClick={e => e.preventDefault()}
+            >
+              <Archive size={14} className="me-50" />
+              <span className="align-middle">Edit</span>
+            </DropdownItem>
+            <DropdownItem
+              tag="a"
+              href="/"
+              className="w-100"
+              // onClick={e => {
+              //   e.preventDefault()
+              //   store.dispatch(deleteUser(row.id))
+              // }}
+            >
+              <Trash2 size={14} className="me-50" />
+              <span className="align-middle">Delete</span>
+            </DropdownItem>
+          </DropdownMenu>
+        </UncontrolledDropdown> */}
+          </div>
+        );
+      },
+    },
+  ];
+
+  const { id } = useParams();
+
+  const { data } = useCoursePayments(id);
+
   return (
     <Fragment>
       <Card>
-        <CardBody>
-          <CardTitle className="mb-75">سایر اطلاعات کاربری</CardTitle>
-          {socialAccounts.map((item, index) => {
-            return (
-              <div key={index} className="d-flex mt-2">
-                <div className="flex-shrink-0">
-                  <img
-                    className="me-1"
-                    src={item.logo}
-                    height="38"
-                    width="38"
-                  />
-                </div>
-                <div className="d-flex align-item-center justify-content-between flex-grow-1">
-                  <div className="me-1">
-                    <p className="fw-bolder mb-0">{item.title}</p>
-                    {item.linked ? (
-                      <a href={item.url} target="_blank">
-                        ghonche.ataee@gmail.com
-                      </a>
-                    ) : (
-                      <span>member of react-deluxe developer</span>
-                    )}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </CardBody>
+        <div
+          className="react-dataTable user-view-account-projects"
+          style={{ maxHeight: "750px", overflowY: "auto" }}
+        >
+          <DataTable
+            noHeader
+            responsive
+            columns={columns}
+            data={data}
+            className="react-dataTable"
+            sortIcon={<ChevronDown size={10} />}
+          />
+        </div>
       </Card>
     </Fragment>
   );
