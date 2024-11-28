@@ -77,14 +77,33 @@ const EditUserForm = () => {
   //   }, 3000);
   // }, []);
 
-  const handleInputChange = (e) => {
-    console.log(e.target);
-    const { name, type, checked, value } = e.target;
-    setFormValues({
-      ...formValues,
-      [name]: type === "checkbox" ? checked : value,
-    });
-    console.log("Form Values:", formValues);
+  // const handleInputChange = (e) => {
+  //   console.log(e.target);
+  //   const { name, type, checked, value } = e.target;
+  //   setFormValues({
+  //     ...formValues,
+  //     [name]: type === "checkbox" ? checked : value,
+  //   });
+  //   console.log("Form Values:", formValues);
+  // };
+
+  const handleInputChange = (eOrName, valueOrNull) => {
+    if (eOrName?.target) {
+      // Handle native inputs (e.target case)
+      const { name, type, checked, value } = eOrName.target;
+      setFormValues({
+        ...formValues,
+        [name]: type === "checkbox" ? checked : value,
+      });
+    } else {
+      // Handle react-select inputs (custom case)
+      const name = eOrName; // The name passed from the select component
+      const value = valueOrNull ? valueOrNull.value : ""; // Extract the value from react-select
+      setFormValues({
+        ...formValues,
+        [name]: value,
+      });
+    }
   };
 
   const mutation = useEditUser();
@@ -203,6 +222,9 @@ const EditUserForm = () => {
                 name="active"
                 defaultValue={defaultActive}
                 // onChange={handleInputChange}
+                onChange={(selectedOption) =>
+                  handleInputChange("active", selectedOption)
+                }
                 // defaultValue={countryOptions[0]}
               />
             </Col>
@@ -261,6 +283,9 @@ const EditUserForm = () => {
                 name="gender"
                 defaultValue={defaultGender}
                 // onChange={handleInputChange}
+                onChange={(selectedOption) =>
+                  handleInputChange("gender", selectedOption)
+                }
                 // defaultValue={countryOptions[0]}
               />
             </Col>
@@ -369,9 +394,9 @@ const EditUserForm = () => {
                 // className=" py-2 px-3 text-xs w-52 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-100 rounded-lg outline-none border-none"
               />
             </Col>
-            <div className="d-flex">
+            <div>
               <Row>
-                <Col md="6" sm="12" className="mb-1 d-flex gap-1">
+                <Col md="4" sm="12" className="mb-1 d-flex gap-1">
                   <Input
                     type="checkbox"
                     name="isTecher"
@@ -384,7 +409,7 @@ const EditUserForm = () => {
                     استاد
                   </Label>
                 </Col>
-                <Col md="6" sm="12" className="mb-1 d-flex gap-1">
+                <Col md="4" sm="12" className="mb-1 d-flex gap-1">
                   <Input
                     type="checkbox"
                     name="isStudent"
@@ -397,7 +422,9 @@ const EditUserForm = () => {
                     دانشجو
                   </Label>
                 </Col>
-                <Col md="6" sm="12" className="mb-1 d-flex gap-1">
+              </Row>
+              <Row>
+                <Col md="4" sm="12" className="mb-1 d-flex gap-1">
                   <Input
                     type="checkbox"
                     name="isDelete"
@@ -410,7 +437,7 @@ const EditUserForm = () => {
                     وضعیت دیلیت
                   </Label>
                 </Col>
-                <Col md="6" sm="12" className="mb-1 d-flex gap-1">
+                <Col md="4" sm="12" className="mb-1 d-flex gap-1">
                   <Input
                     type="checkbox"
                     name="twoStepAuth"
@@ -423,7 +450,7 @@ const EditUserForm = () => {
                     ورود دو مرحله ای
                   </Label>
                 </Col>
-                <Col md="6" sm="12" className="mb-1 d-flex gap-1">
+                <Col md="4" sm="12" className="mb-1 d-flex gap-1">
                   <Input
                     type="checkbox"
                     name="receiveMessageEvent"
