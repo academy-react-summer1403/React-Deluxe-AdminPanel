@@ -248,11 +248,11 @@ const UsersList = () => {
   const handleDelete = async (row) => {
     console.log(row);
     return MySwal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert user!",
+      title: "آیا مطمئن هستید؟",
+      text: "البته امکان بازگشت نیز وجود دارد",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Yes, Suspend user!",
+      confirmButtonText: "بله",
       customClass: {
         confirmButton: "btn btn-primary",
         cancelButton: "btn btn-outline-danger ms-1",
@@ -270,8 +270,8 @@ const UsersList = () => {
         }
         MySwal.fire({
           icon: "success",
-          title: "Suspended!",
-          text: "User has been suspended.",
+          title: "حذف شد !",
+          text: "عملیات با موفقیت انجام شد",
           customClass: {
             confirmButton: "btn btn-success",
           },
@@ -279,7 +279,7 @@ const UsersList = () => {
       } else if (result.dismiss === MySwal.DismissReason.cancel) {
         MySwal.fire({
           title: "Cancelled",
-          text: "Cancelled Suspension :)",
+          text: "لغو",
           icon: "error",
           customClass: {
             confirmButton: "btn btn-success",

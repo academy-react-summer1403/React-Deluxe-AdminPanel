@@ -11,13 +11,7 @@ import Logo from "@src/assets/images/logo/reactdeluxe.png";
 import Sidebar from "./Sidebar";
 
 // ** Table Columns
-import { columns } from "./columns";
-
-// ** Store & Actions
-// import { getAllData, getData } from '../store'
-// import { useDispatch, useSelector } from 'react-redux'
-
-// ** Third Party Components
+import { columns } from "./columns";// ** Third Party Components
 import Select from "react-select";
 import ReactPaginate from "react-paginate";
 import DataTable from "react-data-table-component";
@@ -185,8 +179,7 @@ import { Link } from "react-router-dom";
 //     </div>
 //   )
 // }
-import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
-import { useQuery } from "@tanstack/react-query";
+
 import { useCourseList } from "../../../../core/services/api/courseList";
 import { FullPageLoading } from "../../../../assets/Loadings/FullPageLoading/FullPageLoading";
 import withReactContent from "sweetalert2-react-content";
@@ -194,10 +187,7 @@ import Swal from "sweetalert2";
 import { useDeleteCourse } from "../../../../core/services/api/DeleteCourse";
 import { usehandleDelete } from "./CourseHandleDelete/handleDelete";
 const UsersList = () => {
-  // ** Store Vars
-  // const dispatch = useDispatch()
-  // const store = useSelector(state => state.users)
-
+ 
   // ** States
   const [sort, setSort] = useState("desc");
   const [searchTerm, setSearchTerm] = useState("");
@@ -207,32 +197,26 @@ const UsersList = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentRole, setCurrentRole] = useState({
     value: "",
-    label: "Select Role",
+    label: "انتخاب کنید ...",
   });
   const [currentPlan, setCurrentPlan] = useState({
     value: "",
-    label: "Select Plan",
+    label: "انتخاب کنید ...",
   });
   const [currentStatus, setCurrentStatus] = useState({
     value: "",
-    label: "Select Status",
+    label: "انتخاب کنید ...",
     number: 0,
   });
 
-  // getQuery("courses", "/Course/CourseList");
-  // const { data, isError, isLoading } = useQuery({
-  //   queryKey: ["courses"],
-  // });
-  // console.log(data?.courseDtos);
   const { data, isLoading, isError } = useCourseList(
     currentPage,
     rowsPerPage,
     searchTerm
   );
-  // console.log("CourseListData: ", data);
-  // if (isLoading) return <FullPageLoading />;
+
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
-  // const { courseFilterDtos } = data;
+
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
@@ -270,36 +254,13 @@ const UsersList = () => {
   // ** Function in get data on rows per page
   const handlePerPage = (e) => {
     const value = parseInt(e.currentTarget.value);
-    // dispatch(
-    //   getData({
-    //     sort,
-    //     sortColumn,
-    //     q: searchTerm,
-    //     perPage: value,
-    //     page: currentPage,
-    //     role: currentRole.value,
-    //     currentPlan: currentPlan.value,
-    //     status: currentStatus.value,
-    //   })
-    // );
     setRowsPerPage(value);
     console.log("Per Page: ", value);
   };
 
   // ** Function in get data on search query change
   const handleFilter = (val) => {
-    // dispatch(
-    //   getData({
-    //     sort,
-    //     q: val,
-    //     sortColumn,
-    //     page: currentPage,
-    //     perPage: rowsPerPage,
-    //     role: currentRole.value,
-    //     status: currentStatus.value,
-    //     currentPlan: currentPlan.value,
-    //   })
-    // );
+   
     setSearchTerm(val);
     console.log("Search Value: ", val);
   };
