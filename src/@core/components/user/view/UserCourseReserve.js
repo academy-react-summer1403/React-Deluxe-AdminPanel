@@ -133,7 +133,7 @@ export const columns = [
                   className="fs-5"
                   style={{ width: "35px", textAlign: "center" }}
                 >
-                  فعال
+                  رزرو شده
                 </Badge>
               ) : (
                 <Badge
@@ -141,7 +141,7 @@ export const columns = [
                   className="fs-5"
                   style={{ width: "70px", textAlign: "center" }}
                 >
-                  غیر فعال
+                   رزرو نشده
                 </Badge>
               )}
             </span>

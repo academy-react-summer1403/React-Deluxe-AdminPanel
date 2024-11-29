@@ -5,10 +5,10 @@ import { Fragment, useState } from "react";
 import { Nav, NavItem, NavLink } from "reactstrap";
 
 // ** Icons Imports
-import { User, Lock, Bookmark, Bell } from "react-feather";
+import { User, Lock, Bookmark, Edit, Bell } from "react-feather";
 import UserProjectsList from "./UserProjectsList";
 import Connections from "./Connections";
-import SecurityTab from "./CommentTap";
+import Notifications from "./Notifications";
 import UserCourseReserve from "./UserCourseReserve";
 import CommentTap from "./CommentTap";
 import { useUserDetail } from "../../../../core/services/api/UserDetail";
@@ -60,9 +60,16 @@ const UserTabs = () => {
           <NavItem>
             <NavLink active={active === "4"} onClick={() => toggle("4")}>
               <Bell className="font-medium-3 me-50" />
-              <span className="fw-bold">سایر اطلاعات کاربر</span>
+              <span className="fw-bold">  سایر اظلاعات کاربر</span>
             </NavLink>
           </NavItem>
+            <NavItem>
+          <NavLink active={active === '5'} onClick={() => toggle('5')}>
+            <Edit className="font-medium-3 me-50" />
+            <span className="fw-bold">ارتباط با کاربر</span>
+          </NavLink>
+          
+        </NavItem>
           {/* <NavItem>
           <NavLink active={active === '5'} onClick={() => toggle('5')}>
             <Bell className="font-medium-3 me-50" />
@@ -89,8 +96,13 @@ const UserTabs = () => {
             </div>
           )}
           {active === "4" && (
-            <div style={{ width: "100%" }}>
+            <div style={{ width: "100%", height: "100%" }}>
               <Connections data={data} />
+            </div>
+          )}
+             {active === "5" && (
+            <div style={{ width: "100%", height: "100%" }}>
+              <Notifications data={data} />
             </div>
           )}
         </div>

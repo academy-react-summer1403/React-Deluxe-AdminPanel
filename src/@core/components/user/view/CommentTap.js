@@ -200,20 +200,20 @@ const CommentTap = () => {
               <span className="text-truncate fw-bolder">
                 {row.accept ? (
                   <Badge
-                    color="light-success"
-                    className="fs-5"
-                    style={{ width: "35px", textAlign: "center" }}
-                  >
-                    فعال
-                  </Badge>
-                ) : (
-                  <Badge
-                    color="light-danger"
-                    className="fs-5"
-                    style={{ width: "70px", textAlign: "center" }}
-                  >
-                    غیر فعال
-                  </Badge>
+                  color="light-success"
+                  className="fs-5"
+                  style={{ width: "35px", textAlign: "center" }}
+                >
+                  تایید شده
+                </Badge>
+              ) : (
+                <Badge
+                  color="light-danger"
+                  className="fs-5"
+                  style={{ width: "70px", textAlign: "center" }}
+                >
+                   تایید نشده
+                </Badge>
                 )}
               </span>
             </div>
