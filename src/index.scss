@@ -1,2 +1,61 @@
 @import '../node_modules/prismjs/themes/prism-tomorrow';
 @import './assets/scss/app.scss';
+
+
+
+@font-face {
+    font-family: "yekanReg";
+    src: url("../src/@core/assets/fonts/feather/fonts/yekan-regular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+  }
+
+
+
+
+  @font-face {
+    font-family: "vazirmatn";
+    src: url("../src/@core/assets/fonts/feather/fonts/Vazirmatn-VariableFont_wght.ttf");
+    font-weight: 400;
+  }
+  @font-face {
+    font-family: "vazirmatn";
+    src: url("../src/@core/assets/fonts/feather/fonts//Vazirmatn-Bold.ttf");
+    font-weight: 700;
+  }
+  
+  @font-face {
+    font-family: "vazirmatn";
+    src: url("../src/@core/assets/fonts/feather/fonts/Vazirmatn-ExtraBold.ttf");
+    font-weight: 800;
+  }
+  
+  @font-face {
+    font-family: "vazirmatn";
+    src: url("../src/@core/assets/fonts/feather/fonts/Vazirmatn-ExtraLight.ttf");
+    font-weight: 200;
+  }
+  
+  @font-face {
+    font-family: "vazirmatn";
+    src: url("../src/@core/assets/fonts/feather/fonts/Vazirmatn-Light.ttf");
+    font-weight: 300;
+  }
+  
+  @font-face {
+    font-family: "vazirmatn";
+    src: url("../src/@core/assets/fonts/feather/fonts/Vazirmatn-Medium.ttf");
+    font-weight: 500;
+  }
+  
+  @font-face {
+    font-family: "vazirmatn";
+    src: url("../src/@core/assets/fonts/feather/fonts/Vazirmatn-SemiBold.ttf");
+    font-weight: 600;
+  }
+  
+  @font-face {
+    font-family: "vazirmatn";
+    src: url("../src/@core/assets/fonts/feather/fonts//Vazirmatn-Thin.ttf");
+    font-weight: 100;
+  }
