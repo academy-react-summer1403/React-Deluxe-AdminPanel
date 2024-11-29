@@ -35,7 +35,6 @@ const UserTabs = () => {
         <Nav
           pills
           className="mb-2"
-          // style={{ width: "700px", position: "relative" }}
         >
           <NavItem>
             <NavLink active={active === "1"} onClick={() => toggle("1")}>
@@ -61,12 +60,6 @@ const UserTabs = () => {
               <span className="fw-bold">پرداختی ها</span>
             </NavLink>
           </NavItem>
-          {/* <NavItem>
-          <NavLink active={active === '5'} onClick={() => toggle('5')}>
-            <Bell className="font-medium-3 me-50" />
-            <span className="fw-bold">ارتباط</span>
-          </NavLink>
-        </NavItem> */}
         </Nav>
 
         {/* محتوای تب دوره‌ها */}
@@ -93,12 +86,7 @@ const UserTabs = () => {
           )}
         </div>
       </div>
-      {/* {active === '4' && (
-        <div style={{ position: 'absolute', top: '157px', right: '350px', width: '100%' }}>
-       
 
-        </div>
-      )} */}
     </Fragment>
   );
 };
