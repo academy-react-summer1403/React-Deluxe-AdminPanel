@@ -100,7 +100,7 @@ const Address = ({ stepper, type, finalFormData, setFinalFormData }) => {
             />
           </Col>
         </Row>
-        <div className="d-flex justify-content-between">
+        <div className="d-flex justify-content-between m-5">
           <Button
             color="primary"
             className="btn-prev"
@@ -110,7 +110,7 @@ const Address = ({ stepper, type, finalFormData, setFinalFormData }) => {
               size={14}
               className="align-middle me-sm-25 me-0"
             ></ArrowLeft>
-            <span className="align-middle d-sm-inline-block d-none">قبلی</span>
+            <span className="align-middle d-sm-inline-block d-none">مرحله ی بعدی</span>
           </Button>
           <Button
             color="primary"
@@ -118,7 +118,7 @@ const Address = ({ stepper, type, finalFormData, setFinalFormData }) => {
             type="submit"
             onClick={() => stepper.next()}
           >
-            <span className="align-middle d-sm-inline-block d-none">بعدی</span>
+            <span className="align-middle d-sm-inline-block d-none">مرحله ی بعدی</span>
             <ArrowRight
               size={14}
               className="align-middle ms-sm-25 ms-0"

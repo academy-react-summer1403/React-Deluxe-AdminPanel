@@ -41,10 +41,6 @@ const SocialLinks = ({ stepper }) => {
 
   return (
     <Fragment>
-      <div className='content-header'>
-        <h5 className='mb-0'>Social Links</h5>
-        <small>Enter Your Social Links.</small>
-      </div>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Row>
           <Col md='6' className='mb-1'>

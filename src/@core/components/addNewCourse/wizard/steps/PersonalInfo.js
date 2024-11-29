@@ -98,6 +98,7 @@ const PersonalInfo = ({ stepper, type, data, setFinalFormData }) => {
               classNamePrefix="select"
               options={typeOptions}
               name={"CourseTypeId"}
+              placeholder="انتخاب کنید"
               // defaultValue={countryOptions[0]}
             />
             {/* <Input
@@ -119,6 +120,7 @@ const PersonalInfo = ({ stepper, type, data, setFinalFormData }) => {
               classNamePrefix="select"
               options={teacherOptions}
               name={"TeacherId"}
+              placeholder="انتخاب کنید"
               // defaultValue={countryOptions[0]}
             />
             {/* <Input
@@ -142,6 +144,7 @@ const PersonalInfo = ({ stepper, type, data, setFinalFormData }) => {
               classNamePrefix="select"
               options={levelOptions}
               name={"CourseLvlId"}
+              placeholder="انتخاب کنید"
               // defaultValue={countryOptions[0]}
             />
           </Col>
@@ -158,6 +161,8 @@ const PersonalInfo = ({ stepper, type, data, setFinalFormData }) => {
               className="react-select"
               classNamePrefix="select"
               name={"TremId"}
+              placeholder="انتخاب کنید"
+              
             />
           </Col>
         </Row>
@@ -175,6 +180,8 @@ const PersonalInfo = ({ stepper, type, data, setFinalFormData }) => {
               className="react-select"
               classNamePrefix="select"
               name={"ClassId"}
+              placeholder="انتخاب کنید"
+
             />
           </Col>
           <Col md="6" className="mb-1">
@@ -189,7 +196,7 @@ const PersonalInfo = ({ stepper, type, data, setFinalFormData }) => {
             />
           </Col>
         </Row>
-        <div className="d-flex justify-content-between">
+        <div className="d-flex justify-content-between m-5">
           <Button
             color="primary"
             className="btn-prev"
