@@ -26,7 +26,7 @@ import { Check, Briefcase, X, Users, Bookmark } from "react-feather";
 import { useForm, Controller } from "react-hook-form";
 import withReactContent from "sweetalert2-react-content";
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
-import { useQuery } from "@tanstack/react-query";
+import { Mutation, QueryClient, useQuery } from "@tanstack/react-query";
 
 // ** Custom Components
 import Avatar from "@components/avatar";
@@ -40,6 +40,8 @@ import "@styles/react/libs/react-select/_react-select.scss";
 import { DatePersianizer } from "./../../../../utility/utils/DatePersianizer";
 import { useDeleteCourse } from "../../../../core/services/api/DeleteCourse";
 import { usehandleDelete } from "../list/CourseHandleDelete/handleDelete";
+import { useActiveDeactiveCourse } from "../../../../core/services/api/ActiveDeactiveCourse";
+import toast from "react-hot-toast";
 
 const roleColors = {
   editor: "light-info",
@@ -154,6 +156,19 @@ const CourseInfoCard = () => {
   // };
   const handleDelete = usehandleDelete();
 
+  const mutation = useActiveDeactiveCourse();
+
+  const handleActiveDeactive = async () => {
+    const queryClient = new QueryClient();
+    try {
+      await mutation.mutateAsync(data);
+      toast.success("hsduifhhfh");
+      queryClient.invalidateQueries("userdetail");
+      // queryClient.fetchQuery(["userdetail"]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const { id } = useParams();
 
@@ -316,7 +331,7 @@ const CourseInfoCard = () => {
               className="ms-1"
               color="danger"
               outline
-              onClick={() => handleDelete(data)}
+              onClick={() => handleActiveDeactive(data)}
             >
               غیرفعال کردن
             </Button>

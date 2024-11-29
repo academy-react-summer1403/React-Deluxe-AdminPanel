@@ -20,6 +20,7 @@ import {
   ModalHeader,
   FormFeedback,
   Badge,
+  UncontrolledTooltip,
 } from "reactstrap";
 
 // ** Custom Components
@@ -38,12 +39,15 @@ import {
   MessageSquare,
   ChevronRight,
   ChevronDown,
+  FileText,
+  Trash2,
 } from "react-feather";
 
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
 import { useQuery } from "@tanstack/react-query";
 import DataTable from "react-data-table-component";
 import { useUserComment } from "../../../../core/services/api/UserComment";
+import { useAcceptComment } from "../../../../core/services/api/AcceptComment";
 
 const SignupSchema = yup.object().shape({
   password: yup.string().min(8).required(),
@@ -85,195 +89,6 @@ const defaultValues = {
   confirmPassword: "",
 };
 
-const AppAuthComponent = ({ setShow, setShowDetailModal }) => {
-  const toggle = () => {
-    setShow(false);
-    setShowDetailModal(false);
-  };
-
-  return (
-    <Fragment>
-      <h1 className="text-center mb-2 pb-50">Add Authenticator App</h1>
-      <h4>Authenticator Apps</h4>
-      <p>
-        Using an authenticator app like Google Authenticator, Microsoft
-        Authenticator, Authy, or 1Password, scan the QR code. It will generate a
-        6 digit code for you to enter below.
-      </p>
-      <div className="d-flex justify-content-center my-2 py-50">
-        <img src={qrCode} alt="QR Code" className="img-fluid" width="122" />
-      </div>
-      <Alert color="warning">
-        <h4 className="alert-heading">ASDLKNASDA9AHS678dGhASD78AB</h4>
-        <div className="alert-body fw-normal">
-          If you having trouble using the QR code, select manual entry on your
-          app
-        </div>
-      </Alert>
-      <Row className="gy-1">
-        <Col xs={12}>
-          <Input placeholder="Enter authentication code" />
-        </Col>
-        <Col className="d-flex justify-content-end" xs={12}>
-          <Button
-            outline
-            color="secondary"
-            className="mt-1 me-1"
-            onClick={toggle}
-          >
-            Cancel
-          </Button>
-          <Button color="primary" className="mt-1">
-            <span className="me-50">Continue</span>
-            <ChevronRight size={14} />
-          </Button>
-        </Col>
-      </Row>
-    </Fragment>
-  );
-};
-
-const AppSMSComponent = ({ setShow, setShowDetailModal }) => {
-  const toggle = () => {
-    setShow(false);
-    setShowDetailModal(false);
-  };
-  return (
-    <Fragment>
-      <h1 className="text-center mb-2 pb-50">Add your number</h1>
-      <h4>Verify Your Mobile Number for SMS</h4>
-      <p>
-        Enter your mobile phone number with country code and we will send you a
-        verification code.
-      </p>
-      <Row className="gy-1 mt-1">
-        <Col xs={12}>
-          <Cleave
-            className="form-control"
-            placeholder="1 234 567 8900"
-            options={{ phone: true, phoneRegionCode: "US" }}
-          />
-        </Col>
-        <Col className="d-flex justify-content-end" xs={12}>
-          <Button
-            outline
-            color="secondary"
-            className="mt-1 me-1"
-            onClick={toggle}
-          >
-            Cancel
-          </Button>
-          <Button color="primary" className="mt-1">
-            <span className="me-50">Continue</span>
-            <ChevronRight size={14} />
-          </Button>
-        </Col>
-      </Row>
-    </Fragment>
-  );
-};
-
-export const columns = [
-  {
-    
-    minWidth: "130px",
-    center:true,
-    name: "نام دوره",
-    selector: (row) => row.courseTitle,
-    cell: (row) => {
-      return (
-        <div className="d-flex justify-content-left align-items-center">
-          <div className="avatar-wrapper">
-            {/* <Avatar className='me-1' img={row.img} alt={row.courseName} imgWidth='32' /> */}
-          </div>
-          <div className="d-flex flex-column">
-            <span className="text-truncate fw-bolder">{row.courseTitle}</span>
-          </div>
-        </div>
-      );
-    },
-  },
-  {
-   
-    minWidth: "130px",
-    center:true,
-    name: "عنوان کامنت",
-    selector: (row) => row.commentTitle,
-    cell: (row) => {
-      return (
-        <div className="d-flex justify-content-left align-items-center">
-          <div className="avatar-wrapper">
-            {/* <Avatar className='me-1' img={row.img} alt={row.courseName} imgWidth='32' /> */}
-          </div>
-          <div className="d-flex flex-column">
-            <span className="text-truncate-1 w-1 fw-bolder">
-              {row.commentTitle}
-            </span>
-          </div>
-        </div>
-      );
-    },
-  },
-  {
-    
-    center:true,
-    minWidth: "130px",
-    name: "متن کامنت",
-    selector: (row) => row.describe,
-    cell: (row) => {
-      return (
-        <div className="d-flex justify-content-left align-items-center">
-          <div className="avatar-wrapper">
-            {/* <Avatar className='me-1' img={row.img} alt={row.courseName} imgWidth='32' /> */}
-          </div>
-          <div className="d-flex flex-column">
-            <span className="text-truncate-1 w-1 fw-bolder">
-              {row.describe}
-            </span>
-          </div>
-        </div>
-      );
-    },
-  },
-  {
-    
-    center:true,
-    minWidth: "130px",
-    name: "وضعیت",
-    selector: (row) => row.accept,
-    cell: (row) => {
-      return (
-        <div className="d-flex justify-content-left align-items-center">
-          <div className="avatar-wrapper">
-            {/* <Avatar className='me-1' img={row.img} alt={row.courseName} imgWidth='32' /> */}
-          </div>
-          <div className="d-flex flex-column">
-            <span className="text-truncate fw-bolder">
-              {row.accept ? (
-                <Badge
-                  color="light-success"
-                  className="fs-5"
-                  style={{ width: "35px", textAlign: "center" }}
-                >
-                  فعال
-                </Badge>
-              ) : (
-                <Badge
-                  color="light-danger"
-                  className="fs-5"
-                  style={{ width: "70px", textAlign: "center" }}
-                >
-                  غیر فعال
-                </Badge>
-              )}
-            </span>
-          </div>
-        </div>
-      );
-    },
-  },
-];
-
 const CommentTap = () => {
   // ** Hooks
   const [show, setShow] = useState(false);
@@ -304,6 +119,147 @@ const CommentTap = () => {
 
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>اطلاعات یافت نشد</div>;
+
+  const mutation = useAcceptComment();
+
+  const handleAccept = async (commentId) => {
+    await mutation.mutateAsync(commentId);
+  };
+
+  const columns = [
+    {
+      minWidth: "130px",
+      center: true,
+      name: "نام دوره",
+      selector: (row) => row.courseTitle,
+      cell: (row) => {
+        return (
+          <div className="d-flex justify-content-left align-items-center">
+            <div className="avatar-wrapper">
+              {/* <Avatar className='me-1' img={row.img} alt={row.courseName} imgWidth='32' /> */}
+            </div>
+            <div className="d-flex flex-column">
+              <span className="text-truncate fw-bolder">{row.courseTitle}</span>
+            </div>
+          </div>
+        );
+      },
+    },
+    {
+      minWidth: "130px",
+      center: true,
+      name: "عنوان کامنت",
+      selector: (row) => row.commentTitle,
+      cell: (row) => {
+        return (
+          <div className="d-flex justify-content-left align-items-center">
+            <div className="avatar-wrapper">
+              {/* <Avatar className='me-1' img={row.img} alt={row.courseName} imgWidth='32' /> */}
+            </div>
+            <div className="d-flex flex-column">
+              <span className="text-truncate-1 w-1 fw-bolder">
+                {row.commentTitle}
+              </span>
+            </div>
+          </div>
+        );
+      },
+    },
+    {
+      center: true,
+      minWidth: "130px",
+      name: "متن کامنت",
+      selector: (row) => row.describe,
+      cell: (row) => {
+        return (
+          <div className="d-flex justify-content-left align-items-center">
+            <div className="avatar-wrapper">
+              {/* <Avatar className='me-1' img={row.img} alt={row.courseName} imgWidth='32' /> */}
+            </div>
+            <div className="d-flex flex-column">
+              <span className="text-truncate-1 w-1 fw-bolder">
+                {row.describe}
+              </span>
+            </div>
+          </div>
+        );
+      },
+    },
+    {
+      center: true,
+      minWidth: "130px",
+      name: "وضعیت",
+      selector: (row) => row.accept,
+      cell: (row) => {
+        return (
+          <div className="d-flex justify-content-left align-items-center">
+            <div className="avatar-wrapper">
+              {/* <Avatar className='me-1' img={row.img} alt={row.courseName} imgWidth='32' /> */}
+            </div>
+            <div className="d-flex flex-column">
+              <span className="text-truncate fw-bolder">
+                {row.accept ? (
+                  <Badge
+                    color="light-success"
+                    className="fs-5"
+                    style={{ width: "35px", textAlign: "center" }}
+                  >
+                    فعال
+                  </Badge>
+                ) : (
+                  <Badge
+                    color="light-danger"
+                    className="fs-5"
+                    style={{ width: "70px", textAlign: "center" }}
+                  >
+                    غیر فعال
+                  </Badge>
+                )}
+              </span>
+            </div>
+          </div>
+        );
+      },
+    },
+    {
+      name: "اقدامات",
+      minWidth: "100px",
+      center: true,
+      cell: (row) => (
+        <div className="column-action d-flex">
+          <div
+            className="btn btn-sm"
+            onClick={() => handleAccept(row.commentId)}
+          >
+            <FileText
+              className="cursor-pointer"
+              size={17}
+              id={`send-tooltip-${row.id}`}
+            />
+            <UncontrolledTooltip
+              placement="top"
+              target={`send-tooltip-${row.id}`}
+              // className="mb-1"
+            >
+              جزییات دوره
+            </UncontrolledTooltip>
+          </div>
+          <div
+            className="btn btn-sm"
+            // onClick={() => handleDelete(row)}
+          >
+            <Trash2 size={17} className="" id={`pw-tooltip-${row.id}`} />
+            <UncontrolledTooltip
+              placement="top"
+              target={`pw-tooltip-${row.id}`}
+            >
+              حذف دوره
+            </UncontrolledTooltip>
+          </div>
+        </div>
+      ),
+    },
+  ];
 
   return (
     <Card>
