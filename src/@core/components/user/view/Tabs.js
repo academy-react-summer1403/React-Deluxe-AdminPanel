@@ -13,6 +13,7 @@ import UserCourseReserve from "./UserCourseReserve";
 import CommentTap from "./CommentTap";
 import { useUserDetail } from "../../../../core/services/api/UserDetail";
 import { useParams } from "react-router-dom";
+import Notifications from "./Notifications";
 
 const UserTabs = () => {
   const [active, setActive] = useState("1");
@@ -63,12 +64,12 @@ const UserTabs = () => {
               <span className="fw-bold">سایر اطلاعات کاربر</span>
             </NavLink>
           </NavItem>
-          {/* <NavItem>
+          <NavItem>
           <NavLink active={active === '5'} onClick={() => toggle('5')}>
             <Bell className="font-medium-3 me-50" />
-            <span className="fw-bold">ارتباط</span>
+            <span className="fw-bold">ارتباط با کاربر</span>
           </NavLink>
-        </NavItem> */}
+        </NavItem>
         </Nav>
 
         {/* محتوای تب دوره‌ها */}
@@ -91,6 +92,11 @@ const UserTabs = () => {
           {active === "4" && (
             <div style={{ width: "100%" }}>
               <Connections data={data} />
+            </div>
+          )}
+           {active === "5" && (
+            <div style={{ width: "100%" }}>
+              <Notifications data={data} />
             </div>
           )}
         </div>
