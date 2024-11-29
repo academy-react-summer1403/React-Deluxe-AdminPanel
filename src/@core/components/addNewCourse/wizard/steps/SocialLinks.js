@@ -64,14 +64,10 @@ const SocialLinks = ({
   }));
   return (
     <Fragment>
-      <div className="content-header">
-        <h5 className="mb-0">Social Links</h5>
-        <small>Enter Your Social Links.</small>
-      </div>
       <Form onSubmit={handleSubmit} innerRef={formRef}>
         <Row>
-          <Col md="8 offset-2" className="mb-1">
-            <Label className="form-label" for={`twitter-${type}`}>
+          <Col md="8 offset-2" className="mb-1 m-5" style={{width:"600px"}}>
+            <Label className="form-label m-1" for={`twitter-${type}`}>
               لیست تکنولوژی ها
             </Label>
             <Select
@@ -123,22 +119,15 @@ const SocialLinks = ({
             />
           </Col>
         </Row> */}
-        <div className="d-flex justify-content-between">
-          <Button
-            color="primary"
-            className="btn-prev"
-            onClick={() => stepper.previous()}
-          >
-            <ArrowLeft
-              size={14}
-              className="align-middle me-sm-25 me-0"
-            ></ArrowLeft>
-            <span className="align-middle d-sm-inline-block d-none">قبلی</span>
-          </Button>
+        <div className="d-flex justify-content-between m-5">
+         
           <Button
             color="success"
             className="btn-submit"
+            style={{width:"600px"}}
             type="submit"
+            size={20}
+
             // onClick={() => alert("submitted")}
           >
             افزودن دوره

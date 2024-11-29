@@ -75,21 +75,21 @@ const AccountDetails = ({ stepper, type, finalFormData, setFinalFormData }) => {
             />
           </Col>
         </Row>
-        <div className="d-flex justify-content-between">
-          <Button color="secondary" className="btn-prev" outline disabled>
+        <div className=" m-5" >
+          {/* <Button color="secondary" className="btn-prev" outline disabled>
             <ArrowLeft
               size={14}
               className="align-middle me-sm-25 me-0"
             ></ArrowLeft>
             <span className="align-middle d-sm-inline-block d-none">قبلی</span>
-          </Button>
+          </Button> */}
           <Button
             color="primary"
-            className="btn-next"
+            className="btn-next" style={{width:"600px"}}
             type="submit"
             onClick={() => stepper.next()}
           >
-            <span className="align-middle d-sm-inline-block d-none">بعدی</span>
+            <span className="align-middle d-sm-inline-block d-none">مرحله ی بعدی</span>
             <ArrowRight
               size={16}
               className="align-middle ms-sm-25 ms-0"
