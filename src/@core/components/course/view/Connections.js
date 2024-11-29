@@ -78,7 +78,7 @@ const connectedAccounts = [
   },
 ];
 
-// const socialAccounts = [
+
 //   {
 //     linked: false,
 //     title: "درباره کاربر",
