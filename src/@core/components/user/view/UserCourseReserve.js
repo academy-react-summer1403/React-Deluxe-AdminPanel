@@ -131,9 +131,9 @@ export const columns = [
                 <Badge
                   color="light-success"
                   className="fs-5"
-                  style={{ width: "35px", textAlign: "center" }}
+                  style={{ width: "65px", textAlign: "center" }}
                 >
-                  فعال
+                 رزرو شده 
                 </Badge>
               ) : (
                 <Badge
@@ -141,7 +141,7 @@ export const columns = [
                   className="fs-5"
                   style={{ width: "70px", textAlign: "center" }}
                 >
-                  غیر فعال
+                  رزرو نشده 
                 </Badge>
               )}
             </span>
@@ -168,14 +168,6 @@ export const columns = [
 ];
 
 const UserCourseReserve = (data) => {
-  // const { id } = useParams();
-  // getQuery("userCourses", `/User/UserDetails/${id}`);
-  // const { data, isError, isLoading } = useQuery({
-  //   queryKey: ["userCourses"],
-  // });
-
-  // if (isLoading) return <div>Loading</div>;
-  // if (isError) return <div>اطلاعات یافت نشد</div>;
 
   return (
     <Card>

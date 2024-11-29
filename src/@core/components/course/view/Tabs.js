@@ -40,7 +40,7 @@ const UserTabs = () => {
           <NavItem>
             <NavLink active={active === "1"} onClick={() => toggle("1")}>
               <User className="font-medium-3 me-50" />
-              <span className="fw-bold">کاربر ها</span>
+              <span className="fw-bold">دانشجو ها</span>
             </NavLink>
           </NavItem>
           <NavItem>

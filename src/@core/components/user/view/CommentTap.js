@@ -253,9 +253,9 @@ export const columns = [
                 <Badge
                   color="light-success"
                   className="fs-5"
-                  style={{ width: "35px", textAlign: "center" }}
+                  style={{ width: "65px", textAlign: "center" }}
                 >
-                  فعال
+                  تایید شده
                 </Badge>
               ) : (
                 <Badge
@@ -263,7 +263,7 @@ export const columns = [
                   className="fs-5"
                   style={{ width: "70px", textAlign: "center" }}
                 >
-                  غیر فعال
+                  تایید نشده 
                 </Badge>
               )}
             </span>

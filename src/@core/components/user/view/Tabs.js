@@ -8,11 +8,11 @@ import { Nav, NavItem, NavLink } from "reactstrap";
 import { User, Lock, Bookmark, Bell } from "react-feather";
 import UserProjectsList from "./UserProjectsList";
 import Connections from "./Connections";
-import SecurityTab from "./CommentTap";
 import UserCourseReserve from "./UserCourseReserve";
 import CommentTap from "./CommentTap";
 import { useUserDetail } from "../../../../core/services/api/UserDetail";
 import { useParams } from "react-router-dom";
+import {UserMoreInfo} from "./UserMoreInfo";
 
 const UserTabs = () => {
   const [active, setActive] = useState("1");
@@ -63,12 +63,12 @@ const UserTabs = () => {
               <span className="fw-bold">سایر اطلاعات کاربر</span>
             </NavLink>
           </NavItem>
-          {/* <NavItem>
+          <NavItem>
           <NavLink active={active === '5'} onClick={() => toggle('5')}>
             <Bell className="font-medium-3 me-50" />
-            <span className="fw-bold">ارتباط</span>
+            <span className="fw-bold">ارتباط با کاربر</span>
           </NavLink>
-        </NavItem> */}
+        </NavItem>
         </Nav>
 
         {/* محتوای تب دوره‌ها */}
@@ -89,18 +89,18 @@ const UserTabs = () => {
             </div>
           )}
           {active === "4" && (
-            <div style={{ width: "100%" }}>
+            <div style={{ width: "100%" , height:"100%"}}>
               <Connections data={data} />
+            </div>
+          )}
+           {active === "5" && (
+            <div style={{ width: "100%" }}>
+              <UserMoreInfo data={data} />
             </div>
           )}
         </div>
       </div>
-      {/* {active === '4' && (
-        <div style={{ position: 'absolute', top: '157px', right: '350px', width: '100%' }}>
-       
-
-        </div>
-      )} */}
+     
     </Fragment>
   );
 };
