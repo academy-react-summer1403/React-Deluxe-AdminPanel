@@ -75,7 +75,7 @@ const AccountDetails = ({ stepper, type, finalFormData, setFinalFormData }) => {
             />
           </Col>
         </Row>
-        <div className=" m-5" >
+        <div className=" m-5 d-flex justify-content-center" >
           {/* <Button color="secondary" className="btn-prev" outline disabled>
             <ArrowLeft
               size={14}

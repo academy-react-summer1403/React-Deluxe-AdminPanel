@@ -45,22 +45,20 @@ const SocialLinks = ({
     //   return updatedFormData;
     // });
 
-    console.log(selectedTech);
-
-    const courseToast = toast.loading("درحال افزودن دوره شما...");
+    const courseToast = toast.loading("درحال افزودن تکنولوژی به دوره شما");
     try {
       await mutation.mutateAsync(selectedTech);
-      //   toast.success("دوره شما با موفقیت اضافه شد!", { id: courseToast });
+      toast.success("تکنولوژی با موفقیت اضافه شد!", { id: courseToast });
     } catch (error) {
-      // toast.error(
-      //   `افزودن دوره شما با خطا مواجه شد:
-      //   ${
-      //     error.response.data.title
-      //       ? error.response.data.title
-      //       : error.response.data.ErrorMessage
-      //   }`,
-      //   { id: courseToast }
-      // );
+      toast.error(
+        "افزودن دوره شما با خطا مواجه شد",
+        // ${
+        //     error.response.data.title
+        //       ? error.response.data.title
+        //       : error.response.data.ErrorMessage
+        //   }`,
+        { id: courseToast }
+      );
     }
   };
 
@@ -76,8 +74,8 @@ const SocialLinks = ({
   return (
     <Fragment>
       <Form onSubmit={handleSubmit}>
-        <Row>
-          <Col md="8 offset-2" className="mb-1 m-5" style={{width:"600px"}}>
+        <Row className="d-flex justify-content-center">
+          <Col md="8 offset-2" className="mb-1 m-5" style={{ width: "600px" }}>
             <Label className="form-label m-1" for={`twitter-${type}`}>
               لیست تکنولوژی ها
             </Label>
@@ -131,12 +129,11 @@ const SocialLinks = ({
             />
           </Col>
         </Row> */}
-        <div className="d-flex justify-content-between m-5">
-         
+        <div className="d-flex justify-content-center m-5">
           <Button
             color="success"
             className="btn-submit"
-            style={{width:"600px"}}
+            style={{ width: "600px" }}
             type="submit"
             size={20}
 
