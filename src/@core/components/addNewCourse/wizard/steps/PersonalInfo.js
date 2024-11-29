@@ -113,7 +113,7 @@ const PersonalInfo = ({ stepper, type, data, setFinalFormData }) => {
             </Label>
             <Select
               theme={selectThemeColors}
-              isClearable={false}
+              isClearable={true}
               id={`last-name-${type}`}
               className="react-select"
               classNamePrefix="select"
@@ -136,7 +136,7 @@ const PersonalInfo = ({ stepper, type, data, setFinalFormData }) => {
             </Label>
             <Select
               theme={selectThemeColors}
-              isClearable={false}
+              isClearable={true}
               id={`country-${type}`}
               className="react-select"
               classNamePrefix="select"
@@ -151,7 +151,7 @@ const PersonalInfo = ({ stepper, type, data, setFinalFormData }) => {
             </Label>
             <Select
               // isMulti
-              isClearable={false}
+              isClearable={true}
               theme={selectThemeColors}
               id={`language-${type}`}
               options={termOptions}
@@ -168,7 +168,7 @@ const PersonalInfo = ({ stepper, type, data, setFinalFormData }) => {
             </Label>
             <Select
               // isMulti
-              isClearable={false}
+              isClearable={true}
               theme={selectThemeColors}
               id={`language-${type}`}
               options={classroomOptions}

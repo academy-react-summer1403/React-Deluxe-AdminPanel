@@ -1,5 +1,5 @@
 // ** React Imports
-import { Fragment, useRef } from "react";
+import { Fragment, useRef, useState } from "react";
 
 // ** Icons Imports
 import { ArrowLeft } from "react-feather";
@@ -10,6 +10,7 @@ import Select from "react-select";
 import { selectThemeColors } from "@utils";
 import { useAddCourse } from "../../../../../core/services/api/AddCourse";
 import toast from "react-hot-toast";
+import { useAddCourseTech } from "../../../../../core/services/api/AddCourseTech";
 
 const SocialLinks = ({
   stepper,
@@ -18,15 +19,17 @@ const SocialLinks = ({
   finalFormData,
   setFinalFormData,
 }) => {
-  const formRef = useRef(null);
+  const [selectedTech, setSelectedTech] = useState([]);
 
-  const mutation = useAddCourse();
+  // const formRef = useRef(null);
+
+  const mutation = useAddCourseTech(); // !!!!!!!!!!!!!!!
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData(formRef.current);
+    // const formData = new FormData(formRef.current);
     // const formValues = Object.fromEntries(formData.entries());
-    console.log(formData);
+    // console.log(formValues);
     // setFinalFormData((prevFormData) => {
     //   // console.log("prevFormData", prevFormData);
     //   const updatedFormData = new FormData();
@@ -41,20 +44,23 @@ const SocialLinks = ({
 
     //   return updatedFormData;
     // });
+
+    console.log(selectedTech);
+
     const courseToast = toast.loading("درحال افزودن دوره شما...");
     try {
-      await mutation.mutateAsync(finalFormData);
-      toast.success("دوره شما با موفقیت اضافه شد!", { id: courseToast });
+      await mutation.mutateAsync(selectedTech);
+      //   toast.success("دوره شما با موفقیت اضافه شد!", { id: courseToast });
     } catch (error) {
-      toast.error(
-        `افزودن دوره شما با خطا مواجه شد:
-        ${
-          error.response.data.title
-            ? error.response.data.title
-            : error.response.data.ErrorMessage
-        }`,
-        { id: courseToast }
-      );
+      // toast.error(
+      //   `افزودن دوره شما با خطا مواجه شد:
+      //   ${
+      //     error.response.data.title
+      //       ? error.response.data.title
+      //       : error.response.data.ErrorMessage
+      //   }`,
+      //   { id: courseToast }
+      // );
     }
   };
 
@@ -62,16 +68,17 @@ const SocialLinks = ({
     value: option.id,
     label: option.techName,
   }));
+
+  const handleSelectChange = (selectedOptions) => {
+    setSelectedTech(selectedOptions || []); // Update state with selected options
+  };
+
   return (
     <Fragment>
-      <div className="content-header">
-        <h5 className="mb-0">Social Links</h5>
-        <small>Enter Your Social Links.</small>
-      </div>
-      <Form onSubmit={handleSubmit} innerRef={formRef}>
+      <Form onSubmit={handleSubmit}>
         <Row>
           <Col md="8 offset-2" className="mb-1">
-            <Label className="form-label" for={`twitter-${type}`}>
+            <Label className="form-label" for={`tech`}>
               لیست تکنولوژی ها
             </Label>
             <Select
@@ -79,11 +86,12 @@ const SocialLinks = ({
               placeholder={"لیست تکنولوژی ها"}
               theme={selectThemeColors}
               isClearable={true}
-              id={`twitter-${type}`}
+              id={`tech`}
               className="react-select"
               classNamePrefix="select"
               options={techOptions}
               name={"tech"}
+              onChange={handleSelectChange} // Capture changes
               // defaultValue={"لیست تکنولوژی ها"}
             />
           </Col>

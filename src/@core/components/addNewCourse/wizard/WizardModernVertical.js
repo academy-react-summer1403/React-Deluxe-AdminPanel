@@ -73,6 +73,7 @@ const WizardModernVertical = () => {
         <Address
           stepper={stepper}
           type="modern-vertical"
+          finalFormData={finalFormData}
           setFinalFormData={setFinalFormData}
         />
       ),

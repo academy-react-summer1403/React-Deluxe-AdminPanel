@@ -6,28 +6,48 @@ import { ArrowLeft, ArrowRight } from "react-feather";
 
 // ** Reactstrap Imports
 import { Label, Row, Col, Input, Form, Button } from "reactstrap";
+import { useAddCourse } from "../../../../../core/services/api/AddCourse";
+import toast from "react-hot-toast";
 
-const Address = ({ stepper, type, setFinalFormData }) => {
+const Address = ({ stepper, type, finalFormData, setFinalFormData }) => {
   const formRef = useRef(null);
+
+  const mutation = useAddCourse();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(formRef.current);
-    console.log(formData);
-    setFinalFormData((prevFormData) => {
-      // console.log("prevFormData", prevFormData);
-      const updatedFormData = new FormData();
+    // console.log(formData);
+    // setFinalFormData((prevFormData) => {
+    // console.log("prevFormData", prevFormData);
+    const updatedFormData = new FormData();
 
-      for (const [key, value] of prevFormData.entries()) {
-        updatedFormData.append(key, value);
-      }
+    for (const [key, value] of finalFormData.entries()) {
+      updatedFormData.append(key, value);
+    }
 
-      for (const [key, value] of formData.entries()) {
-        updatedFormData.append(key, value);
-      }
+    for (const [key, value] of formData.entries()) {
+      updatedFormData.append(key, value);
+    }
 
-      return updatedFormData;
-    });
+    // return updatedFormData;
+    // });
+    console.log("UpdatedFormData", updatedFormData);
+    const courseToast = toast.loading("درحال افزودن دوره شما...");
+    try {
+      await mutation.mutateAsync(updatedFormData);
+      toast.success("دوره شما با موفقیت اضافه شد!", { id: courseToast });
+    } catch (error) {
+      toast.error(
+        `افزودن دوره شما با خطا مواجه شد:
+        ${
+          error.response.data.title
+            ? error.response.data.title
+            : error.response.data.ErrorMessage
+        }`,
+        { id: courseToast }
+      );
+    }
   };
   return (
     <Fragment>
@@ -62,7 +82,7 @@ const Address = ({ stepper, type, setFinalFormData }) => {
               تاریخ شروع
             </Label>
             <Input
-              type="text"
+              type="date"
               name={"StartTime"}
               id={`pincode-${type}`}
               placeholder="YYYY/MM/DD"
@@ -73,7 +93,7 @@ const Address = ({ stepper, type, setFinalFormData }) => {
               تاریخ پایان
             </Label>
             <Input
-              type="text"
+              type="date"
               name={"EndTime"}
               id={`city-${type}`}
               placeholder="YYYY/MM/DD"
