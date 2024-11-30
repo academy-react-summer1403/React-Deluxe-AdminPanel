@@ -116,16 +116,16 @@ const CommentTap = () => {
   //   queryKey: ["userCourses"],
   // });
   const { data, isError, isLoading } = useUserComment(id);
-
-  if (isLoading) return <div>Loading</div>;
-  if (isError) return <div>اطلاعات یافت نشد</div>;
-
+  
   const mutation = useAcceptComment();
-
+  
   const handleAccept = async (commentId) => {
     await mutation.mutateAsync(commentId);
   };
-
+  
+    if (isLoading) return <div>Loading</div>;
+    if (isError) return <div>اطلاعات یافت نشد</div>;
+  
   const columns = [
     {
       minWidth: "130px",

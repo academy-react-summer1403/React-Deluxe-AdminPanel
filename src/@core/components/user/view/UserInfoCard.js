@@ -250,12 +250,12 @@ const UserInfoCard = () => {
                 <span>{data.nationalCode}</span>
               </li>
               <li className="mb-75">
-                <span className="fw-bolder me-25"> توضیحات:</span>
-                <span> {data.userAbout}</span>
+                <span className="fw-bolder me-25">آدرس:</span>
+                <span>{data.homeAdderess}</span>
               </li>
               <li className="mb-75">
-                <span className="fw-bolder me-25">کشور:</span>
-                <span>ایران</span>
+                <span className="fw-bolder me-25">بیوگرافی:</span>
+                <span>{data.userAbout}</span>
               </li>
             </ul>
             {/* ) : null} */}
