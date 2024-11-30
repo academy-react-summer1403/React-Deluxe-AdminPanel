@@ -84,9 +84,10 @@ const UsersList = () => {
 
   const { data, isLoading, isError } = useBlogs(
     searchTerm,
-    currentRole.id,
     currentPage,
-    rowsPerPage
+    rowsPerPage,
+    currentRole.value,
+    currentPlan.value
   );
 
   // if (isLoading) return <FullPageLoading />;
@@ -99,20 +100,19 @@ const UsersList = () => {
 
   // ** User filter options
   const roleOptions = [
-    { value: "", label: "Select Role" },
-    { value: "admin", label: "Admin" },
-    { value: "author", label: "Author" },
-    { value: "editor", label: "Editor" },
-    { value: "maintainer", label: "Maintainer" },
-    { value: "subscriber", label: "Subscriber" },
+    { value: "", label: "انتخاب کنید..." },
+    { value: "TypeName", label: "نوع دوره" },
+    { value: "StatusName", label: "وضعیت دوره" },
+    { value: "LevelName", label: "سطح دوره" },
+    { value: "Cost", label: "قیمت" },
+    { value: "LastUpdate", label: "آخرین ویرایش" },
+    { value: "InsertDate", label: "تاریخ ایجاد" },
   ];
 
   const planOptions = [
-    { value: "", label: "Select Plan" },
-    { value: "basic", label: "Basic" },
-    { value: "company", label: "Company" },
-    { value: "enterprise", label: "Enterprise" },
-    { value: "team", label: "Team" },
+    { value: "", label: "انتخاب کنید..." },
+    { value: "DESC", label: "ترتیب نزولی" },
+    { value: "ASC", label: "ترتیب صعودی" },
   ];
 
   const statusOptions = [
@@ -422,9 +422,48 @@ const UsersList = () => {
       ),
     },
   ];
+  
 
   return (
     <Fragment>
+      <Card>
+        <CardHeader>
+          <CardTitle tag="h4">فیلتر ها</CardTitle>
+        </CardHeader>
+        <CardBody>
+          <Row>
+            <Col md="4">
+              <Label for="role-select">نوع مرتب سازی</Label>
+              <Select
+                isClearable={false}
+                value={currentRole}
+                options={roleOptions}
+                className="react-select"
+                classNamePrefix="select"
+                theme={selectThemeColors}
+                onChange={(data) => {
+                  setCurrentRole(data);
+                }}
+              />
+            </Col>
+            <Col className="my-md-0 my-1" md="4">
+              <Label for="plan-select">جهت مرتب سازی</Label>
+              <Select
+                theme={selectThemeColors}
+                isClearable={false}
+                className="react-select"
+                classNamePrefix="select"
+                options={planOptions}
+                value={currentPlan}
+                onChange={(data) => {
+                  setCurrentPlan(data);
+                }}
+              />
+            </Col>
+          </Row>
+        </CardBody>
+      </Card>
+
       <Card className="overflow-hidden ">
         <Row className="ltr mt-2">
           <Col xl="6" className="d-flex align-items-center p-0">

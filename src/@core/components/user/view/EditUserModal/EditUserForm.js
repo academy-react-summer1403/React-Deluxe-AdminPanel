@@ -65,7 +65,7 @@ const EditUserForm = () => {
     receiveMessageEvent: data?.receiveMessageEvent,
     isDelete: data?.isDelete,
     isTecher: data?.isTecher,
-    isStudent: data.isStudent,
+    isStudent: data?.isStudent,
     twoStepAuth: data?.twoStepAuth,
     currentPictureAddress: data?.currentPictureAddress,
     insertDate: data?.insertDate,
