@@ -1,10 +1,10 @@
 import http from "../interceptor";
 import { useQuery } from "@tanstack/react-query";
 
-export const useAllCourseInfo = () => {
-  const AllCourseInfo = async () => {
+export const useAddBlogCategory = () => {
+  const AddBlogCategory = async () => {
     try {
-      const res = await http.get("/Course/CourseList?RowsOfPage=1000");
+      const res = await http.get("/News/GetListNewsCategory");
       return res;
     } catch (error) {
       console.log(error);
@@ -12,7 +12,7 @@ export const useAllCourseInfo = () => {
     }
   };
   return useQuery({
-    queryKey: ["AllCourseInfo"],
-    queryFn: AllCourseInfo,
+    queryKey: ["AddBlogCategory"],
+    queryFn: AddBlogCategory,
   });
 };

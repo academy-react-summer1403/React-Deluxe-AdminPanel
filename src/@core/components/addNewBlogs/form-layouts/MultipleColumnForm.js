@@ -15,6 +15,9 @@ import {
 import { useAddBlog } from "../../../../core/services/api/AddBlog";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { useAddBlogCategory } from "../../../../core/services/api/AddBlogCategory";
+import Select from "react-select";
+import { selectThemeColors } from "./../../../../utility/Utils";
 
 const MultipleColumnForm = () => {
   // const [formValues, setFormValues] = useState({
@@ -52,6 +55,15 @@ const MultipleColumnForm = () => {
     //   mutation.isPending ? (blogToast = toast.loading("Adding...")) : "";
     // }
   };
+
+  const { data } = useAddBlogCategory();
+  console.log(data);
+
+  const categoryOptions = data?.map((option) => ({
+    value: option.id,
+    label: option.categoryName,
+  }));
+
   return (
     <Card>
       <CardHeader>
@@ -130,14 +142,19 @@ const MultipleColumnForm = () => {
               />
             </Col>
             <Col md="6" sm="12" className="mb-1">
-              <Label className="form-label" for="NewsCatregoryId">
-                دسته بندی خبر
+              <Label className="form-label" for={"NewsCatregoryId"}>
+                نوع دوره
               </Label>
-              <Input
-                type="text"
-                name="NewsCatregoryId"
-                id="NewsCatregoryId"
-                placeholder="دسته بندی خبر"
+              <Select
+                theme={selectThemeColors}
+                isClearable={true}
+                id={"NewsCatregoryId"}
+                className="react-select"
+                classNamePrefix="select"
+                options={categoryOptions}
+                name={"NewsCatregoryId"}
+                placeholder="انتخاب کنید"
+                // defaultValue={countryOptions[0]}
               />
             </Col>
             <Col sm="12">

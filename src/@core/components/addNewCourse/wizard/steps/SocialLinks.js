@@ -81,7 +81,7 @@ const SocialLinks = ({
             </Label>
             <Select
               isMulti
-              placeholder={"لیست تکنولوژی ها"}
+              placeholder={"انتخاب کنید..."}
               theme={selectThemeColors}
               isClearable={true}
               id={`tech`}

@@ -212,7 +212,9 @@ const UsersList = () => {
   const { data, isLoading, isError } = useCourseList(
     currentPage,
     rowsPerPage,
-    searchTerm
+    searchTerm,
+    currentRole.value,
+    currentPlan.value
   );
 
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
@@ -222,20 +224,19 @@ const UsersList = () => {
 
   // ** User filter options
   const roleOptions = [
-    { value: "", label: "Select Role" },
-    { value: "admin", label: "Admin" },
-    { value: "author", label: "Author" },
-    { value: "editor", label: "Editor" },
-    { value: "maintainer", label: "Maintainer" },
-    { value: "subscriber", label: "Subscriber" },
+    { value: "", label: "انتخاب کنید..." },
+    { value: "TypeName", label: "نوع دوره" },
+    { value: "StatusName", label: "وضعیت دوره" },
+    { value: "LevelName", label: "سطح دوره" },
+    { value: "Cost", label: "قیمت" },
+    { value: "LastUpdate", label: "آخرین ویرایش" },
+    { value: "InsertDate", label: "تاریخ ایجاد" },
   ];
 
   const planOptions = [
     { value: "", label: "انتخاب کنید..." },
-    { value: "basic", label: "Basic" },
-    { value: "company", label: "Company" },
-    { value: "enterprise", label: "Enterprise" },
-    { value: "team", label: "Team" },
+    { value: "DESC", label: "ترتیب نزولی" },
+    { value: "ASC", label: "ترتیب صعودی" },
   ];
 
   const statusOptions = [
@@ -506,7 +507,7 @@ const UsersList = () => {
         <CardBody>
           <Row>
             <Col md="4">
-              <Label for="role-select">مرتب سازی</Label>
+              <Label for="role-select">نوع مرتب سازی</Label>
               <Select
                 isClearable={false}
                 value={currentRole}
@@ -516,23 +517,11 @@ const UsersList = () => {
                 theme={selectThemeColors}
                 onChange={(data) => {
                   setCurrentRole(data);
-                  dispatch(
-                    getData({
-                      sort,
-                      sortColumn,
-                      q: searchTerm,
-                      role: data.value,
-                      page: currentPage,
-                      perPage: rowsPerPage,
-                      status: currentStatus.value,
-                      currentPlan: currentPlan.value,
-                    })
-                  );
                 }}
               />
             </Col>
             <Col className="my-md-0 my-1" md="4">
-              <Label for="plan-select">نوع مرتب سازی</Label>
+              <Label for="plan-select">جهت مرتب سازی</Label>
               <Select
                 theme={selectThemeColors}
                 isClearable={false}
