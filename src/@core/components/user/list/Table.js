@@ -52,18 +52,21 @@ import {
   ModalHeader,
   ModalBody,
   Badge,
+  UncontrolledTooltip,
 } from "reactstrap";
 
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
-import { Link } from "react-router-dom";
 import { useUserList } from "../../../../core/services/api/userList";
 
 import CardBrowserState from "./progress";
 
 import AddUserForm from "./AddUserForm";
 import { FullPageLoading } from "../../../../assets/Loadings/FullPageLoading/FullPageLoading";
+import { Link } from "react-router-dom";
+import Male from "../../../../assets/images/avatars/Male.png";
+import Female from "../../../../assets/images/avatars/Female.png";
 
 const UsersList = () => {
   // ** States
@@ -292,7 +295,7 @@ const UsersList = () => {
     },
     {
       name: "نقش",
-      center:true,
+      center: true,
       // sortable: true,
       minWidth: "172px",
       sortField: "role",
@@ -404,16 +407,9 @@ const UsersList = () => {
       ),
     },
     {
-      name: "جنسیت",
-      sortable: true,
-      minWidth: "172px",
-      sortField: "role",
-      selector: (row) => <div> {row.gender ? "مرد" : "زن"} </div>,
-    },
-    {
       name: "وضعیت",
       sortable: true,
-      minWidth: "172px",
+      maxWidth: "100x",
       sortField: "role",
       selector: (row) => (
         <div>
@@ -439,11 +435,59 @@ const UsersList = () => {
       ),
     },
     {
+      name: "جنسیت",
+      sortable: true,
+      maxWidth: "70px",
+      sortField: "role",
+      selector: (row) => (
+        <div>
+          {row.gender ? (
+            <Avatar img={Male} style={{ backgroundColor: "transparent" }} />
+          ) : (
+            <Avatar
+              img={Female}
+              style={{ backgroundColor: "transparent" }}
+              imgWidth={28}
+            />
+          )}
+        </div>
+      ),
+    },
+    {
       name: "عملیات",
       minWidth: "100px",
       cell: (row) => (
         <div className="column-action">
-          <UncontrolledDropdown>
+          <Link
+            className="user_name text-truncate text-body p-0"
+            to={`/userdetail/${row?.id}`}
+          >
+            <div className="btn btn-sm">
+              <FileText
+                className="cursor-pointer"
+                size={17}
+                id={`send-tooltip-${row.id}`}
+              />
+              <UncontrolledTooltip
+                placement="top"
+                target={`send-tooltip-${row.id}`}
+                // className="mb-1"
+              >
+                جزییات کاربر
+              </UncontrolledTooltip>
+            </div>
+          </Link>
+          <div className="btn btn-sm" onClick={() => handleDelete(row)}>
+            <Trash2 size={17} className="" id={`pw-tooltip-${row.id}`} />
+            <UncontrolledTooltip
+              placement="top"
+              target={`pw-tooltip-${row.id}`}
+            >
+              حذف کاربر
+            </UncontrolledTooltip>
+          </div>
+          {/* <Uncontr
+          {/* <UncontrolledDropdown>
             <DropdownToggle tag="div" className="btn btn-sm">
               <MoreVertical size={14} className="cursor-pointer" />
             </DropdownToggle>
@@ -471,7 +515,7 @@ const UsersList = () => {
                 <span className="align-middle">حذف</span>
               </DropdownItem>
             </DropdownMenu>
-          </UncontrolledDropdown>
+          </UncontrolledDropdown> */}
         </div>
       ),
     },

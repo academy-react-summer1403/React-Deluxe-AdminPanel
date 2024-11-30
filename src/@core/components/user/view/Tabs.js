@@ -13,6 +13,12 @@ import UserCourseReserve from "./UserCourseReserve";
 import CommentTap from "./CommentTap";
 import { useUserDetail } from "../../../../core/services/api/UserDetail";
 import { useParams } from "react-router-dom";
+import {
+  Comment01Icon,
+  LicenseDraftIcon,
+  Share01Icon,
+  Task01Icon,
+} from "hugeicons-react";
 
 const UserTabs = () => {
   const [active, setActive] = useState("1");
@@ -41,35 +47,34 @@ const UserTabs = () => {
         >
           <NavItem>
             <NavLink active={active === "1"} onClick={() => toggle("1")}>
-              <User className="font-medium-3 me-50" />
+              <LicenseDraftIcon size={20} />
               <span className="fw-bold">دوره ها</span>
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink active={active === "2"} onClick={() => toggle("2")}>
-              <Lock className="font-medium-3 me-50" />
+              <Task01Icon size={20} />
               <span className="fw-bold">دوره های رزرو</span>
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink active={active === "3"} onClick={() => toggle("3")}>
-              <Bookmark className="font-medium-3 me-50" />
+              <Comment01Icon size={20} />
               <span className="fw-bold">کامنت ها</span>
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink active={active === "4"} onClick={() => toggle("4")}>
-              <Bell className="font-medium-3 me-50" />
-              <span className="fw-bold">  سایر اظلاعات کاربر</span>
+              <Share01Icon size={20} />
+              <span className="fw-bold"> سایر اظلاعات کاربر</span>
             </NavLink>
           </NavItem>
-            <NavItem>
-          <NavLink active={active === '5'} onClick={() => toggle('5')}>
-            <Edit className="font-medium-3 me-50" />
-            <span className="fw-bold">ارتباط با کاربر</span>
-          </NavLink>
-          
-        </NavItem>
+          <NavItem>
+            <NavLink active={active === "5"} onClick={() => toggle("5")}>
+              <Edit className="font-medium-3 me-50" />
+              <span className="fw-bold">ارتباط با کاربر</span>
+            </NavLink>
+          </NavItem>
           {/* <NavItem>
           <NavLink active={active === '5'} onClick={() => toggle('5')}>
             <Bell className="font-medium-3 me-50" />
@@ -100,7 +105,7 @@ const UserTabs = () => {
               <Connections data={data} />
             </div>
           )}
-             {active === "5" && (
+          {active === "5" && (
             <div style={{ width: "100%", height: "100%" }}>
               <Notifications data={data} />
             </div>
@@ -109,7 +114,7 @@ const UserTabs = () => {
       </div>
       {/* {active === '4' && (
         <div style={{ position: 'absolute', top: '157px', right: '350px', width: '100%' }}>
-       
+      
 
         </div>
       )} */}
