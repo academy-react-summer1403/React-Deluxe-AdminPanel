@@ -2,7 +2,7 @@
 import { Fragment, useState } from "react";
 
 // ** Reactstrap Imports
-import { Nav, NavItem, NavLink } from "reactstrap";
+import { CardDeck, Nav, NavItem, NavLink } from "reactstrap";
 
 // ** Icons Imports
 import {
@@ -13,11 +13,19 @@ import {
   Users,
   MessageSquare,
   DollarSign,
+  Edit2,
 } from "react-feather";
 import UserProjectsList from "./UserProjectsList";
 import Connections from "./Connections";
 import SecurityTab from "./SecurityTab";
 import UserGroupsList from "./UserGroupsList";
+import { CursorEdit02Icon } from "hugeicons-react";
+import CoursesDescribe from "./coursesDescribe";
+
+
+
+
+
 
 const UserTabs = () => {
   const [active, setActive] = useState("1");
@@ -61,12 +69,12 @@ const UserTabs = () => {
               <span className="fw-bold">پرداختی ها</span>
             </NavLink>
           </NavItem>
-          {/* <NavItem>
+          <NavItem>
           <NavLink active={active === '5'} onClick={() => toggle('5')}>
-            <Bell className="font-medium-3 me-50" />
-            <span className="fw-bold">ارتباط</span>
+            <CursorEdit02Icon className="font-medium-3 me-50" />
+            <span className="fw-bold">توضیحات</span>
           </NavLink>
-        </NavItem> */}
+        </NavItem>
         </Nav>
 
         {/* محتوای تب دوره‌ها */}
@@ -89,6 +97,11 @@ const UserTabs = () => {
           {active === "4" && (
             <div style={{ width: "100%" }}>
               <Connections />
+            </div>
+          )}
+             {active === "5" && (
+            <div style={{ width: "100%" }}>
+              <CoursesDescribe />
             </div>
           )}
         </div>
