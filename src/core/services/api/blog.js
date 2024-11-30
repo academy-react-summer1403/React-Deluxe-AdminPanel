@@ -1,13 +1,14 @@
 import http from "../interceptor";
 import { useQuery } from "@tanstack/react-query";
 
-export const useBlogs = (search, role, currentPage, rowsPerPage) => {
+export const useBlogs = (search, currentPage, rowsPerPage, Role, Sorting) => {
   const Blogs = async () => {
     try {
       const query = {};
       if (search !== "" && search !== null) query.Query = search;
 
-      // if (role !== "" && role !== null) query.roleId = role;
+      if (Role !== "" && Role !== null) query.SortingCol = Role;
+      if (Sorting !== "" && Sorting !== null) query.SortType = Sorting;
 
       if (currentPage !== "" && currentPage !== null)
         query.PageNumber = currentPage;
@@ -26,7 +27,7 @@ export const useBlogs = (search, role, currentPage, rowsPerPage) => {
   };
 
   return useQuery({
-    queryKey: ["Blogs", search, role, currentPage, rowsPerPage],
+    queryKey: ["Blogs", search, currentPage, rowsPerPage, Role, Sorting],
     queryFn: Blogs,
   });
 };
