@@ -301,7 +301,9 @@ const UsersList = () => {
           <Avatar img={data.currentImageAddressTumb ?? Logo} />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column ">
-            <Link className="user_name text-truncate text-body p-0">
+            <Link className="user_name text-truncate text-body p-0"
+             to={`/blogsDetail/${data?.id}`}
+            >
               <span className="fw-bolder">{data?.addUserFullName}</span>
             </Link>
           </div>
@@ -375,7 +377,7 @@ const UsersList = () => {
                 target={`send-tooltip-${row.id}`}
                 // className="mb-1"
               >
-                جزییات دوره
+              جزئیات مقاله
               </UncontrolledTooltip>
             </div>
           </Link>
@@ -385,7 +387,7 @@ const UsersList = () => {
               placement="top"
               target={`pw-tooltip-${row.id}`}
             >
-              حذف دوره
+              حذف مقاله
             </UncontrolledTooltip>
           </div>
           {/* <UncontrolledDropdown>
