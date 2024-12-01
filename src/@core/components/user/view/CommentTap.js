@@ -202,7 +202,7 @@ const CommentTap = () => {
                   <Badge
                   color="light-success"
                   className="fs-5"
-                  style={{ width: "35px", textAlign: "center" }}
+                  style={{ width: "auto", textAlign: "center" }}
                 >
                   تایید شده
                 </Badge>
@@ -210,7 +210,7 @@ const CommentTap = () => {
                 <Badge
                   color="light-danger"
                   className="fs-5"
-                  style={{ width: "70px", textAlign: "center" }}
+                  style={{ width: "auto", textAlign: "center" }}
                 >
                    تایید نشده
                 </Badge>
@@ -241,7 +241,7 @@ const CommentTap = () => {
               target={`send-tooltip-${row.id}`}
               // className="mb-1"
             >
-              جزییات دوره
+               تایید 
             </UncontrolledTooltip>
           </div>
           <div
@@ -253,7 +253,7 @@ const CommentTap = () => {
               placement="top"
               target={`pw-tooltip-${row.id}`}
             >
-              حذف دوره
+              حذف 
             </UncontrolledTooltip>
           </div>
         </div>
