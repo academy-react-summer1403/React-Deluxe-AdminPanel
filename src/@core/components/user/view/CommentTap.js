@@ -216,20 +216,20 @@ const CommentTap = () => {
               <span className="text-truncate fw-bolder">
                 {row.accept ? (
                   <Badge
-                    color="light-success"
-                    className="fs-5"
-                    style={{ width: "35px", textAlign: "center" }}
-                  >
-                    تایید شده
-                  </Badge>
-                ) : (
-                  <Badge
-                    color="light-danger"
-                    className="fs-5"
-                    style={{ width: "70px", textAlign: "center" }}
-                  >
-                    تایید نشده
-                  </Badge>
+                  color="light-success"
+                  className="fs-5"
+                  style={{ width: "auto", textAlign: "center" }}
+                >
+                  تایید شده
+                </Badge>
+              ) : (
+                <Badge
+                  color="light-danger"
+                  className="fs-5"
+                  style={{ width: "auto", textAlign: "center" }}
+                >
+                   تایید نشده
+                </Badge>
                 )}
               </span>
             </div>
@@ -257,7 +257,7 @@ const CommentTap = () => {
               target={`send-tooltip-${row.id}`}
               // className="mb-1"
             >
-              جزییات دوره <FileText />
+               تایید 
             </UncontrolledTooltip>
           </div>
           <div
@@ -269,7 +269,7 @@ const CommentTap = () => {
               placement="top"
               target={`pw-tooltip-${row.id}`}
             >
-              حذف دوره
+              حذف 
             </UncontrolledTooltip>
           </div>
         </div>
