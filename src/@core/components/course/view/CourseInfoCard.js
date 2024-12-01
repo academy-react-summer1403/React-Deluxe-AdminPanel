@@ -325,10 +325,10 @@ const CourseInfoCard = () => {
                 <span className="fw-bolder me-25">پایان دوره:</span>
                 <span> {DatePersianizer(data.endTime)}</span>
               </li>
-              <li className="mb-75">
+              {/* <li className="mb-75">
                 <span className="fw-bolder me-25"> توضیحات:</span>
                 <span className="text-capitalize">{data.describe}</span>
-              </li>
+              </li> */}
             </ul>
             {/* ) : null} */}
           </div>

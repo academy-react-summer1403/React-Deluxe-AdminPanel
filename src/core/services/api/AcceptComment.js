@@ -7,7 +7,7 @@ export const useAcceptComment = () => {
     if (CommentId !== "" && CommentId !== null)
       query.CommentCourseId = CommentId;
     try {
-      await http.post(`/Comment/AcceptComment`, {
+      await http.post(`/Course/AcceptCourseComment`, null, {
         params: query,
       });
     } catch (error) {
