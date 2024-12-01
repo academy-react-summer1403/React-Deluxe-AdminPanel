@@ -137,13 +137,13 @@ const EditCourseForm = ({ data2, data3 }) => {
       }
     }
     console.log(formData);
-    const userToast = toast.loading("درحال ساختن کاربر");
+    const userToast = toast.loading(" درحال ویرایش دوره");
     try {
       await mutation.mutateAsync(formData);
-      toast.success("کاربر با موفقیت ساخته شد!", { id: userToast });
+      toast.success("    دوره با موفقیت ویرایش شد", { id: userToast });
     } catch (error) {
       toast.error(
-        `ساخت کاربر با مشکل مواجه شد:,
+        `ویرایش دوره انجام نشد ,
         ${
           error.response.data.ErrorMessage
             ? error.response.data.ErrorMessage

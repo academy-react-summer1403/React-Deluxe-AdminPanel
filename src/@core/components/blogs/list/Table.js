@@ -282,7 +282,7 @@ const UsersList = () => {
         });
       } else if (result.dismiss === MySwal.DismissReason.cancel) {
         MySwal.fire({
-          title: "Cancelled",
+          title: "عملیات لغو شد",
           text: "لغو",
           icon: "error",
           customClass: {
