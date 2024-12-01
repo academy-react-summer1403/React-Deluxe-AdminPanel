@@ -21,11 +21,7 @@ import SecurityTab from "./SecurityTab";
 import UserGroupsList from "./UserGroupsList";
 import { CursorEdit02Icon } from "hugeicons-react";
 import CoursesDescribe from "./coursesDescribe";
-
-
-
-
-
+import CourseReservesList from "./CourseReservesList";
 
 const UserTabs = () => {
   const [active, setActive] = useState("1");
@@ -47,68 +43,78 @@ const UserTabs = () => {
         >
           <NavItem>
             <NavLink active={active === "1"} onClick={() => toggle("1")}>
+              <CursorEdit02Icon className="font-medium-3 me-50" />
+              <span className="fw-bold">توضیحات</span>
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink active={active === "2"} onClick={() => toggle("2")}>
               <User className="font-medium-3 me-50" />
               <span className="fw-bold">کاربر ها</span>
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink active={active === "2"} onClick={() => toggle("2")}>
+            <NavLink active={active === "3"} onClick={() => toggle("3")}>
+              <User className="font-medium-3 me-50" />
+              <span className="fw-bold">رزرو ها</span>
+            </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink active={active === "4"} onClick={() => toggle("4")}>
               <Users className="font-medium-3 me-50" />
               <span className="fw-bold">گروه ها</span>
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink active={active === "3"} onClick={() => toggle("3")}>
+            <NavLink active={active === "5"} onClick={() => toggle("5")}>
               <MessageSquare className="font-medium-3 me-50" />
               <span className="fw-bold">کامنت ها</span>
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink active={active === "4"} onClick={() => toggle("4")}>
+            <NavLink active={active === "6"} onClick={() => toggle("6")}>
               <DollarSign className="font-medium-3 me-50" />
               <span className="fw-bold">پرداختی ها</span>
             </NavLink>
           </NavItem>
-          <NavItem>
-          <NavLink active={active === '5'} onClick={() => toggle('5')}>
-            <CursorEdit02Icon className="font-medium-3 me-50" />
-            <span className="fw-bold">توضیحات</span>
-          </NavLink>
-        </NavItem>
         </Nav>
 
         {/* محتوای تب دوره‌ها */}
         <div>
           {active === "1" && (
             <div style={{ width: "100%" }}>
-              <UserProjectsList />
+              <CoursesDescribe />
             </div>
           )}
           {active === "2" && (
             <div style={{ width: "100%" }}>
-              <UserGroupsList  />
+              <UserProjectsList />
             </div>
           )}
           {active === "3" && (
             <div style={{ width: "100%" }}>
-              <SecurityTab />
+              <CourseReservesList />
             </div>
           )}
           {active === "4" && (
             <div style={{ width: "100%" }}>
-              <Connections />
+              <UserGroupsList />
             </div>
           )}
-             {active === "5" && (
+          {active === "5" && (
             <div style={{ width: "100%" }}>
-              <CoursesDescribe />
+              <SecurityTab />
+            </div>
+          )}
+          {active === "6" && (
+            <div style={{ width: "100%" }}>
+              <Connections />
             </div>
           )}
         </div>
       </div>
       {/* {active === '4' && (
         <div style={{ position: 'absolute', top: '157px', right: '350px', width: '100%' }}>
-       
 
         </div>
       )} */}

@@ -48,6 +48,7 @@ import { useQuery } from "@tanstack/react-query";
 import DataTable from "react-data-table-component";
 import { useUserComment } from "../../../../core/services/api/UserComment";
 import { useAcceptComment } from "../../../../core/services/api/AcceptComment";
+import toast from "react-hot-toast";
 
 const SignupSchema = yup.object().shape({
   password: yup.string().min(8).required(),
@@ -116,16 +117,31 @@ const CommentTap = () => {
   //   queryKey: ["userCourses"],
   // });
   const { data, isError, isLoading } = useUserComment(id);
-  
+
   const mutation = useAcceptComment();
-  
+
   const handleAccept = async (commentId) => {
-    await mutation.mutateAsync(commentId);
+    const userToast = toast.loading("درحال تایید کامنت");
+    try {
+      await mutation.mutateAsync(commentId);
+      toast.success("تایید کامنت با موفقیت شد!", { id: userToast });
+    } catch (error) {
+      toast.error(
+        `تایید کامنت با مشکل مواجه شد:,
+        ${
+          error.response.data.ErrorMessage
+            ? error.response.data.ErrorMessage
+            : "خطای تعریف نشده"
+        }`,
+        { id: userToast }
+      );
+      console.log(error);
+    }
   };
-  
-    if (isLoading) return <div>Loading</div>;
-    if (isError) return <div>اطلاعات یافت نشد</div>;
-  
+
+  if (isLoading) return <div>Loading</div>;
+  if (isError) return <div>اطلاعات یافت نشد</div>;
+
   const columns = [
     {
       minWidth: "130px",
@@ -200,20 +216,20 @@ const CommentTap = () => {
               <span className="text-truncate fw-bolder">
                 {row.accept ? (
                   <Badge
-                  color="light-success"
-                  className="fs-5"
-                  style={{ width: "35px", textAlign: "center" }}
-                >
-                  تایید شده
-                </Badge>
-              ) : (
-                <Badge
-                  color="light-danger"
-                  className="fs-5"
-                  style={{ width: "70px", textAlign: "center" }}
-                >
-                   تایید نشده
-                </Badge>
+                    color="light-success"
+                    className="fs-5"
+                    style={{ width: "35px", textAlign: "center" }}
+                  >
+                    تایید شده
+                  </Badge>
+                ) : (
+                  <Badge
+                    color="light-danger"
+                    className="fs-5"
+                    style={{ width: "70px", textAlign: "center" }}
+                  >
+                    تایید نشده
+                  </Badge>
                 )}
               </span>
             </div>
@@ -241,7 +257,7 @@ const CommentTap = () => {
               target={`send-tooltip-${row.id}`}
               // className="mb-1"
             >
-              جزییات دوره
+              جزییات دوره <FileText />
             </UncontrolledTooltip>
           </div>
           <div

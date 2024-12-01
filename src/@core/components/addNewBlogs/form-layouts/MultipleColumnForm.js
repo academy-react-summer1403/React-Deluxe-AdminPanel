@@ -119,28 +119,7 @@ const MultipleColumnForm = () => {
                 placeholder="توضیحات گوگل"
               />
             </Col>
-            <Col md="6" sm="12" className="mb-1">
-              <Label className="form-label" for="Describe">
-                توضیح کامل
-              </Label>
-              <Input
-                type="text"
-                name="Describe"
-                id="Describe"
-                placeholder="توضیح کامل"
-              />
-            </Col>
-            <Col md="6" sm="12" className="mb-1">
-              <Label className="form-label" for="Keyword">
-                کلمات کلیدی
-              </Label>
-              <Input
-                type="text"
-                name="Keyword"
-                id="Keyword"
-                placeholder="کلمات کلیدی"
-              />
-            </Col>
+
             <Col md="6" sm="12" className="mb-1">
               <Label className="form-label" for={"NewsCatregoryId"}>
                 نوع دوره
@@ -155,6 +134,28 @@ const MultipleColumnForm = () => {
                 name={"NewsCatregoryId"}
                 placeholder="انتخاب کنید"
                 // defaultValue={countryOptions[0]}
+              />
+            </Col>
+            <Col md="6" sm="12" className="mb-1">
+              <Label className="form-label" for="Keyword">
+                کلمات کلیدی
+              </Label>
+              <Input
+                type="text"
+                name="Keyword"
+                id="Keyword"
+                placeholder="کلمات کلیدی"
+              />
+            </Col>
+            <Col md="12" sm="12" className="mb-1">
+              <Label className="form-label" for="Describe">
+                توضیح کامل
+              </Label>
+              <Input
+                type="textarea"
+                name="Describe"
+                id="Describe"
+                placeholder="توضیح کامل"
               />
             </Col>
             <Col sm="12">

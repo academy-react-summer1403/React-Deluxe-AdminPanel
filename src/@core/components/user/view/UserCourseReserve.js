@@ -1,8 +1,14 @@
 // ** Reactstrap Imports
-import { Badge, Card, CardHeader, Progress } from "reactstrap";
+import {
+  Badge,
+  Card,
+  CardHeader,
+  Progress,
+  UncontrolledTooltip,
+} from "reactstrap";
 
 // ** Third Party Components
-import { ChevronDown } from "react-feather";
+import { ChevronDown, FileText, Trash2 } from "react-feather";
 import DataTable from "react-data-table-component";
 import Logo from "@src/assets/images/logo/reactdeluxe.png";
 
@@ -89,94 +95,106 @@ import { useParams } from "react-router-dom";
 //   },
 // ];
 
-export const columns = [
-  {
-    sortable: true,
-    minWidth: "130px",
-    name: "نام دوره",
-    selector: (row) => row.courseName,
-    cell: (row) => {
-      return (
-        <div className="d-flex justify-content-left align-items-center">
-          <div className="avatar-wrapper">
-            {/* <Avatar className='me-1' img={row.img} alt={row.courseName} imgWidth='32' /> */}
-          </div>
-          <div className="d-flex flex-column">
-            <span className="text-truncate fw-bolder">{row.courseName}</span>
-          </div>
-        </div>
-      );
-    },
-  },
-  {
-    name: " تاریخ رزرو دوره",
-    selector: (row) => row.reserverDate.slice(0, 10),
-  },
-  {
-    name: "وضعیت دوره ",
-    selector: (row) => row.accept,
-    sortable: true,
-    cell: (row) => {
-      return (
-        <div className="d-flex justify-content-left align-items-center">
-          <div className="avatar-wrapper">
-            {/* <Avatar className='me-1' img={row.img} alt={row.title} imgWidth='32' /> */}
-          </div>
-          <div className="d-flex flex-column">
-            <span
-              className="text-truncate fw-bolder"
-              style={{ width: "250px" }}
-            >
-              {row.accept ? (
-                <Badge
-                  color="light-success"
-                  className="fs-5"
-                  style={{ width: "35px", textAlign: "center" }}
-                >
-                  رزرو شده
-                </Badge>
-              ) : (
-                <Badge
-                  color="light-danger"
-                  className="fs-5"
-                  style={{ width: "70px", textAlign: "center" }}
-                >
-                   رزرو نشده
-                </Badge>
-              )}
-            </span>
-          </div>
-        </div>
-      );
-    },
-  },
-  // {
-  //   name: " عکس",
-  //   selector: (row) => row.tumbImageAddress,
-  //   cell: (row) => {
-  //     return (
-  //       <Avatar
-  //         img={
-  //           row.tumbImageAddress !== null && row.tumbImageAddress !== "Not-set"
-  //             ? row.tumbImageAddress
-  //             : Logo
-  //         }
-  //       />
-  //     );
-  //   },
-  // },
-];
 
 const UserCourseReserve = (data) => {
-  // const { id } = useParams();
-  // getQuery("userCourses", `/User/UserDetails/${id}`);
-  // const { data, isError, isLoading } = useQuery({
-  //   queryKey: ["userCourses"],
-  // });
+  const columns = [
+    {
+      sortable: true,
+      minWidth: "130px",
+      name: "نام دوره",
+      selector: (row) => row.courseName,
+      cell: (row) => {
+        return (
+          <div className="d-flex justify-content-left align-items-center">
+            <div className="avatar-wrapper">
+              {/* <Avatar className='me-1' img={row.img} alt={row.courseName} imgWidth='32' /> */}
+            </div>
+            <div className="d-flex flex-column">
+              <span className="text-truncate fw-bolder">{row.courseName}</span>
+            </div>
+          </div>
+        );
+      },
+    },
+    {
+      name: " تاریخ رزرو دوره",
+      selector: (row) => row.reserverDate.slice(0, 10),
+    },
+    {
+      name: "وضعیت دوره ",
+      selector: (row) => row.accept,
+      sortable: true,
+      cell: (row) => {
+        return (
+          <div className="d-flex justify-content-left align-items-center">
+            <div className="avatar-wrapper">
+              {/* <Avatar className='me-1' img={row.img} alt={row.title} imgWidth='32' /> */}
+            </div>
+            <div className="d-flex flex-column">
+              <span
+                className="text-truncate fw-bolder"
+                style={{ width: "250px" }}
+              >
+                {row.accept ? (
+                  <Badge
+                    color="light-success"
+                    className="fs-5"
+                    style={{ width: "35px", textAlign: "center" }}
+                  >
+                    رزرو شده
+                  </Badge>
+                ) : (
+                  <Badge
+                    color="light-danger"
+                    className="fs-5"
+                    style={{ width: "70px", textAlign: "center" }}
+                  >
+                    رزرو نشده
+                  </Badge>
+                )}
+              </span>
+            </div>
+          </div>
+        );
+      },
+    },
+    {
+      name: "اقدامات",
+      minWidth: "100px",
+      center: true,
+      cell: (row) => (
+        <div className="column-action d-flex">
+          <div className="btn btn-sm" onClick={() => handleAccept()}>
+            <FileText
+              className="cursor-pointer"
+              size={17}
+              id={`send-tooltip-${row.id}`}
+            />
+            <UncontrolledTooltip
+              placement="top"
+              target={`send-tooltip-${row.id}`}
+              // className="mb-1"
+            >
+              جزییات دوره
+            </UncontrolledTooltip>
+          </div>
+          <div
+            className="btn btn-sm"
+            // onClick={() => handleDelete(row)}
+          >
+            <Trash2 size={17} className="" id={`pw-tooltip-${row.id}`} />
+            <UncontrolledTooltip placement="top" target={`pw-tooltip-${row.id}`}>
+              حذف دوره
+            </UncontrolledTooltip>
+          </div>
+        </div>
+      ),
+    },
+  ];
+  const handleAccept = () => {
+  };
 
-  // if (isLoading) return <div>Loading</div>;
-  // if (isError) return <div>اطلاعات یافت نشد</div>;
-
+  console.log(data)
   return (
     <Card>
       <div className="react-dataTable user-view-account-projects ">

@@ -60,6 +60,9 @@ import { useBlogs } from "../../../../core/services/api/blog";
 import { FullPageLoading } from "../../../../assets/Loadings/FullPageLoading/FullPageLoading";
 import withReactContent from "sweetalert2-react-content";
 import Swal from "sweetalert2";
+import { useActiveDeactiveCourse } from "../../../../core/services/api/ActiveDeactiveCourse";
+import { useActiveDeactiveBlog } from "../../../../core/services/api/ActiveDeactiveBlogs";
+import { CancelCircleIcon, CheckmarkCircle02Icon } from "hugeicons-react";
 const UsersList = () => {
   // ** States
   const [sort, setSort] = useState("desc");
@@ -70,24 +73,24 @@ const UsersList = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentRole, setCurrentRole] = useState({
     value: "",
-    label: "Select Role",
+    label: "انتخاب کنید...",
   });
   const [currentPlan, setCurrentPlan] = useState({
     value: "",
-    label: "Select Plan",
+    label: "انتخاب کنید...",
   });
   const [currentStatus, setCurrentStatus] = useState({
     value: "",
-    label: "Select Status",
-    number: 0,
+    label: "انتخاب کنید...",
   });
 
   const { data, isLoading, isError } = useBlogs(
     searchTerm,
     currentPage,
     rowsPerPage,
-    currentRole.value,
-    currentPlan.value
+    currentRole?.value,
+    currentPlan?.value,
+    currentStatus?.value
   );
 
   // if (isLoading) return <FullPageLoading />;
@@ -100,26 +103,26 @@ const UsersList = () => {
 
   // ** User filter options
   const roleOptions = [
-    { value: "", label: "انتخاب کنید..." },
-    { value: "TypeName", label: "نوع دوره" },
-    { value: "StatusName", label: "وضعیت دوره" },
-    { value: "LevelName", label: "سطح دوره" },
-    { value: "Cost", label: "قیمت" },
-    { value: "LastUpdate", label: "آخرین ویرایش" },
+    // { value: "", label: "انتخاب کنید..." },
     { value: "InsertDate", label: "تاریخ ایجاد" },
+    // { value: "title", label: "تیتر خبر" },
+    // { value: "TypeName", label: "نوع دوره" },
+    // { value: "StatusName", label: "وضعیت دوره" },
+    // { value: "LevelName", label: "سطح دوره" },
+    // { value: "Cost", label: "قیمت" },
+    // { value: "LastUpdate", label: "آخرین ویرایش" },
   ];
 
   const planOptions = [
-    { value: "", label: "انتخاب کنید..." },
+    // { value: "", label: "انتخاب کنید..." },
     { value: "DESC", label: "ترتیب نزولی" },
     { value: "ASC", label: "ترتیب صعودی" },
   ];
 
   const statusOptions = [
-    { value: "", label: "Select Status", number: 0 },
-    { value: "pending", label: "Pending", number: 1 },
-    { value: "active", label: "Active", number: 2 },
-    { value: "inactive", label: "Inactive", number: 3 },
+    // { value: "", label: "انتخاب کنید..." },
+    { value: true, label: "فعال" },
+    { value: false, label: "غیر فعال" },
   ];
 
   // ** Function in get data on page change
@@ -289,10 +292,58 @@ const UsersList = () => {
     });
   };
 
+  const mutationActivation = useActiveDeactiveBlog();
+
+  const handleActication = async (row) => {
+    const formData = new FormData();
+    formData.append("Active", !row.isActive);
+    formData.append("Id", row.id);
+    console.log(row);
+    return MySwal.fire({
+      title: "آیا مطمئن هستید؟",
+      text: "البته امکان بازگشت نیز وجود دارد",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "خیر",
+      confirmButtonText: "بله",
+      customClass: {
+        confirmButton: "btn btn-primary",
+        cancelButton: "btn btn-outline-danger ms-1",
+      },
+      buttonsStyling: false,
+    }).then(async (result) => {
+      if (result.value) {
+        try {
+          await mutationActivation.mutateAsync(formData);
+        } catch (error) {
+          console.log(error);
+        }
+        MySwal.fire({
+          icon: "success",
+          title: "حذف شد !",
+          text: "عملیات با موفقیت انجام شد",
+          customClass: {
+            confirmButton: "btn btn-success",
+          },
+        });
+      } else if (result.dismiss === MySwal.DismissReason.cancel) {
+        MySwal.fire({
+          title: "عملیات لغو شد!",
+          text: "لغو",
+          icon: "error",
+          customClass: {
+            confirmButton: "btn btn-success",
+          },
+        });
+      }
+    });
+  };
+
   const column = [
     {
       name: "نویسنده",
       sortable: true,
+      // center: true,
       maxWidth: "200px",
       sortField: "title",
       // selector: (data) => data?.fullName,
@@ -301,8 +352,9 @@ const UsersList = () => {
           <Avatar img={data.currentImageAddressTumb ?? Logo} />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column ">
-            <Link className="user_name text-truncate text-body p-0"
-             to={`/blogsDetail/${data?.id}`}
+            <Link
+              className="user_name text-truncate text-body p-0"
+              to={`/blogsDetail/${data?.id}`}
             >
               <span className="fw-bolder">{data?.addUserFullName}</span>
             </Link>
@@ -312,33 +364,31 @@ const UsersList = () => {
     },
 
     {
-      name: " عنوان خبر",
-      center:true,
-      maxWidth: "500px",
-      sortField: "typeName",
-      selector: (row) => row.miniDescribe,
-    },
-    {
-      name: "دسته بندی خبر",
+      name: "عنوان خبر",
       sortable: true,
-      center:true,
+      center: true,
       maxWidth: "300px",
       sortField: "role",
       selector: (row) => row.title,
     },
     {
+      name: "توضیحات خبر",
+      center: true,
+      maxWidth: "500px",
+      sortField: "typeName",
+      selector: (row) => row.miniDescribe,
+    },
+    {
       name: " وضعیت",
       sortable: true,
-      // minWidth: "40px",
       maxWidth: "40px",
-      // width: "40px",
       sortField: "role",
       selector: (row) =>
         row.isActive ? (
           <Badge
             color="light-success"
             className="fs-5"
-            style={{ width: "35px", textAlign: "center" }}
+            style={{ width: "auto", textAlign: "center" }}
           >
             فعال
           </Badge>
@@ -346,7 +396,7 @@ const UsersList = () => {
           <Badge
             color="light-danger"
             className="fs-5"
-            style={{ width: "70px", textAlign: "center" }}
+            style={{ width: "auto", textAlign: "center" }}
           >
             غیر فعال
           </Badge>
@@ -354,7 +404,7 @@ const UsersList = () => {
     },
     {
       name: "اقدام",
-      center:true,
+      center: true,
       maxWidth: "100px",
       style: {
         textAlign: "center", // Centers the text horizontally
@@ -377,10 +427,28 @@ const UsersList = () => {
                 target={`send-tooltip-${row.id}`}
                 // className="mb-1"
               >
-              جزئیات مقاله
+                جزئیات مقاله
               </UncontrolledTooltip>
             </div>
           </Link>
+          <div className="btn btn-sm" onClick={() => handleActication(row)}>
+            {row?.isActive ? (
+              <CancelCircleIcon
+                size={20}
+                color={"#ff0000"}
+                id="ActiveDeactive"
+              />
+            ) : (
+              <CheckmarkCircle02Icon
+                size={20}
+                color={"#00cf13"}
+                id="ActiveDeactive"
+              />
+            )}
+            <UncontrolledTooltip placement="top" target={`ActiveDeactive`}>
+              فعال / غیرفعال سازی
+            </UncontrolledTooltip>
+          </div>
           <div className="btn btn-sm" onClick={() => handleDelete(row)}>
             <Trash2 size={17} className="" id={`pw-tooltip-${row.id}`} />
             <UncontrolledTooltip
@@ -422,7 +490,6 @@ const UsersList = () => {
       ),
     },
   ];
-  
 
   return (
     <Fragment>
@@ -433,9 +500,27 @@ const UsersList = () => {
         <CardBody>
           <Row>
             <Col md="4">
+              <Label for="role-select">وضعیت</Label>
+              <Select
+                isClearable={true}
+                value={currentStatus}
+                options={statusOptions}
+                className="react-select"
+                classNamePrefix="select"
+                theme={selectThemeColors}
+                onChange={(data) => {
+                  setCurrentStatus(data);
+                }}
+                // defaultValue={{
+                //   value: "",
+                //   label: "انتخاب کنید...",
+                // }}
+              />
+            </Col>
+            <Col md="4">
               <Label for="role-select">نوع مرتب سازی</Label>
               <Select
-                isClearable={false}
+                isClearable={true}
                 value={currentRole}
                 options={roleOptions}
                 className="react-select"
@@ -450,7 +535,7 @@ const UsersList = () => {
               <Label for="plan-select">جهت مرتب سازی</Label>
               <Select
                 theme={selectThemeColors}
-                isClearable={false}
+                isClearable={true}
                 className="react-select"
                 classNamePrefix="select"
                 options={planOptions}
