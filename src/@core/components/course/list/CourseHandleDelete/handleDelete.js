@@ -13,6 +13,7 @@ export const usehandleDelete = () => {
       text: "البته امکان بازگشت نیز وجود دارد",
       icon: "warning",
       showCancelButton: true,
+      cancelButtonText:"لغو",
       confirmButtonText: "بله",
       customClass: {
         confirmButton: "btn btn-primary",
