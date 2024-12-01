@@ -27,22 +27,7 @@ import { useEditCourse } from "../../../../../core/services/api/EditCourse";
 const EditCourseForm = ({ data2, data3 }) => {
   const formRef = useRef(null);
 
-  // const mutation = useAddUser();
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const formData = new FormData(formRef.current);
-  //   const formValues = Object.fromEntries(formData.entries());
-  //   console.log(formValues);
-  //   const userToast = toast.loading("درحال ساختن کاربر");
-  //   try {
-  //     await mutation.mutateAsync(formValues);
-  //     toast.success("کاربر با موفقیت ساخته شد!", { id: userToast });
-  //   } catch (error) {
-  //     toast.error("ساخت کاربر با مشکل مواجه شد:", { id: userToast });
-  //   }
-  // };
-  // const { id } = useParams();
+ 
   const { data } = useQuery({
     queryKey: ["userdetail"],
   });
@@ -68,41 +53,9 @@ const EditCourseForm = ({ data2, data3 }) => {
     UniqeUrlString: data2?.uniqeUrlString,
     MiniDescribe: data2?.miniDescribe,
     Describe: data?.describe,
-    // CourseTypeId: data?.CourseTypeId,
-    // userAbout: data?.userAbout,
-    // birthDay: data?.birthDay.slice(0, 10),
-    // gender: data?.gender,
-    // gmail: data?.gmail,
-    // recoveryEmail: data?.recoveryEmail,
-    // telegramLink: data?.telegramLink,
-    // linkdinProfile: data?.linkdinProfile,
-    // homeAdderess: data?.homeAdderess,
-    // longitude: data?.longitude,
-    // latitude: data?.latitude,
-    // receiveMessageEvent: data?.receiveMessageEvent,
-    // isDelete: data?.isDelete,
-    // isTecher: data?.isTecher,
-    // isStudent: data?.isStudent,
-    // twoStepAuth: data?.twoStepAuth,
-    // currentPictureAddress: data?.currentPictureAddress,
-    // insertDate: data?.insertDate,
+  
   });
   data && data2 && data3 && console.log("formValues", formValues);
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setFormValues({ fName: "Jane", lName: "Smith" });
-  //   }, 3000);
-  // }, []);
-
-  // const handleInputChange = (e) => {
-  //   console.log(e.target);
-  //   const { name, type, checked, value } = e.target;
-  //   setFormValues({
-  //     ...formValues,
-  //     [name]: type === "checkbox" ? checked : value,
-  //   });
-  //   console.log("Form Values:", formValues);
-  // };
 
   const handleInputChange = (eOrName, valueOrNull) => {
     if (eOrName?.target) {
