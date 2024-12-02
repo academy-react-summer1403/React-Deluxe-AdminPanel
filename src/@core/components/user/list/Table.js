@@ -63,7 +63,6 @@ import { useUserList } from "../../../../core/services/api/userList";
 import CardBrowserState from "./progress";
 
 import AddUserForm from "./AddUserForm";
-import { FullPageLoading } from "../../../../assets/Loadings/FullPageLoading/FullPageLoading";
 import { Link } from "react-router-dom";
 import Male from "../../../../assets/images/avatars/Male.png";
 import Female from "../../../../assets/images/avatars/Female.png";
@@ -142,10 +141,7 @@ const UsersList = () => {
     console.log(value);
   };
 
-  // ** Function in get data on search query change
-  // const handleFilter = (val) => {
-  //   setSearchTerm(val);
-  // };
+ 
   // ** Custom Pagination
   const CustomPagination = () => {
     const count = Math.ceil(data?.totalCount / rowsPerPage);

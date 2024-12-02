@@ -113,11 +113,6 @@ const UserTabs = () => {
           )}
         </div>
       </div>
-      {/* {active === '4' && (
-        <div style={{ position: 'absolute', top: '157px', right: '350px', width: '100%' }}>
-
-        </div>
-      )} */}
     </Fragment>
   );
 };
