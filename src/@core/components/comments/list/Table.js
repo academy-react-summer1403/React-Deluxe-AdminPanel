@@ -427,7 +427,6 @@ const Comments = () => {
           <DataTable
             noHeader
             
-            sortServer
             pagination
             responsive
             paginationServer
