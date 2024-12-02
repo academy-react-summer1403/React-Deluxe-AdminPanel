@@ -44,7 +44,8 @@ const Error = lazy(() => import("../../pages/Error"));
 const Sample = lazy(() => import("../../pages/Sample"));
 const UserDetail = lazy(() => import("../../pages/UserDetail"));
 const CourseDetail = lazy(() => import("../../pages/CourseDetail"));
-
+const CourseGroupManage = lazy(() => import("../../pages/CourseGroupManage"));
+const CourseGroupDetail = lazy(() => import("../../pages/CourseGroupDetail"));
 // const UserList = lazy(() => import('../../views/apps/user/list'))
 
 // ** Merge Routes
@@ -76,8 +77,16 @@ const Routes = [
     element: <CourseManage />,
   },
   {
+    path: "/courseGroupManage",
+    element: <CourseGroupManage />,
+  },
+  {
     path: "/courseDetail/:id",
     element: <CourseDetail />,
+  },
+  {
+    path: "/courseGroupDetail/:id",
+    element: <CourseGroupDetail />,
   },
   {
     path: "/addcourse",
