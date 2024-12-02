@@ -227,7 +227,7 @@ const Comments = () => {
             <Badge
               color="light-success"
               className="fs-5"
-              style={{ width: "60px", textAlign: "center" }}
+              style={{ width: "auto", textAlign: "center" }}
             >
               تایید شده
             </Badge>
@@ -235,7 +235,7 @@ const Comments = () => {
             <Badge
               color="light-danger"
               className="fs-5"
-              style={{ width: "60px", textAlign: "center" }}
+              style={{ width: "auto", textAlign: "center" }}
             >
               {" "}
               تایید نشده{" "}
@@ -347,7 +347,7 @@ const Comments = () => {
       </Card>
 
       <Card className="overflow-hidden">
-        <Row className="ltr">
+        <Row className="ltr" style={{ margin: "20px" }}>
           <Col xl="6" className="d-flex align-items-center p-0">
             <div className="d-flex align-items-center w-100">
               <label htmlFor="rows-per-page" style={{ marginRight: "20px" }}>
@@ -426,8 +426,7 @@ const Comments = () => {
         <div className="react-dataTable">
           <DataTable
             noHeader
-            subHeader
-            sortServer
+            
             pagination
             responsive
             paginationServer

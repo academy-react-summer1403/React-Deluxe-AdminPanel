@@ -1,33 +1,12 @@
 // ** Reactstrap Imports
-import {
-  Badge,
-  Card,
-  CardHeader,
-  Progress,
-  UncontrolledTooltip,
-} from "reactstrap";
+import { Badge, Card, UncontrolledTooltip } from "reactstrap";
 
 // ** Third Party Components
 import { ChevronDown, FileText, Trash2 } from "react-feather";
 import DataTable from "react-data-table-component";
-import Logo from "@src/assets/images/logo/reactdeluxe.png";
-
-// ** Custom Components
-import Avatar from "@components/avatar";
-
-// ** Label Images
-import xdLabel from "@src/assets/images/icons/brands/xd-label.png";
-import vueLabel from "@src/assets/images/icons/brands/vue-label.png";
-import htmlLabel from "@src/assets/images/icons/brands/html-label.png";
-import reactLabel from "@src/assets/images/icons/brands/react-label.png";
-import sketchLabel from "@src/assets/images/icons/brands/sketch-label.png";
 
 // ** Styles
 import "@styles/react/libs/tables/react-dataTable-component.scss";
-import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
-import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
-import { useCourseReserveHandleDelete } from "../../course/list/CourseReserveHandleDelete/CourseReserveHandleDelete";
 
 const UserCourseReserve = (data) => {
   const columns = [
@@ -72,7 +51,7 @@ const UserCourseReserve = (data) => {
                   <Badge
                     color="light-success"
                     className="fs-5"
-                    style={{ width: "35px", textAlign: "center" }}
+                    style={{ width: "auto", textAlign: "center" }}
                   >
                     رزرو شده
                   </Badge>
@@ -80,7 +59,7 @@ const UserCourseReserve = (data) => {
                   <Badge
                     color="light-danger"
                     className="fs-5"
-                    style={{ width: "70px", textAlign: "center" }}
+                    style={{ width: "auto", textAlign: "center" }}
                   >
                     رزرو نشده
                   </Badge>

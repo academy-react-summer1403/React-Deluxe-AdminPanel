@@ -23,21 +23,6 @@ import { useEditUser } from "../../../../../core/services/api/EditUser";
 const EditUserForm = () => {
   const formRef = useRef(null);
 
-  // const mutation = useAddUser();
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   const formData = new FormData(formRef.current);
-  //   const formValues = Object.fromEntries(formData.entries());
-  //   console.log(formValues);
-  //   const userToast = toast.loading("درحال ساختن کاربر");
-  //   try {
-  //     await mutation.mutateAsync(formValues);
-  //     toast.success("کاربر با موفقیت ساخته شد!", { id: userToast });
-  //   } catch (error) {
-  //     toast.error("ساخت کاربر با مشکل مواجه شد:", { id: userToast });
-  //   }
-  // };
   const { id } = useParams();
   const { data } = useQuery({
     queryKey: ["UserDetail", id],
