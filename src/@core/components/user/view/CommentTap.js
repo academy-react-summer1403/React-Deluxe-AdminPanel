@@ -49,6 +49,7 @@ import DataTable from "react-data-table-component";
 import { useUserComment } from "../../../../core/services/api/UserComment";
 import { useAcceptComment } from "../../../../core/services/api/AcceptComment";
 import toast from "react-hot-toast";
+import { CancelCircleIcon, CheckmarkCircle02Icon } from "hugeicons-react";
 
 const SignupSchema = yup.object().shape({
   password: yup.string().min(8).required(),
@@ -216,20 +217,20 @@ const CommentTap = () => {
               <span className="text-truncate fw-bolder">
                 {row.accept ? (
                   <Badge
-                  color="light-success"
-                  className="fs-5"
-                  style={{ width: "auto", textAlign: "center" }}
-                >
-                  تایید شده
-                </Badge>
-              ) : (
-                <Badge
-                  color="light-danger"
-                  className="fs-5"
-                  style={{ width: "auto", textAlign: "center" }}
-                >
-                   تایید نشده
-                </Badge>
+                    color="light-success"
+                    className="fs-5"
+                    style={{ width: "auto", textAlign: "center" }}
+                  >
+                    تایید شده
+                  </Badge>
+                ) : (
+                  <Badge
+                    color="light-danger"
+                    className="fs-5"
+                    style={{ width: "auto", textAlign: "center" }}
+                  >
+                    تایید نشده
+                  </Badge>
                 )}
               </span>
             </div>
@@ -247,29 +248,27 @@ const CommentTap = () => {
             className="btn btn-sm"
             onClick={() => handleAccept(row.commentId)}
           >
-            <FileText
-              className="cursor-pointer"
-              size={17}
-              id={`send-tooltip-${row.id}`}
+            <CheckmarkCircle02Icon
+              color={"#00cf13"}
+              size={20}
+              id={"AcceptComment"}
             />
             <UncontrolledTooltip
               placement="top"
-              target={`send-tooltip-${row.id}`}
+              target={`AcceptComment`}
               // className="mb-1"
             >
-               تایید 
+              تایید
             </UncontrolledTooltip>
           </div>
           <div
             className="btn btn-sm"
             // onClick={() => handleDelete(row)}
           >
-            <Trash2 size={17} className="" id={`pw-tooltip-${row.id}`} />
-            <UncontrolledTooltip
-              placement="top"
-              target={`pw-tooltip-${row.id}`}
-            >
-              حذف 
+            <CancelCircleIcon color={"#ff0000"} size={20} id={"CancelComment"}
+            />
+            <UncontrolledTooltip placement="top" target={`CancelComment`}>
+              حذف
             </UncontrolledTooltip>
           </div>
         </div>

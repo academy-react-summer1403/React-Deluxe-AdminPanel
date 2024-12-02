@@ -66,6 +66,7 @@ import AddUserForm from "./AddUserForm";
 import { Link } from "react-router-dom";
 import Male from "../../../../assets/images/avatars/Male.png";
 import Female from "../../../../assets/images/avatars/Female.png";
+import { useUserHandleDelete } from "./UserHandleDelete/userHandleDelete";
 
 const UsersList = () => {
   // ** States
@@ -101,7 +102,7 @@ const UsersList = () => {
   // if (isLoading) return <FullPageLoading />;
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
 
-  console.log(currentRole);
+  console.log(data);
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
@@ -168,95 +169,7 @@ const UsersList = () => {
     );
   };
 
-  // ** Table data to render
-  const dataToRender = () => {
-    const filters = {
-      role: currentRole.value,
-      isActive: isActive.value,
-      status: currentStatus.value,
-      q: searchTerm,
-    };
-
-    const isFiltered = Object.keys(filters).some(function (k) {
-      return filters[k].length > 0;
-    });
-
-    if (store.data.length > 0) {
-      return store.data;
-    } else if (store.data.length === 0 && isFiltered) {
-      return [];
-    } else {
-      return store.allData.slice(0, rowsPerPage);
-    }
-  };
-
-  const handleSort = (column, sortDirection) => {
-    setSort(sortDirection);
-    setSortColumn(column.sortField);
-  };
-
-  const chartOptions = {
-      chart: {
-        sparkline: {
-          enabled: true,
-        },
-        dropShadow: {
-          enabled: true,
-          blur: 3,
-          left: 1,
-          top: 1,
-          opacity: 0.1,
-        },
-      },
-      colors: ["#51e5a8"],
-      plotOptions: {
-        radialBar: {
-          offsetY: 10,
-          startAngle: -150,
-          endAngle: 150,
-          hollow: {
-            size: "77%",
-          },
-          track: {
-            background: "#ebe9f1",
-            strokeWidth: "50%",
-          },
-          dataLabels: {
-            name: {
-              show: false,
-            },
-            value: {
-              color: "#5e5873",
-              fontFamily: "Montserrat",
-              fontSize: "2.86rem",
-              fontWeight: "600",
-            },
-          },
-        },
-      },
-      fill: {
-        type: "gradient",
-        gradient: {
-          shade: "dark",
-          type: "horizontal",
-          shadeIntensity: 0.5,
-          // gradientToColors: [red],
-          inverseColors: true,
-          opacityFrom: 1,
-          opacityTo: 1,
-          stops: [0, 100],
-        },
-      },
-      stroke: {
-        lineCap: "round",
-      },
-      grid: {
-        padding: {
-          bottom: 30,
-        },
-      },
-    },
-    series = [83];
+  const handleDelete = useUserHandleDelete();
 
   const column = [
     {
@@ -473,7 +386,7 @@ const UsersList = () => {
               </UncontrolledTooltip>
             </div>
           </Link>
-          <div className="btn btn-sm" onClick={() => handleDelete(row)}>
+          <div className="btn btn-sm" onClick={() => handleDelete(row?.id)}>
             <Trash2 size={17} className="" id={`pw-tooltip-${row.id}`} />
             <UncontrolledTooltip
               placement="top"
@@ -482,36 +395,6 @@ const UsersList = () => {
               حذف کاربر
             </UncontrolledTooltip>
           </div>
-          {/* <Uncontr
-          {/* <UncontrolledDropdown>
-            <DropdownToggle tag="div" className="btn btn-sm">
-              <MoreVertical size={14} className="cursor-pointer" />
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem
-                tag={Link}
-                className="w-100"
-                to={`/userdetail/${row.id}`}
-                // onClick={() => store.dispatch(getUser(row.id))}
-              >
-                <FileText size={14} className="me-50" />
-
-                <span className="align-middle">جزئیات</span>
-              </DropdownItem>
-              <DropdownItem
-                tag="a"
-                href="/"
-                className="w-100"
-                onClick={(e) => {
-                  e.preventDefault();
-                  // store.dispatch(deleteUser(row.id));
-                }}
-              >
-                <Trash2 size={14} className="me-50" />
-                <span className="align-middle">حذف</span>
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown> */}
         </div>
       ),
     },
