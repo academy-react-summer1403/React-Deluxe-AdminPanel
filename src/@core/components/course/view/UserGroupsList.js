@@ -1,5 +1,18 @@
 // ** Reactstrap Imports
-import { Card, CardHeader, Progress, UncontrolledTooltip } from "reactstrap";
+import {
+  Button,
+  Card,
+  CardHeader,
+  Col,
+  Input,
+  Label,
+  Modal,
+  ModalBody,
+  ModalHeader,
+  Progress,
+  Row,
+  UncontrolledTooltip,
+} from "reactstrap";
 
 // ** Third Party Components
 import { ChevronDown, FileText, Trash2 } from "react-feather";
@@ -24,6 +37,10 @@ import { Link, useParams } from "react-router-dom";
 import { useCourseUser } from "../../../../core/services/api/CourseUser";
 import { Badge } from "reactstrap";
 import { useCourseGroups } from "../../../../core/services/api/CourseGroups";
+import { useRef, useState } from "react";
+import { Form } from "reactstrap";
+import toast from "react-hot-toast";
+import { useAddCourseGroup } from "../../../../core/services/api/AddCourseGroup";
 
 // const projectsArr = [
 //   {
@@ -151,25 +168,20 @@ const UserGroupsList = () => {
       cell: (row) => {
         return (
           <div className="column-action d-flex">
-            <Link
-              className="user_name text-truncate text-body p-0"
-              to={`/courseDetail/${row?.courseId}`}
-            >
-              <div className="btn btn-sm">
-                <FileText
-                  className="cursor-pointer "
-                  size={17}
-                  id={`send-tooltip-${row.id}`}
-                />
-                <UncontrolledTooltip
-                  placement="top"
-                  target={`send-tooltip-${row.id}`}
-                  // className="mb-1"
-                >
-                  جزییات دوره
-                </UncontrolledTooltip>
-              </div>
-            </Link>
+            <div className="btn btn-sm">
+              <FileText
+                className="cursor-pointer "
+                size={17}
+                id={`send-tooltip-${row.id}`}
+              />
+              <UncontrolledTooltip
+                placement="top"
+                target={`send-tooltip-${row.id}`}
+                // className="mb-1"
+              >
+                جزییات دوره
+              </UncontrolledTooltip>
+            </div>
             <div className="btn btn-sm" onClick={() => handleDelete(row)}>
               <Trash2 size={17} className="" id={`pw-tooltip-${row.id}`} />
               <UncontrolledTooltip
@@ -222,6 +234,8 @@ const UserGroupsList = () => {
     },
   ];
 
+  const [show, setShow] = useState(false);
+  const formRef = useRef(null);
   const { id } = useParams();
 
   const { data: data2 } = useQuery({
@@ -232,8 +246,42 @@ const UserGroupsList = () => {
   const { data } = useCourseGroups(id, data2.teacherId);
 
   console.log(data);
+
+  const mutation = useAddCourseGroup();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData(formRef.current);
+    // const formValues = Object.fromEntries(formData.entries());
+    formData.append("CourseId", data2?.courseId);
+    console.log(formData);
+    // console.log("Form Submitted Values:", formValues);
+    const blogToast = toast.loading("درحال ساختن گروه شما...");
+    try {
+      await mutation.mutateAsync(formData);
+      toast.success("گروه شما با موفقیت اضافه شد!", { id: blogToast });
+    } catch (error) {
+      toast.error(
+        `افزودن گروه شما با خطا مواجه شد:
+        ${
+          error.response.data.errors
+            ? error.response.data.errors
+            : error.response.data.ErrorMessage
+        }`,
+        { id: blogToast }
+      );
+    }
+    // {
+    //   mutation.isPending ? (blogToast = toast.loading("Adding...")) : "";
+    // }
+  };
   return (
     <Card>
+      <CardHeader>
+        <Button color="primary" size="md" onClick={() => setShow(true)}>
+          افزودن گروه
+        </Button>
+      </CardHeader>
       <div className="react-dataTable user-view-account-projects ">
         <DataTable
           noHeader
@@ -244,6 +292,57 @@ const UserGroupsList = () => {
           sortIcon={<ChevronDown size={10} />}
         />
       </div>
+      <Modal
+        isOpen={show}
+        toggle={() => setShow(!show)}
+        className="modal-dialog-centered modal-lg"
+      >
+        <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}>
+          {/* <div>header</div> */}
+        </ModalHeader>
+        <ModalBody className="px-sm-5 pt-50 pb-5">
+          {/* <EditCourseForm data2={data2} data3={data3} /> */}
+          <Form onSubmit={handleSubmit} innerRef={formRef}>
+            <Col lg="12" md="12" sm="12" className="mb-1">
+              <Label className="form-label" for="GroupName">
+                نام گروه
+              </Label>
+              <Input
+                type="text"
+                name="GroupName"
+                id="GroupName"
+                placeholder="نام گروه"
+              />
+            </Col>
+            <Col lg="12" md="12" sm="12" className="mb-1">
+              <Label className="form-label" for="GroupCapacity">
+                ظرفیت گروه
+              </Label>
+              <Input
+                type="text"
+                name="GroupCapacity"
+                id="GroupCapacity"
+                placeholder="نام گروه"
+              />
+            </Col>
+            <Col sm="12">
+              {/* <div className="d-flex"> */}
+              <Button
+                className="mt-2"
+                style={{ width: "100%" }}
+                color="primary"
+                type="submit"
+              >
+                افزودن
+              </Button>
+              {/* <Button outline color="secondary" type="reset">
+              حذف همه
+            </Button> */}
+              {/* </div> */}
+            </Col>
+          </Form>
+        </ModalBody>
+      </Modal>
     </Card>
   );
 };
