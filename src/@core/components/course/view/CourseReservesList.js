@@ -24,7 +24,7 @@ import { useParams } from "react-router-dom";
 import { useCourseUser } from "../../../../core/services/api/CourseUser";
 import { Badge } from "reactstrap";
 import { useCourseReserveWithCourseId } from "../../../../core/services/api/CourseReserveWithCourseId";
-import { DatePersianizer } from './../../../../utility/utils/DatePersianizer';
+import { DatePersianizer } from "./../../../../utility/utils/DatePersianizer";
 
 // const projectsArr = [
 //   {
@@ -141,9 +141,9 @@ const CourseReservesList = () => {
     },
     {
       name: "وضعیت رزرو",
-      selector: (row) => row.peymentDone,
+      // selector: (row) => row.peymentDone,
       cell: (row) => {
-        return row?.peymentDone ? (
+        return row?.accept ? (
           <Badge
             color="light-success"
             className="fs-5"

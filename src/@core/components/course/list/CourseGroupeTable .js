@@ -11,7 +11,7 @@ import Logo from "@src/assets/images/logo/reactdeluxe.png";
 import Sidebar from "./Sidebar";
 
 // ** Table Columns
-import { columns } from "./columns";// ** Third Party Components
+import { columns } from "./columns"; // ** Third Party Components
 import Select from "react-select";
 import ReactPaginate from "react-paginate";
 import DataTable from "react-data-table-component";
@@ -28,6 +28,7 @@ import {
   Archive,
   Send,
   Eye,
+  Image,
 } from "react-feather";
 
 // ** Utils
@@ -50,20 +51,19 @@ import {
   UncontrolledDropdown,
   Badge,
   UncontrolledTooltip,
+  Modal,
+  ModalHeader,
+  ModalBody,
 } from "reactstrap";
 
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { Link } from "react-router-dom";
-import { useCourseList } from "../../../../core/services/api/courseList";
-import { FullPageLoading } from "../../../../assets/Loadings/FullPageLoading/FullPageLoading";
-import withReactContent from "sweetalert2-react-content";
-import Swal from "sweetalert2";
-import { useDeleteCourse } from "../../../../core/services/api/DeleteCourse";
 import { usehandleDelete } from "./CourseHandleDelete/handleDelete";
-const UsersList = () => {
- 
+import { useCourseGroupList } from "../../../../core/services/api/CourseGroupList";
+import { CourseGroupDetailModalContent } from "./CourseGroupDetailModalContent/CourseGroupDetailModalContent";
+const CourseGroupeTable = () => {
   // ** States
   const [sort, setSort] = useState("desc");
   const [searchTerm, setSearchTerm] = useState("");
@@ -84,16 +84,16 @@ const UsersList = () => {
     label: "انتخاب کنید ...",
     number: 0,
   });
+  const [show, setShow] = useState(false);
 
-  const { data, isLoading, isError } = useCourseList(
+  const { data } = useCourseGroupList(
     currentPage,
     rowsPerPage,
     searchTerm,
     currentRole.value,
     currentPlan.value
   );
-
-  if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
+  // if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
@@ -137,7 +137,6 @@ const UsersList = () => {
 
   // ** Function in get data on search query change
   const handleFilter = (val) => {
-   
     setSearchTerm(val);
     console.log("Search Value: ", val);
   };
@@ -168,161 +167,119 @@ const UsersList = () => {
     );
   };
 
-  // ** Table data to render
-  const dataToRender = () => {
-    const filters = {
-      role: currentRole.value,
-      currentPlan: currentPlan.value,
-      status: currentStatus.value,
-      q: searchTerm,
-    };
-
-    const isFiltered = Object.keys(filters).some(function (k) {
-      return filters[k].length > 0;
-    });
-
-    if (store.data.length > 0) {
-      return store.data;
-    } else if (store.data.length === 0 && isFiltered) {
-      return [];
-    } else {
-      return store.allData.slice(0, rowsPerPage);
-    }
-  };
-
-  const handleSort = (column, sortDirection) => {
-    setSort(sortDirection);
-    setSortColumn(column.sortField);
-    dispatch(
-      getData({
-        sort,
-        sortColumn,
-        q: searchTerm,
-        page: currentPage,
-        perPage: rowsPerPage,
-        role: currentRole.value,
-        status: currentStatus.value,
-        currentPlan: currentPlan.value,
-      })
-    );
-  };
-
-  // const MySwal = withReactContent(Swal);
-
-  // const mutation = useDeleteCourse();
-
   const handleDelete = usehandleDelete();
+
+  console.log(data);
+
+  const [openModalId, setOpenModalId] = useState(null); // Track which modal is open
+
+  const toggleModal = (id) => {
+    setOpenModalId((prevId) => (prevId === id ? null : id));
+  };
 
   const column = [
     {
-      name: "نام دوره",
-      
-      minWidth: "300px",
+      name: "نام گروه",
+      minWidth: "200px",
       sortField: "title",
-      // selector: (data) => data?.fullName,
       cell: (data) => (
         <div className="d-flex gap-1 justify-content-left align-items-center">
-          <Avatar img={data.tumbImageAddress ?? Logo} />
-          {/* {renderClient(row)} */}
           <div className="d-flex flex-column">
             <Link
               className="user_name text-truncate text-body p-0"
               to={`/courseDetail/${data?.courseId}`}
             >
-              <span className="fw-bolder">{data?.title}</span>
+              <span className="fw-bolder">{data?.groupName}</span>
             </Link>
-            <small className="text-truncate text-muted mb-0">
-              {data?.fullName}
-            </small>
+            {/* <small className="text-truncate text-muted mb-0">
+              {data?.teacherName}
+            </small> */}
           </div>
         </div>
       ),
     },
     {
-      name: "نوع دوره",
-    center:true,
+      name: "شماره گروه",
+      minWidth: "172px",
+      center: true,
+      sortField: "levelName",
+      selector: (row) => row?.groupId,
+    },
+    {
+      name: "ظرفیت گروه",
+      minWidth: "50px",
+      center: true,
+      sortField: "levelName",
+      selector: (row) => row.groupCapacity,
+    },
+    {
+      name: "نام استاد",
+      center: true,
       minWidth: "172px",
       sortField: "typeName",
-      selector: (row) => row.typeName,
-      // cell: row => renderRole(row)
+      selector: (row) => row?.teacherName,
     },
     {
-      name: "سطح",
-      minWidth: "172px",
-      sortField: "levelName",
-      selector: (row) => row.levelName,
-      // cell: row => renderRole(row)
-    },
-    {
-      name: "وضعیت",
-      minWidth: "172px",
-      sortField: "statusName",
-      selector: (row) => row.statusName,
-      // cell: row => renderRole(row)
-    },
-    {
-      name: "تعداد رزرو",
+      name: "شماره استاد",
       maxWidth: "110px",
+      center: true,
       sortField: "reserveCount",
-      selector: (row) => row.reserveCount,
-      // cell: row => renderRole(row)
+      selector: (row) => row?.teacherId,
     },
     {
-      name: "فعالیت",
-      sortable: true,
-      maxWidth: "100px",
-      sortField: "isActive ",
-      selector: (row) => (
-        <div>
-          {" "}
-          {row.isActive ? (
-            <Badge
-              color="light-success"
-              className="fs-5"
-              style={{ width: "60px", textAlign: "center" }}
-            >
-              تایید شده
-            </Badge>
-          ) : (
-            <Badge
-              color="light-danger"
-              className="fs-5"
-              style={{ width: "60px", textAlign: "center" }}
-            >
-              {" "}
-              تایید نشده{" "}
-            </Badge>
-          )}
-        </div>
-      ),
-      //<div> {row.isActive ? "فعال" : "غیر فعال"}</div>,
-      // cell: row => renderRole(row)
+      name: "نام دوره",
+      minWidth: "172px",
+      center: true,
+      sortField: "typeName",
+      selector: (row) => row?.courseName,
+    },
+    {
+      name: "ظرفیت دوره",
+      minWidth: "172px",
+      center: true,
+      sortField: "statusName",
+      selector: (row) => row?.courseCapacity,
     },
     {
       name: "اقدامات",
       minWidth: "100px",
-    center:true,
+      center: true,
       cell: (row) => (
         <div className="column-action d-flex">
-          <Link
-            className="user_name text-truncate text-body p-0"
-            to={`/courseDetail/${row?.courseId}`}
-          >
-            <div className="btn btn-sm">
-              <FileText
+          <Link to={`/courseGroupDetail/${row.groupId}`}>
+            <div
+              className="btn btn-sm"
+              onClick={() => toggleModal(row.groupId)}
+            >
+              <Image
                 className="cursor-pointer"
                 size={17}
-                id={`send-tooltip-${row.id}`}
+                id={`send-tooltip-${row.groupId}`}
               />
               <UncontrolledTooltip
                 placement="top"
-                target={`send-tooltip-${row.id}`}
+                target={`send-tooltip-${row.groupId}`}
                 // className="mb-1"
               >
-                جزییات دوره
+                رسید تراکنش
               </UncontrolledTooltip>
             </div>
           </Link>
+
+          {/* <Modal
+            isOpen={openModalId === row.groupId} // Check if this modal should be open
+            toggle={() => toggleModal(row.groupId)}
+            className="modal-dialog-centered modal-lg"
+          >
+            <ModalHeader
+              className="bg-transparent"
+              toggle={() => toggleModal(row.groupId)}
+            ></ModalHeader>
+            <ModalBody className="pb-5 px-sm-5 mx-50">
+              <CourseGroupDetailModalContent groupId={row.groupId} />
+            </ModalBody>
+          </Modal> */}
+
           <div className="btn btn-sm" onClick={() => handleDelete(row)}>
             <Trash2 size={17} className="" id={`pw-tooltip-${row.id}`} />
             <UncontrolledTooltip
@@ -332,43 +289,6 @@ const UsersList = () => {
               حذف دوره
             </UncontrolledTooltip>
           </div>
-          {/* <UncontrolledDropdown>
-            <DropdownToggle tag="div" className="btn btn-sm">
-              <MoreVertical size={14} className="cursor-pointer" />
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem
-                tag={Link}
-                className="w-100"
-                to={`/apps/user/view/${row.id}`}
-                // onClick={() => store.dispatch(getUser(row.id))}
-              >
-                <FileText size={14} className="me-50" />
-                <span className="align-middle">Details</span>
-              </DropdownItem>
-              <DropdownItem
-                tag="a"
-                href="/"
-                className="w-100"
-                // onClick={e => e.preventDefault()}
-              >
-                <Archive size={14} className="me-50" />
-                <span className="align-middle">Edit</span>
-              </DropdownItem>
-              <DropdownItem
-                tag="a"
-                href="/"
-                className="w-100"
-                // onClick={e => {
-                //   e.preventDefault()
-                //   store.dispatch(deleteUser(row.id))
-                // }}
-              >
-                <Trash2 size={14} className="me-50" />
-                <span className="align-middle">Delete</span>
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown> */}
         </div>
       ),
     },
@@ -505,17 +425,7 @@ const UsersList = () => {
             // sortIcon={<ChevronDown />}
             className="react-dataTable"
             paginationComponent={CustomPagination}
-            data={data?.courseDtos}
-            // subHeaderComponent={
-            //   <CustomHeader
-            //     store={store}
-            //     searchTerm={searchTerm}
-            //     rowsPerPage={rowsPerPage}
-            //     handleFilter={handleFilter}
-            //     handlePerPage={handlePerPage}
-            //     toggleSidebar={toggleSidebar}
-            //   />
-            // }
+            data={data?.courseGroupDtos}
           />
         </div>
       </Card>
@@ -525,4 +435,4 @@ const UsersList = () => {
   );
 };
 
-export default UsersList;
+export default CourseGroupeTable;

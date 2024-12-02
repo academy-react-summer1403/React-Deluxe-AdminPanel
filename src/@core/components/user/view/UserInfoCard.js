@@ -5,16 +5,12 @@ import Logo from "@src/assets/images/logo/reactdeluxe.png";
 
 // ** Reactstrap Imports
 import {
-  Row,
-  Col,
+ 
   Card,
-  Form,
   CardBody,
   Button,
   Badge,
   Modal,
-  Input,
-  Label,
   ModalBody,
   ModalHeader,
 } from "reactstrap";
@@ -25,14 +21,6 @@ import Select from "react-select";
 import { Check, Briefcase, X } from "react-feather";
 import { useForm, Controller } from "react-hook-form";
 import withReactContent from "sweetalert2-react-content";
-import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
-import { useQuery } from "@tanstack/react-query";
-
-// ** Custom Components
-import Avatar from "@components/avatar";
-
-// ** Utils
-import { selectThemeColors } from "@utils";
 
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
@@ -77,50 +65,18 @@ const languageOptions = [
 
 const MySwal = withReactContent(Swal);
 
-// ** render user img
-//  const renderUserImg = () => {
-//   if (selectedUser !== null && selectedUser.avatar.length) {
-//     return (
-//       <img
-//         height='110'
-//         width='110'
-//         alt='user-avatar'
-//         src={selectedUser.avatar}
-//         className='img-fluid rounded mt-3 mb-2'
-//       />
-//     )
-//   } else {
-//     return (
-//       <Avatar
-//         initials
-//         color={selectedUser.avatarColor || 'light-primary'}
-//         className='rounded mt-3 mb-2'
-//         content={selectedUser.fullName}
-//         contentStyles={{
-//           borderRadius: 0,
-//           fontSize: 'calc(48px)',
-//           width: '100%',
-//           height: '100%'
-//         }}
-//         style={{
-//           height: '110px',
-//           width: '110px'
-//         }}
-//       />
-//     )
-//   }
-// }
 const UserInfoCard = () => {
   // ** State
   const [show, setShow] = useState(false);
 
   const handleSuspendedClick = () => {
     return MySwal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert user!",
+      title: "آیا مطمئن هستید؟",
+      text: "البته امکان لغو نیز وجود دارد",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonText: "Yes, Suspend user!",
+      cancelButtonText:"لغو",
+      confirmButtonText: "بله",
       customClass: {
         confirmButton: "btn btn-primary",
         cancelButton: "btn btn-outline-danger ms-1",
@@ -130,16 +86,16 @@ const UserInfoCard = () => {
       if (result.value) {
         MySwal.fire({
           icon: "success",
-          title: "Suspended!",
-          text: "User has been suspended.",
+          title: "غیر فعال شد",
+          text: "عملیات با موفقیت انجام شد !",
           customClass: {
             confirmButton: "btn btn-success",
           },
         });
       } else if (result.dismiss === MySwal.DismissReason.cancel) {
         MySwal.fire({
-          title: "Cancelled",
-          text: "Cancelled Suspension :)",
+          title: "لغو شد",
+          text: "عملیات با موفقیت لغو شد",
           icon: "error",
           customClass: {
             confirmButton: "btn btn-success",
@@ -151,10 +107,7 @@ const UserInfoCard = () => {
 
   const { id } = useParams();
 
-  // getQuery("userdetail", `/User/UserDetails/${id}`);
-  // const { data, isError, isLoading } = useQuery({
-  //   queryKey: ["userdetail"],
-  // });
+
   const { data, isError, isLoading } = useUserDetail(id);
 
   if (isLoading) return <div>Loading</div>;
@@ -186,12 +139,6 @@ const UserInfoCard = () => {
                     <span className="fs-3">{data.fName} </span>
                     <span className="fs-3">{data.lName}</span>
                   </Badge>
-                  {/* {selectedUser !== null ? selectedUser.fullName : 'Eleanor Aguilar'} */}
-                  {/* {selectedUser !== null ? (
-                    <Badge color={roleColors[selectedUser.role]} className='text-capitalize'>
-                      {selectedUser.role}
-                    </Badge>
-                  ) : null} */}
                 </div>
               </div>
             </div>
@@ -220,14 +167,6 @@ const UserInfoCard = () => {
           <div className="info-container">
             {/* {selectedUser !== null ? ( */}
             <ul className="list-unstyled">
-              {/* <li className="mb-75">
-                <span className="fw-bolder me-25">نام کاربری:</span>
-                <span>{data.fName}</span>
-              </li>
-              <li className="mb-75">
-                <span className="fw-bolder me-25"> فامیلی:</span>
-                <span className="text-capitalize">{data.lName}</span>
-              </li> */}
               <li className="mb-75">
                 <span className="fw-bolder me-25">ایمیل:</span>
                 <span>{data.gmail}</span>
@@ -281,7 +220,6 @@ const UserInfoCard = () => {
         className="modal-dialog-centered modal-lg"
       >
         <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}>
-          {/* <div>header</div> */}
         </ModalHeader>
         <ModalBody className="px-sm-5 pt-50 pb-5">
           <EditUserForm />

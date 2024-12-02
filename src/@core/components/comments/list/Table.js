@@ -227,7 +227,7 @@ const Comments = () => {
             <Badge
               color="light-success"
               className="fs-5"
-              style={{ width: "60px", textAlign: "center" }}
+              style={{ width: "auto", textAlign: "center" }}
             >
               تایید شده
             </Badge>
@@ -235,7 +235,7 @@ const Comments = () => {
             <Badge
               color="light-danger"
               className="fs-5"
-              style={{ width: "60px", textAlign: "center" }}
+              style={{ width: "auto", textAlign: "center" }}
             >
               {" "}
               تایید نشده{" "}
@@ -426,7 +426,7 @@ const Comments = () => {
         <div className="react-dataTable">
           <DataTable
             noHeader
-            sortServer
+            
             pagination
             responsive
             paginationServer

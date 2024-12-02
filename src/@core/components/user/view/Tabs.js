@@ -75,12 +75,7 @@ const UserTabs = () => {
               <span className="fw-bold">ارتباط با کاربر</span>
             </NavLink>
           </NavItem>
-          {/* <NavItem>
-          <NavLink active={active === '5'} onClick={() => toggle('5')}>
-            <Bell className="font-medium-3 me-50" />
-            <span className="fw-bold">ارتباط</span>
-          </NavLink>
-        </NavItem> */}
+        
         </Nav>
 
         {/* محتوای تب دوره‌ها */}
@@ -112,12 +107,7 @@ const UserTabs = () => {
           )}
         </div>
       </div>
-      {/* {active === '4' && (
-        <div style={{ position: 'absolute', top: '157px', right: '350px', width: '100%' }}>
-      
-
-        </div>
-      )} */}
+    
     </Fragment>
   );
 };

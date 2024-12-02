@@ -15,15 +15,15 @@ import {
   DollarSign,
   Edit2,
 } from "react-feather";
-import UserProjectsList from "./UserProjectsList";
-import Connections from "./Connections";
-import SecurityTab from "./SecurityTab";
-import UserGroupsList from "./UserGroupsList";
+import UserProjectsList from "./../UserProjectsList";
+import Connections from "./../Connections";
+import SecurityTab from "./../SecurityTab";
+import UserGroupsList from "./../UserGroupsList";
 import { CursorEdit02Icon } from "hugeicons-react";
-import CoursesDescribe from "./coursesDescribe";
-import CourseReservesList from "./CourseReservesList";
+import CoursesDescribe from "./../coursesDescribe";
+import CourseReservesList from "./../CourseReservesList";
 
-const UserTabs = () => {
+const CourseGroupTabs = () => {
   const [active, setActive] = useState("1");
 
   const toggle = (tab) => {
@@ -113,8 +113,13 @@ const UserTabs = () => {
           )}
         </div>
       </div>
+      {/* {active === '4' && (
+        <div style={{ position: 'absolute', top: '157px', right: '350px', width: '100%' }}>
+
+        </div>
+      )} */}
     </Fragment>
   );
 };
 
-export default UserTabs;
+export default CourseGroupTabs;

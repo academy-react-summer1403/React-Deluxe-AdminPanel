@@ -25,6 +25,12 @@ export default [
         navLink: "/courseManage",
       },
       {
+        id: "courseGroups",
+        title: "لیست گروه دوره ها",
+        icon: <Circle size={12} />,
+        navLink: "/courseGroupManage",
+      },
+      {
         id: "addCourse",
         title: "افزودن دوره جدید",
         icon: <Circle size={12} />,
