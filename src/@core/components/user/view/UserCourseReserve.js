@@ -54,7 +54,7 @@ const UserCourseReserve = (data) => {
       selector: (row) => row.reserverDate.slice(0, 10),
     },
     {
-      name: "وضعیت دوره ",
+      name: "وضعیت رزرو ",
       selector: (row) => row.accept,
       sortable: true,
       cell: (row) => {
@@ -74,7 +74,7 @@ const UserCourseReserve = (data) => {
                     className="fs-5"
                     style={{ width: "auto", textAlign: "center" }}
                   >
-                    رزرو شده
+                    تایید شده
                   </Badge>
                 ) : (
                   <Badge
@@ -82,7 +82,7 @@ const UserCourseReserve = (data) => {
                     className="fs-5"
                     style={{ width: "auto", textAlign: "center" }}
                   >
-                    رزرو نشده
+                    تایید نشده
                   </Badge>
                 )}
               </span>
@@ -143,7 +143,7 @@ const UserCourseReserve = (data) => {
                 className="modal-dialog-centered modal-lg"
               >
                 <ModalHeader
-                  className="bg-transparent text-center"
+                  className="bg-transparent text-center fs-8 mt-2" style={{marginRight:"330px"}}
                   toggle={() => toggleModal(row?.reserveId)}
                 >
                   گروه دوره را انتخاب کنید!
