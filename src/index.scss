@@ -2,6 +2,17 @@
 @import './assets/scss/app.scss';
 
 
+$font-family-base: 'vazirmatn';
+
+header, 
+.sidebar, 
+.navbar, 
+.navbar-header, 
+.content-wrapper,
+.navigation,
+.navigation-main {
+  font-family: 'vazirmatn' !important;
+}
 
 @font-face {
     font-family: "yekanReg";
@@ -9,10 +20,6 @@
     font-weight: normal;
     font-style: normal;
   }
-
-
-
-
   @font-face {
     font-family: "vazirmatn";
     src: url("../src/@core/assets/fonts/feather/fonts/Vazirmatn-VariableFont_wght.ttf");

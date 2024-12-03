@@ -173,7 +173,7 @@ const VerticalLayout = (props) => {
           } navbar-shadow`
         )}
       >
-        <div className="navbar-container d-flex content">
+        <div className="navbar-container d-flex content" style={{fontFamily: "vazirmatn"}}>
           {navbar ? (
             navbar({ skin, setSkin, setMenuVisibility })
           ) : (
