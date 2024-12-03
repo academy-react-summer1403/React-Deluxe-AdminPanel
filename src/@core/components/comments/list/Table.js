@@ -88,7 +88,6 @@ const Comments = () => {
   const roleOptions = [
     { value: "", label: "تایید شده", id: true },
     { value: "", label: "تایید نشده", id: false },
-    // { value: "", label: "دانشجو", id: 5 },
   ];
 
   const planOptions = [
@@ -323,7 +322,7 @@ const Comments = () => {
                 isClearable={false}
                 className="react-select"
                 classNamePrefix="select"
-                // options={planOptions}
+                options={planOptions}
                 value={currentPlan}
                 onChange={(data) => {
                   setCurrentPlan(data);
