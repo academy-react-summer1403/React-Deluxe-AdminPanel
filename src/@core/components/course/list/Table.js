@@ -220,7 +220,15 @@ const UsersList = () => {
       // selector: (data) => data?.fullName,
       cell: (data) => (
         <div className="d-flex gap-1 justify-content-left align-items-center">
-          <Avatar img={data.tumbImageAddress ?? Logo} />
+          <Avatar
+            img={
+              data.tumbImageAddress !== null &&
+              data.tumbImageAddress !== "Not-set" &&
+              data.tumbImageAddress.includes("http")
+                ? data.tumbImageAddress
+                : Logo
+            }
+          />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column">
             <Link
