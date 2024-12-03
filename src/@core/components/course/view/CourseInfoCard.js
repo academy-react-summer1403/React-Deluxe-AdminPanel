@@ -242,7 +242,7 @@ const CourseInfoCard = () => {
                   <Badge
                     color="light-success"
                     className="fs-5"
-                    style={{ width: "35px", textAlign: "center" }}
+                    style={{ width: "auto", textAlign: "center" }}
                   >
                     فعال
                   </Badge>
@@ -250,7 +250,7 @@ const CourseInfoCard = () => {
                   <Badge
                     color="light-danger"
                     className="fs-5"
-                    style={{ width: "70px", textAlign: "center" }}
+                    style={{ width: "auto", textAlign: "center" }}
                   >
                     غیر فعال
                   </Badge>

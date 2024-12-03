@@ -276,7 +276,8 @@ const UsersList = () => {
     {
       name: "فعالیت",
       sortable: true,
-      maxWidth: "100px",
+      center:true,
+      maxWidth: "200px",
       sortField: "isActive ",
       selector: (row) => (
         <div>
@@ -285,7 +286,7 @@ const UsersList = () => {
             <Badge
               color="light-success"
               className="fs-5"
-              style={{ width: "60px", textAlign: "center" }}
+              style={{ width: "auto", textAlign: "center" }}
             >
               تایید شده
             </Badge>
@@ -293,7 +294,7 @@ const UsersList = () => {
             <Badge
               color="light-danger"
               className="fs-5"
-              style={{ width: "60px", textAlign: "center" }}
+              style={{ width: "auto", textAlign: "center" }}
             >
               {" "}
               تایید نشده{" "}
