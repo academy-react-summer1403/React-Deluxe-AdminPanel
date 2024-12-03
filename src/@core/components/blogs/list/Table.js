@@ -350,10 +350,7 @@ const UsersList = () => {
       // selector: (data) => data?.fullName,
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1 px-1">
-          <Avatar img={data.currentImageAddressTumb !== null &&
-                  data.currentImageAddressTumb !== "Not-set" &&
-                  data.currentImageAddressTumb.includes("http")
-                    ? data.currentImageAddressTumb : Logo} />
+          <Avatar img={data.currentImageAddressTumb ?? Logo} />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column ">
             <Link

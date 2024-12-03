@@ -38,7 +38,6 @@ import "@styles/react/libs/react-select/_react-select.scss";
 import { useGetBlogDetails } from "../../../../core/services/api/GetBlogDetail";
 import { DatePersianizer } from "./../../../../utility/utils/DatePersianizer";
 import { EditBlogForm } from "./EditBlogForm/EditBlogForm";
-import Logo from "@src/assets/images/logo/reactdeluxe.png";
 
 const roleColors = {
   editor: "light-info",
@@ -97,9 +96,68 @@ const UserInfoCard = ({ selectedUser }) => {
     },
   });
 
+  // ** render user img
+  const renderUserImg = () => {
+    // if (selectedUser !== null && selectedUser.avatar.length)
+    {
+      return (
+        <img
+          height="110"
+          width="110"
+          alt="user-avatar"
+          // src={selectedUser.avatar}
+          className="img-fluid rounded mt-3 mb-2"
+        />
+      );
+      // } else {
+      // return (
+      //   <Avatar
+      //     initials
+      //     // color={selectedUser.avatarColor || 'light-primary'}
+      //     className='rounded mt-3 mb-2'
+      //     // content={selectedUser.fullName}
+      //     contentStyles={{
+      //       borderRadius: 0,
+      //       fontSize: 'calc(48px)',
+      //       width: '100%',
+      //       height: '100%'
+      //     }}
+      //     style={{
+      //       height: '110px',
+      //       width: '110px'
+      //     }}
+      //   />
+      // )
+    }
+  };
+  // getQuery("newsdetail", `news/${id}`);
+  // const { data, isError, isLoading } = useQuery({
+  //   queryKey: ["newsdetail"],
+  // });
+
+  // if (isLoading) return <div>Loading</div>;
+  // if (isError) return <div>اطلاعات یافت نشد</div>;
+
+  // const UserInfoCard = () => {
+  //   const { id } = useParams();
+
+  //   if (!id) {
+  //     return <div>شناسه معتبر نیست</div>;
+  //   }
+
+  //   const { data, isError, isLoading } = useQuery({
+  //     queryKey: ["newsdetail", id],
+  //     queryFn: () => getQuery(`news/${id}`),
+  //     onError: (error) => console.error('Error fetching data:', error),
+  //   });
+
+  //   if (isLoading) return <div>Loading...</div>;
+  //   if (isError) return <div>اطلاعات یافت نشد</div>;
   const { id } = useParams();
 
   const { data } = useGetBlogDetails(id);
+  // const { detailsNewsDto } = data;
+  // console.log(data);
 
   return (
     <div style={{ width: "25%" }}>
@@ -108,13 +166,7 @@ const UserInfoCard = ({ selectedUser }) => {
           <div className="user-avatar-section">
             <div className="d-flex align-items-center flex-column">
               <Avatar
-                img={
-                  data?.detailsNewsDto.currentImageAddress !== null &&
-                  data?.detailsNewsDto.currentImageAddress !== "Not-set" &&
-                  data?.detailsNewsDto.currentImageAddress.includes("http")
-                    ? data?.detailsNewsDto.currentImageAddress
-                    : Logo
-                }
+                img={data?.detailsNewsDto.currentImageAddress}
                 imgHeight={150}
                 imgWidth={150}
               />
@@ -231,7 +283,7 @@ const UserInfoCard = ({ selectedUser }) => {
           {/* <div>header</div> */}
         </ModalHeader>
         <ModalBody className="px-sm-5 pt-50 pb-5">
-          <EditBlogForm data={data} />
+          <EditBlogForm data={data}/>
         </ModalBody>
       </Modal>
     </div>

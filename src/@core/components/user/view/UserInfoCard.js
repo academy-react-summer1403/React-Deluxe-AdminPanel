@@ -5,6 +5,7 @@ import Logo from "@src/assets/images/logo/reactdeluxe.png";
 
 // ** Reactstrap Imports
 import {
+ 
   Card,
   CardBody,
   Button,
@@ -25,9 +26,6 @@ import withReactContent from "sweetalert2-react-content";
 import "@styles/react/libs/react-select/_react-select.scss";
 import { useUserDetail } from "../../../../core/services/api/UserDetail";
 import { EditUserForm } from "./EditUserModal/EditUserForm";
-import Avatar from "@components/avatar";
-import Male from "../../../../assets/images/avatars/Male.png";
-import Female from "../../../../assets/images/avatars/Female.png";
 
 const roleColors = {
   editor: "light-info",
@@ -77,7 +75,7 @@ const UserInfoCard = () => {
       text: "البته امکان لغو نیز وجود دارد",
       icon: "warning",
       showCancelButton: true,
-      cancelButtonText: "لغو",
+      cancelButtonText:"لغو",
       confirmButtonText: "بله",
       customClass: {
         confirmButton: "btn btn-primary",
@@ -109,6 +107,7 @@ const UserInfoCard = () => {
 
   const { id } = useParams();
 
+
   const { data, isError, isLoading } = useUserDetail(id);
 
   if (isLoading) return <div>Loading</div>;
@@ -127,8 +126,7 @@ const UserInfoCard = () => {
                 alt="user-avatar"
                 src={
                   data.currentPictureAddress !== null &&
-                  data.currentPictureAddress !== "Not-set" &&
-                  data.currentPictureAddress.includes("http")
+                  data.currentPictureAddress !== "Not-set"
                     ? data.currentPictureAddress
                     : Logo
                 }
@@ -169,23 +167,6 @@ const UserInfoCard = () => {
           <div className="info-container">
             {/* {selectedUser !== null ? ( */}
             <ul className="list-unstyled">
-              <li className="mb-75">
-                <span className="fw-bolder me-25">جنسیت:</span>
-                <span>
-                  {data.gender ? (
-                    <Avatar
-                      img={Male}
-                      style={{ backgroundColor: "transparent" }}
-                    />
-                  ) : (
-                    <Avatar
-                      img={Female}
-                      style={{ backgroundColor: "transparent" }}
-                      imgWidth={28}
-                    />
-                  )}
-                </span>
-              </li>
               <li className="mb-75">
                 <span className="fw-bolder me-25">ایمیل:</span>
                 <span>{data.gmail}</span>
@@ -238,10 +219,8 @@ const UserInfoCard = () => {
         toggle={() => setShow(!show)}
         className="modal-dialog-centered modal-lg"
       >
-        <ModalHeader
-          className="bg-transparent"
-          toggle={() => setShow(!show)}
-        ></ModalHeader>
+        <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}>
+        </ModalHeader>
         <ModalBody className="px-sm-5 pt-50 pb-5">
           <EditUserForm />
         </ModalBody>

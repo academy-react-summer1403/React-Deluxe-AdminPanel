@@ -142,6 +142,7 @@ const UsersList = () => {
     console.log(value);
   };
 
+ 
   // ** Custom Pagination
   const CustomPagination = () => {
     const count = Math.ceil(data?.totalCount / rowsPerPage);
@@ -180,25 +181,13 @@ const UsersList = () => {
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
           <Avatar
-            style={{
-              backgroundColor: "transparent",
-              // ...(data.gender ? "" : { width: "13%" }),
-              ...(data.pictureAddress !== null &&
-              data.pictureAddress !== "Not-set" &&
-              data.pictureAddress.includes("http")
-                ? { opacity: "1" }
-                : { opacity: "0.5" }),
-            }}
             img={
-              data.pictureAddress !== null &&
-              data.pictureAddress !== "Not-set" &&
-              data.pictureAddress.includes("http")
+              data.pictureAddress !== null && data.pictureAddress !== "Not-set"
                 ? data.pictureAddress
-                : data.gender
-                ? Male
-                : Female
+                : Logo
             }
           />
+          {/* {renderClient(row)} */}
           <div className="d-flex flex-column">
             <Link
               className="user_name text-truncate text-body  p-0"
@@ -354,28 +343,27 @@ const UsersList = () => {
         </div>
       ),
     },
-    // {
-    //   name: "جنسیت",
-    //   sortable: true,
-    //   maxWidth: "70px",
-    //   sortField: "role",
-    //   selector: (row) => (
-    //     <div>
-    //       {row.gender ? (
-    //         <Avatar img={Male} style={{ backgroundColor: "transparent" }} />
-    //       ) : (
-    //         <Avatar
-    //           img={Female}
-    //           style={{ backgroundColor: "transparent" }}
-    //           imgWidth={28}
-    //         />
-    //       )}
-    //     </div>
-    //   ),
-    // },
+    {
+      name: "جنسیت",
+      sortable: true,
+      maxWidth: "70px",
+      sortField: "role",
+      selector: (row) => (
+        <div>
+          {row.gender ? (
+            <Avatar img={Male} style={{ backgroundColor: "transparent" }} />
+          ) : (
+            <Avatar
+              img={Female}
+              style={{ backgroundColor: "transparent" }}
+              imgWidth={28}
+            />
+          )}
+        </div>
+      ),
+    },
     {
       name: "عملیات",
-      center: true,
       minWidth: "100px",
       cell: (row) => (
         <div className="column-action">

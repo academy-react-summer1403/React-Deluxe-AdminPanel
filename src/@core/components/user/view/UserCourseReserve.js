@@ -27,7 +27,6 @@ import { useCourseGroupsAll } from "../../../../core/services/api/CourseGroupsAl
 import { useAcceptCourseReserve } from "../../../../core/services/api/AcceptCourseReserve";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
-import { ReserveGroupForm } from "./ReserveGroupForm/ReserveGroupForm";
 
 const UserCourseReserve = (data) => {
   const columns = [
@@ -143,19 +142,49 @@ const UserCourseReserve = (data) => {
                 className="modal-dialog-centered modal-lg"
               >
                 <ModalHeader
-                  className="bg-transparent text-center"
+                  className="bg-transparent"
                   toggle={() => toggleModal(row?.reserveId)}
                 >
-                  گروه دوره را انتخاب کنید!
+                  {/* <div>header</div> */}
                 </ModalHeader>
                 <ModalBody className="px-sm-5 pt-50 pb-5">
-                  {openModalId === row?.reserveId && (
-                    <ReserveGroupForm
-                      row={row}
-                      setGroupId={setGroupId}
-                      groupId={groupId}
-                    />
-                  )}
+                  <Form
+                    className=" d-flex flex-column justify-content-center align-items-center items-center"
+                    style={{ width: "100%" }}
+                    onSubmit={(e) =>
+                      handleSubmit(e, row?.studentId, row?.courseId)
+                    }
+                  >
+                    <Col md="9" sm="12" className="mb-1">
+                      <Label className="form-label" for={"NewsCatregoryId"}>
+                        نوع دوره
+                      </Label>
+                      <Select
+                        theme={selectThemeColors}
+                        isClearable={true}
+                        id={"News"}
+                        className="react-select"
+                        classNamePrefix="select"
+                        options={GroupOptions}
+                        name={"NewsCatregoryId"}
+                        placeholder="انتخاب کنید"
+                        onChange={(e) => setGroupId(e)}
+                        // defaultValue={countryOptions[0]}
+                      />
+                    </Col>
+                    <Col lg="2" sm="12">
+                      <div className="d-flex">
+                        <Button
+                          className="me-1"
+                          style={{ width: "auto" }}
+                          color="primary"
+                          type="submit"
+                        >
+                          تایید رزرو
+                        </Button>
+                      </div>
+                    </Col>
+                  </Form>
                 </ModalBody>
               </Modal>
             </>
@@ -172,6 +201,7 @@ const UserCourseReserve = (data) => {
     setOpenModalId((prevId) => (prevId === id ? null : id));
   };
 
+  const handleAccept = () => {};
   const handleDelete = useCourseReserveHandleDelete();
   console.log(data);
 
@@ -179,30 +209,36 @@ const UserCourseReserve = (data) => {
 
   console.log(data2);
 
+  const GroupOptions = data2?.courseGroupDtos?.map((option) => ({
+    value: option?.groupId,
+    label: option?.courseName,
+  }));
+
   const mutate = useAcceptCourseReserve();
 
-  //   e.preventDefault();
-  //   console.log(studentId, courseId);
-  //   const courseToast = toast.loading("درحال تبدیل رزرو به دوره");
-  //   try {
-  //     await mutate.mutateAsync({
-  //       studentId,
-  //       courseId,
-  //       courseGroupId: groupId.value,
-  //     });
-  //     toast.success("دوره با موفقیت اضافه شد!", { id: courseToast });
-  //   } catch (error) {
-  //     toast.error(
-  //       `تبدیل رزرو با خطا مواجه شد
-  //     ${
-  //       error.response.data.title
-  //         ? error.response.data.title
-  //         : error.response.data.ErrorMessage
-  //     }`,
-  //       { id: courseToast }
-  //     );
-  //   }
-  // };
+  const handleSubmit = async (e, studentId, courseId) => {
+    e.preventDefault();
+    console.log(studentId, courseId);
+    const courseToast = toast.loading("درحال تبدیل رزرو به دوره");
+    try {
+      await mutate.mutateAsync({
+        studentId,
+        courseId,
+        courseGroupId: groupId.value,
+      });
+      toast.success("دوره با موفقیت اضافه شد!", { id: courseToast });
+    } catch (error) {
+      toast.error(
+        `تبدیل رزرو با خطا مواجه شد
+      ${
+        error.response.data.title
+          ? error.response.data.title
+          : error.response.data.ErrorMessage
+      }`,
+        { id: courseToast }
+      );
+    }
+  };
 
   return (
     <Card>
