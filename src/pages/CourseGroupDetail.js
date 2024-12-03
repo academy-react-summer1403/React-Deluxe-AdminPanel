@@ -6,7 +6,7 @@ import UserTabs from "../@core/components/course/view/Tabs";
 const CourseDetail = () => {
   return (
     <div className="d-flex gap-1">
-      <CourseGroupInfoCard />
+      {/* <CourseGroupInfoCard /> */}
       <CourseGroupTabs />
     </div>
   );

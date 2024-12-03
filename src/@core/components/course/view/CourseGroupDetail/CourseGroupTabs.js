@@ -14,6 +14,7 @@ import {
   MessageSquare,
   DollarSign,
   Edit2,
+  Table,
 } from "react-feather";
 import UserProjectsList from "./../UserProjectsList";
 import Connections from "./../Connections";
@@ -22,6 +23,11 @@ import UserGroupsList from "./../UserGroupsList";
 import { CursorEdit02Icon } from "hugeicons-react";
 import CoursesDescribe from "./../coursesDescribe";
 import CourseReservesList from "./../CourseReservesList";
+import CourseGroupDescribe from "./CourseGroupTabs/CourseGroupDescribe";
+import CourseGroupUserList from "./CourseGroupTabs/CourseGroupUserList";
+import CourseGroupScheduleList from "./CourseGroupTabs/CourseGroupScheduleList";
+import { useCourseGroupDetail } from "../../../../../core/services/api/CourseGroupDetail";
+import { useParams } from "react-router-dom";
 
 const CourseGroupTabs = () => {
   const [active, setActive] = useState("1");
@@ -31,11 +37,15 @@ const CourseGroupTabs = () => {
       setActive(tab);
     }
   };
+  const { id } = useParams();
+
+  const { data } = useCourseGroupDetail(id);
+  console.log(data);
 
   return (
     <Fragment>
       {/* تب‌ها */}
-      <div className="d-flex flex-column border" style={{ width: "80%" }}>
+      <div className="d-flex flex-column border" style={{ width: "100%" }}>
         <Nav
           pills
           className="mb-2"
@@ -44,37 +54,19 @@ const CourseGroupTabs = () => {
           <NavItem>
             <NavLink active={active === "1"} onClick={() => toggle("1")}>
               <CursorEdit02Icon className="font-medium-3 me-50" />
-              <span className="fw-bold">توضیحات</span>
+              <span className="fw-bold">جزئیات</span>
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink active={active === "2"} onClick={() => toggle("2")}>
               <User className="font-medium-3 me-50" />
-              <span className="fw-bold">کاربر ها</span>
+              <span className="fw-bold">دانشجو ها</span>
             </NavLink>
           </NavItem>
           <NavItem>
             <NavLink active={active === "3"} onClick={() => toggle("3")}>
-              <User className="font-medium-3 me-50" />
-              <span className="fw-bold">رزرو ها</span>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink active={active === "4"} onClick={() => toggle("4")}>
-              <Users className="font-medium-3 me-50" />
-              <span className="fw-bold">گروه ها</span>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink active={active === "5"} onClick={() => toggle("5")}>
-              <MessageSquare className="font-medium-3 me-50" />
-              <span className="fw-bold">کامنت ها</span>
-            </NavLink>
-          </NavItem>
-          <NavItem>
-            <NavLink active={active === "6"} onClick={() => toggle("6")}>
-              <DollarSign className="font-medium-3 me-50" />
-              <span className="fw-bold">پرداختی ها</span>
+              <Table className="font-medium-3 me-50" />
+              <span className="fw-bold">جدول زمانی</span>
             </NavLink>
           </NavItem>
         </Nav>
@@ -83,32 +75,17 @@ const CourseGroupTabs = () => {
         <div>
           {active === "1" && (
             <div style={{ width: "100%" }}>
-              <CoursesDescribe />
+              <CourseGroupDescribe data={data?.courseGroupDto} />
             </div>
           )}
           {active === "2" && (
             <div style={{ width: "100%" }}>
-              <UserProjectsList />
+              <CourseGroupUserList data={data?.courseUserListDto} />
             </div>
           )}
           {active === "3" && (
             <div style={{ width: "100%" }}>
-              <CourseReservesList />
-            </div>
-          )}
-          {active === "4" && (
-            <div style={{ width: "100%" }}>
-              <UserGroupsList />
-            </div>
-          )}
-          {active === "5" && (
-            <div style={{ width: "100%" }}>
-              <SecurityTab />
-            </div>
-          )}
-          {active === "6" && (
-            <div style={{ width: "100%" }}>
-              <Connections />
+              <CourseGroupScheduleList data={data?.courseSchedules} />
             </div>
           )}
         </div>

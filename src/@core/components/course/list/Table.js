@@ -11,7 +11,7 @@ import Logo from "@src/assets/images/logo/reactdeluxe.png";
 import Sidebar from "./Sidebar";
 
 // ** Table Columns
-import { columns } from "./columns";// ** Third Party Components
+import { columns } from "./columns"; // ** Third Party Components
 import Select from "react-select";
 import ReactPaginate from "react-paginate";
 import DataTable from "react-data-table-component";
@@ -63,7 +63,6 @@ import Swal from "sweetalert2";
 import { useDeleteCourse } from "../../../../core/services/api/DeleteCourse";
 import { usehandleDelete } from "./CourseHandleDelete/handleDelete";
 const UsersList = () => {
- 
   // ** States
   const [sort, setSort] = useState("desc");
   const [searchTerm, setSearchTerm] = useState("");
@@ -137,7 +136,6 @@ const UsersList = () => {
 
   // ** Function in get data on search query change
   const handleFilter = (val) => {
-   
     setSearchTerm(val);
     console.log("Search Value: ", val);
   };
@@ -216,7 +214,7 @@ const UsersList = () => {
   const column = [
     {
       name: "نام دوره",
-      
+
       minWidth: "300px",
       sortField: "title",
       // selector: (data) => data?.fullName,
@@ -240,7 +238,7 @@ const UsersList = () => {
     },
     {
       name: "نوع دوره",
-    center:true,
+      center: true,
       minWidth: "172px",
       sortField: "typeName",
       selector: (row) => row.typeName,
@@ -295,13 +293,11 @@ const UsersList = () => {
           )}
         </div>
       ),
-      //<div> {row.isActive ? "فعال" : "غیر فعال"}</div>,
-      // cell: row => renderRole(row)
     },
     {
       name: "اقدامات",
       minWidth: "100px",
-    center:true,
+      center: true,
       cell: (row) => (
         <div className="column-action d-flex">
           <Link
@@ -332,43 +328,6 @@ const UsersList = () => {
               حذف دوره
             </UncontrolledTooltip>
           </div>
-          {/* <UncontrolledDropdown>
-            <DropdownToggle tag="div" className="btn btn-sm">
-              <MoreVertical size={14} className="cursor-pointer" />
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem
-                tag={Link}
-                className="w-100"
-                to={`/apps/user/view/${row.id}`}
-                // onClick={() => store.dispatch(getUser(row.id))}
-              >
-                <FileText size={14} className="me-50" />
-                <span className="align-middle">Details</span>
-              </DropdownItem>
-              <DropdownItem
-                tag="a"
-                href="/"
-                className="w-100"
-                // onClick={e => e.preventDefault()}
-              >
-                <Archive size={14} className="me-50" />
-                <span className="align-middle">Edit</span>
-              </DropdownItem>
-              <DropdownItem
-                tag="a"
-                href="/"
-                className="w-100"
-                // onClick={e => {
-                //   e.preventDefault()
-                //   store.dispatch(deleteUser(row.id))
-                // }}
-              >
-                <Trash2 size={14} className="me-50" />
-                <span className="align-middle">Delete</span>
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown> */}
         </div>
       ),
     },

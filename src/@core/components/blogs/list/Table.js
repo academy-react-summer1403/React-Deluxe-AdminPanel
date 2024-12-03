@@ -255,7 +255,7 @@ const UsersList = () => {
       text: "البته امکان بازگشت نیز وجود دارد",
       icon: "warning",
       showCancelButton: true,
-      cancelButtonText:"لغو",
+      cancelButtonText: "لغو",
       confirmButtonText: "بله",
       customClass: {
         confirmButton: "btn btn-primary",
@@ -447,7 +447,7 @@ const UsersList = () => {
               />
             )}
             <UncontrolledTooltip placement="top" target={`ActiveDeactive`}>
-              فعال / غیرفعال سازی
+              {row?.isActive ? "غیرفعال سازی" : "فعال سازی"}
             </UncontrolledTooltip>
           </div>
           <div className="btn btn-sm" onClick={() => handleDelete(row)}>

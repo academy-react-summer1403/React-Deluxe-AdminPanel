@@ -296,7 +296,7 @@ const CourseGroupeTable = () => {
 
   return (
     <Fragment>
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle tag="h4">فیلتر ها</CardTitle>
         </CardHeader>
@@ -332,7 +332,7 @@ const CourseGroupeTable = () => {
             </Col>
           </Row>
         </CardBody>
-      </Card>
+      </Card> */}
 
       <Card className="overflow-hidden">
         <Row className="ltr py-1 px-2">
