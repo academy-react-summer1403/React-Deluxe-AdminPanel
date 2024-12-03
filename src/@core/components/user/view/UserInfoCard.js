@@ -126,10 +126,10 @@ const UserInfoCard = () => {
                 width="210"
                 alt="user-avatar"
                 src={
-                  data.currentPictureAddress !== null &&
-                  data.currentPictureAddress !== "Not-set" &&
-                  data.currentPictureAddress.includes("http")
-                    ? data.currentPictureAddress
+                  data?.currentPictureAddress !== null &&
+                  data?.currentPictureAddress !== "Not-set" &&
+                  data?.currentPictureAddress?.includes("http")
+                    ? data?.currentPictureAddress
                     : Logo
                 }
                 className=" rounded  mb-2"

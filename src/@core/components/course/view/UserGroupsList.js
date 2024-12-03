@@ -31,7 +31,6 @@ import { Form } from "reactstrap";
 import toast from "react-hot-toast";
 import { useAddCourseGroup } from "../../../../core/services/api/AddCourseGroup";
 
-
 const UserGroupsList = () => {
   const columns = [
     {
@@ -39,7 +38,6 @@ const UserGroupsList = () => {
       name: "نام گروه",
       selector: (row) => row.groupName,
       center: true,
-    
     },
     {
       name: "ظرفیت گروه",
@@ -55,7 +53,6 @@ const UserGroupsList = () => {
       name: "شماره گروه",
       selector: (row) => row.groupId,
       center: true,
-    
     },
     {
       name: "اقدامات",
@@ -64,26 +61,23 @@ const UserGroupsList = () => {
       cell: (row) => {
         return (
           <div className="column-action d-flex">
-            <Link
-              to={`/courseGroupDetail/${row?.groupId}`}
-            
-            > 
-            <div className="btn btn-sm">
-              <FileText
-                className="cursor-pointer "
-                size={17}
-                id={`send-tooltip-${row.id}`}
-              />
-              <UncontrolledTooltip
-             
-                placement="top"
-                target={`send-tooltip-${row.id}`}
-                // className="mb-1"
-              >
-                 جزییات گروه
-              </UncontrolledTooltip>
-            </div></Link>
-           
+            <Link to={`/courseGroupDetail/${row?.groupId}`}>
+              <div className="btn btn-sm">
+                <FileText
+                  className="cursor-pointer "
+                  size={17}
+                  id={`send-tooltip-${row.id}`}
+                />
+                <UncontrolledTooltip
+                  placement="top"
+                  target={`send-tooltip-${row.id}`}
+                  // className="mb-1"
+                >
+                  جزییات گروه
+                </UncontrolledTooltip>
+              </div>
+            </Link>
+
             <div className="btn btn-sm" onClick={() => handleDelete(row)}>
               <Trash2 size={17} className="" id={`pw-tooltip-${row.id}`} />
               <UncontrolledTooltip
@@ -237,7 +231,6 @@ const UserGroupsList = () => {
               >
                 افزودن
               </Button>
-             
             </Col>
           </Form>
         </ModalBody>

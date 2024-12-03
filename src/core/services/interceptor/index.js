@@ -12,6 +12,7 @@ const onSuccess = (response) => {
 };
 
 const onError = (err) => {
+  // console.log(err)
   // console.log("Interceptor : " + err);
 
   // if (err.response.status >= 400 && err.response.status < 500) {

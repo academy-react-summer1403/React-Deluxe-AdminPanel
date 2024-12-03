@@ -50,6 +50,8 @@ import { useUserComment } from "../../../../core/services/api/UserComment";
 import { useAcceptComment } from "../../../../core/services/api/AcceptComment";
 import toast from "react-hot-toast";
 import { CancelCircleIcon, CheckmarkCircle02Icon } from "hugeicons-react";
+import { useDeleteComment } from "../../../../core/services/api/DeleteComment";
+import { useDeleteCommentModal } from "./DeleteCommentModal/DeleteCommentModal";
 
 const SignupSchema = yup.object().shape({
   password: yup.string().min(8).required(),
@@ -139,6 +141,29 @@ const CommentTap = () => {
       console.log(error);
     }
   };
+
+  // const deleteMutation = useDeleteComment()
+
+  const handleDelete = useDeleteCommentModal();
+
+  // const handleDelete = async (commentId) => {
+  //   const userToast = toast.loading("درحال تایید کامنت");
+  //   try {
+  //     await deleteMutation.mutateAsync(commentId);
+  //     toast.success("تایید کامنت با موفقیت شد!", { id: userToast });
+  //   } catch (error) {
+  //     toast.error(
+  //       `تایید کامنت با مشکل مواجه شد:,
+  //       ${
+  //         error.response.data.ErrorMessage
+  //           ? error.response.data.ErrorMessage
+  //           : "خطای تعریف نشده"
+  //       }`,
+  //       { id: userToast }
+  //     );
+  //     console.log(error);
+  //   }
+  // };
 
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>اطلاعات یافت نشد</div>;
@@ -244,28 +269,33 @@ const CommentTap = () => {
       center: true,
       cell: (row) => (
         <div className="column-action d-flex">
-          <div
-            className="btn btn-sm"
-            onClick={() => handleAccept(row.commentId)}
-          >
-            <CheckmarkCircle02Icon
-              color={"#00cf13"}
-              size={20}
-              id={"AcceptComment"}
-            />
-            <UncontrolledTooltip
-              placement="top"
-              target={`AcceptComment`}
-              // className="mb-1"
+          {!row.accept && (
+            <div
+              className="btn btn-sm"
+              onClick={() => handleAccept(row.commentId)}
             >
-              تایید
-            </UncontrolledTooltip>
-          </div>
+              <CheckmarkCircle02Icon
+                color={"#00cf13"}
+                size={20}
+                id={"AcceptComment"}
+              />
+              <UncontrolledTooltip
+                placement="top"
+                target={`AcceptComment`}
+                // className="mb-1"
+              >
+                تایید
+              </UncontrolledTooltip>
+            </div>
+          )}
           <div
             className="btn btn-sm"
-            // onClick={() => handleDelete(row)}
+            onClick={() => handleDelete(row.commentId)}
           >
-            <CancelCircleIcon color={"#ff0000"} size={20} id={"CancelComment"}
+            <CancelCircleIcon
+              color={"#ff0000"}
+              size={20}
+              id={"CancelComment"}
             />
             <UncontrolledTooltip placement="top" target={`CancelComment`}>
               حذف
