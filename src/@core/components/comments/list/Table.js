@@ -86,7 +86,6 @@ const Comments = () => {
 
   // ** User filter options
   const roleOptions = [
-    { value: "", label: "انتخاب کنید", id: null },
     { value: "", label: "تایید شده", id: true },
     { value: "", label: "تایید نشده", id: false },
     // { value: "", label: "دانشجو", id: 5 },
@@ -218,6 +217,7 @@ const Comments = () => {
       name: "وضعیت",
       center:true,
       sortable: true,
+      center:true,
       minWidth: "172px",
       sortField: "accept",
       selector: (row) => (
@@ -323,7 +323,7 @@ const Comments = () => {
                 isClearable={false}
                 className="react-select"
                 classNamePrefix="select"
-                options={planOptions}
+                // options={planOptions}
                 value={currentPlan}
                 onChange={(data) => {
                   setCurrentPlan(data);
