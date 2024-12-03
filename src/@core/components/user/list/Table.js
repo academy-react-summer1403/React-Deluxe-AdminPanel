@@ -321,7 +321,7 @@ const UsersList = () => {
     {
       name: "درصد تکمیل پروفایل",
       sortable: true,
-      minWidth: "162px",
+      minWidth: "172px",
       cell: (row) => (
         <CardBrowserState percent={row.profileCompletionPercentage} />
       ),
@@ -329,7 +329,7 @@ const UsersList = () => {
     {
       name: "وضعیت",
       sortable: true,
-      maxWidth: "100x",
+      maxWidth: "150x",
       sortField: "role",
       selector: (row) => (
         <div>
@@ -338,7 +338,7 @@ const UsersList = () => {
             <Badge
               color="light-success"
               className="fs-5"
-              style={{ width: "35px", textAlign: "center" }}
+              style={{ width: "auto", textAlign: "center" }}
             >
               فعال
             </Badge>
@@ -346,7 +346,7 @@ const UsersList = () => {
             <Badge
               color="light-danger"
               className="fs-5"
-              style={{ width: "70px", textAlign: "center" }}
+              style={{ width: "auto", textAlign: "center" }}
             >
               غیر فعال
             </Badge>
