@@ -15,9 +15,9 @@ const CardBrowserState = ({ percent }) => {
   if (percent < 33) {
     color = "#FF0000"; // Red
   } else if (percent >= 33 && percent <= 66) {
-    color = "#FFEB3B"; // Yellow
+    color = "#fdc904"; // Yellow
   } else {
-    color = "#4CAF50"; // Green
+    color = "#34cb78"; // Green
   }
 
   const statesArr = [
@@ -68,13 +68,13 @@ const CardBrowserState = ({ percent }) => {
       };
 
       return (
-        <div className="ms-2" style={{ width: "50px", height: "50px" }}>
+        <div className="ms-2" style={{ width: "60px", height: "60px" }}>
           <Chart
             options={chartOptions}
             series={chartOptions.series}
             type="radialBar"
-            height={50}
-            width={50}
+            height={60}
+            width={60}
           />
         </div>
       );

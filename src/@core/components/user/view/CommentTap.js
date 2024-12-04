@@ -41,15 +41,25 @@ import {
   ChevronDown,
   FileText,
   Trash2,
+  EyeOff,
+  Eye,
 } from "react-feather";
 
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import DataTable from "react-data-table-component";
 import { useUserComment } from "../../../../core/services/api/UserComment";
 import { useAcceptComment } from "../../../../core/services/api/AcceptComment";
 import toast from "react-hot-toast";
-import { CancelCircleIcon, CheckmarkCircle02Icon } from "hugeicons-react";
+import {
+  CancelCircleIcon,
+  CheckmarkCircle02Icon,
+  Delete01Icon,
+} from "hugeicons-react";
+import { useDeleteComment } from "../../../../core/services/api/DeleteComment";
+import { useDeleteCommentModal } from "./DeleteCommentModal/DeleteCommentModal";
+import { useRejectComment } from "../../../../core/services/api/RejectComment";
+import { ReplyModal } from "../../course/view/ReplyModal/ReplyModal";
 
 const SignupSchema = yup.object().shape({
   password: yup.string().min(8).required(),
@@ -103,6 +113,8 @@ const CommentTap = () => {
     formState: { errors },
   } = useForm({ defaultValues, resolver: yupResolver(SignupSchema) });
 
+  const queryClient = useQueryClient();
+
   const onSubmit = (data) => {
     trigger();
     console.log(data);
@@ -119,6 +131,12 @@ const CommentTap = () => {
   // });
   const { data, isError, isLoading } = useUserComment(id);
 
+  const [openModalId, setOpenModalId] = useState(null); // Track which modal is open
+
+  const toggleModal = (id) => {
+    setOpenModalId((prevId) => (prevId === id ? null : id));
+  };
+
   const mutation = useAcceptComment();
 
   const handleAccept = async (commentId) => {
@@ -126,6 +144,7 @@ const CommentTap = () => {
     try {
       await mutation.mutateAsync(commentId);
       toast.success("تایید کامنت با موفقیت شد!", { id: userToast });
+      queryClient.invalidateQueries("UserComment");
     } catch (error) {
       toast.error(
         `تایید کامنت با مشکل مواجه شد:,
@@ -139,6 +158,51 @@ const CommentTap = () => {
       console.log(error);
     }
   };
+
+  const rejectMutation = useRejectComment();
+
+  const handleReject = async (commentId) => {
+    const userToast = toast.loading("درحال رد کردن کامنت");
+    try {
+      await rejectMutation.mutateAsync(commentId);
+      toast.success("رد کردن کامنت با موفقیت شد!", { id: userToast });
+      queryClient.invalidateQueries("UserComment");
+    } catch (error) {
+      toast.error(
+        `رد کردن کامنت با مشکل مواجه شد:,
+        ${
+          error.response.data.ErrorMessage
+            ? error.response.data.ErrorMessage
+            : "خطای تعریف نشده"
+        }`,
+        { id: userToast }
+      );
+      console.log(error);
+    }
+  };
+
+  // const deleteMutation = useDeleteComment()
+
+  const handleDelete = useDeleteCommentModal();
+
+  // const handleDelete = async (commentId) => {
+  //   const userToast = toast.loading("درحال تایید کامنت");
+  //   try {
+  //     await deleteMutation.mutateAsync(commentId);
+  //     toast.success("تایید کامنت با موفقیت شد!", { id: userToast });
+  //   } catch (error) {
+  //     toast.error(
+  //       `تایید کامنت با مشکل مواجه شد:,
+  //       ${
+  //         error.response.data.ErrorMessage
+  //           ? error.response.data.ErrorMessage
+  //           : "خطای تعریف نشده"
+  //       }`,
+  //       { id: userToast }
+  //     );
+  //     console.log(error);
+  //   }
+  // };
 
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>اطلاعات یافت نشد</div>;
@@ -243,34 +307,132 @@ const CommentTap = () => {
       minWidth: "100px",
       center: true,
       cell: (row) => (
+        // <div className="column-action d-flex">
+        //   {!row.accept && (
+        //     <div
+        //       className="btn btn-sm"
+        //       onClick={() => handleAccept(row.commentId)}
+        //     >
+        //       <CheckmarkCircle02Icon
+        //         color={"#00cf13"}
+        //         size={20}
+        //         id={"AcceptComment"}
+        //       />
+        //       <UncontrolledTooltip
+        //         placement="top"
+        //         target={`AcceptComment`}
+        //         // className="mb-1"
+        //       >
+        //         تایید
+        //       </UncontrolledTooltip>
+        //     </div>
+        //   )}
+        //   <div
+        //     className="btn btn-sm"
+        //     onClick={() => handleDelete(row.commentId)}
+        //   >
+        //     <CancelCircleIcon
+        //       color={"#ff0000"}
+        //       size={20}
+        //       id={"CancelComment"}
+        //     />
+        //     <UncontrolledTooltip placement="top" target={`CancelComment`}>
+        //       حذف
+        //     </UncontrolledTooltip>
+        //   </div>
+        // </div>
         <div className="column-action d-flex">
-          <div
-            className="btn btn-sm"
-            onClick={() => handleAccept(row.commentId)}
+          <div className="btn btn-sm">
+            {row.replyCount > 0 ? (
+              <div onClick={() => toggleModal(row.commentId)}>
+                <Eye size={17} id={`eye-tooltip-${row.commentId}`} />
+                <UncontrolledTooltip
+                  placement="top"
+                  target={`eye-tooltip-${row.commentId}`}
+                >
+                  مشاهده پاسخ
+                </UncontrolledTooltip>
+              </div>
+            ) : (
+              <>
+                <EyeOff size={17} id={`eye-tooltip-${row.commentId}`} />
+                <UncontrolledTooltip
+                  placement="top"
+                  target={`eye-tooltip-${row.commentId}`}
+                >
+                  پاسخی نیست
+                </UncontrolledTooltip>
+              </>
+            )}
+          </div>
+
+          <div className="column-action d-flex">
+            {!row.accept ? (
+              <div className="btn btn-sm" onClick={() => handleAccept(row.commentId)}>
+                <CheckmarkCircle02Icon
+                  color={"#00cf13"}
+                  size={20}
+                  id={"AcceptComments"}
+                />
+                <UncontrolledTooltip
+                  placement="top"
+                  target={`AcceptComments`}
+                  // className="mb-1"
+                >
+                  تایید
+                </UncontrolledTooltip>
+              </div>
+            ) : (
+              <div className="btn btn-sm" onClick={() => handleReject(row.commentId)}>
+                <CancelCircleIcon
+                  color={"#ffc300"}
+                  size={20}
+                  id={"RejectComment"}
+                />
+                <UncontrolledTooltip
+                  placement="top"
+                  target={`RejectComment`}
+                  // className="mb-1"
+                >
+                  رد کردن
+                </UncontrolledTooltip>
+              </div>
+            )}
+
+            <div className="btn btn-sm" onClick={() => handleDelete(row.commentId)}>
+              <Delete01Icon color={"#ff0000"} size={18} id={"CancelComment"} />
+              <UncontrolledTooltip placement="top" target={`CancelComment`}>
+                حذف
+              </UncontrolledTooltip>
+            </div>
+          </div>
+
+          <Modal
+            isOpen={openModalId === row.commentId}
+            toggle={() => toggleModal(row.commentId)}
+            className="modal-dialog-centered modal-xl"
           >
-            <CheckmarkCircle02Icon
-              color={"#00cf13"}
-              size={20}
-              id={"AcceptComment"}
-            />
-            <UncontrolledTooltip
-              placement="top"
-              target={`AcceptComment`}
-              // className="mb-1"
+            <ModalHeader
+              className="bg-transparent"
+              toggle={() => toggleModal(row.commentId)}
             >
-              تایید
-            </UncontrolledTooltip>
-          </div>
-          <div
-            className="btn btn-sm"
-            // onClick={() => handleDelete(row)}
-          >
-            <CancelCircleIcon color={"#ff0000"} size={20} id={"CancelComment"}
-            />
-            <UncontrolledTooltip placement="top" target={`CancelComment`}>
-              حذف
-            </UncontrolledTooltip>
-          </div>
+              <div className="mb-2">
+                <h1 className="mb-1">
+                  <span className="fs-5">پاسخ ها به کامنت</span> {row.title}
+                </h1>
+              </div>
+            </ModalHeader>
+            {openModalId === row.commentId && (
+              <ReplyModal
+                // toggleModal={(value) => toggleModal(value)}
+                // data={data}
+                // replyColumns={replyColumns}
+                rowId={row.commentId}
+                courseId={row.courseId}
+                // openModalId={openModalId}
+              />
+            )}
+          </Modal>
         </div>
       ),
     },
@@ -278,7 +440,7 @@ const CommentTap = () => {
 
   return (
     <Card>
-      <div className="react-dataTable user-view-account-projects ">
+      <div className="react-dataTable user-view-account-projects">
         <DataTable
           noHeader
           responsive

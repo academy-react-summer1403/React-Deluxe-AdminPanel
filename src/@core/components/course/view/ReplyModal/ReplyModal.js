@@ -1,6 +1,6 @@
 import DataTable from "react-data-table-component";
-import { ChevronDown } from "react-feather";
-import { Badge, Modal, ModalBody, ModalHeader } from "reactstrap";
+import { ChevronDown, Eye, EyeOff } from "react-feather";
+import { Badge, Modal, ModalBody, ModalHeader, UncontrolledTooltip } from "reactstrap";
 import { useCourseCommentReply } from "../../../../../core/services/api/CourseCommentReply";
 import { DatePersianizer } from "../../../../../utility/utils/DatePersianizer";
 
@@ -46,7 +46,7 @@ export const ReplyModal = (
             <Badge
               color="light-success"
               className="fs-5"
-              style={{ width: "65px", textAlign: "center" }}
+              style={{ width: "auto", textAlign: "center" }}
             >
               تایید شده
             </Badge>
@@ -54,12 +54,44 @@ export const ReplyModal = (
             <Badge
               color="light-danger"
               className="fs-5"
-              style={{ width: "70px", textAlign: "center" }}
+              style={{ width: "auto", textAlign: "center" }}
             >
               تایید نشده
             </Badge>
           );
         },
+      },
+      {
+        name: "اقدامات",
+        center: true,
+        minWidth: "100px",
+        cell: (row) => (
+          <div className="column-action d-flex justify-content-center">
+            <div className="btn btn-sm">
+              {row.acceptReplysCount > 0 ? (
+                <div onClick={() => toggleModal(row.id)}>
+                  <Eye size={17} id={`eye-tooltip-${row.id}`} />
+                  <UncontrolledTooltip
+                    placement="top"
+                    target={`eye-tooltip-${row.id}`}
+                  >
+                    مشاهده پاسخ
+                  </UncontrolledTooltip>
+                </div>
+              ) : (
+                <>
+                  <EyeOff size={17} id={`eye-tooltip-${row.id}`} />
+                  <UncontrolledTooltip
+                    placement="top"
+                    target={`eye-tooltip-${row.id}`}
+                  >
+                    پاسخی نیست
+                  </UncontrolledTooltip>
+                </>
+              )}
+            </div>
+          </div>
+        ),
       },
     ];
     const { data } = useCourseCommentReply(courseId, rowId);

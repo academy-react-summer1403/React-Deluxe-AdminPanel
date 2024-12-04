@@ -16,7 +16,7 @@ import toast from "react-hot-toast";
 import Select from "react-select";
 import { selectThemeColors } from "@utils";
 import { Formik } from "formik";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { useEditUser } from "../../../../../core/services/api/EditUser";
 import { useCourseDetailStudent } from "../../../../../core/services/api/CourseDetailStudent";
@@ -77,6 +77,8 @@ const EditCourseForm = ({ data2, data3 }) => {
   };
 
   const mutation = useEditCourse();
+  const queryClient = useQueryClient();
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -94,6 +96,7 @@ const EditCourseForm = ({ data2, data3 }) => {
     try {
       await mutation.mutateAsync(formData);
       toast.success("    دوره با موفقیت ویرایش شد", { id: userToast });
+      queryClient.invalidateQueries("userdetail")
     } catch (error) {
       toast.error(
         `ویرایش دوره انجام نشد ,
@@ -405,81 +408,6 @@ const EditCourseForm = ({ data2, data3 }) => {
                 onChange={handleInputChange}
               />
             </Col>
-            {/* <div>
-              <Row>
-                <Col md="4" sm="12" className="mb-1 d-flex gap-1">
-                  <Input
-                    type="checkbox"
-                    name="isTecher"
-                    id="isTecher"
-                    // placeholder="استاد"
-                    checked={formValues.isTecher}
-                    onChange={handleInputChange}
-                  />
-                  <Label className="form-label font-medium-2" for="isTecher">
-                    استاد
-                  </Label>
-                </Col>
-                <Col md="4" sm="12" className="mb-1 d-flex gap-1">
-                  <Input
-                    type="checkbox"
-                    name="isStudent"
-                    id="isStudent"
-                    // placeholder="رمز عبور"
-                    checked={formValues.isStudent}
-                    onChange={handleInputChange}
-                  />
-                  <Label className="form-label font-medium-2" for="isStudent">
-                    دانشجو
-                  </Label>
-                </Col>
-              </Row>
-              <Row>
-                <Col md="4" sm="12" className="mb-1 d-flex gap-1">
-                  <Input
-                    type="checkbox"
-                    name="isDelete"
-                    id="isDelete"
-                    // placeholder="رمز عبور"
-                    checked={formValues.isDelete}
-                    onChange={handleInputChange}
-                  />
-                  <Label className="form-label font-medium-2" for="isDelete">
-                    وضعیت دیلیت
-                  </Label>
-                </Col>
-                <Col md="4" sm="12" className="mb-1 d-flex gap-1">
-                  <Input
-                    type="checkbox"
-                    name="twoStepAuth"
-                    id="twoStepAuth"
-                    // placeholder="رمز عبور"
-                    checked={formValues.twoStepAuth}
-                    onChange={handleInputChange}
-                  />
-                  <Label className="form-label font-medium-2" for="twoStepAuth">
-                    ورود دو مرحله ای
-                  </Label>
-                </Col>
-                <Col md="4" sm="12" className="mb-1 d-flex gap-1">
-                  <Input
-                    type="checkbox"
-                    name="receiveMessageEvent"
-                    id="receiveMessageEvent"
-                    // placeholder="رمز عبور"
-                    checked={formValues.receiveMessageEvent}
-                    onChange={handleInputChange}
-                  />
-                  <Label
-                    className="form-label font-medium-2"
-                    for="receiveMessageEvent"
-                  >
-                    دریافت پیام های رویداد
-                  </Label>
-                </Col>
-              </Row>
-            </div> */}
-
             <Col sm="12">
               <div className="d-flex">
                 <Button className="me-1" color="primary" type="submit">

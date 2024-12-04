@@ -1,20 +1,18 @@
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
-import { useDeleteCourse } from "../../../../../core/services/api/DeleteCourse";
-import { useDeleteUser } from "../../../../../core/services/api/DeleteUser";
-import { useDeleteCourseReserve } from "../../../../../core/services/api/DeleteCourseReserve";
+import { useDeleteComment } from "../../../../../core/services/api/DeleteComment";
 import { useQueryClient } from "@tanstack/react-query";
 
-export const useCourseReserveHandleDelete = () => {
+export const useDeleteCommentModal = () => {
   //   console.log(row);
   const queryClient = useQueryClient();
   const MySwal = withReactContent(Swal);
-  const mutation = useDeleteCourseReserve();
+  const mutation = useDeleteComment();
 
-  const CourseReserveHandleDelete = async (Id) => {
+  const DeleteCommentModal = async (commentId) => {
     return MySwal.fire({
       title: "آیا مطمئن هستید؟",
-      text: "رزرو دوره برای همیشه حذف خواهد شد!",
+      text: "بعد از حذف کامنت امکان بازگشت وجود ندارد!",
       icon: "warning",
       showCancelButton: true,
       cancelButtonText: "لغو",
@@ -27,9 +25,7 @@ export const useCourseReserveHandleDelete = () => {
     }).then(async (result) => {
       if (result.value) {
         try {
-          await mutation.mutateAsync({
-            id: Id,
-          });
+          await mutation.mutateAsync({ commentId });
           MySwal.fire({
             icon: "success",
             title: "حذف شد !",
@@ -37,20 +33,20 @@ export const useCourseReserveHandleDelete = () => {
             customClass: {
               confirmButton: "btn btn-success",
             },
+            confirmButtonText: "ایول",
           });
-          queryClient.invalidateQueries("UserDetail");
+          queryClient.invalidateQueries("UserComment");
         } catch (error) {
           console.log(error);
           MySwal.fire({
             icon: "error",
             title: "حذف نشد!",
-            text: error.response.data.ErrorMessage
-              ? `${error.response.data.ErrorMessage}`
-              : "عملیات حذف با خطای تعریف نشده مواجه شد",
+            text: `:عملیات حذف با خطا مواجه شد
+            ${error.response.data.ErrorMessage}
+            `,
             customClass: {
               confirmButton: "btn btn-success",
             },
-            confirmButtonText: "باشه",
           });
         }
       } else if (result.dismiss === MySwal.DismissReason.cancel) {
@@ -66,5 +62,5 @@ export const useCourseReserveHandleDelete = () => {
       }
     });
   };
-  return CourseReserveHandleDelete;
+  return DeleteCommentModal;
 };

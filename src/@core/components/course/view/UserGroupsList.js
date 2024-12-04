@@ -21,7 +21,7 @@ import DataTable from "react-data-table-component";
 // ** Styles
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useParams } from "react-router-dom";
 import { useCourseUser } from "../../../../core/services/api/CourseUser";
 import { Badge } from "reactstrap";
@@ -30,16 +30,79 @@ import { useRef, useState } from "react";
 import { Form } from "reactstrap";
 import toast from "react-hot-toast";
 import { useAddCourseGroup } from "../../../../core/services/api/AddCourseGroup";
-
+import { useDeleteCourseGroup } from "../../../../core/services/api/DeleteCourseGroup";
+import withReactContent from "sweetalert2-react-content";
+import Swal from "sweetalert2";
 
 const UserGroupsList = () => {
+  const MySwal = withReactContent(Swal);
+  const deleteMutation = useDeleteCourseGroup();
+
+  const handleDelete = (Id) => {
+    console.log(Id)
+    const formData = new FormData();
+    formData.append("Id", Id);
+    console.log(formData);
+    MySwal.fire({
+      title: "آیا مطمئن هستید؟",
+      text: "رزرو دوره برای همیشه حذف خواهد شد!",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "لغو",
+      confirmButtonText: "بله",
+      customClass: {
+        confirmButton: "btn btn-primary",
+        cancelButton: "btn btn-outline-danger ms-1",
+      },
+      buttonsStyling: false,
+    }).then(async (result) => {
+      if (result.value) {
+        console.log(formData)
+        try {
+          await deleteMutation.mutateAsync(formData);
+          MySwal.fire({
+            icon: "success",
+            title: "حذف شد !",
+            text: "عملیات با موفقیت انجام شد",
+            customClass: {
+              confirmButton: "btn btn-success",
+            },
+          });
+          queryClient.invalidateQueries("CourseGroups");
+        } catch (error) {
+          console.log(error);
+          MySwal.fire({
+            icon: "error",
+            title: "حذف نشد!",
+            text: error.response.data.ErrorMessage
+              ? `${error.response.data.ErrorMessage}`
+              : "عملیات حذف با خطای تعریف نشده مواجه شد",
+            customClass: {
+              confirmButton: "btn btn-success",
+            },
+            confirmButtonText: "باشه",
+          });
+        }
+      } else if (result.dismiss === MySwal.DismissReason.cancel) {
+        MySwal.fire({
+          title: "لغو",
+          text: "عملیات لغو شد :)",
+          icon: "error",
+          customClass: {
+            confirmButton: "btn btn-success",
+          },
+          confirmButtonText: "باشه",
+        });
+      }
+    });
+  };
+
   const columns = [
     {
       minWidth: "130px",
       name: "نام گروه",
       selector: (row) => row.groupName,
       center: true,
-    
     },
     {
       name: "ظرفیت گروه",
@@ -55,7 +118,6 @@ const UserGroupsList = () => {
       name: "شماره گروه",
       selector: (row) => row.groupId,
       center: true,
-    
     },
     {
       name: "اقدامات",
@@ -64,27 +126,27 @@ const UserGroupsList = () => {
       cell: (row) => {
         return (
           <div className="column-action d-flex">
-            <Link
-              to={`/courseGroupDetail/${row?.groupId}`}
-            
-            > 
-            <div className="btn btn-sm">
-              <FileText
-                className="cursor-pointer "
-                size={17}
-                id={`send-tooltip-${row.id}`}
-              />
-              <UncontrolledTooltip
-             
-                placement="top"
-                target={`send-tooltip-${row.id}`}
-                // className="mb-1"
-              >
-                 جزییات گروه
-              </UncontrolledTooltip>
-            </div></Link>
-           
-            <div className="btn btn-sm" onClick={() => handleDelete(row)}>
+            <Link to={`/courseGroupDetail/${row?.groupId}`}>
+              <div className="btn btn-sm">
+                <FileText
+                  className="cursor-pointer "
+                  size={17}
+                  id={`send-tooltip-${row.id}`}
+                />
+                <UncontrolledTooltip
+                  placement="top"
+                  target={`send-tooltip-${row.id}`}
+                  // className="mb-1"
+                >
+                  جزییات گروه
+                </UncontrolledTooltip>
+              </div>
+            </Link>
+
+            <div
+              className="btn btn-sm"
+              onClick={() => handleDelete(row?.groupId)}
+            >
               <Trash2 size={17} className="" id={`pw-tooltip-${row.id}`} />
               <UncontrolledTooltip
                 placement="top"
@@ -93,43 +155,6 @@ const UserGroupsList = () => {
                 حذف گروه
               </UncontrolledTooltip>
             </div>
-            {/* <UncontrolledDropdown>
-            <DropdownToggle tag="div" className="btn btn-sm">
-              <MoreVertical size={14} className="cursor-pointer" />
-            </DropdownToggle>
-            <DropdownMenu>
-              <DropdownItem
-                tag={Link}
-                className="w-100"
-                to={`/apps/user/view/${row.id}`}
-                // onClick={() => store.dispatch(getUser(row.id))}
-              >
-                <FileText size={14} className="me-50" />
-                <span className="align-middle">Details</span>
-              </DropdownItem>
-              <DropdownItem
-                tag="a"
-                href="/"
-                className="w-100"
-                // onClick={e => e.preventDefault()}
-              >
-                <Archive size={14} className="me-50" />
-                <span className="align-middle">Edit</span>
-              </DropdownItem>
-              <DropdownItem
-                tag="a"
-                href="/"
-                className="w-100"
-                // onClick={e => {
-                //   e.preventDefault()
-                //   store.dispatch(deleteUser(row.id))
-                // }}
-              >
-                <Trash2 size={14} className="me-50" />
-                <span className="align-middle">Delete</span>
-              </DropdownItem>
-            </DropdownMenu>
-          </UncontrolledDropdown> */}
           </div>
         );
       },
@@ -150,6 +175,7 @@ const UserGroupsList = () => {
   console.log(data);
 
   const mutation = useAddCourseGroup();
+  const queryClient = useQueryClient();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -162,6 +188,7 @@ const UserGroupsList = () => {
     try {
       await mutation.mutateAsync(formData);
       toast.success("گروه شما با موفقیت اضافه شد!", { id: blogToast });
+      queryClient.invalidateQueries("CourseGroups");
     } catch (error) {
       toast.error(
         `افزودن گروه شما با خطا مواجه شد:
@@ -173,6 +200,7 @@ const UserGroupsList = () => {
         { id: blogToast }
       );
     }
+
     // {
     //   mutation.isPending ? (blogToast = toast.loading("Adding...")) : "";
     // }
@@ -237,7 +265,6 @@ const UserGroupsList = () => {
               >
                 افزودن
               </Button>
-             
             </Col>
           </Form>
         </ModalBody>

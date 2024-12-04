@@ -66,7 +66,7 @@ const UserTabs = () => {
           <NavItem>
             <NavLink active={active === "4"} onClick={() => toggle("4")}>
               <Share01Icon size={20} />
-              <span className="fw-bold"> سایر اظلاعات کاربر</span>
+              <span className="fw-bold"> سایر اطلاعات کاربر</span>
             </NavLink>
           </NavItem>
           <NavItem>
@@ -75,7 +75,6 @@ const UserTabs = () => {
               <span className="fw-bold">ارتباط با کاربر</span>
             </NavLink>
           </NavItem>
-        
         </Nav>
 
         {/* محتوای تب دوره‌ها */}
@@ -107,7 +106,6 @@ const UserTabs = () => {
           )}
         </div>
       </div>
-    
     </Fragment>
   );
 };
