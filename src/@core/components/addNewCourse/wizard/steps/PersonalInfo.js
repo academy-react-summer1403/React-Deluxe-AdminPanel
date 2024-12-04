@@ -17,22 +17,7 @@ import "@styles/react/libs/react-select/_react-select.scss";
 const PersonalInfo = ({ stepper, type, data, setFinalFormData }) => {
   const formRef = useRef(null);
 
-  // const countryOptions = [
-  //   { value: "UK", label: "UK" },
-  //   { value: "USA", label: "USA" },
-  //   { value: "Spain", label: "Spain" },
-  //   { value: "France", label: "France" },
-  //   { value: "Italy", label: "Italy" },
-  //   { value: "Australia", label: "Australia" },
-  // ];
-
-  // const languageOptions = [
-  //   { value: "English", label: "English" },
-  //   { value: "French", label: "French" },
-  //   { value: "Spanish", label: "Spanish" },
-  //   { value: "Italian", label: "Italian" },
-  //   { value: "Japanese", label: "Japanese" },
-  // ];
+ 
 
   const levelOptions = data?.courseLevelDtos.map((option) => ({
     value: option.id,
@@ -99,14 +84,8 @@ const PersonalInfo = ({ stepper, type, data, setFinalFormData }) => {
               options={typeOptions}
               name={"CourseTypeId"}
               placeholder="انتخاب کنید"
-              // defaultValue={countryOptions[0]}
             />
-            {/* <Input
-              type="text"
-              name="first-name"
-              id={`first-name-${type}`}
-              placeholder=""
-            /> */}
+          
           </Col>
           <Col md="6" className="mb-1">
             <Label className="form-label" for={`last-name-${type}`}>
@@ -121,14 +100,8 @@ const PersonalInfo = ({ stepper, type, data, setFinalFormData }) => {
               options={teacherOptions}
               name={"TeacherId"}
               placeholder="انتخاب کنید"
-              // defaultValue={countryOptions[0]}
             />
-            {/* <Input
-              type="text"
-              name="last-name"
-              id={`last-name-${type}`}
-              placeholder=""
-            /> */}
+    
           </Col>
         </Row>
         <Row>
