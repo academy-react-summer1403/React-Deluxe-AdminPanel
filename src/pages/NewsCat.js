@@ -1,8 +1,9 @@
+import {CourseCategory} from "../@core/components/courseCat/list/Table";
 
 const NewsCat = () => {
   return (
     <div>
-    moz
+    <CourseCategory />
     </div>
   )
 }
