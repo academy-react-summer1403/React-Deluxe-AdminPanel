@@ -69,7 +69,9 @@ import Female from "../../../../assets/images/avatars/Female.png";
 import { useUserHandleDelete } from "./UserHandleDelete/userHandleDelete";
 import AvatarGroup from "@components/avatar-group";
 import NoRole from "../../../../assets/images/icons/NoRole.png";
-
+import Student from "../../../../assets/images/avatars/Student.png"
+import Teacher from "../../../../assets/images/avatars/Teacher.png"
+import Admin from "../../../../assets/images/avatars/Admin.png"
 const UsersList = () => {
   // ** States
   const [sort, setSort] = useState("desc");
@@ -172,28 +174,28 @@ const UsersList = () => {
 
   const handleDelete = useUserHandleDelete();
 
-  const AvatarDATA = [
-    {
-      title: "Vinnie Mostowy",
-      img: Logo,
-    },
-    {
-      title: "Elicia Rieske",
-      img: Logo,
-    },
-    {
-      title: "Julee Rossignol",
-      img: Logo,
-    },
-    {
-      title: "Darcey Nooner",
-      img: Logo,
-    },
-    {
-      title: "Jenny Looper",
-      img: Logo,
-    },
-  ];
+  // const AvatarDATA = [
+  //   {
+  //     title: "Vinnie Mostowy",
+  //     img: Logo,
+  //   },
+  //   {
+  //     title: "Elicia Rieske",
+  //     img: Logo,
+  //   },
+  //   {
+  //     title: "Julee Rossignol",
+  //     img: Logo,
+  //   },
+  //   {
+  //     title: "Darcey Nooner",
+  //     img: Logo,
+  //   },
+  //   {
+  //     title: "Jenny Looper",
+  //     img: Logo,
+  //   },
+  // ];
 
   // const roleAvatars = {
   //   Student: { title: "Student", img: "/path/to/student-avatar.png" },
@@ -227,9 +229,9 @@ const UsersList = () => {
   // };
 
   const roleAvatars = {
-    Student: { title: "دانشجو", img: Logo },
-    Teacher: { title: "استاد", img: Logo },
-    Administrator: { title: "ادمین", img: Logo },
+    Student: { title: "دانشجو", img: Student },
+    Teacher: { title: "استاد", img: Teacher },
+    Administrator: { title: "ادمین", img: Admin },
     // Add other roles here as needed
   };
 
@@ -283,7 +285,7 @@ const UsersList = () => {
               className="user_name text-truncate text-body  p-0"
               to={`/userdetail/${data?.id}`}
             >
-              <span className="fw-bolder">{data?.fname}</span>
+              <span className="fw-bolder">{data?.fname} {data?.lname}</span>
             </Link>
             <small className="text-truncate text-muted mb-0">
               {data?.gmail}

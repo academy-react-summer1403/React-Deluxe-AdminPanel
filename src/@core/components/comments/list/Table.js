@@ -495,10 +495,11 @@ const Comments = () => {
             )}
           </Modal>
           {/* ADD COMMENT MODAL */}
+          {/* DIDNT REQUIRE THE COMPLEX OPENING SYSTEM MADE OF openReplyModalId AND toggleReplyModal CAUSE IT DIDNT HAD ANY API CALLS INSIDE THE MODAL BUT EH HERE WE ARE ¯\_(ツ)_/¯ */}
           <Modal
             isOpen={openReplyModalId === row.commentId}
             toggle={() => toggleReplyModal(row.commentId)}
-            className="modal-dialog-centered modal-xl"
+            className="modal-dialog-centered modal-lg"
           >
             <ModalHeader
               className="bg-transparent"
@@ -506,8 +507,7 @@ const Comments = () => {
             >
               <div className="mb-2">
                 <h1 className="mb-1">
-                  <span className="fs-5">پاسخ ها به کامنت</span>{" "}
-                  {row.commentTitle}
+                  <span className="fs-5">پاسخ به کامنت</span> {row.commentTitle}
                 </h1>
               </div>
             </ModalHeader>
