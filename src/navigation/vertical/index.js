@@ -1,3 +1,4 @@
+import { Menu07Icon, NewsIcon } from "hugeicons-react";
 import {
   BloggerIcon,
   Comment01Icon,
@@ -70,6 +71,24 @@ export default [
         title: "افزودن مقاله جدید",
         icon: <PlusSignCircleIcon size={15} />,
         navLink: "/addblogs",
+      },
+    ],
+  },
+  {
+    id: "newsCategory",
+    title: "دسته بندی ها",
+    icon:   <Menu07Icon
+    size={24} 
+  />,
+    navLink: "/newsCategory",
+    children: [
+      {
+        id: "newsCat",
+        title: "دسته بندی اخبار و مقالات",
+        icon:   <NewsIcon
+        size={14} 
+      />,
+        navLink: "/newsCat",
       },
     ],
   },

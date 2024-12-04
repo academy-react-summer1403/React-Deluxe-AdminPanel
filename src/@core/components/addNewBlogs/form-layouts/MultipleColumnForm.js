@@ -20,10 +20,7 @@ import Select from "react-select";
 import { selectThemeColors } from "./../../../../utility/Utils";
 
 const MultipleColumnForm = () => {
-  // const [formValues, setFormValues] = useState({
-  //   title: "",
-  //   googleTitle: "",
-  // });
+
   const formRef = useRef(null);
 
   const mutation = useAddBlog();
@@ -51,9 +48,6 @@ const MultipleColumnForm = () => {
         { id: blogToast }
       );
     }
-    // {
-    //   mutation.isPending ? (blogToast = toast.loading("Adding...")) : "";
-    // }
   };
 
   const { data } = useAddBlogCategory();
@@ -82,8 +76,7 @@ const MultipleColumnForm = () => {
                 name="Title"
                 id="Title"
                 placeholder="عنوان خبر"
-                // onChange={}
-                // value={}
+             
               />
             </Col>
             <Col md="6" sm="12" className="mb-1">
@@ -133,7 +126,6 @@ const MultipleColumnForm = () => {
                 options={categoryOptions}
                 name={"NewsCatregoryId"}
                 placeholder="انتخاب کنید"
-                // defaultValue={countryOptions[0]}
               />
             </Col>
             <Col md="6" sm="12" className="mb-1">
@@ -164,7 +156,6 @@ const MultipleColumnForm = () => {
                   className="me-1"
                   color="primary"
                   type="submit"
-                  // onClick={(e) => e.preventDefault()}
                 >
                   {mutation.isPending ? "درحال افزودن..." : "افزودن"}
                 </Button>

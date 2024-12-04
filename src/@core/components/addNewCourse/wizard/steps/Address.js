@@ -17,9 +17,7 @@ const Address = ({ stepper, type, finalFormData, setFinalFormData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(formRef.current);
-    // console.log(formData);
-    // setFinalFormData((prevFormData) => {
-    // console.log("prevFormData", prevFormData);
+
     const updatedFormData = new FormData();
 
     for (const [key, value] of finalFormData.entries()) {
@@ -30,8 +28,6 @@ const Address = ({ stepper, type, finalFormData, setFinalFormData }) => {
       updatedFormData.append(key, value);
     }
 
-    // return updatedFormData;
-    // });
     console.log("UpdatedFormData", updatedFormData);
     const courseToast = toast.loading("درحال افزودن دوره شما...");
     try {
