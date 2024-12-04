@@ -4,7 +4,7 @@ import { Badge, Modal, ModalBody, ModalHeader } from "reactstrap";
 import { useCourseCommentReply } from "../../../../../core/services/api/CourseCommentReply";
 import { DatePersianizer } from "../../../../../utility/utils/DatePersianizer";
 
-export const ReplyModal = (
+export const AddModal = (
   //   toggleModal,
   //   data,
   //   replyColumns,
@@ -65,7 +65,7 @@ export const ReplyModal = (
     const { data } = useCourseCommentReply(courseId, rowId);
     return (
       <ModalBody className="pb-5 px-sm-5 mx-50">
-        <div className="react-dataTable user-view-account-projects ">
+        {/* <div className="react-dataTable user-view-account-projects ">
           <DataTable
             noHeader
             responsive
@@ -74,7 +74,8 @@ export const ReplyModal = (
             className="react-dataTable"
             sortIcon={<ChevronDown size={10} />}
           />
-        </div>
+        </div> */}
+        
       </ModalBody>
     );
   };

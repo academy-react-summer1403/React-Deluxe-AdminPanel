@@ -63,6 +63,7 @@ import Swal from "sweetalert2";
 import { useActiveDeactiveCourse } from "../../../../core/services/api/ActiveDeactiveCourse";
 import { useActiveDeactiveBlog } from "../../../../core/services/api/ActiveDeactiveBlogs";
 import { CancelCircleIcon, CheckmarkCircle02Icon } from "hugeicons-react";
+import { useQueryClient } from "@tanstack/react-query";
 const UsersList = () => {
   // ** States
   const [sort, setSort] = useState("desc");
@@ -295,6 +296,8 @@ const UsersList = () => {
 
   const mutationActivation = useActiveDeactiveBlog();
 
+  const queryClient = useQueryClient();
+
   const handleActication = async (row) => {
     const formData = new FormData();
     formData.append("Active", !row.isActive);
@@ -316,17 +319,34 @@ const UsersList = () => {
       if (result.value) {
         try {
           await mutationActivation.mutateAsync(formData);
+          MySwal.fire({
+            icon: "success",
+            title: row?.isActive ? "غیرفعال سازی" : "فعال سازی",
+            text: "عملیات با موفقیت انجام شد",
+            customClass: {
+              confirmButton: "btn btn-success",
+            },
+          });
+          queryClient.invalidateQueries("Blogs");
         } catch (error) {
           console.log(error);
+          MySwal.fire({
+            icon: "error",
+            title: "حذف نشد !",
+            text: "عملیات با موفقیت انجام نشد",
+            customClass: {
+              confirmButton: "btn btn-success",
+            },
+          });
         }
-        MySwal.fire({
-          icon: "success",
-          title: "حذف شد !",
-          text: "عملیات با موفقیت انجام شد",
-          customClass: {
-            confirmButton: "btn btn-success",
-          },
-        });
+        // MySwal.fire({
+        //   icon: "success",
+        //   title: "حذف شد !",
+        //   text: "عملیات با موفقیت انجام شد",
+        //   customClass: {
+        //     confirmButton: "btn btn-success",
+        //   },
+        // });
       } else if (result.dismiss === MySwal.DismissReason.cancel) {
         MySwal.fire({
           title: "عملیات لغو شد!",
@@ -342,7 +362,7 @@ const UsersList = () => {
 
   const column = [
     {
-      name: "نویسنده",
+      name: "عنوان خبر",
       sortable: true,
       // center: true,
       maxWidth: "200px",
@@ -350,17 +370,22 @@ const UsersList = () => {
       // selector: (data) => data?.fullName,
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1 px-1">
-          <Avatar img={data.currentImageAddressTumb !== null &&
-                  data.currentImageAddressTumb !== "Not-set" &&
-                  data.currentImageAddressTumb.includes("http")
-                    ? data.currentImageAddressTumb : Logo} />
+          <Avatar
+            img={
+              data.currentImageAddressTumb !== null &&
+              data.currentImageAddressTumb !== "Not-set" &&
+              data.currentImageAddressTumb.includes("http")
+                ? data.currentImageAddressTumb
+                : Logo
+            }
+          />
           {/* {renderClient(row)} */}
           <div className="d-flex flex-column ">
             <Link
               className="user_name text-truncate text-body p-0"
               to={`/blogsDetail/${data?.id}`}
             >
-              <span className="fw-bolder">{data?.addUserFullName}</span>
+              <span className="fw-bolder">{data?.title}</span>
             </Link>
           </div>
         </div>
@@ -368,12 +393,12 @@ const UsersList = () => {
     },
 
     {
-      name: "عنوان خبر",
+      name: "نویسنده",
       sortable: true,
       center: true,
       maxWidth: "300px",
       sortField: "role",
-      selector: (row) => row.title,
+      selector: (row) => row.addUserFullName,
     },
     {
       name: "توضیحات خبر",
@@ -385,7 +410,7 @@ const UsersList = () => {
     {
       name: " وضعیت",
       sortable: true,
-      maxWidth: "40px",
+      maxWidth: "120px",
       sortField: "role",
       selector: (row) =>
         row.isActive ? (

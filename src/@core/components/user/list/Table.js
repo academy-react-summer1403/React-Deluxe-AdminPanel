@@ -67,6 +67,8 @@ import { Link } from "react-router-dom";
 import Male from "../../../../assets/images/avatars/Male.png";
 import Female from "../../../../assets/images/avatars/Female.png";
 import { useUserHandleDelete } from "./UserHandleDelete/userHandleDelete";
+import AvatarGroup from "@components/avatar-group";
+import NoRole from "../../../../assets/images/icons/NoRole.png";
 
 const UsersList = () => {
   // ** States
@@ -170,6 +172,83 @@ const UsersList = () => {
 
   const handleDelete = useUserHandleDelete();
 
+  const AvatarDATA = [
+    {
+      title: "Vinnie Mostowy",
+      img: Logo,
+    },
+    {
+      title: "Elicia Rieske",
+      img: Logo,
+    },
+    {
+      title: "Julee Rossignol",
+      img: Logo,
+    },
+    {
+      title: "Darcey Nooner",
+      img: Logo,
+    },
+    {
+      title: "Jenny Looper",
+      img: Logo,
+    },
+  ];
+
+  // const roleAvatars = {
+  //   Student: { title: "Student", img: "/path/to/student-avatar.png" },
+  //   Teacher: { title: "Teacher", img: "/path/to/teacher-avatar.png" },
+  //   Administrator: { title: "Administrator", img: "/path/to/admin-avatar.png" },
+  // };
+
+  // const AvatarGroupComponent = ({ userRoles }) => {
+  //   // Convert string to an array
+  //   const rolesArray = userRoles
+  //     ? userRoles.split(", ").map((role) => role.trim())
+  //     : [];
+
+  //   // Generate avatar data based on roles
+  //   const avatarData = rolesArray
+  //     .filter((role) => roleAvatars[role])
+  //     .map((role) => ({
+  //       title: roleAvatars[role].title,
+  //       img: roleAvatars[role].img,
+  //     }));
+
+  //   return (
+  //     <AvatarGroup>
+  //       {avatarData.map((avatar, index) => (
+  //         <Tooltip key={index} title={avatar.title}>
+  //           <Avatar src={avatar.img} alt={avatar.title} />
+  //         </Tooltip>
+  //       ))}
+  //     </AvatarGroup>
+  //   );
+  // };
+
+  const roleAvatars = {
+    Student: { title: "دانشجو", img: Logo },
+    Teacher: { title: "استاد", img: Logo },
+    Administrator: { title: "ادمین", img: Logo },
+    // Add other roles here as needed
+  };
+
+  // const dynamicAvatars = row.userRoles
+  //   ? row.userRoles
+  //       .split(", ")
+  //       .map((role) => role.trim()) // Split roles into an array
+  //       .filter((role) => roleAvatars[role]) // Keep only roles with defined avatars
+  //       .map((role) => ({
+  //         title: roleAvatars[role].title,
+  //         img: roleAvatars[role].img,
+  //       }))
+  //   : [
+  //       {
+  //         title: "No Role Assigned",
+  //         img: Logo, // Placeholder for null roles
+  //       },
+  //     ];
+
   const column = [
     {
       name: "نام کاربر",
@@ -229,7 +308,56 @@ const UsersList = () => {
               to={`/userdetail/${data?.id}`}
               className="user_name text-truncate text-body p-1"
             >
-              <span className="fw-bolder">
+              {/* <AvatarGroup
+                data={
+                  [
+                    // row.userRoles == null && {
+                    //   title: "KIIIIIIIIIIIIIIIIIIIII",
+                    //   img: Logo,
+                    // },
+                    // row.userRoles.includes("Student") && {
+                    //   title: "KIIIIIIIIIIIIIIIIIIIII",
+                    //   img: Logo,
+                    // },
+                    // {
+                    //   title: "Elicia Rieske",
+                    //   img: Logo,
+                    // },
+                    // {
+                    //   title: "Julee Rossignol",
+                    //   img: Logo,
+                    // },
+                    // {
+                    //   title: "Darcey Nooner",
+                    //   img: Logo,
+                    // },
+                    // {
+                    //   title: "Jenny Looper",
+                    //   img: Logo,
+                    // },
+                  ]
+                }
+              /> */}
+              <AvatarGroup
+                data={
+                  row.userRoles
+                    ? row.userRoles
+                        .split(", ")
+                        .map((role) => role.trim()) // Split roles into an array
+                        .filter((role) => roleAvatars[role]) // Keep only roles with defined avatars
+                        .map((role) => ({
+                          title: roleAvatars[role].title,
+                          img: roleAvatars[role].img,
+                        }))
+                    : [
+                        {
+                          title: "نقشی ندارد",
+                          img: NoRole, // Placeholder for null roles
+                        },
+                      ]
+                }
+              />
+              {/* <span className="fw-bolder">
                 {row.userRoles == "Teacher" ? (
                   <>
                     <svg
@@ -312,7 +440,7 @@ const UsersList = () => {
                     نقشی ندارد
                   </>
                 )}
-              </span>
+              </span> */}
             </Link>
           </div>
         </div>

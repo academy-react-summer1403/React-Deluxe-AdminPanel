@@ -28,6 +28,8 @@ import {
   MoreVertical,
   Trash2,
   Archive,
+  EyeOff,
+  Eye,
 } from "react-feather";
 
 // ** Utils
@@ -49,6 +51,9 @@ import {
   DropdownToggle,
   UncontrolledDropdown,
   Badge,
+  UncontrolledTooltip,
+  ModalHeader,
+  Modal,
 } from "reactstrap";
 
 // ** Styles
@@ -56,6 +61,19 @@ import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { Link } from "react-router-dom";
 import { useComments } from "../../../../core/services/api/Comments";
+import { ReplyModal } from "../../course/view/ReplyModal/ReplyModal";
+import {
+  AddCircleHalfDotIcon,
+  CancelCircleIcon,
+  CheckmarkCircle02Icon,
+  Delete01Icon,
+} from "hugeicons-react";
+import toast from "react-hot-toast";
+import { useAcceptComment } from "../../../../core/services/api/AcceptComment";
+import { useRejectComment } from "../../../../core/services/api/RejectComment";
+import { useQueryClient } from "@tanstack/react-query";
+import { useDeleteCommentModal } from "../../user/view/DeleteCommentModal/DeleteCommentModal";
+import { AddModal } from "./AddModal/AddModal";
 
 const Comments = () => {
   // ** States
@@ -177,46 +195,112 @@ const Comments = () => {
     setSortColumn(column.sortField);
   };
 
+  const [openModalId, setOpenModalId] = useState(null); // Track which modal is open
+
+  const toggleModal = (id) => {
+    setOpenModalId((prevId) => (prevId === id ? null : id));
+  };
+
+  const [openReplyModalId, setOpenReplyModalId] = useState(null); // Track which modal is open
+
+  const toggleReplyModal = (id) => {
+    setOpenReplyModalId((prevId) => (prevId === id ? null : id));
+  };
+
+  const queryClient = useQueryClient();
+
+  const mutation = useAcceptComment();
+
+  const handleAccept = async (commentId) => {
+    const userToast = toast.loading("درحال تایید کامنت");
+    try {
+      await mutation.mutateAsync(commentId);
+      toast.success("تایید کامنت با موفقیت شد!", { id: userToast });
+      queryClient.invalidateQueries("UserComment");
+    } catch (error) {
+      toast.error(
+        `تایید کامنت با مشکل مواجه شد:,
+        ${
+          error.response.data.ErrorMessage
+            ? error.response.data.ErrorMessage
+            : "خطای تعریف نشده"
+        }`,
+        { id: userToast }
+      );
+      console.log(error);
+    }
+  };
+
+  const rejectMutation = useRejectComment();
+
+  const handleReject = async (commentId) => {
+    const userToast = toast.loading("درحال رد کردن کامنت");
+    try {
+      await rejectMutation.mutateAsync(commentId);
+      toast.success("رد کردن کامنت با موفقیت شد!", { id: userToast });
+      queryClient.invalidateQueries("UserComment");
+    } catch (error) {
+      toast.error(
+        `رد کردن کامنت با مشکل مواجه شد:,
+        ${
+          error.response.data.ErrorMessage
+            ? error.response.data.ErrorMessage
+            : "خطای تعریف نشده"
+        }`,
+        { id: userToast }
+      );
+      console.log(error);
+    }
+  };
+
+  const handleDelete = useDeleteCommentModal();
+
   const column = [
     {
-      name: " کاربر",
+      name: "کاربر",
       sortable: true,
-      minWidth: "300px",
+      minWidth: "190px",
       sortField: "title",
       // selector: (data) => data?.fullName,
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
           <Avatar img={Logo} />
           <div className="d-flex flex-column">
-            <Link className="user_name text-truncate text-body  p-0">
+            <Link
+              className="user_name text-truncate text-body p-0"
+              style={{ width: "180px" }}
+            >
               <span className="fw-bolder">{data?.userFullName}</span>
             </Link>
           </div>
         </div>
       ),
     },
-
     {
       name: "  نام دوره",
-      sortable: true,
       minWidth: "172px",
-      center:true,
+      center: true,
       sortField: "typeName",
       selector: (row) => row.courseTitle,
       // cell: row => renderRole(row)
     },
     {
-      name: "نمایش کامنت",
-      sortable: true,
-      center:true,
+      name: "عنوان کامنت",
+      center: true,
+      minWidth: "172px",
+      sortField: "role",
+      selector: (row) => row.commentTitle,
+    },
+    {
+      name: "توضیحات کامنت",
+      center: true,
       minWidth: "172px",
       sortField: "role",
       selector: (row) => row.describe,
-      // cell: row => renderRole(row)
     },
     {
       name: "وضعیت",
-      center:true,
+      center: true,
       sortable: true,
       minWidth: "172px",
       sortField: "accept",
@@ -247,11 +331,101 @@ const Comments = () => {
     },
     {
       name: "اقدامات",
-      center:true,
+      center: true,
       minWidth: "100px",
       cell: (row) => (
-        <div className="column-action">
-          <UncontrolledDropdown>
+        <div className="column-action d-flex justify-content-center">
+          <div className="btn btn-sm">
+            {row.replyCount > 0 ? (
+              <div onClick={() => toggleModal(row.commentId)}>
+                <Eye size={17} id={`eye-tooltip-${row.commentId}`} />
+                <UncontrolledTooltip
+                  placement="top"
+                  target={`eye-tooltip-${row.commentId}`}
+                >
+                  مشاهده پاسخ
+                </UncontrolledTooltip>
+              </div>
+            ) : (
+              <>
+                <EyeOff size={17} id={`eye-tooltip-${row.commentId}`} />
+                <UncontrolledTooltip
+                  placement="top"
+                  target={`eye-tooltip-${row.commentId}`}
+                >
+                  پاسخی نیست
+                </UncontrolledTooltip>
+              </>
+            )}
+          </div>
+          <div className="column-action d-flex">
+            <div
+              className="btn btn-sm"
+              onClick={() => toggleReplyModal(row.commentId)}
+            >
+              <AddCircleHalfDotIcon
+                size={20}
+                color={"#0075ff"}
+                id={"AddComment"}
+              />
+              <UncontrolledTooltip
+                placement="top"
+                target={`AddComment`}
+                // className="mb-1"
+              >
+                پاسخ
+              </UncontrolledTooltip>
+            </div>
+          </div>
+          <div className="column-action d-flex">
+            {!row.accept ? (
+              <div
+                className="btn btn-sm"
+                onClick={() => handleAccept(row.commentId)}
+              >
+                <CheckmarkCircle02Icon
+                  color={"#00cf13"}
+                  size={20}
+                  id={"AcceptComment"}
+                />
+                <UncontrolledTooltip
+                  placement="top"
+                  target={`AcceptComment`}
+                  // className="mb-1"
+                >
+                  تایید
+                </UncontrolledTooltip>
+              </div>
+            ) : (
+              <div
+                className="btn btn-sm"
+                onClick={() => handleReject(row.commentId)}
+              >
+                <CancelCircleIcon
+                  color={"#ffc300"}
+                  size={20}
+                  id={"RejectComment"}
+                />
+                <UncontrolledTooltip
+                  placement="top"
+                  target={`RejectComment`}
+                  // className="mb-1"
+                >
+                  رد کردن
+                </UncontrolledTooltip>
+              </div>
+            )}
+            <div
+              className="btn btn-sm"
+              onClick={() => handleDelete(row.commentId)}
+            >
+              <Delete01Icon color={"#ff0000"} size={18} id={"CancelComment"} />
+              <UncontrolledTooltip placement="top" target={`CancelComment`}>
+                حذف
+              </UncontrolledTooltip>
+            </div>
+          </div>
+          {/* <UncontrolledDropdown>
             <DropdownToggle tag="div" className="btn btn-sm">
               <MoreVertical size={14} className="cursor-pointer" />
             </DropdownToggle>
@@ -291,7 +465,63 @@ const Comments = () => {
                 <span className="align-middle">پاسخ</span>
               </DropdownItem>
             </DropdownMenu>
-          </UncontrolledDropdown>
+          </UncontrolledDropdown> */}
+          {/* REPLY COMMENT MODAL */}
+          <Modal
+            isOpen={openModalId === row.commentId}
+            toggle={() => toggleModal(row.commentId)}
+            className="modal-dialog-centered modal-xl"
+          >
+            <ModalHeader
+              className="bg-transparent"
+              toggle={() => toggleModal(row.commentId)}
+            >
+              <div className="mb-2">
+                <h1 className="mb-1">
+                  <span className="fs-5">پاسخ ها به کامنت</span>{" "}
+                  {row.commentTitle}
+                </h1>
+              </div>
+            </ModalHeader>
+            {openModalId === row.commentId && (
+              <ReplyModal
+                // toggleModal={(value) => toggleModal(value)}
+                // data={data}
+                // replyColumns={replyColumns}
+                rowId={row.commentId}
+                courseId={row.courseId}
+                // openModalId={openModalId}
+              />
+            )}
+          </Modal>
+          {/* ADD COMMENT MODAL */}
+          <Modal
+            isOpen={openReplyModalId === row.commentId}
+            toggle={() => toggleReplyModal(row.commentId)}
+            className="modal-dialog-centered modal-xl"
+          >
+            <ModalHeader
+              className="bg-transparent"
+              toggle={() => toggleReplyModal(row.commentId)}
+            >
+              <div className="mb-2">
+                <h1 className="mb-1">
+                  <span className="fs-5">پاسخ ها به کامنت</span>{" "}
+                  {row.commentTitle}
+                </h1>
+              </div>
+            </ModalHeader>
+            {openReplyModalId === row.commentId && (
+              <AddModal
+                // toggleModal={(value) => toggleModal(value)}
+                // data={data}
+                // replyColumns={replyColumns}
+                rowId={row.commentId}
+                courseId={row.courseId}
+                // openModalId={openModalId}
+              />
+            )}
+          </Modal>
         </div>
       ),
     },
@@ -426,7 +656,6 @@ const Comments = () => {
         <div className="react-dataTable">
           <DataTable
             noHeader
-            
             pagination
             responsive
             paginationServer

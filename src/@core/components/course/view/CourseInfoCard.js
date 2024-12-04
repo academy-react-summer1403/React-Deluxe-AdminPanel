@@ -26,7 +26,12 @@ import { Check, Briefcase, X, Users, Bookmark } from "react-feather";
 import { useForm, Controller } from "react-hook-form";
 import withReactContent from "sweetalert2-react-content";
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
-import { Mutation, QueryClient, useQuery } from "@tanstack/react-query";
+import {
+  Mutation,
+  QueryClient,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 // ** Custom Components
 import Avatar from "@components/avatar";
@@ -157,28 +162,34 @@ const CourseInfoCard = () => {
   //     }
   //   });
   // };
-  const handleDelete = usehandleDelete();
-
-  const mutation = useActiveDeactiveCourse();
-
-  const handleActiveDeactive = async () => {
-    const queryClient = new QueryClient();
-    try {
-      await mutation.mutateAsync(data);
-      toast.success("hsduifhhfh");
-      queryClient.invalidateQueries("userdetail");
-      // queryClient.fetchQuery(["userdetail"]);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   const { id } = useParams();
 
   getQuery("userdetail", `/Course/${id}`);
   const { data, isError, isLoading } = useQuery({
     queryKey: ["userdetail"],
   });
+  const handleDelete = usehandleDelete();
+
+  const mutation = useActiveDeactiveCourse();
+
+  // const queryClient = new QueryClient();
+  const queryClient = useQueryClient();
+
+  const handleActiveDeactive = async () => {
+    const userToast = toast.loading(
+      data.isActive ? "در حال غیرفعال کردن دوره" : "در حال فعال کردن دوره"
+    );
+    try {
+      await mutation.mutateAsync(data);
+      toast.success(data.isActive ? "دوره غیرفعال شد!" : "دوره فعال شد!", {
+        id: userToast,
+      });
+      queryClient.invalidateQueries("userdetail");
+      // queryClient.fetchQuery(["userdetail"]);
+    } catch (error) {
+      toast.error(`عملیات با مشکل مواجه شد`, { id: userToast });
+    }
+  };
 
   const { data: data2 } = useCourseDetailStudent(data?.courseId);
   console.log("data2", data2);
@@ -336,14 +347,25 @@ const CourseInfoCard = () => {
             <Button color="primary" onClick={() => setShow(true)}>
               ویرایش
             </Button>
-            <Button
-              className="ms-1"
-              color="danger"
-              outline
-              onClick={() => handleActiveDeactive(data)}
-            >
-              غیرفعال کردن
-            </Button>
+            {data.isActive ? (
+              <Button
+                className="ms-1"
+                color="danger"
+                outline
+                onClick={() => handleActiveDeactive(data)}
+              >
+                غیرفعال کردن
+              </Button>
+            ) : (
+              <Button
+                className="ms-1"
+                color="success"
+                outline
+                onClick={() => handleActiveDeactive(data)}
+              >
+                فعال کردن
+              </Button>
+            )}
           </div>
         </CardBody>
       </Card>

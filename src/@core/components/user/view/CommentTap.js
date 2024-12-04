@@ -44,7 +44,7 @@ import {
 } from "react-feather";
 
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import DataTable from "react-data-table-component";
 import { useUserComment } from "../../../../core/services/api/UserComment";
 import { useAcceptComment } from "../../../../core/services/api/AcceptComment";
@@ -105,6 +105,8 @@ const CommentTap = () => {
     formState: { errors },
   } = useForm({ defaultValues, resolver: yupResolver(SignupSchema) });
 
+  const queryClient = useQueryClient();
+
   const onSubmit = (data) => {
     trigger();
     console.log(data);
@@ -128,6 +130,7 @@ const CommentTap = () => {
     try {
       await mutation.mutateAsync(commentId);
       toast.success("تایید کامنت با موفقیت شد!", { id: userToast });
+      queryClient.invalidateQueries("UserComment");
     } catch (error) {
       toast.error(
         `تایید کامنت با مشکل مواجه شد:,
@@ -308,7 +311,7 @@ const CommentTap = () => {
 
   return (
     <Card>
-      <div className="react-dataTable user-view-account-projects ">
+      <div className="react-dataTable user-view-account-projects">
         <DataTable
           noHeader
           responsive

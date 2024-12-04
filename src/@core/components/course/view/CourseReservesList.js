@@ -1,8 +1,8 @@
 // ** Reactstrap Imports
-import { Card, CardHeader, Progress } from "reactstrap";
+import { Card, CardHeader, Modal, ModalBody, ModalHeader, Progress, UncontrolledTooltip } from "reactstrap";
 
 // ** Third Party Components
-import { ChevronDown } from "react-feather";
+import { ChevronDown, FileText } from "react-feather";
 import DataTable from "react-data-table-component";
 import Logo from "@src/assets/images/logo/reactdeluxe.png";
 
@@ -20,11 +20,15 @@ import sketchLabel from "@src/assets/images/icons/brands/sketch-label.png";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useCourseUser } from "../../../../core/services/api/CourseUser";
 import { Badge } from "reactstrap";
 import { useCourseReserveWithCourseId } from "../../../../core/services/api/CourseReserveWithCourseId";
 import { DatePersianizer } from "./../../../../utility/utils/DatePersianizer";
+import { useState } from "react";
+import { CancelCircleIcon, CheckmarkCircle02Icon } from "hugeicons-react";
+import { ReserveGroupForm } from "../../user/view/ReserveGroupForm/ReserveGroupForm";
+import { useCourseReserveHandleDelete } from "../list/CourseReserveHandleDelete/CourseReserveHandleDelete";
 
 // const projectsArr = [
 //   {
@@ -162,7 +166,89 @@ const CourseReservesList = () => {
         );
       },
     },
+    {
+      name: "اقدامات",
+      minWidth: "100px",
+      center: true,
+      cell: (row) => (
+        <div className="column-action d-flex">
+          <Link to={`/userDetail/${row.studentId}`}>
+            <div className="btn btn-sm">
+              <FileText
+                className="cursor-pointer"
+                size={17}
+                id={`send-tooltip-${row.id}`}
+              />
+              <UncontrolledTooltip
+                placement="top"
+                target={`send-tooltip-${row.id}`}
+                // className="mb-1"
+              >
+                جزییات دانشجو
+              </UncontrolledTooltip>
+            </div>
+          </Link>
+          {!row?.accept && (
+            <>
+              <div
+                className="btn btn-sm"
+                onClick={() => toggleModal(row?.reserveId)}
+              >
+                <CheckmarkCircle02Icon
+                  color={"#00cf13"}
+                  size={20}
+                  id={"Accept"}
+                />
+                <UncontrolledTooltip placement="top" target={"Accept"}>
+                  تایید رزرو دوره
+                </UncontrolledTooltip>
+              </div>
+              <div
+                className="btn btn-sm"
+                onClick={() => handleDelete(row?.reserveId)}
+              >
+                <CancelCircleIcon color={"#ff0000"} size={20} id={"Cancel"} />
+                <UncontrolledTooltip placement="top" target={"Cancel"}>
+                  حذف رزرو دوره
+                </UncontrolledTooltip>
+              </div>
+              <Modal
+                isOpen={openModalId === row?.reserveId}
+                toggle={() => toggleModal(row?.reserveId)}
+                className="modal-dialog-centered modal-lg"
+              >
+                <ModalHeader
+                  className="bg-transparent text-center fs-8 mt-2" style={{marginRight:"330px"}}
+                  toggle={() => toggleModal(row?.reserveId)}
+                >
+                  گروه دوره را انتخاب کنید!
+                </ModalHeader>
+                <ModalBody className="px-sm-5 pt-50 pb-5">
+                  {openModalId === row?.reserveId && (
+                    <ReserveGroupForm
+                      row={row}
+                      setGroupId={setGroupId}
+                      groupId={groupId}
+                    />
+                  )}
+                </ModalBody>
+              </Modal>
+            </>
+          )}
+        </div>
+      ),
+    },
   ];
+
+  const [groupId, setGroupId] = useState();
+  console.log(groupId);
+  const [openModalId, setOpenModalId] = useState(null); // Track which modal is open
+
+  const toggleModal = (id) => {
+    setOpenModalId((prevId) => (prevId === id ? null : id));
+  };
+
+  const handleDelete = useCourseReserveHandleDelete();
 
   const { id } = useParams();
 

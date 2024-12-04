@@ -147,7 +147,7 @@ const Connections = () => {
           <Badge
             color="light-success"
             className="fs-5"
-            style={{ width: "80px", textAlign: "center" }}
+            style={{ width: "auto", textAlign: "center" }}
           >
             پرداخت شده
           </Badge>
@@ -155,7 +155,7 @@ const Connections = () => {
           <Badge
             color="light-danger"
             className="fs-5"
-            style={{ width: "80px", textAlign: "center" }}
+            style={{ width: "auto", textAlign: "center" }}
           >
             پرداخت نشده
           </Badge>

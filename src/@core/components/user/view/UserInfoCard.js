@@ -28,6 +28,7 @@ import { EditUserForm } from "./EditUserModal/EditUserForm";
 import Avatar from "@components/avatar";
 import Male from "../../../../assets/images/avatars/Male.png";
 import Female from "../../../../assets/images/avatars/Female.png";
+import { useDeleteUser } from "../../../../core/services/api/DeleteUser";
 
 const roleColors = {
   editor: "light-info",
@@ -71,7 +72,9 @@ const UserInfoCard = () => {
   // ** State
   const [show, setShow] = useState(false);
 
-  const handleSuspendedClick = () => {
+  const mutation = useDeleteUser();
+
+  const handleSuspendedClick = async (userId) => {
     return MySwal.fire({
       title: "آیا مطمئن هستید؟",
       text: "البته امکان لغو نیز وجود دارد",
@@ -84,16 +87,34 @@ const UserInfoCard = () => {
         cancelButton: "btn btn-outline-danger ms-1",
       },
       buttonsStyling: false,
-    }).then(function (result) {
+    }).then(async (result) => {
       if (result.value) {
-        MySwal.fire({
-          icon: "success",
-          title: "غیر فعال شد",
-          text: "عملیات با موفقیت انجام شد !",
-          customClass: {
-            confirmButton: "btn btn-success",
-          },
-        });
+        try {
+          await mutation.mutateAsync({
+            userId: userId,
+          });
+          MySwal.fire({
+            icon: "success",
+            title: "حذف شد !",
+            text: "عملیات با موفقیت انجام شد",
+            customClass: {
+              confirmButton: "btn btn-success",
+            },
+          });
+        } catch (error) {
+          console.log(error);
+          MySwal.fire({
+            icon: "error",
+            title: "حذف نشد!",
+            text: error.response.data.ErrorMessage
+              ? `${error.response.data.ErrorMessage}`
+              : "عملیات حذف با خطای تعریف نشده مواجه شد",
+            customClass: {
+              confirmButton: "btn btn-success",
+            },
+            confirmButtonText: "باشه",
+          });
+        }
       } else if (result.dismiss === MySwal.DismissReason.cancel) {
         MySwal.fire({
           title: "لغو شد",
@@ -226,7 +247,7 @@ const UserInfoCard = () => {
               className="ms-1"
               color="danger"
               outline
-              onClick={handleSuspendedClick}
+              onClick={() => handleSuspendedClick(data.id)}
             >
               غیرفعال کردن
             </Button>

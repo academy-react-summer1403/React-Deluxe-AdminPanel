@@ -1,4 +1,20 @@
-import { Mail, Home, Airplay, Circle , User, Book, BookOpen } from "react-feather";
+import {
+  BloggerIcon,
+  Comment01Icon,
+  ListViewIcon,
+  Mortarboard01Icon,
+  PlusSignCircleIcon,
+  UserListIcon,
+} from "hugeicons-react";
+import {
+  Mail,
+  Home,
+  Airplay,
+  Circle,
+  User,
+  Book,
+  BookOpen,
+} from "react-feather";
 
 export default [
   {
@@ -16,24 +32,24 @@ export default [
   {
     id: "courseManage",
     title: "مدیریت دوره ها",
-    icon: <Book size={20} />,
+    icon: <Mortarboard01Icon size={20} />,
     children: [
       {
         id: "courses",
         title: "لیست دوره ها",
-        icon: <Circle size={12} />,
+        icon: <ListViewIcon size={15} />,
         navLink: "/courseManage",
       },
       {
         id: "courseGroups",
         title: "لیست گروه دوره ها",
-        icon: <Circle size={12} />,
+        icon: <UserListIcon size={15} />,
         navLink: "/courseGroupManage",
       },
       {
         id: "addCourse",
         title: "افزودن دوره جدید",
-        icon: <Circle size={12} />,
+        icon: <PlusSignCircleIcon size={15} />,
         navLink: "/addcourse",
       },
     ],
@@ -41,18 +57,18 @@ export default [
   {
     id: "blogsManage",
     title: "مدیریت مقالات",
-    icon: <Book size={20} />,
+    icon: <BloggerIcon size={20} />,
     children: [
       {
         id: "blogs",
         title: "لیست مقالات",
-        icon: <Circle size={12} />,
+        icon: <ListViewIcon size={15} />,
         navLink: "/blogsManage",
       },
       {
         id: "addBlogs",
         title: "افزودن مقاله جدید",
-        icon: <Circle size={12} />,
+        icon: <PlusSignCircleIcon size={15} />,
         navLink: "/addblogs",
       },
     ],
@@ -60,7 +76,7 @@ export default [
   {
     id: "comments",
     title: "مدیریت کامنت ها",
-    icon: <BookOpen size={20} />,
+    icon: <Comment01Icon size={20} />,
     navLink: "/comments",
   },
 ];

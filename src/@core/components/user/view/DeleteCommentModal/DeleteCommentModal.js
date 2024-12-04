@@ -1,9 +1,11 @@
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
 import { useDeleteComment } from "../../../../../core/services/api/DeleteComment";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const useDeleteCommentModal = () => {
   //   console.log(row);
+  const queryClient = useQueryClient();
   const MySwal = withReactContent(Swal);
   const mutation = useDeleteComment();
 
@@ -33,6 +35,7 @@ export const useDeleteCommentModal = () => {
             },
             confirmButtonText: "ایول",
           });
+          queryClient.invalidateQueries("UserComment");
         } catch (error) {
           console.log(error);
           MySwal.fire({

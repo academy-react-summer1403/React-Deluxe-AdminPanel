@@ -3,9 +3,11 @@ import withReactContent from "sweetalert2-react-content";
 import { useDeleteCourse } from "../../../../../core/services/api/DeleteCourse";
 import { useDeleteUser } from "../../../../../core/services/api/DeleteUser";
 import { useDeleteCourseReserve } from "../../../../../core/services/api/DeleteCourseReserve";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const useCourseReserveHandleDelete = () => {
   //   console.log(row);
+  const queryClient = useQueryClient();
   const MySwal = withReactContent(Swal);
   const mutation = useDeleteCourseReserve();
 
@@ -36,6 +38,7 @@ export const useCourseReserveHandleDelete = () => {
               confirmButton: "btn btn-success",
             },
           });
+          queryClient.invalidateQueries("UserDetail");
         } catch (error) {
           console.log(error);
           MySwal.fire({

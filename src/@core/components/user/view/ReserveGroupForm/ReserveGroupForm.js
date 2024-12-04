@@ -16,7 +16,7 @@ import toast from "react-hot-toast";
 import Select from "react-select";
 import { selectThemeColors } from "@utils";
 import { Formik } from "formik";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { useEditUser } from "../../../../../core/services/api/EditUser";
 import { getQuery } from "../../../../../core/services/api/ReactQuery/getQuery";
@@ -27,8 +27,10 @@ import { useAcceptCourseReserve } from "../../../../../core/services/api/AcceptC
 const ReserveGroupForm = ({ row, setGroupId, groupId }) => {
   //   const mutation = useEditUser();
   // Handle form submission
+  console.log(row)
   const [IsSelected, setIsSelected] = useState();
   const mutate = useAcceptCourseReserve();
+  const queryClient = useQueryClient();
 
   const handleSubmit = async (e, studentId, courseId) => {
     e.preventDefault();
@@ -41,6 +43,7 @@ const ReserveGroupForm = ({ row, setGroupId, groupId }) => {
         courseGroupId: groupId.value,
       });
       toast.success("دوره با موفقیت اضافه شد!", { id: courseToast });
+      queryClient.invalidateQueries("UserDetail");
     } catch (error) {
       toast.error(
         `تبدیل رزرو با خطا مواجه شد

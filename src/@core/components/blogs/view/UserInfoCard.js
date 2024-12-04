@@ -25,7 +25,7 @@ import { Check, Briefcase, X, Eye, MessageSquare } from "react-feather";
 import { useForm, Controller } from "react-hook-form";
 import withReactContent from "sweetalert2-react-content";
 import { getQuery } from "../../../../core/services/api/ReactQuery/getQuery";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 // ** Custom Components
 import Avatar from "@components/avatar";
@@ -39,6 +39,7 @@ import { useGetBlogDetails } from "../../../../core/services/api/GetBlogDetail";
 import { DatePersianizer } from "./../../../../utility/utils/DatePersianizer";
 import { EditBlogForm } from "./EditBlogForm/EditBlogForm";
 import Logo from "@src/assets/images/logo/reactdeluxe.png";
+import { useActiveDeactiveBlog } from "../../../../core/services/api/ActiveDeactiveBlogs";
 
 const roleColors = {
   editor: "light-info",
@@ -100,6 +101,72 @@ const UserInfoCard = ({ selectedUser }) => {
   const { id } = useParams();
 
   const { data } = useGetBlogDetails(id);
+
+  const mutationActivation = useActiveDeactiveBlog();
+
+  const queryClient = useQueryClient();
+
+  const handleActication = async (row) => {
+    const formData = new FormData();
+    formData.append("Active", !data?.detailsNewsDto.active);
+    formData.append("Id", row?.detailsNewsDto.id);
+    console.log(row);
+    return MySwal.fire({
+      title: "آیا مطمئن هستید؟",
+      text: "البته امکان بازگشت نیز وجود دارد",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonText: "خیر",
+      confirmButtonText: "بله",
+      customClass: {
+        confirmButton: "btn btn-primary",
+        cancelButton: "btn btn-outline-danger ms-1",
+      },
+      buttonsStyling: false,
+    }).then(async (result) => {
+      if (result.value) {
+        try {
+          await mutationActivation.mutateAsync(formData);
+          MySwal.fire({
+            icon: "success",
+            title: row?.isActive ? "غیرفعال سازی" : "فعال سازی",
+            text: "عملیات با موفقیت انجام شد",
+            customClass: {
+              confirmButton: "btn btn-success",
+            },
+          });
+          queryClient.invalidateQueries("GetBlogDetails");
+        } catch (error) {
+          console.log(error);
+          MySwal.fire({
+            icon: "error",
+            title: "حذف نشد !",
+            text: "عملیات با موفقیت انجام نشد",
+            customClass: {
+              confirmButton: "btn btn-success",
+            },
+          });
+        }
+        // MySwal.fire({
+        //   icon: "success",
+        //   title: "حذف شد !",
+        //   text: "عملیات با موفقیت انجام شد",
+        //   customClass: {
+        //     confirmButton: "btn btn-success",
+        //   },
+        // });
+      } else if (result.dismiss === MySwal.DismissReason.cancel) {
+        MySwal.fire({
+          title: "عملیات لغو شد!",
+          text: "لغو",
+          icon: "error",
+          customClass: {
+            confirmButton: "btn btn-success",
+          },
+        });
+      }
+    });
+  };
 
   return (
     <div style={{ width: "25%" }}>
@@ -211,14 +278,33 @@ const UserInfoCard = ({ selectedUser }) => {
             <Button color="primary" onClick={() => setShow(true)}>
               ویرایش
             </Button>
-            <Button
+            {data?.detailsNewsDto.active ? (
+              <Button
+                className="ms-1"
+                color="danger"
+                outline
+                onClick={() => handleActication(data)}
+              >
+                غیرفعال کردن
+              </Button>
+            ) : (
+              <Button
+                className="ms-1"
+                color="success"
+                outline
+                onClick={() => handleActication(data)}
+              >
+                فعال کردن
+              </Button>
+            )}
+            {/* <Button
               className="ms-1"
               color="danger"
               outline
-              // onClick={() => handleActiveDeactive(data)}
+              onClick={() => handleActication(data)}
             >
               غیرفعال کردن
-            </Button>
+            </Button> */}
           </div>
         </CardBody>
       </Card>
