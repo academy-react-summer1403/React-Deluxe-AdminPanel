@@ -1,3 +1,4 @@
+import { Menu07Icon, NewsIcon } from "hugeicons-react";
 import { Mail, Home, Airplay, Circle , User, Book, BookOpen } from "react-feather";
 
 export default [
@@ -54,6 +55,24 @@ export default [
         title: "افزودن مقاله جدید",
         icon: <Circle size={12} />,
         navLink: "/addblogs",
+      },
+    ],
+  },
+  {
+    id: "newsCategory",
+    title: "دسته بندی ها",
+    icon:   <Menu07Icon
+    size={24} 
+  />,
+    navLink: "/newsCategory",
+    children: [
+      {
+        id: "newsCat",
+        title: "دسته بندی اخبار و مقالات",
+        icon:   <NewsIcon
+        size={14} 
+      />,
+        navLink: "/newsCat",
       },
     ],
   },

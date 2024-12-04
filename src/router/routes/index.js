@@ -46,7 +46,8 @@ const UserDetail = lazy(() => import("../../pages/UserDetail"));
 const CourseDetail = lazy(() => import("../../pages/CourseDetail"));
 const CourseGroupManage = lazy(() => import("../../pages/CourseGroupManage"));
 const CourseGroupDetail = lazy(() => import("../../pages/CourseGroupDetail"));
-// const UserList = lazy(() => import('../../views/apps/user/list'))
+const NewsCat = lazy(() => import("../../pages/NewsCat"));
+
 
 // ** Merge Routes
 const Routes = [
@@ -104,7 +105,10 @@ const Routes = [
     path: "/blogsDetail/:id",
     element: <BlogsDetail />,
   },
-
+ {
+    path: "/NewsCat",
+    element: <NewsCat />,
+  },
   {
     path: "/comments",
     element: <Comments />,
