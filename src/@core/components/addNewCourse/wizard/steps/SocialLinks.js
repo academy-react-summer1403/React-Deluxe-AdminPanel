@@ -21,29 +21,11 @@ const SocialLinks = ({
 }) => {
   const [selectedTech, setSelectedTech] = useState([]);
 
-  // const formRef = useRef(null);
 
   const mutation = useAddCourseTech(); // !!!!!!!!!!!!!!!
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // const formData = new FormData(formRef.current);
-    // const formValues = Object.fromEntries(formData.entries());
-    // console.log(formValues);
-    // setFinalFormData((prevFormData) => {
-    //   // console.log("prevFormData", prevFormData);
-    //   const updatedFormData = new FormData();
-
-    //   for (const [key, value] of prevFormData.entries()) {
-    //     updatedFormData.append(key, value);
-    //   }
-
-    //   for (const [key, value] of formData.entries()) {
-    //     updatedFormData.append(key, value);
-    //   }
-
-    //   return updatedFormData;
-    // });
 
     const courseToast = toast.loading("درحال افزودن تکنولوژی به دوره شما");
     try {
@@ -52,11 +34,7 @@ const SocialLinks = ({
     } catch (error) {
       toast.error(
         "افزودن دوره شما با خطا مواجه شد",
-        // ${
-        //     error.response.data.title
-        //       ? error.response.data.title
-        //       : error.response.data.ErrorMessage
-        //   }`,
+  
         { id: courseToast }
       );
     }
@@ -93,42 +71,9 @@ const SocialLinks = ({
               // defaultValue={"لیست تکنولوژی ها"}
             />
           </Col>
-          {/* <Col md="6" className="mb-1">
-            <Label className="form-label" for={`facebook-${type}`}>
-              Facebook
-            </Label>
-            <Input
-              type="text"
-              id={`facebook-${type}`}
-              name="facebook"
-              placeholder="https://facebook.com/abc"
-            />
-          </Col> */}
+
         </Row>
-        {/* <Row>
-          <Col md="6" className="mb-1">
-            <Label className="form-label" for={`google-${type}`}>
-              Google+
-            </Label>
-            <Input
-              type="text"
-              id={`google-${type}`}
-              name="google"
-              placeholder="https://plus.google.com/abc"
-            />
-          </Col>
-          <Col md="6" className="mb-1">
-            <Label className="form-label" for={`linkedin-${type}`}>
-              Linkedin
-            </Label>
-            <Input
-              type="text"
-              id={`linkedin-${type}`}
-              name="linkedin"
-              placeholder="https://linkedin.com/abc"
-            />
-          </Col>
-        </Row> */}
+
         <div className="d-flex justify-content-center m-5">
           <Button
             color="success"

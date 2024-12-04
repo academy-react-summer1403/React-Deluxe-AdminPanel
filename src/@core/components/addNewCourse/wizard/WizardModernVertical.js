@@ -25,10 +25,7 @@ const WizardModernVertical = () => {
   const [finalFormData, setFinalFormData] = useState();
 
   console.log("finalFormData1", finalFormData);
-  // const {isError , isLoading} = useQuery({
-  //   queryKey: ["CreateCourseInfo"]
-  //   queryFn:
-  // })
+
   const { data } = GetCreateCourse();
   console.log("data", data);
 
@@ -38,7 +35,6 @@ const WizardModernVertical = () => {
       title: "اطلاعات دوره مرحله اول",
       subtitle: "اطلاعات دوره را وارد نمایید.",
       icon: 1,
-      // <FileText size={18} />
       content: (
         <AccountDetails
           stepper={stepper}
