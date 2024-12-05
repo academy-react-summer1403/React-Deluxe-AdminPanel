@@ -25,11 +25,11 @@ const AddCatForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(formRef.current);
-    // const formValues = Object.fromEntries(formData.entries());
-    // console.log(formData);
+    const formValues = Object.fromEntries(formData.entries());
+
     const userToast = toast.loading("درحال ساختن  ترم جدید");
     try {
-      await mutation.mutateAsync(formData);
+      await mutation.mutateAsync(formValues);
       toast.success(" ترم با موفقیت ساخته شد!", { id: userToast });
     } catch (error) {
       toast.error(
@@ -75,7 +75,7 @@ const AddCatForm = () => {
                    تاریخ شروع
               </Label>
               <Input
-                type="text"
+                type="date"
                 name="startDate"
                 id="startDate"
                 placeholder="تاریخ شروع را وارد کنید"
@@ -86,7 +86,7 @@ const AddCatForm = () => {
                    تاریخ پایان
               </Label>
               <Input
-                type="text"
+                type="date"
                 name="endDate"
                 id="endDate"
                 placeholder="تاریخ پایان را وارد کنید"

@@ -99,7 +99,7 @@ const AddCatForm = () => {
                    تاریخ
               </Label>
               <Input
-                type="text"
+                type="date"
                 name="GoogleDescribe"
                 id="GoogleDescribe"
                 placeholder="تاریخ  را انتخاب کنید"

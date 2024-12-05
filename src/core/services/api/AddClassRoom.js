@@ -4,7 +4,6 @@ import http from "../interceptor";
 export const useAddClassRoom = () => {
   const AddClassRoom = async (classValue) => {
     try {
-      // console.log("Submitting form data:", formData);
       const res = await http.post("/ClassRoom",classValue);
       return res;
     } catch (error) {
