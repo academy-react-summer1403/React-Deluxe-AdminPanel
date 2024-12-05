@@ -15,6 +15,7 @@ import {
   Row,
   Col,
 } from "reactstrap";
+import { AddTeamIcon, Book02Icon, CommentAdd02Icon, LicenseDraftIcon, UserAccountIcon, UserAdd01Icon, UserAdd02Icon, UserArrowLeftRightIcon, UserCheck02Icon, UserCircle02Icon } from "hugeicons-react";
 
 const StatsCard = ({Report, cols }) => {
   const data = [
@@ -22,49 +23,49 @@ const StatsCard = ({Report, cols }) => {
       title: Report?.allUser,
       subtitle: "کاربران",
       color: "light-primary",
-      icon: <TrendingUp size={36} />,
+      icon: <User size={24} />,
     },
     {
       title: Report?.deactiveUsers,
-      subtitle: "دوره ها",
-      color: "light-info",
-      icon: <User size={36} />,
+      subtitle: "کاریرغیرفعال",
+      color: "light-danger",
+      icon: <UserAdd01Icon size={24} />,
     },
     {
       title: Report?.allUser - Report?.deactiveUsers,
-      subtitle: "اساتید",
-      color: "light-danger",
-      icon: <Box size={36} />,
+      subtitle: "کاربر فعال",
+      color: "light-info",
+      icon: <UserAdd02Icon size={24} />,
     },
     {
       title: Report?.inCompeletUserCount,
-      subtitle: "کامنت ها",
+      subtitle: "پرداختیها",
       color: "light-success",
-      icon: <DollarSign size={36} />,
+      icon: <DollarSign size={24} />,
     },
     {
       title: Report?.allUser - Report?.inCompeletUserCount,
       subtitle: "اساتید",
       color: "light-danger",
-      icon: <Box size={36} />,
+      icon: <UserCircle02Icon size={36} />,
     },
     {
       title: Report?.allReserve,
-      subtitle: "کامنت ها",
+      subtitle: "بلاگ ها",
       color: "light-success",
-      icon: <DollarSign size={36} />,
+      icon: <Book02Icon size={36} />,
     },
     {
       title: Report?.allReserveAccept,
-      subtitle: "کامنت ها",
+      subtitle: "دوره ها",
       color: "light-success",
-      icon: <DollarSign size={36} />,
+      icon: <LicenseDraftIcon size={36} />,
     },
     {
       title: Report?.allReserveNotAccept,
       subtitle: "کامنت ها",
-      color: "light-success",
-      icon: <DollarSign size={36} />,
+      color: "light-primary",
+      icon: <CommentAdd02Icon size={36} />,
     },
   ];
 
