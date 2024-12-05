@@ -263,6 +263,7 @@ const Term = () => {
       <Modal
         isOpen={show}
         toggle={() => setShow(!show)}
+        style={{width:"450px"}}
         className="modal-dialog-centered modal-lg"
       >
         <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}>

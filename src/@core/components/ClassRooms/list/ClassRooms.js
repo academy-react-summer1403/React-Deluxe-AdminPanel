@@ -145,7 +145,7 @@ const ClassRooms = () => {
 
   const column = [
     {
-      name: "  نام کلاس",
+      name: "نام کلاس",
       sortable: true,
       width: "230px",
       sortField: "title",
@@ -161,7 +161,7 @@ const ClassRooms = () => {
     },
 
     {
-      name: "  تاریخ  کار",
+      name: "تاریخ  برگزاری",
       sortable: true,
       width: "150px",
       sortField: "insertDate",
@@ -209,7 +209,7 @@ const ClassRooms = () => {
 //       ),
 //     },
     {
-      name: "   نام ساختمان",
+      name: "نام ساختمان",
       sortable: true,
       maxWidth: "350x",
       sortField: "role",
@@ -267,7 +267,7 @@ const ClassRooms = () => {
       <Modal
         isOpen={show}
         toggle={() => setShow(!show)}
-        className="modal-dialog-centered modal-lg"
+        className="modal-dialog-centered modal-lg" style={{width:"450px"}}
       >
         <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}>
           {/* <div>header</div> */}
