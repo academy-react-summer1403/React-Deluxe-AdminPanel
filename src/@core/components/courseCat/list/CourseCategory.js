@@ -66,6 +66,7 @@ import CardBrowserState from "./progress";
 
 import AddCatForm from "./AddCatForm";
 import { Link } from "react-router-dom";
+import { EditCatForm } from "./EditCatForm/EditCatForm";
 
 const CourseCategory = () => {
   // ** States
@@ -160,7 +161,7 @@ const CourseCategory = () => {
     },
 
     {
-      name: "  تاریخ بروز رسانی",
+      name: "تاریخ بروزرسانی",
       sortable: true,
       width: "230px",
       sortField: "insertDate",
@@ -197,7 +198,7 @@ const CourseCategory = () => {
       minWidth: "100px",
       cell: (row) => (
         <div className="column-action">
-          <div className="btn btn-sm">
+          <div className="btn btn-sm" onClick={() => toggleModal(row?.id)}>
             <FileText
               className="cursor-pointer"
               size={17}
@@ -221,10 +222,36 @@ const CourseCategory = () => {
               مشخصات دسته بندی
             </UncontrolledTooltip>
           </div>
+          <Modal
+            isOpen={openModalId === row?.id}
+            toggle={() => toggleModal(row?.id)}
+            className="modal-dialog-centered modal-lg"
+          >
+            <ModalHeader
+              className="bg-transparent text-center fs-8 mt-2"
+              style={{ marginRight: "330px" }}
+              toggle={() => toggleModal(row?.id)}
+            ></ModalHeader>
+            <ModalBody className="px-sm-5 pt-50 pb-5">
+              {openModalId === row?.id && (
+                <EditCatForm
+                rowId={row?.id}
+                // setGroupId={setGroupId}
+                // groupId={groupId}
+                />
+              )}
+            </ModalBody>
+          </Modal>
         </div>
       ),
     },
   ];
+
+  const [openModalId, setOpenModalId] = useState(null); // Track which modal is open
+
+  const toggleModal = (id) => {
+    setOpenModalId((prevId) => (prevId === id ? null : id));
+  };
 
   return (
     <Fragment>
