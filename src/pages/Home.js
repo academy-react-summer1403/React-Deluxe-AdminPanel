@@ -21,6 +21,7 @@ import { ThemeColors } from "../utility/context/ThemeColors";
 import CardBrowserState from "../@core/components/Dashboard/CardBrowserState";
 import Earnings from "../@core/components/Dashboard/Earnings";
 import CardTransactions from "../@core/components/Dashboard/CardTransactions";
+import { useAdminDashboardReport } from "../core/services/api/AdminDashboardReport";
 
 const Home = () => {
   const { data } = useQuery({
@@ -28,6 +29,7 @@ const Home = () => {
   });
   console.log(data);
   const { colors } = useContext(ThemeColors);
+  const { data: Report } = useAdminDashboardReport();
   return (
     <div>
       {/* <Card>
@@ -90,8 +92,8 @@ const Home = () => {
         </Col>
       </Row>
       <Row className="match-height">
-        <Col>
-          <StatsCard cols={{ xl: "3", sm: "6" }} />
+        <Col className="">
+          <StatsCard Report={Report} cols={{ xl: "3", sm: "6" }} />
         </Col>
         <Col lg="4" md="6" xs="12">
           <GoalOverview success={colors.success.main} />
@@ -102,7 +104,7 @@ const Home = () => {
           <CardBrowserState success={colors.success.main} />
         </Col>
         <Col lg="4" md="6" xs="12">
-          <Earnings success={colors.success.main} />
+          <Earnings Report={Report} success={colors.success.main} />
         </Col>
         <Col lg="4" md="6" xs="12">
           <CardTransactions success={colors.success.main} />

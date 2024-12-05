@@ -16,28 +16,52 @@ import {
   Col,
 } from "reactstrap";
 
-const StatsCard = ({ cols }) => {
+const StatsCard = ({Report, cols }) => {
   const data = [
     {
-      title: "230k",
+      title: Report?.allUser,
       subtitle: "کاربران",
       color: "light-primary",
       icon: <TrendingUp size={36} />,
     },
     {
-      title: "8.549k",
+      title: Report?.deactiveUsers,
       subtitle: "دوره ها",
       color: "light-info",
       icon: <User size={36} />,
     },
     {
-      title: "1.423k",
+      title: Report?.allUser - Report?.deactiveUsers,
       subtitle: "اساتید",
       color: "light-danger",
       icon: <Box size={36} />,
     },
     {
-      title: "$9745",
+      title: Report?.inCompeletUserCount,
+      subtitle: "کامنت ها",
+      color: "light-success",
+      icon: <DollarSign size={36} />,
+    },
+    {
+      title: Report?.allUser - Report?.inCompeletUserCount,
+      subtitle: "اساتید",
+      color: "light-danger",
+      icon: <Box size={36} />,
+    },
+    {
+      title: Report?.allReserve,
+      subtitle: "کامنت ها",
+      color: "light-success",
+      icon: <DollarSign size={36} />,
+    },
+    {
+      title: Report?.allReserveAccept,
+      subtitle: "کامنت ها",
+      color: "light-success",
+      icon: <DollarSign size={36} />,
+    },
+    {
+      title: Report?.allReserveNotAccept,
       subtitle: "کامنت ها",
       color: "light-success",
       icon: <DollarSign size={36} />,
@@ -72,12 +96,12 @@ const StatsCard = ({ cols }) => {
     <Card className="card-statistics d-flex flex-column justify-content-center">
       <CardHeader>
         <CardTitle tag="h4">آمار سایت</CardTitle>
-        {/* <CardText className='card-text font-small-2 me-25 mb-0'>Updated 1 month ago</CardText> */}
+        <CardText className='card-text font-small-2 me-25 mb-0'>آخرین آپدیت</CardText>
       </CardHeader>
-      <CardBody className="statistics-body d-flex align-items-center">
+      <CardBody className="statistics-body d-flex align-items-center" style={{height: "20rem"}}>
         <Row
-          className="d-flex justify-content-between"
-          style={{ width: "100%" }}
+          className="d-flex justify-content-between align-items-center"
+          style={{ width: "100%", height: "100%" }}
         >
           {renderData()}
         </Row>
