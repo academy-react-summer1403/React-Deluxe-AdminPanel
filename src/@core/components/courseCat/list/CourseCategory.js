@@ -29,6 +29,7 @@ import {
   MoreVertical,
   Trash2,
   Archive,
+  Edit,
 } from "react-feather";
 
 // ** Utils
@@ -59,7 +60,6 @@ import {
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
-// import { useUserList } from "../../../../core/services/api/userList";
 import { useCourseCat } from "../../../../core/services/api/CourseCat";
 
 import CardBrowserState from "./progress";
@@ -67,6 +67,7 @@ import CardBrowserState from "./progress";
 import AddCatForm from "./AddCatForm";
 import { Link } from "react-router-dom";
 import { EditCatForm } from "./EditCatForm/EditCatForm";
+import {DetailCatForm} from "./DetailCatForm/DetailCatForm"
 
 const CourseCategory = () => {
   // ** States
@@ -214,7 +215,7 @@ const CourseCategory = () => {
           </div>
 
           <div className="btn btn-sm" onClick={() => handleDelete(row?.id)}>
-            <Trash2 size={17} className="" id={`pw-tooltip-${row.id}`} />
+            <Edit size={17} className="" id={`pw-tooltip-${row.id}`} />
             <UncontrolledTooltip
               placement="top"
               target={`pw-tooltip-${row.id}`}
@@ -235,6 +236,26 @@ const CourseCategory = () => {
             <ModalBody className="px-sm-5 pt-50 pb-5">
               {openModalId === row?.id && (
                 <EditCatForm
+                rowId={row?.id}
+                // setGroupId={setGroupId}
+                // groupId={groupId}
+                />
+              )}
+            </ModalBody>
+          </Modal>
+          <Modal
+            isOpen={openModalId === row?.id}
+            toggle={() => toggleModal(row?.id)}
+            className="modal-dialog-centered modal-lg"
+          >
+            <ModalHeader
+              className="bg-transparent text-center fs-8 mt-2"
+              style={{ marginRight: "330px" }}
+              toggle={() => toggleModal(row?.id)}
+            ></ModalHeader>
+            <ModalBody className="px-sm-5 pt-50 pb-5">
+              {openModalId === row?.id && (
+                <DetailCatForm
                 rowId={row?.id}
                 // setGroupId={setGroupId}
                 // groupId={groupId}

@@ -11,8 +11,7 @@ import {
   Button,
   Label,
 } from "reactstrap";
-import { useAddTerm } from "../../../../core/services/api/AddTerm";
-
+import { useAddClassRoom } from "../../../../core/services/api/AddClassRoom";
 
 
 import toast from "react-hot-toast";
@@ -20,20 +19,20 @@ import toast from "react-hot-toast";
 const AddCatForm = () => {
   const formRef = useRef(null);
 
-  const mutation = useAddTerm();
+  const mutation = useAddClassRoom();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(formRef.current);
     const formValues = Object.fromEntries(formData.entries());
-
-    const userToast = toast.loading("درحال ساختن  ترم جدید");
+    console.log(formData);
+    const userToast = toast.loading("درحال ساختن  کلاس جدید");
     try {
       await mutation.mutateAsync(formValues);
-      toast.success(" ترم با موفقیت ساخته شد!", { id: userToast });
+      toast.success(" کلاس با موفقیت ساخته شد!", { id: userToast });
     } catch (error) {
       toast.error(
-        `ساخت   ترم با مشکل مواجه شد: 
+        `ساخت  کلاس با مشکل مواجه شد: 
         ${error.response.data.ErrorMessage}`,
         { id: userToast }
       );
@@ -42,54 +41,38 @@ const AddCatForm = () => {
   return (
     <Card style={{width:"350px"}}>
       <CardHeader>
-        <CardTitle tag="h4">افزودن  ترم جدید</CardTitle>
+        <CardTitle tag="h4">وضعیت کلاس ها</CardTitle>
       </CardHeader>
 
       <CardBody>
         <Form onSubmit={handleSubmit} innerRef={formRef}>
           <Row>
             <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="termName">
-               نام ترم
+              <Label className="form-label" for="classRoomName">
+                
+              </Label>
+          
+            </Col>
+            <Col md="12" sm="12" className="mb-1">
+              <Label className="form-label" for="capacity">
+                ظرفیت
               </Label>
               <Input
                 type="text"
-                name="termName"
-                id="termName"
-                placeholder="نام ترم را انتخاب کنید"
+                name="capacity"
+                id="capacity"
+                placeholder="ظرفیت را وارد کنید"
               />
             </Col>
             <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="departmentId">
-                شماره ساختمان
+              <Label className="form-label" for="buildingId">
+                  شماره ساختمان
               </Label>
               <Input
                 type="text"
-                name="departmentId"
-                id="departmentId"
-                placeholder="شماره ساختمان را وارد کنید"
-              />
-            </Col>
-            <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="startDate">
-                   تاریخ شروع
-              </Label>
-              <Input
-                type="date"
-                name="startDate"
-                id="startDate"
-                placeholder="تاریخ شروع را وارد کنید"
-              />
-            </Col>
-            <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="endDate">
-                   تاریخ پایان
-              </Label>
-              <Input
-                type="date"
-                name="endDate"
-                id="endDate"
-                placeholder="تاریخ پایان را وارد کنید"
+                name="buildingId"
+                id="buildingId"
+                placeholder="شماره ساختمان را انتخاب کنید"
               />
             </Col>
 

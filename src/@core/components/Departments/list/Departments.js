@@ -67,6 +67,7 @@ import CardBrowserState from "./progress";
 import AddCatForm from "./AddCatForm";
 import { Link } from "react-router-dom";
 import { DashboardSquareEditIcon } from "hugeicons-react";
+import { EditCatForm } from "./EditCatForm/EditCatForm";
 
 const Department = () => {
   // ** States
@@ -215,10 +216,6 @@ const Department = () => {
       minWidth: "200px",
       cell: (row) => (
         <div className="column-action">
-          <Link
-            className="user_name text-truncate text-body p-0"
-            to={`/userdetail/${row?.id}`}
-          >
             <div className="btn btn-sm">
               <FileText
                 className="cursor-pointer"
@@ -233,7 +230,6 @@ const Department = () => {
                 ویرایش
               </UncontrolledTooltip>
             </div>
-          </Link>
           <div className="btn btn-sm" onClick={() => handleDelete(row?.id)}>
             <DashboardSquareEditIcon size={17} className="" id={`pw-tooltip-${row.id}`} />
             <UncontrolledTooltip
@@ -243,16 +239,40 @@ const Department = () => {
                 جزییات
             </UncontrolledTooltip>
           </div>
+          <Modal
+            isOpen={openModalId === row?.id}
+            toggle={() => toggleModal(row?.id)}
+            className="modal-dialog-centered modal-lg"
+          >
+            <ModalHeader
+              className="bg-transparent text-center fs-8 mt-2"
+              style={{ marginRight: "330px" }}
+              toggle={() => toggleModal(row?.id)}
+            ></ModalHeader>
+            <ModalBody className="px-sm-5 pt-50 pb-5">
+              {openModalId === row?.id && (
+                <EditCatForm
+                rowId={row?.id}
+               
+                />
+              )}
+            </ModalBody>
+          </Modal>
         </div>
       ),
     },
   ];
+  const [openModalId, setOpenModalId] = useState(null); // Track which modal is open
 
+  const toggleModal = (id) => {
+    setOpenModalId((prevId) => (prevId === id ? null : id));
+  };
   return (
     <Fragment>
       <Modal
         isOpen={show}
         toggle={() => setShow(!show)}
+        style={{width:"450px"}}
         className="modal-dialog-centered modal-lg"
       >
         <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}>

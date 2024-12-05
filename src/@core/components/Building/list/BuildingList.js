@@ -190,41 +190,41 @@ const BuildingList = () => {
         </div>
       ),
     },
- {
-      name: " عرض جغرافیایی ",
-      sortable: true,
-      maxWidth: "350x",
-      sortField: "role",
-      cell: (data) => (
-        <div className="d-flex justify-content-left align-items-center gap-1">
-          {/* <Avatar img={Logo} /> */}
-          <div className="d-flex flex-column">
-            <Link className="user_name text-truncate text-body  p-0">
-              <span className="fw-bolder">{data?.latitude.slice(0, 10)}</span>
-            </Link>
-          </div>
-        </div>
-      ),
-    },
-    {
-      name: "  طول جغرافیایی",
-      sortable: true,
-      maxWidth: "350x",
-      sortField: "role",
-      cell: (data) => (
-        <div className="d-flex justify-content-left align-items-center gap-1">
-          <div className="d-flex flex-column">
-            <Link className="user_name text-truncate text-body  p-0">
-              <span className="fw-bolder">{data?.longitude.slice(0, 10)}</span>
-            </Link>
-          </div>
-        </div>
-      ),
-    },
+//  {
+//       name: " عرض جغرافیایی ",
+//       sortable: true,
+//       maxWidth: "350x",
+//       sortField: "role",
+//       cell: (data) => (
+//         <div className="d-flex justify-content-left align-items-center gap-1">
+//           {/* <Avatar img={Logo} /> */}
+//           <div className="d-flex flex-column">
+//             <Link className="user_name text-truncate text-body  p-0">
+//               <span className="fw-bolder">{data?.latitude.slice(0, 10)}</span>
+//             </Link>
+//           </div>
+//         </div>
+//       ),
+//     },
+    // {
+    //   name: "  طول جغرافیایی",
+    //   sortable: true,
+    //   maxWidth: "350x",
+    //   sortField: "role",
+    //   cell: (data) => (
+    //     <div className="d-flex justify-content-left align-items-center gap-1">
+    //       <div className="d-flex flex-column">
+    //         <Link className="user_name text-truncate text-body  p-0">
+    //           <span className="fw-bolder">{data?.longitude.slice(0, 10)}</span>
+    //         </Link>
+    //       </div>
+    //     </div>
+    //   ),
+    // },
     {
       name: "عملیات",
       center: true,
-      minWidth: "100px",
+      minWidth: "200px",
       cell: (row) => (
         <div className="column-action">
           <Link
@@ -275,7 +275,10 @@ const BuildingList = () => {
         </ModalBody>
       </Modal>
 
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden"
+    style={{width:"600px"}}
+      
+      >
         <Row className="ltr px-2 py-1">
           {/* <Col xl="6" className="d-flex align-items-center p-0">
             <div className="d-flex align-items-center w-100">
@@ -343,7 +346,7 @@ const BuildingList = () => {
             </div>
           </Col>
         </Row>
-        <div className="react-dataTable m-1">
+        <div className="react-dataTable m-1" >
           <DataTable
             noHeader
             // subHeader
