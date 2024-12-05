@@ -117,7 +117,7 @@ export default [
   },
   {
     id: "ClassRoom",
-    title: " کلاس ها",
+    title: " مدیریت کلاس ها",
     icon: <MeetingRoomIcon size={24} />,
     children: [
       {
@@ -125,6 +125,18 @@ export default [
         title: "لیست کلاس ها",
         icon: <PlusSignCircleIcon size={15} />,
         navLink: "/classroom",
+      },
+      {
+        id: "Terms",
+        title: "  لیست ترم ها  ",
+        icon: <PlusSignCircleIcon size={15} />,
+        navLink: "/term",
+      },
+      {
+        id: "Status",
+        title: "  وضعیت کلاس ها",
+        icon: <PlusSignCircleIcon size={15} />,
+        navLink: "/status",
       },
     ],
   },
