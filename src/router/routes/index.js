@@ -52,6 +52,7 @@ const ClassRoom = lazy(() => import("../../pages/ClassRooms"));
 const Building = lazy(() => import("../../pages/Building"));
 const Term = lazy(() => import("../../pages/Terms"));
 const Status = lazy(() => import("../../pages/Status"));
+const Schedual = lazy(() => import("../../pages/Schedual"));
 
 
 
@@ -143,6 +144,10 @@ const Routes = [
   {
     path: "/Status",
     element: <Status />,
+  },
+  {
+    path: "/Schedual",
+    element: <Schedual />,
   },
   {
     path: "/login",
