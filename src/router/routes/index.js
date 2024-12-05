@@ -50,6 +50,10 @@ const NewsCat = lazy(() => import("../../pages/NewsCat"));
 const Departments = lazy(() => import("../../pages/Departments"));
 const ClassRoom = lazy(() => import("../../pages/ClassRooms"));
 const Building = lazy(() => import("../../pages/Building"));
+const Term = lazy(() => import("../../pages/Terms"));
+const Status = lazy(() => import("../../pages/Status"));
+
+
 
 
 
@@ -128,9 +132,17 @@ const Routes = [
     path: "/ClassRoom",
     element: <ClassRoom />,
   },
+  {
+    path: "/term",
+    element: <Term />,
+  },
  {
     path: "/Departments",
     element: <Departments />,
+  },
+  {
+    path: "/Status",
+    element: <Status />,
   },
   {
     path: "/login",
