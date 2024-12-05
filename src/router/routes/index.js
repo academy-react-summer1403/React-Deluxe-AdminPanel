@@ -47,7 +47,17 @@ const CourseDetail = lazy(() => import("../../pages/CourseDetail"));
 const CourseGroupManage = lazy(() => import("../../pages/CourseGroupManage"));
 const CourseGroupDetail = lazy(() => import("../../pages/CourseGroupDetail"));
 const NewsCat = lazy(() => import("../../pages/NewsCat"));
+const Departments = lazy(() => import("../../pages/Departments"));
+const ClassRoom = lazy(() => import("../../pages/ClassRooms"));
 const Building = lazy(() => import("../../pages/Building"));
+const Term = lazy(() => import("../../pages/Terms"));
+const Status = lazy(() => import("../../pages/Status"));
+
+
+
+
+
+
 
 
 // ** Merge Routes
@@ -118,7 +128,22 @@ const Routes = [
     path: "/Building",
     element: <Building />,
   },
-
+  {
+    path: "/ClassRoom",
+    element: <ClassRoom />,
+  },
+  {
+    path: "/term",
+    element: <Term />,
+  },
+ {
+    path: "/Departments",
+    element: <Departments />,
+  },
+  {
+    path: "/Status",
+    element: <Status />,
+  },
   {
     path: "/login",
     element: <Login />,
