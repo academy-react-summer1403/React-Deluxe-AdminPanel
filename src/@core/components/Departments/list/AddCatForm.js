@@ -11,74 +11,64 @@ import {
   Button,
   Label,
 } from "reactstrap";
-import { useAddCourseCat } from "../../../../core/services/api/AddCourseCat";
 
 import toast from "react-hot-toast";
+import { useAddDepartment } from "../../../../core/services/api/AddDepartment";
 
 const AddCatForm = () => {
   const formRef = useRef(null);
 
-  const mutation = useAddCourseCat();
+  const mutation = useAddDepartment();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(formRef.current);
-    // const formValues = Object.fromEntries(formData.entries());
+    const formValues = Object.fromEntries(formData.entries());
     console.log(formData);
-    const userToast = toast.loading("درحال ساختن دسته بندی جدید");
+    const userToast = toast.loading("درحال ساختن دپارتمان جدید");
     try {
-      await mutation.mutateAsync(formData);
-      toast.success("دسته بندی با موفقیت ساخته شد!", { id: userToast });
+      await mutation.mutateAsync(formValues);
+      toast.success(" دپارتمان با موفقیت ساخته شد!", { id: userToast });
     } catch (error) {
       toast.error(
-        `ساخت دسته بندی با مشکل مواجه شد: 
+        `ساخت  دپارتمان با مشکل مواجه شد: 
         ${error.response.data.ErrorMessage}`,
         { id: userToast }
       );
     }
   };
   return (
-    <Card>
+    <Card style={{width:"350px"}}>
       <CardHeader>
-        <CardTitle tag="h4">افزودن دسته بندی جدید</CardTitle>
+        <CardTitle tag="h4">افزودن دپارتمان جدید</CardTitle>
       </CardHeader>
 
       <CardBody>
         <Form onSubmit={handleSubmit} innerRef={formRef}>
           <Row>
             <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="CategoryName">
-                عنوان دسته بندی
+              <Label className="form-label" for="depName">
+                  نام دپارتمان
               </Label>
               <Input
-                type="textarea"
-                name="CategoryName"
-                id="CategoryName"
-                placeholder="عنوان دسته بندی را انتخاب کنید"
+                type="text"
+                name="depName"
+                id="depName"
+                placeholder="نام دپارتمان را یادداشت کنید"
               />
             </Col>
             <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="GoogleTitle">
-                عنوان در گوگل
+              <Label className="form-label" for="buildingId">
+                 شماره ساختمان 
               </Label>
               <Input
-                type="textarea"
-                name="GoogleTitle"
-                id="GoogleTitle"
-                placeholder=" عنوان دسته بندی در گوگل را انتخاب کنید"
+                type="text"
+                name="buildingId"
+                id="buildingId"
+                placeholder="شماره ساختمان را یادداشت کنید"
               />
             </Col>
-            <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="GoogleDescribe">
-                توضیحات در گوگل
-              </Label>
-              <Input
-                type="textarea"
-                name="GoogleDescribe"
-                id="GoogleDescribe"
-                placeholder=" توضیحات دسته بندی در گوگل را انتخاب کنید"
-              />
-            </Col>
+          
 
             <Col sm="12">
               <div className="d-flex justify-content-center">
