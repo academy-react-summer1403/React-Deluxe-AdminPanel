@@ -17,7 +17,7 @@ export const useCourseCat = (data,rowsPerPage) => {
   };
 
   return useQuery({
-    queryKey: ["CourseCat,rowsPerPage"],
+    queryKey: ["CourseCat" , rowsPerPage],
     queryFn: CourseCat,
   });
 };
