@@ -193,9 +193,9 @@ const UsersList = () => {
         // forcePage={currentPage !== 0 ? currentPage - 1 : 0}
         forcePage={currentPage > 0 ? currentPage - 1 : 0} // Adjust for zero-based indexing
         onPageChange={(page) => handlePagination(page)}
-        pageClassName={"page-item"}
-        nextLinkClassName={"page-link"}
-        nextClassName={"page-item next"}
+        pageClassName={"page-item rtl"}
+        nextLinkClassName={"page-link rtl"}
+        nextClassName={"page-item next rtl"}
         previousClassName={"page-item prev"}
         previousLinkClassName={"page-link"}
         pageLinkClassName={"page-link"}

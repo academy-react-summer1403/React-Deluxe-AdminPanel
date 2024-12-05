@@ -65,7 +65,7 @@ import { useCourseCat } from "../../../../core/services/api/CourseCat";
 
 import CardBrowserState from "./progress";
 
-import AddUserForm from "./AddCatForm";
+import AddCatForm from "./AddCatForm";
 import { Link } from "react-router-dom";
 
 
@@ -243,7 +243,7 @@ const CourseCategory = () => {
           {/* <div>header</div> */}
         </ModalHeader>
         <ModalBody className="px-sm-5 pt-50 pb-5">
-          <AddUserForm />
+          <AddCatForm />
         </ModalBody>
       </Modal>
     
