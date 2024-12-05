@@ -6,6 +6,7 @@ import {
   Mortarboard01Icon,
   PlusSignCircleIcon,
   UserListIcon,
+  MeetingRoomIcon
 } from "hugeicons-react";
 import {
   Mail,
@@ -107,16 +108,23 @@ export default [
 
       },
       {
-        id: "classRoom",
-        title: "لیست کلاس ها",
-        icon: <PlusSignCircleIcon size={15} />,
-        navLink: "/classroom",
-      },
-      {
         id: "Departments",
         title: "لیست دپارتمان ها",
         icon: <PlusSignCircleIcon size={15} />,
         navLink: "/Departments",
+      },
+    ],
+  },
+  {
+    id: "ClassRoom",
+    title: " کلاس ها",
+    icon: <MeetingRoomIcon size={24} />,
+    children: [
+      {
+        id: "classRoom",
+        title: "لیست کلاس ها",
+        icon: <PlusSignCircleIcon size={15} />,
+        navLink: "/classroom",
       },
     ],
   },
