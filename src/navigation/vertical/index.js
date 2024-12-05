@@ -1,4 +1,4 @@
-import { Menu07Icon, NewsIcon } from "hugeicons-react";
+import { Building02Icon, Menu07Icon, NewsIcon } from "hugeicons-react";
 import {
   BloggerIcon,
   Comment01Icon,
@@ -95,9 +95,30 @@ export default [
     navLink: "/comments",
   },
   {
-    id: "comments",
+    id: "buildings",
     title: "مدیریت ساختمان ها",
-    icon: <Comment01Icon size={20} />,
+    icon:   <Building02Icon size={24} />,
+    children: [
+      {
+        id: " building",
+        title: "لیست ساختمان ها",
+        icon: <ListViewIcon size={15} />,
     navLink: "/Building",
+
+      },
+      {
+        id: "classRoom",
+        title: "لیست کلاس ها",
+        icon: <PlusSignCircleIcon size={15} />,
+        navLink: "/classroom",
+      },
+      {
+        id: "Departments",
+        title: "لیست دپارتمان ها",
+        icon: <PlusSignCircleIcon size={15} />,
+        navLink: "/Departments",
+      },
+    ],
   },
+  
 ];

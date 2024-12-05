@@ -59,7 +59,7 @@ import {
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
-import { useBuilding } from "../../../../core/services/api/Building";
+import { useDepartments } from "../../../../core/services/api/Departments";
 
 
 import CardBrowserState from "./progress";
@@ -68,7 +68,7 @@ import AddCatForm from "./AddCatForm";
 import { Link } from "react-router-dom";
 import { DashboardSquareEditIcon } from "hugeicons-react";
 
-const BuildingList = () => {
+const Department = () => {
   // ** States
   const [sort, setSort] = useState("desc");
   const [searchTerm, setSearchTerm] = useState("");
@@ -92,7 +92,7 @@ const BuildingList = () => {
   });
   const [show, setShow] = useState(false);
 
-  const { data, isLoading, isError } = useBuilding(rowsPerPage);
+  const { data, isLoading, isError } = useDepartments(rowsPerPage);
   // if (isLoading) return <FullPageLoading />;
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
 
@@ -145,15 +145,15 @@ const BuildingList = () => {
 
   const column = [
     {
-      name: " نام  ساختمان",
+      name: "  نام دپارتمان",
       sortable: true,
-      width: "150px",
+      width: "230px",
       sortField: "title",
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
           <div className="d-flex flex-column" style={{ overflow: "hidden" }}>
             <span className="fw-bolder">
-              {data?.buildingName ? data?.buildingName : "نامشخص"}
+              {data?.depName ? data?.depName : "نامشخص"}
             </span>
           </div>
         </div>
@@ -161,7 +161,7 @@ const BuildingList = () => {
     },
 
     {
-      name: "  تاریخ  کار",
+      name: "  تاریخ  تاسیس",
       sortable: true,
       width: "150px",
       sortField: "insertDate",
@@ -169,62 +169,50 @@ const BuildingList = () => {
         <div className="d-flex justify-content-left align-items-center gap-1">
           <div className="d-flex flex-column">
             <span className="fw-bolder">
-              {DatePersianizer(data?.workDate)}
+              {DatePersianizer(data?.insertDate)}
             </span>
           </div>
         </div>
       ),
     },
     {
-      name: " طبقه ",
+      name: " نام ساختمان ",
       sortable: true,
       maxWidth: "150x",
+      center:true,
       sortField: "role",
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
           <div className="d-flex flex-column">
             <Link className="user_name text-truncate text-body  p-0">
-              <span className="fw-bolder">{data?.floor}</span>
+              <span className="fw-bolder">{data?.buildingName}</span>
             </Link>
           </div>
         </div>
       ),
     },
  {
-      name: " عرض جغرافیایی ",
+      name: "  شماره ساختمان ",
       sortable: true,
-      maxWidth: "350x",
+      maxWidth: "250x",
+      center:true,
       sortField: "role",
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
           {/* <Avatar img={Logo} /> */}
           <div className="d-flex flex-column">
             <Link className="user_name text-truncate text-body  p-0">
-              <span className="fw-bolder">{data?.latitude.slice(0, 10)}</span>
+              <span className="fw-bolder">{data?.buildingId}</span>
             </Link>
           </div>
         </div>
       ),
     },
-    {
-      name: "  طول جغرافیایی",
-      sortable: true,
-      maxWidth: "350x",
-      sortField: "role",
-      cell: (data) => (
-        <div className="d-flex justify-content-left align-items-center gap-1">
-          <div className="d-flex flex-column">
-            <Link className="user_name text-truncate text-body  p-0">
-              <span className="fw-bolder">{data?.longitude.slice(0, 10)}</span>
-            </Link>
-          </div>
-        </div>
-      ),
-    },
+  
     {
       name: "عملیات",
       center: true,
-      minWidth: "100px",
+      minWidth: "200px",
       cell: (row) => (
         <div className="column-action">
           <Link
@@ -338,7 +326,7 @@ const BuildingList = () => {
                 // onClick={toggleSidebar}
                 onClick={() => setShow(true)}
               >
-                افزودن  ساختمان جدید
+                افزودن  دپارتمان جدید
               </Button>
             </div>
           </Col>
@@ -377,4 +365,4 @@ const BuildingList = () => {
   );
 };
 
-export { BuildingList };
+export { Department };
