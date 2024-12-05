@@ -11,77 +11,90 @@ import {
   Button,
   Label,
 } from "reactstrap";
-import { useAddCourseCat } from "../../../../core/services/api/AddCourseCat";
+import { useAddTerm } from "../../../../core/services/api/AddTerm";
+
+
 
 import toast from "react-hot-toast";
 
 const AddCatForm = () => {
   const formRef = useRef(null);
 
-  const mutation = useAddCourseCat();
+  const mutation = useAddTerm();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(formRef.current);
     // const formValues = Object.fromEntries(formData.entries());
-    console.log(formData);
-    const userToast = toast.loading("درحال ساختن دسته بندی جدید");
+    // console.log(formData);
+    const userToast = toast.loading("درحال ساختن  ترم جدید");
     try {
       await mutation.mutateAsync(formData);
-      toast.success("دسته بندی با موفقیت ساخته شد!", { id: userToast });
+      toast.success(" ترم با موفقیت ساخته شد!", { id: userToast });
     } catch (error) {
       toast.error(
-        `ساخت دسته بندی با مشکل مواجه شد: 
+        `ساخت   ترم با مشکل مواجه شد: 
         ${error.response.data.ErrorMessage}`,
         { id: userToast }
       );
     }
   };
   return (
-    <Card>
+    <Card style={{width:"350px"}}>
       <CardHeader>
-        <CardTitle tag="h4">افزودن دسته بندی جدید</CardTitle>
+        <CardTitle tag="h4">افزودن  ترم جدید</CardTitle>
       </CardHeader>
 
       <CardBody>
         <Form onSubmit={handleSubmit} innerRef={formRef}>
           <Row>
             <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="CategoryName">
-                عنوان دسته بندی
+              <Label className="form-label" for="termName">
+               نام ترم
               </Label>
               <Input
-                type="textarea"
-                name="CategoryName"
-                id="CategoryName"
-                placeholder="عنوان دسته بندی را انتخاب کنید"
+                type="text"
+                name="termName"
+                id="termName"
+                placeholder="نام ترم را انتخاب کنید"
               />
             </Col>
             <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="GoogleTitle">
-                عنوان در گوگل
+              <Label className="form-label" for="departmentId">
+                شماره ساختمان
               </Label>
               <Input
-                type="textarea"
-                name="GoogleTitle"
-                id="GoogleTitle"
-                placeholder=" عنوان دسته بندی در گوگل را انتخاب کنید"
+                type="text"
+                name="departmentId"
+                id="departmentId"
+                placeholder="شماره ساختمان را وارد کنید"
               />
             </Col>
             <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="GoogleDescribe">
-                توضیحات در گوگل
+              <Label className="form-label" for="startDate">
+                   تاریخ شروع
               </Label>
               <Input
-                type="textarea"
-                name="GoogleDescribe"
-                id="GoogleDescribe"
-                placeholder=" توضیحات دسته بندی در گوگل را انتخاب کنید"
+                type="text"
+                name="startDate"
+                id="startDate"
+                placeholder="تاریخ شروع را وارد کنید"
+              />
+            </Col>
+            <Col md="12" sm="12" className="mb-1">
+              <Label className="form-label" for="endDate">
+                   تاریخ پایان
+              </Label>
+              <Input
+                type="text"
+                name="endDate"
+                id="endDate"
+                placeholder="تاریخ پایان را وارد کنید"
               />
             </Col>
 
-            <Col sm="12">
-              <div className="d-flex justify-content-center">
+            <Col sm="10">
+              <div className="d-flex justify-content-center m-2">
                 <Button className="me-1" color="success" type="submit">
                   افزودن
                 </Button>

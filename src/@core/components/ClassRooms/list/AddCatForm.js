@@ -11,77 +11,78 @@ import {
   Button,
   Label,
 } from "reactstrap";
-import { useAddCourseCat } from "../../../../core/services/api/AddCourseCat";
+import { useAddClassRoom } from "../../../../core/services/api/AddClassRoom";
+
 
 import toast from "react-hot-toast";
 
 const AddCatForm = () => {
   const formRef = useRef(null);
 
-  const mutation = useAddCourseCat();
+  const mutation = useAddClassRoom();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(formRef.current);
-    // const formValues = Object.fromEntries(formData.entries());
+    const formValues = Object.fromEntries(formData.entries());
     console.log(formData);
-    const userToast = toast.loading("درحال ساختن دسته بندی جدید");
+    const userToast = toast.loading("درحال ساختن  کلاس جدید");
     try {
-      await mutation.mutateAsync(formData);
-      toast.success("دسته بندی با موفقیت ساخته شد!", { id: userToast });
+      await mutation.mutateAsync(formValues);
+      toast.success(" کلاس با موفقیت ساخته شد!", { id: userToast });
     } catch (error) {
       toast.error(
-        `ساخت دسته بندی با مشکل مواجه شد: 
+        `ساخت  کلاس با مشکل مواجه شد: 
         ${error.response.data.ErrorMessage}`,
         { id: userToast }
       );
     }
   };
   return (
-    <Card>
+    <Card style={{width:"350px"}}>
       <CardHeader>
-        <CardTitle tag="h4">افزودن دسته بندی جدید</CardTitle>
+        <CardTitle tag="h4">افزودن  کلاس جدید</CardTitle>
       </CardHeader>
 
       <CardBody>
         <Form onSubmit={handleSubmit} innerRef={formRef}>
           <Row>
             <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="CategoryName">
-                عنوان دسته بندی
+              <Label className="form-label" for="classRoomName">
+               نام کلاس
               </Label>
               <Input
-                type="textarea"
-                name="CategoryName"
-                id="CategoryName"
-                placeholder="عنوان دسته بندی را انتخاب کنید"
+                type="text"
+                name="classRoomName"
+                id="classRoomName"
+                placeholder="نام کلاس را انتخاب کنید"
               />
             </Col>
             <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="GoogleTitle">
-                عنوان در گوگل
+              <Label className="form-label" for="capacity">
+                ظرفیت
               </Label>
               <Input
-                type="textarea"
-                name="GoogleTitle"
-                id="GoogleTitle"
-                placeholder=" عنوان دسته بندی در گوگل را انتخاب کنید"
+                type="text"
+                name="capacity"
+                id="capacity"
+                placeholder="ظرفیت را وارد کنید"
               />
             </Col>
             <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="GoogleDescribe">
-                توضیحات در گوگل
+              <Label className="form-label" for="buildingId">
+                  شماره ساختمان
               </Label>
               <Input
-                type="textarea"
-                name="GoogleDescribe"
-                id="GoogleDescribe"
-                placeholder=" توضیحات دسته بندی در گوگل را انتخاب کنید"
+                type="text"
+                name="buildingId"
+                id="buildingId"
+                placeholder="شماره ساختمان را انتخاب کنید"
               />
             </Col>
 
-            <Col sm="12">
-              <div className="d-flex justify-content-center">
+            <Col sm="10">
+              <div className="d-flex justify-content-center m-2">
                 <Button className="me-1" color="success" type="submit">
                   افزودن
                 </Button>
