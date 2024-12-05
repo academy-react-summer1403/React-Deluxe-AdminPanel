@@ -12,7 +12,7 @@ import Sidebar from "./Sidebar";
 
 // ** Table Columns
 import { columns } from "./columns";
-import { DatePersianizer } from "./../../../../utility/utils/DatePersianizer";
+import { DatePersianizer } from "../../../../utility/utils/DatePersianizer";
 
 // ** Third Party Components
 import Select from "react-select";
@@ -62,14 +62,12 @@ import "@styles/react/libs/tables/react-dataTable-component.scss";
 // import { useUserList } from "../../../../core/services/api/userList";
 import { useCourseCat } from "../../../../core/services/api/CourseCat";
 
-
 import CardBrowserState from "./progress";
 
 import AddCatForm from "./AddCatForm";
 import { Link } from "react-router-dom";
 
-
-const CourseCategory = () => {
+const BuildingList = () => {
   // ** States
   const [sort, setSort] = useState("desc");
   const [searchTerm, setSearchTerm] = useState("");
@@ -93,9 +91,7 @@ const CourseCategory = () => {
   });
   const [show, setShow] = useState(false);
 
-  const { data, isLoading, isError } = useCourseCat(
-    rowsPerPage
-  );
+  const { data, isLoading, isError } = useCourseCat(rowsPerPage);
   // if (isLoading) return <FullPageLoading />;
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
 
@@ -103,8 +99,6 @@ const CourseCategory = () => {
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
-
-
 
   // ** Function in get data on page change
   const handlePagination = (page) => {
@@ -156,25 +150,29 @@ const CourseCategory = () => {
       sortField: "title",
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
-          <div className="d-flex flex-column" style={{overflow: 'hidden'}}>
-              <span className="fw-bolder">{data?.categoryName ? (data?.categoryName) : 'نامشخص'}</span>
+          <div className="d-flex flex-column" style={{ overflow: "hidden" }}>
+            <span className="fw-bolder">
+              {data?.categoryName ? data?.categoryName : "نامشخص"}
+            </span>
           </div>
         </div>
       ),
     },
-   
+
     {
       name: "  تاریخ بروز رسانی",
       sortable: true,
       width: "230px",
-      sortField: 'insertDate',
+      sortField: "insertDate",
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
           <div className="d-flex flex-column">
-              <span className="fw-bolder">{DatePersianizer(data?.insertDate)}</span>
+            <span className="fw-bolder">
+              {DatePersianizer(data?.insertDate)}
+            </span>
           </div>
         </div>
-      )
+      ),
     },
     {
       name: "عنوان در گوگل",
@@ -190,7 +188,7 @@ const CourseCategory = () => {
             </Link>
           </div>
         </div>
-      )
+      ),
     },
 
     {
@@ -214,7 +212,7 @@ const CourseCategory = () => {
                 target={`send-tooltip-${row.id}`}
                 // className="mb-1"
               >
-                 ویرایش
+                ویرایش
               </UncontrolledTooltip>
             </div>
           </Link>
@@ -224,7 +222,7 @@ const CourseCategory = () => {
               placement="top"
               target={`pw-tooltip-${row.id}`}
             >
-               مشخصات دسته بندی
+              مشخصات دسته بندی
             </UncontrolledTooltip>
           </div>
         </div>
@@ -246,11 +244,10 @@ const CourseCategory = () => {
           <AddCatForm />
         </ModalBody>
       </Modal>
-    
 
       <Card className="overflow-hidden">
         <Row className="ltr px-2 py-1">
-        {/* <Col xl="6" className="d-flex align-items-center p-0">
+          {/* <Col xl="6" className="d-flex align-items-center p-0">
             <div className="d-flex align-items-center w-100">
               <label htmlFor="rows-per-page" style={{ marginRight: "25px" }}>
                 نمایش
@@ -276,9 +273,6 @@ const CourseCategory = () => {
             xl="6"
             // className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
           >
-           
-      
-
             <div className="d-flex align-items-center table-header-actions">
               <UncontrolledDropdown className="me-1">
                 <DropdownMenu>
@@ -314,7 +308,7 @@ const CourseCategory = () => {
                 // onClick={toggleSidebar}
                 onClick={() => setShow(true)}
               >
-                  افزودن دسته بندی جدید
+                افزودن دسته بندی جدید
               </Button>
             </div>
           </Col>
@@ -353,4 +347,4 @@ const CourseCategory = () => {
   );
 };
 
-export  {CourseCategory};
+export { BuildingList };

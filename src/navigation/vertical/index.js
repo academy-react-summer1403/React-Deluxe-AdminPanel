@@ -77,17 +77,13 @@ export default [
   {
     id: "newsCategory",
     title: "دسته بندی ها",
-    icon:   <Menu07Icon
-    size={24} 
-  />,
+    icon: <Menu07Icon size={24} />,
     navLink: "/newsCategory",
     children: [
       {
         id: "newsCat",
         title: "دسته بندی اخبار و مقالات",
-        icon:   <NewsIcon
-        size={14} 
-      />,
+        icon: <NewsIcon size={14} />,
         navLink: "/newsCat",
       },
     ],
@@ -97,5 +93,11 @@ export default [
     title: "مدیریت کامنت ها",
     icon: <Comment01Icon size={20} />,
     navLink: "/comments",
+  },
+  {
+    id: "comments",
+    title: "مدیریت ساختمان ها",
+    icon: <Comment01Icon size={20} />,
+    navLink: "/Building",
   },
 ];

@@ -1,11 +1,11 @@
-import {CourseCategory} from "../@core/components/courseCat/list/Table";
+import { CourseCategory } from "../@core/components/courseCat/list/CourseCategory";
 
 const NewsCat = () => {
   return (
     <div>
-    <CourseCategory />
+      <CourseCategory />
     </div>
-  )
-}
+  );
+};
 
-export default NewsCat
+export default NewsCat;
