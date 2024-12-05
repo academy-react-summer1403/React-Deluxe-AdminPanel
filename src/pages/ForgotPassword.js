@@ -116,7 +116,7 @@ const ForgotPassword = () => {
         >
           <Col className="px-xl-2 mx-auto" sm="8" md="6" lg="12">
             <CardTitle tag="h4" className="fw-bold mb-1">
-                 🔒آرمز خودرا فراموش کرده اید ؟ 
+                 🔒آیا رمز خودرا فراموش کرده اید ؟ 
             </CardTitle>
             <CardText className="mb-2">
               برای بازیابی رمز لطفت ایمیل خود را وارد کنید
