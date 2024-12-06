@@ -7,7 +7,7 @@ import {
 import { useDepartmentDetail } from "../../../../../core/services/api/DepartmentDetail";
 import { DatePersianizer } from "../../../../../utility/utils/DatePersianizer";
 
-const DetailTerms = ({rowId}) => {
+const DetailDepartment = ({rowId}) => {
 
   const { data, isError, isLoading } = useDepartmentDetail(rowId);
 
@@ -46,4 +46,4 @@ const DetailTerms = ({rowId}) => {
     </Card>
   );
 };
-export { DetailTerms };
+export { DetailDepartment };
