@@ -12,38 +12,39 @@ import {
   Label,
 } from "reactstrap";
 import toast from "react-hot-toast";
-import Select from "react-select";
-import { selectThemeColors } from "@utils";
-import { Formik } from "formik";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
-import { useEditUser } from "../../../../../core/services/api/EditUser";
-import { useEdiClassRoom } from "../../../../../core/services/api/EdiClassRoom";
-import { useDepartmentDetail } from "../../../../../core/services/api/DepartmentDetail";
+import {  useQueryClient } from "@tanstack/react-query";
+import { useEdiClassRoom } from "../../../../../core/services/api/EditClassRoom";
+import { useClassRoomDetail } from "../../../../../core/services/api/DetailClassRoom";
 
-const EditClassRooms = ({ id }) => {
+
+const EditClassRooms = ({ rowId }) => {
   const formRef = useRef(null);
-  const { data } = useEdiClassRoom(id);
+  const { data } = useClassRoomDetail(rowId);
   console.log(data);
 
   const [formValues, setFormValues] = useState({
     classRoomName: "",
     capacity: "",
     buildingId:"",
+    buildingName: "",
+    insertDate: "",
     id: "1",
   });
 
   useEffect(() => {
     if (data) {
       setFormValues({
-        depName: data.depName || "",
+        classRoomName: data.classRoomName || "",
+        capacity: data.capacity || "",
         buildingId: data.buildingId || "",
+        buildingName: data.buildingName || "",
+        insertDate: data.capacity || "",
         id: data.id || "",
       });
     }
   }, [data]);
 
-
+ 
 
   const handleInputChange = (eOrName, valueOrNull) => {
     if (eOrName?.target) {
@@ -70,28 +71,32 @@ const EditClassRooms = ({ id }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form Submitted:", formValues);
-    // console.log("Form Ref: ", formRef);
+  
     const formData = new FormData();
-    formData.append("Id", id);
+    formData.append("Id", formValues.id);
     formData.append("classRoomName", formValues.classRoomName);
     formData.append("capacity", formValues.capacity);    
     formData.append("buildingId", formValues.buildingId);    
+    formData.append("buildingName", formValues.buildingName);    
+    formData.append("insertDate", formValues.insertDate);    
 
     console.log(formData);
 
-    const userToast = toast.loading("درحال ویرایش کلاس");
+    
+    const userToast = toast.loading("درحال ویرایش ترم");
     try {
       await mutation.mutateAsync(formValues);
-      toast.success("کلاس با موفقیت ویرایش شد!", { id: userToast });
+      toast.success("ترم با موفقیت ویرایش شد!", { id: userToast });
       queryClient.invalidateQueries("CourseCat");
     } catch (error) {
       toast.error(
-        `ویرایش کلاس با مشکل مواجه شد: 
+        `ویرایش ترم با مشکل مواجه شد: 
         ${error.response.data.ErrorMessage}`,
         { id: userToast }
       );
     }
-  };
+  
+}
 
   const activeOptions = [
     { value: true, label: "فعال" },
@@ -145,8 +150,21 @@ const EditClassRooms = ({ id }) => {
               />
             </Col>
              <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="buildingId">
+              <Label className="form-label" for="capacity">
                   ظرفیت 
+              </Label>
+              <Input
+                type="text"
+                name="capacity"
+                id="capacity"
+                placeholder=" شماره ساختمان را وارد کنید"
+                value={formValues?.capacity}
+                onChange={handleInputChange}
+              />
+            </Col>
+            <Col md="12" sm="12" className="mb-1">
+              <Label className="form-label" for="buildingId">
+                  شماره ساختمان 
               </Label>
               <Input
                 type="text"
@@ -156,7 +174,33 @@ const EditClassRooms = ({ id }) => {
                 value={formValues?.buildingId}
                 onChange={handleInputChange}
               />
+            </Col> 
+            <Col md="12" sm="12" className="mb-1">
+              <Label className="form-label" for="buildingName">
+                  نام ساختمان 
+              </Label>
+              <Input
+                type="text"
+                name="buildingName"
+                id="buildingName"
+                placeholder=" نام ساختمان را وارد کنید"
+                value={formValues?.buildingName}
+                onChange={handleInputChange}
+              />
             </Col>
+            {/* <Col md="12" sm="12" className="mb-1">
+              <Label className="form-label" for="insertDate">
+                   تاریخ برگزاری 
+              </Label>
+              <Input
+                type="date"
+                name="insertDate"
+                id="insertDate"
+                placeholder=" نام ساختمان را وارد کنید"
+                value={formValues?.insertDate}
+                onChange={handleInputChange}
+              />
+            </Col> */}
             <Col sm="12">
               <div className="d-flex justify-content-center">
                 <Button className="me-1" color="success" type="submit">

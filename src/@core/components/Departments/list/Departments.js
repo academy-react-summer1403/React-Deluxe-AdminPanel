@@ -66,7 +66,7 @@ import CardBrowserState from "./progress";
 
 import AddCatForm from "./AddCatForm";
 import { Link } from "react-router-dom";
-import { DashboardSquareEditIcon } from "hugeicons-react";
+import { LicenseIcon   } from "hugeicons-react";
 import { EditCatForm } from "./EditCatForm/EditCatForm";
 
 const Department = () => {
@@ -231,7 +231,7 @@ const Department = () => {
               </UncontrolledTooltip>
             </div>
           <div className="btn btn-sm" onClick={() => handleDelete(row?.id)}>
-            <DashboardSquareEditIcon size={17} className="" id={`pw-tooltip-${row.id}`} />
+            <LicenseIcon   size={17} className="" id={`pw-tooltip-${row.id}`} />
             <UncontrolledTooltip
               placement="top"
               target={`pw-tooltip-${row.id}`}
