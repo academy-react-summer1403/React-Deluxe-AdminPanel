@@ -15,9 +15,21 @@ import {
   Row,
   Col,
 } from "reactstrap";
-import { AddTeamIcon, Book02Icon, CommentAdd02Icon, LicenseDraftIcon, UserAccountIcon, UserAdd01Icon, UserAdd02Icon, UserArrowLeftRightIcon, UserCheck02Icon, UserCircle02Icon } from "hugeicons-react";
+import { AddTeamIcon, Book02Icon, Building02Icon, CommentAdd02Icon, LicenseDraftIcon, MeetingRoomIcon, UserAccountIcon, UserAdd01Icon, UserAdd02Icon, UserArrowLeftRightIcon, UserCheck02Icon, UserCircle02Icon } from "hugeicons-react";
+import { useBuilding } from "../../../core/services/api/Building";
+import { useDepartments } from "../../../core/services/api/Departments";
+import { useClassRooms } from "../../../core/services/api/ClassRooms";
+import { useTerms } from "../../../core/services/api/Term";
 
 const StatsCard = ({Report, cols }) => {
+  const {data: Buildings} = useBuilding();
+
+  const {data: Departments} = useDepartments();
+
+  const {data: ClassRooms} = useClassRooms();
+
+   const {data: Terms} = useTerms()
+
   const data = [
     {
       title: Report?.allUser,
@@ -27,46 +39,70 @@ const StatsCard = ({Report, cols }) => {
     },
     {
       title: Report?.deactiveUsers,
-      subtitle: "کاریرغیرفعال",
+      subtitle: "کاریرهای غیرفعال",
       color: "light-danger",
       icon: <UserAdd01Icon size={24} />,
     },
     {
       title: Report?.allUser - Report?.deactiveUsers,
-      subtitle: "کاربر فعال",
+      subtitle: "کاربرهای فعال",
       color: "light-info",
       icon: <UserAdd02Icon size={24} />,
     },
-    {
-      title: Report?.inCompeletUserCount,
-      subtitle: "پرداختیها",
-      color: "light-success",
-      icon: <DollarSign size={24} />,
-    },
-    {
-      title: Report?.allUser - Report?.inCompeletUserCount,
-      subtitle: "اساتید",
-      color: "light-danger",
-      icon: <UserCircle02Icon size={36} />,
-    },
+    // {
+    //   title: Report?.inCompeletUserCount,
+    //   subtitle: "تعداد ",
+    //   color: "light-success",
+    //   icon: <DollarSign size={24} />,
+    // },
+    // {
+    //   title: Report?.allUser - Report?.inCompeletUserCount,
+    //   subtitle: "",
+    //   color: "light-danger",
+    //   icon: <UserCircle02Icon size={36} />,
+    // },
     {
       title: Report?.allReserve,
-      subtitle: "بلاگ ها",
+      subtitle: "رزرو ها",
       color: "light-success",
       icon: <Book02Icon size={36} />,
     },
     {
-      title: Report?.allReserveAccept,
-      subtitle: "دوره ها",
+      title: Buildings?.length,
+      subtitle: "ساختمان ها",
       color: "light-success",
-      icon: <LicenseDraftIcon size={36} />,
+      icon: <Building02Icon size={36} />,
     },
     {
-      title: Report?.allReserveNotAccept,
-      subtitle: "کامنت ها",
-      color: "light-primary",
-      icon: <CommentAdd02Icon size={36} />,
+      title: Departments?.length,
+      subtitle: "دپارتمان ها",
+      color: "light-success",
+      icon: <Book02Icon size={36} />,
     },
+    {
+      title: ClassRooms?.length,
+      subtitle: "کلاس ها",
+      color: "light-success",
+      icon: <MeetingRoomIcon size={36} />,
+    },
+    {
+      title: Terms?.length,
+      subtitle: "ترم ها",
+      color: "light-success",
+      icon: <Book02Icon size={36} />,
+    },
+    // {
+    //   title: Report?.allReserveAccept,
+    //   subtitle: "دوره ها",
+    //   color: "light-success",
+    //   icon: <LicenseDraftIcon size={36} />,
+    // },
+    // {
+    //   title: Report?.allReserveNotAccept,
+    //   subtitle: "کامنت ها",
+    //   color: "light-primary",
+    //   icon: <CommentAdd02Icon size={36} />,
+    // },
   ];
 
   const renderData = () => {
