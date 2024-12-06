@@ -41,7 +41,7 @@ const AddCatForm = () => {
   return (
     <Card style={{width:"350px"}}>
       <CardHeader>
-        <CardTitle tag="h4">افزودن  کلاس جدید</CardTitle>
+        <CardTitle tag="h4">وضعیت کلاس ها</CardTitle>
       </CardHeader>
 
       <CardBody>
@@ -49,14 +49,9 @@ const AddCatForm = () => {
           <Row>
             <Col md="12" sm="12" className="mb-1">
               <Label className="form-label" for="classRoomName">
-               نام کلاس
+                
               </Label>
-              <Input
-                type="text"
-                name="classRoomName"
-                id="classRoomName"
-                placeholder="نام کلاس را انتخاب کنید"
-              />
+          
             </Col>
             <Col md="12" sm="12" className="mb-1">
               <Label className="form-label" for="capacity">

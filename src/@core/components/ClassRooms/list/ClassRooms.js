@@ -65,6 +65,8 @@ import { useClassRooms } from "../../../../core/services/api/ClassRooms";
 import CardBrowserState from "./progress";
 
 import AddCatForm from "./AddCatForm";
+import ClassStatus from "./ClassStatus";
+
 import { Link } from "react-router-dom";
 import { DashboardSquareEditIcon } from "hugeicons-react";
 
@@ -145,7 +147,7 @@ const ClassRooms = () => {
 
   const column = [
     {
-      name: "  نام کلاس",
+      name: "نام کلاس",
       sortable: true,
       width: "230px",
       sortField: "title",
@@ -161,7 +163,7 @@ const ClassRooms = () => {
     },
 
     {
-      name: "  تاریخ  کار",
+      name: "تاریخ  برگزاری",
       sortable: true,
       width: "150px",
       sortField: "insertDate",
@@ -209,7 +211,7 @@ const ClassRooms = () => {
 //       ),
 //     },
     {
-      name: "   نام ساختمان",
+      name: "نام ساختمان",
       sortable: true,
       maxWidth: "350x",
       sortField: "role",
@@ -264,19 +266,33 @@ const ClassRooms = () => {
 
   return (
     <Fragment>
-      <Modal
+   <div className="d-flex gap-2">
+
+   <Modal
         isOpen={show}
         toggle={() => setShow(!show)}
-        className="modal-dialog-centered modal-lg"
+        className="modal-dialog-centered modal-lg" style={{width:"450px"}}
       >
         <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}>
           {/* <div>header</div> */}
         </ModalHeader>
-        <ModalBody className="px-sm-5 pt-50 pb-5">
+        <ModalBody className="px-sm-5 pt-50 pb-5 d-flex gap-5">
           <AddCatForm />
         </ModalBody>
       </Modal>
-
+  <Modal
+        isOpen={show}
+        toggle={() => setShow(!show)}
+        className="modal-dialog-centered modal-lg" style={{width:"450px"}}
+      >
+        <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}>
+          {/* <div>header</div> */}
+        </ModalHeader>
+        {/* <ModalBody className="px-sm-5 pt-50 pb-5 d-flex gap-5">
+          <ClassStatus />
+        </ModalBody> */}
+      </Modal>
+   </div>
       <Card className="overflow-hidden">
         <Row className="ltr px-2 py-1">
           {/* <Col xl="6" className="d-flex align-items-center p-0">
@@ -305,7 +321,7 @@ const ClassRooms = () => {
             xl="6"
             // className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
           >
-            <div className="d-flex align-items-center table-header-actions">
+            <div className="d-flex align-items-center table-header-actions gap-3">
               <UncontrolledDropdown className="me-1">
                 <DropdownMenu>
                   <DropdownItem className="w-100">
@@ -342,6 +358,15 @@ const ClassRooms = () => {
               >
                 افزودن  کلاس جدید
               </Button>
+              {/* <Button
+                className="add-new-user"
+                color="primary"
+                marginRight="5px"
+                // onClick={toggleSidebar}
+                onClick={() => setShow(true)}
+              >
+                  وضعیت 
+              </Button> */}
             </div>
           </Col>
         </Row>

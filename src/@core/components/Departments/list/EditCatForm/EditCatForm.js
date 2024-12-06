@@ -18,12 +18,12 @@ import { Formik } from "formik";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { useEditUser } from "../../../../../core/services/api/EditUser";
-import { useCatDetail } from "../../../../../core/services/api/CatDetail";
-import { useEditCat } from "../../../../../core/services/api/EditCat";
+import { useEditDepatment } from "../../../../../core/services/api/EditDepartment";
+import { useDepartmentDetail } from "../../../../../core/services/api/DepartmentDetail";
 
-const EditCatForm = ({ rowId }) => {
+const EditCatForm = ({ id }) => {
   const formRef = useRef(null);
-  const { data } = useCatDetail(rowId);
+  const { data } = useDepartmentDetail(id);
   console.log(data);
 
   const [formValues, setFormValues] = useState({
@@ -45,21 +45,7 @@ const EditCatForm = ({ rowId }) => {
     }
   }, [data]);
 
-  // useEffect(() => {
-  //   setTimeout(() => {
-  //     setFormValues({ fName: "Jane", lName: "Smith" });
-  //   }, 3000);
-  // }, []);
 
-  // const handleInputChange = (e) => {
-  //   console.log(e.target);
-  //   const { name, type, checked, value } = e.target;
-  //   setFormValues({
-  //     ...formValues,
-  //     [name]: type === "checkbox" ? checked : value,
-  //   });
-  //   console.log("Form Values:", formValues);
-  // };
 
   const handleInputChange = (eOrName, valueOrNull) => {
     if (eOrName?.target) {
@@ -81,33 +67,26 @@ const EditCatForm = ({ rowId }) => {
   };
 
   const queryClient = useQueryClient();
-  const mutation = useEditCat();
+  const mutation = useEditDepatment();
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log("Form Submitted:", formValues);
     // console.log("Form Ref: ", formRef);
     const formData = new FormData();
-    formData.append("Id", rowId);
-    formData.append("CategoryName", formValues.CategoryName);
-    formData.append("GoogleTitle", formValues.GoogleTitle);
-    formData.append("GoogleDescribe", formValues.GoogleDescribe);
-    formData.append("Image", formValues.Image);
-    formData.append("IconAddress", formValues.IconAddress);
-    formData.append("IconName", formValues.IconName);
-
-
+    formData.append("Id", id);
+    formData.append("depName", formValues.depName);
+    formData.append("buildingId", formValues.buildingId);    
     console.log(formData);
-    // mutation.mutateAsync(formData);
 
-    const userToast = toast.loading("درحال افزودن تکنولوژی به دوره شما");
+    const userToast = toast.loading("درحال افزودن دپارتمان");
     try {
       await mutation.mutateAsync(formData);
-      toast.success("تکنولوژی با موفقیت اضافه شد!", { id: userToast });
+      toast.success("دپارتمان با موفقیت اضافه شد!", { id: userToast });
       queryClient.invalidateQueries("CourseCat");
     } catch (error) {
       toast.error(
-        `ساخت دسته بندی با مشکل مواجه شد: 
+        `ساخت دپارتمان با مشکل مواجه شد: 
         ${error.response.data.ErrorMessage}`,
         { id: userToast }
       );
@@ -133,51 +112,38 @@ const EditCatForm = ({ rowId }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle tag="h4">ویرایش اطلاعات دسته بندی</CardTitle>
+        <CardTitle tag="h4">ویرایش دپارتمان</CardTitle>
       </CardHeader>
+
       <CardBody>
         <Form onSubmit={handleSubmit} innerRef={formRef}>
           <Row>
             <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="CategoryName">
-                عنوان دسته بندی
+              <Label className="form-label" for="depName">
+                عنوان دپارتمان 
               </Label>
               <Input
                 type="textarea"
-                name="CategoryName"
-                id="CategoryName"
-                placeholder="عنوان دسته بندی را انتخاب کنید"
-                value={formValues?.CategoryName}
+                name="depName"
+                id="depName"
+                placeholder="نام دپارتمان را یادداشت کنید"
+                value={formValues?.depName}
                 onChange={handleInputChange}
               />
             </Col>
             <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="GoogleTitle">
-                عنوان در گوگل
+              <Label className="form-label" for="buildingId">
+                 شماره ساختمان 
               </Label>
               <Input
                 type="textarea"
-                name="GoogleTitle"
-                id="GoogleTitle"
-                placeholder=" عنوان دسته بندی در گوگل را انتخاب کنید"
+                name="buildingId"
+                id="buildingId"
+                placeholder="شماره ساختمان را وارد کنید"
                 value={formValues?.GoogleTitle}
                 onChange={handleInputChange}
               />
             </Col>
-            <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="GoogleDescribe">
-                توضیحات در گوگل
-              </Label>
-              <Input
-                type="textarea"
-                name="GoogleDescribe"
-                id="GoogleDescribe"
-                placeholder=" توضیحات دسته بندی در گوگل را انتخاب کنید"
-                value={formValues?.GoogleDescribe}
-                onChange={handleInputChange}
-              />
-            </Col>
-
             <Col sm="12">
               <div className="d-flex">
                 <Button className="me-1" color="primary" type="submit">
@@ -190,11 +156,8 @@ const EditCatForm = ({ rowId }) => {
             </Col>
           </Row>
         </Form>
-        
       </CardBody>
     </Card>
-    
-    
   );
 };
 export { EditCatForm };

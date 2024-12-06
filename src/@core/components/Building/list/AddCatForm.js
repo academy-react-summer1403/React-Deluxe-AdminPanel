@@ -11,27 +11,31 @@ import {
   Button,
   Label,
 } from "reactstrap";
-import { useAddCourseCat } from "../../../../core/services/api/AddCourseCat";
+// import { useAddCourseCat } from "../../../../core/services/api/AddCourseCat";
+// import { useAddBuilding } from "../../../../core/services/api/AddBuilding;
+
+
 
 import toast from "react-hot-toast";
+import { useAddBuilding } from "../../../../core/services/api/AddBuilding";
 
 const AddCatForm = () => {
   const formRef = useRef(null);
 
-  const mutation = useAddCourseCat();
+  const mutation = useAddBuilding();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(formRef.current);
     // const formValues = Object.fromEntries(formData.entries());
     console.log(formData);
-    const userToast = toast.loading("درحال ساختن دسته بندی جدید");
+    const userToast = toast.loading("درحال ساختن ساختمان  جدید");
     try {
       await mutation.mutateAsync(formData);
-      toast.success("دسته بندی با موفقیت ساخته شد!", { id: userToast });
+      toast.success("ساختمان  با موفقیت ساخته شد!", { id: userToast });
     } catch (error) {
       toast.error(
-        `ساخت دسته بندی با مشکل مواجه شد: 
+        `ساخت ساختمان  با مشکل مواجه شد: 
         ${error.response.data.ErrorMessage}`,
         { id: userToast }
       );
@@ -40,43 +44,65 @@ const AddCatForm = () => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle tag="h4">افزودن دسته بندی جدید</CardTitle>
+        <CardTitle tag="h4">افزودن  ساختمان جدید</CardTitle>
       </CardHeader>
 
       <CardBody>
         <Form onSubmit={handleSubmit} innerRef={formRef}>
           <Row>
-            <Col md="12" sm="12" className="mb-1">
+            <Col md="6" sm="6" className="mb-1">
               <Label className="form-label" for="CategoryName">
-                عنوان دسته بندی
+                  نام ساختمان
               </Label>
               <Input
-                type="textarea"
+                type="text"
                 name="CategoryName"
                 id="CategoryName"
-                placeholder="عنوان دسته بندی را انتخاب کنید"
+                placeholder="نام  ساختمان را انتخاب کنید"
               />
             </Col>
-            <Col md="12" sm="12" className="mb-1">
+            <Col md="6" sm="6" className="mb-1">
               <Label className="form-label" for="GoogleTitle">
-                عنوان در گوگل
+                 طبقه 
               </Label>
               <Input
-                type="textarea"
+                type="text"
                 name="GoogleTitle"
                 id="GoogleTitle"
-                placeholder=" عنوان دسته بندی در گوگل را انتخاب کنید"
+                placeholder="طبقه  را انتخاب کنید"
               />
             </Col>
-            <Col md="12" sm="12" className="mb-1">
+            <Col md="6" sm="6" className="mb-1">
               <Label className="form-label" for="GoogleDescribe">
-                توضیحات در گوگل
+                  عرض جغرافیایی
               </Label>
               <Input
-                type="textarea"
+                type="text"
                 name="GoogleDescribe"
                 id="GoogleDescribe"
-                placeholder=" توضیحات دسته بندی در گوگل را انتخاب کنید"
+                placeholder="عرض  را انتخاب کنید"
+              />
+            </Col>
+            <Col md="6" sm="6" className="mb-1">
+              <Label className="form-label" for="GoogleDescribe">
+                  طول جغرافیایی
+              </Label>
+              <Input
+                type="text"
+                name="GoogleDescribe"
+                id="GoogleDescribe"
+                placeholder="طول  را انتخاب کنید"
+              />
+            </Col>
+            <Col md="6" sm="6" className="mb-1">
+              <Label className="form-label" for="GoogleDescribe">
+                   تاریخ
+              </Label>
+              <Input
+                type="date"
+                name="GoogleDescribe"
+                id="GoogleDescribe"
+                placeholder="تاریخ  را انتخاب کنید"
               />
             </Col>
 

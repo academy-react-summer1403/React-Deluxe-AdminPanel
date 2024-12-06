@@ -21,7 +21,7 @@ import { useEditUser } from "../../../../../core/services/api/EditUser";
 import { useCatDetail } from "../../../../../core/services/api/CatDetail";
 import { useEditCat } from "../../../../../core/services/api/EditCat";
 
-const EditCatForm = ({ rowId }) => {
+const DetailCatForm = ({ rowId }) => {
   const formRef = useRef(null);
   const { data } = useCatDetail(rowId);
   console.log(data);
@@ -135,6 +135,7 @@ const EditCatForm = ({ rowId }) => {
       <CardHeader>
         <CardTitle tag="h4">ویرایش اطلاعات دسته بندی</CardTitle>
       </CardHeader>
+
       <CardBody>
         <Form onSubmit={handleSubmit} innerRef={formRef}>
           <Row>
@@ -190,11 +191,8 @@ const EditCatForm = ({ rowId }) => {
             </Col>
           </Row>
         </Form>
-        
       </CardBody>
     </Card>
-    
-    
   );
 };
-export { EditCatForm };
+export { DetailCatForm };
