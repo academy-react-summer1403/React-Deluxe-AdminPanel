@@ -154,7 +154,7 @@ const BuildingList = () => {
     {
       name: " نام  ساختمان",
       sortable: true,
-      width: "150px",
+      minWidth: "140px",
       sortField: "title",
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
@@ -166,24 +166,11 @@ const BuildingList = () => {
         </div>
       ),
     },
-
-    {
-      name: "  تاریخ  کار",
-      sortable: true,
-      width: "150px",
-      sortField: "insertDate",
-      cell: (data) => (
-        <div className="d-flex justify-content-left align-items-center gap-1">
-          <div className="d-flex flex-column">
-            <span className="fw-bolder">{DatePersianizer(data?.workDate)}</span>
-          </div>
-        </div>
-      ),
-    },
     {
       name: " طبقه ",
       sortable: true,
-      maxWidth: "150x",
+      center: true,
+      maxWidth: "20x",
       sortField: "role",
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
@@ -229,7 +216,7 @@ const BuildingList = () => {
     {
       name: "عملیات",
       center: true,
-      minWidth: "200px",
+      minWidth: "150px",
       cell: (row) => (
         <div className="column-action">
           <Link
@@ -272,6 +259,7 @@ const BuildingList = () => {
   const GetCoordinates = ({ setCoords, setCortinate }) => {
     useMapEvents({
       click: (e) => {
+        console.log(e)
         // const { lat, lng } = e.latlng;
         // setCoords({ lat, lng });
         // setCortinate({ lat, lng });
@@ -318,11 +306,38 @@ const BuildingList = () => {
         </ModalBody>
       </Modal>
 
-      <Card className="overflow-hidden" style={{ width: "50%" }}>
-        <Row className="ltr px-2 py-1">
-          <Col xl="6">
-            <div className="d-flex align-items-center table-header-actions">
-              <UncontrolledDropdown className="me-1">
+      <MapContainer
+        // center={coords}
+        center={[ 51, 0]}
+        zoom={13}
+        style={{ height: "100vh", width: "70%", zIndex: "0" }}
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        <GetCoordinates
+          setCoords={setCoords}
+          // setCortinate={setCortinate}
+        />
+
+        {/* <Marker position={coords}>
+            <Popup>A popup for the marker.</Popup>
+          </Marker> */}
+        {
+        // markerData &&
+          markerData?.map((marker) => (
+            <Marker key={marker?.id} position={marker?.position}>
+              <Popup>{marker?.name}</Popup>
+            </Marker>
+          ))}
+      </MapContainer>
+
+      <Card className="overflow-hidden" style={{ width: "30%" }}>
+        <Row className="ltr px-2 py-1 d-flex justify-content-center">
+          <Col xl="6" className="w-75">
+            <div className="d-flex align-items-center justify-content-center table-header-actions">
+              {/* <UncontrolledDropdown className="me-1">
                 <DropdownMenu>
                   <DropdownItem className="w-100">
                     <Printer className="font-small-4 me-50" />
@@ -348,7 +363,7 @@ const BuildingList = () => {
                     <span className="align-middle">Copy</span>
                   </DropdownItem>
                 </DropdownMenu>
-              </UncontrolledDropdown>
+              </UncontrolledDropdown> */}
 
               <Button
                 className="add-new-user"
@@ -376,30 +391,7 @@ const BuildingList = () => {
           />
         </div>
       </Card>
-      <MapContainer
-        center={coords}
-        zoom={3}
-        style={{ height: "100vh", width: "50%", zIndex: "0" }}
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        />
-        <GetCoordinates
-          setCoords={setCoords}
-          // setCortinate={setCortinate}
-        />
-
-        {/* <Marker position={coords}>
-            <Popup>A popup for the marker.</Popup>
-          </Marker> */}
-        {markerData &&
-          markerData?.map((marker) => (
-            <Marker key={marker.id} position={marker.position}>
-              <Popup>{marker.name}</Popup>
-            </Marker>
-          ))}
-      </MapContainer>
+      
 
       {/* <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} /> */}
     </div>

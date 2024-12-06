@@ -15,9 +15,14 @@ import {
   Col,
 } from "reactstrap";
 
-const GoalOverview = (props) => {
+const GoalOverview = ({ Report }) => {
   // ** State
   const [data, setData] = useState(null);
+
+  console.log(Report);
+
+  const percentage = (Report?.inCompeletUserCount / Report?.allUser) * 100;
+  console.log(percentage);
 
   const options = {
       chart: {
@@ -61,10 +66,10 @@ const GoalOverview = (props) => {
       fill: {
         type: "gradient",
         gradient: {
-          shade: "dark",
+          // shade: "dark",
           type: "horizontal",
           shadeIntensity: 0.5,
-          gradientToColors: [props.success],
+          // gradientToColors: ,
           inverseColors: true,
           opacityFrom: 1,
           opacityTo: 1,
@@ -80,12 +85,12 @@ const GoalOverview = (props) => {
         },
       },
     },
-    series = [83];
+    series = [100 - percentage.toFixed(0)];
 
   return (
     <Card>
       <CardHeader className="pb-0">
-        <CardTitle tag="h4">درصد تکمیل پروفایل ادمین</CardTitle>
+        <CardTitle tag="h4">درصد کاربران تکمیل شده</CardTitle>
       </CardHeader>
       <CardBody className="p-0">
         <Chart
@@ -95,6 +100,16 @@ const GoalOverview = (props) => {
           height={230}
         />
       </CardBody>
+      <Row className='border-top text-center mx-0'>
+        <Col xs='6' className='border-end py-1'>
+          <CardText className='text-muted mb-0'>تکمیل شده</CardText>
+          <h3 className='fw-bolder mb-0'>{100 - percentage.toFixed(0)}%</h3>
+        </Col>
+        <Col xs='6' className='py-1'>
+          <CardText className='text-muted mb-0'>تکمیل نشده</CardText>
+          <h3 className='fw-bolder mb-0'>{percentage.toFixed(0)}%</h3>
+        </Col>
+      </Row>
     </Card>
   );
 };

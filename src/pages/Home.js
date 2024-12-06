@@ -22,6 +22,7 @@ import CardBrowserState from "../@core/components/Dashboard/CardBrowserState";
 import Earnings from "../@core/components/Dashboard/Earnings";
 import CardTransactions from "../@core/components/Dashboard/CardTransactions";
 import { useAdminDashboardReport } from "../core/services/api/AdminDashboardReport";
+import SupportTracker from "../@core/components/Dashboard/SupportTracker";
 
 const Home = () => {
   const { data } = useQuery({
@@ -29,7 +30,10 @@ const Home = () => {
   });
   console.log(data);
   const { colors } = useContext(ThemeColors);
+  
   const { data: Report } = useAdminDashboardReport();
+  console.log(Report);
+  // const context = useContext(ThemeColors)
   return (
     <div>
       {/* <Card>
@@ -96,11 +100,11 @@ const Home = () => {
           <StatsCard Report={Report} cols={{ xl: "3", sm: "6" }} />
         </Col>
         <Col lg="4" md="6" xs="12">
-          <GoalOverview success={colors.success.main} />
+          <GoalOverview Report={Report} />
         </Col>
       </Row>
       <Row>
-      <Col lg="4" md="6" xs="12">
+        <Col lg="4" md="6" xs="12">
           <CardBrowserState success={colors.success.main} />
         </Col>
         <Col lg="4" md="6" xs="12">
@@ -110,7 +114,13 @@ const Home = () => {
           <CardTransactions success={colors.success.main} />
         </Col>
       </Row>
-
+      <Row>
+        <Col lg="6" sm="12">
+          <SupportTracker
+            Report={Report}
+          />
+        </Col>
+      </Row>
     </div>
   );
 };

@@ -53,11 +53,7 @@ const Building = lazy(() => import("../../pages/Building"));
 const Term = lazy(() => import("../../pages/Terms"));
 const Status = lazy(() => import("../../pages/Status"));
 const Schedual = lazy(() => import("../../pages/Schedual"));
-
-
-
-
-
+const AssistanceWork = lazy(() => import("../../pages/AssistanceWork"));
 
 
 
@@ -148,6 +144,10 @@ const Routes = [
   {
     path: "/Schedual",
     element: <Schedual />,
+  },
+  {
+    path: "/AssistanceWork",
+    element: <AssistanceWork />,
   },
   {
     path: "/login",
