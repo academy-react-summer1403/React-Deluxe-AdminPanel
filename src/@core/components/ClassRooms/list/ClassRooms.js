@@ -65,7 +65,7 @@ import { useClassRooms } from "../../../../core/services/api/ClassRooms";
 import CardBrowserState from "./progress";
 
 import AddCatForm from "./AddCatForm";
-import ClassStatus from "./ClassStatus";
+// import ClassStatus from "./ClassStatus";
 
 import { Link } from "react-router-dom";
 import { DashboardSquareEditIcon } from "hugeicons-react";
@@ -166,6 +166,7 @@ const ClassRooms = () => {
       name: "تاریخ  برگزاری",
       sortable: true,
       width: "150px",
+      center:true,
       sortField: "insertDate",
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
@@ -181,6 +182,7 @@ const ClassRooms = () => {
       name: " ظرفیت ",
       sortable: true,
       width: "100x",
+      center:true,
       sortField: "role",
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
@@ -213,6 +215,8 @@ const ClassRooms = () => {
     {
       name: "نام ساختمان",
       sortable: true,
+      center:true,
+
       maxWidth: "350x",
       sortField: "role",
       cell: (data) => (
@@ -231,10 +235,6 @@ const ClassRooms = () => {
       minWidth: "200px",
       cell: (row) => (
         <div className="column-action">
-          <Link
-            className="user_name text-truncate text-body p-0"
-            to={`/userdetail/${row?.id}`}
-          >
             <div className="btn btn-sm">
               <FileText
                 className="cursor-pointer"
@@ -243,13 +243,12 @@ const ClassRooms = () => {
               />
               <UncontrolledTooltip
                 placement="top"
-                target={`send-tooltip-${row.id}`}
-                // className="mb-1"
+                target={`send-tooltip-${row.id}`
+              }
               >
                 ویرایش
               </UncontrolledTooltip>
             </div>
-          </Link>
           <div className="btn btn-sm" onClick={() => handleDelete(row?.id)}>
             <DashboardSquareEditIcon size={17} className="" id={`pw-tooltip-${row.id}`} />
             <UncontrolledTooltip
@@ -280,18 +279,18 @@ const ClassRooms = () => {
           <AddCatForm />
         </ModalBody>
       </Modal>
-  <Modal
+  {/* <Modal
         isOpen={show}
         toggle={() => setShow(!show)}
         className="modal-dialog-centered modal-lg" style={{width:"450px"}}
-      >
-        <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}>
+      > */}
+        {/* <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}> */}
           {/* <div>header</div> */}
-        </ModalHeader>
+        {/* </ModalHeader> */}
         {/* <ModalBody className="px-sm-5 pt-50 pb-5 d-flex gap-5">
           <ClassStatus />
         </ModalBody> */}
-      </Modal>
+      {/* </Modal> */}
    </div>
       <Card className="overflow-hidden">
         <Row className="ltr px-2 py-1">

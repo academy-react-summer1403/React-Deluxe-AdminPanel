@@ -132,12 +132,12 @@ export default [
         icon: <PlusSignCircleIcon size={15} />,
         navLink: "/term",
       },
-      {
-        id: "Status",
-        title: "  وضعیت کلاس ها",
-        icon: <PlusSignCircleIcon size={15} />,
-        navLink: "/status",
-      },
+      // {
+      //   id: "Status",
+      //   title: "  وضعیت کلاس ها",
+      //   icon: <PlusSignCircleIcon size={15} />,
+      //   navLink: "/status",
+      // },
     ],
   },
   {
