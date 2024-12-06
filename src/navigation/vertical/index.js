@@ -147,5 +147,11 @@ export default [
     icon: <Time04Icon size={20} />,
     navLink: "/Schedual",
   },
+  {
+    id: "userManage",
+    title: "مدیریت زمان بندی",
+    icon: <User size={20} />,
+    navLink: "/AssistanceWork",
+  },
   
 ];
