@@ -91,7 +91,7 @@ export const AddModal = (
             <Button
               className="mt-2"
               style={{ width: "100%" }}
-              color="primary"
+              color="success"
               type="submit"
             >
               افزودن

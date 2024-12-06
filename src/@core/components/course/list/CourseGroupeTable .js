@@ -404,7 +404,8 @@ const CourseGroupeTable = () => {
 
               <Button
                 className="add-new-user"
-                color="primary"
+                color="success"
+
                 onClick={toggleSidebar}
               >
                 جستجو
