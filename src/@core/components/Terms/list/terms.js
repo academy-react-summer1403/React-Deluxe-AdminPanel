@@ -89,6 +89,11 @@ const Term = () => {
   // if (isLoading) return <FullPageLoading />;
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
 
+  const paginatedData =
+  data &&
+  data?.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+
+
   console.log(data);
 
   // ** Function to toggle sidebar
@@ -113,14 +118,18 @@ const Term = () => {
   //   const count = Math.ceil(data?.totalCount / rowsPerPage);
 
 
-  const CustomPagination = ({
-      total,
-      currentPage,
-      setCurrentPage,
-      rowsPerPage,
-    }) => {
-      const count = Number(Math.ceil(total / rowsPerPage));
+  // const CustomPagination = ({
+  //     total,
+  //     currentPage,
+  //     setCurrentPage,
+  //     rowsPerPage,
+  //   }) => {
+  //     const count = Number(Math.ceil(total / rowsPerPage));
     
+  const CustomPagination = () => {
+    const count = Math.ceil(data?.length / 5);
+
+
     return (
       <ReactPaginate
         previousLabel={""}
@@ -419,7 +428,7 @@ style={{width:"450px"}}
             // sortIcon={<ChevronDown />}
             className="react-dataTable"
             paginationComponent={CustomPagination}
-            data={data}
+            data={paginatedData}
 
 
 
