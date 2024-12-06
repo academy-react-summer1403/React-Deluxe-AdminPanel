@@ -1,17 +1,5 @@
 // ** React Imports
-import { Fragment, useState, useEffect } from "react";
-
-import Avatar from "@components/avatar";
-
-import Pic from "@src/assets/images/avatars/1.png";
-import Pic2 from "@src/assets/images/raty/star-on-2.png";
-
-import Logo from "@src/assets/images/logo/reactdeluxe.png";
-// ** Invoice List Sidebar
-import Sidebar from "./Sidebar";
-
-// ** Table Columns
-import { columns } from "./columns";
+import { Fragment, useState } from "react";
 import { DatePersianizer } from "../../../../utility/utils/DatePersianizer";
 
 // ** Third Party Components
@@ -26,25 +14,14 @@ import {
   File,
   Grid,
   Copy,
-  MoreVertical,
-  Trash2,
-  Archive,
 } from "react-feather";
-
-// ** Utils
-import { selectThemeColors } from "@utils";
 
 // ** Reactstrap Imports
 import {
   Row,
   Col,
   Card,
-  Input,
-  Label,
   Button,
-  CardBody,
-  CardTitle,
-  CardHeader,
   DropdownMenu,
   DropdownItem,
   DropdownToggle,
@@ -52,7 +29,6 @@ import {
   Modal,
   ModalHeader,
   ModalBody,
-  Badge,
   UncontrolledTooltip,
 } from "reactstrap";
 
@@ -77,33 +53,29 @@ import "leaflet/dist/leaflet.css";
 
 const BuildingList = () => {
   // ** States
-  const [sort, setSort] = useState("desc");
   const [searchTerm, setSearchTerm] = useState("");
   console.log(searchTerm);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortColumn, setSortColumn] = useState("id");
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentRole, setCurrentRole] = useState({
     value: "",
     label: "انتخاب کنید ...",
   });
-  const [isActive, setIsActive] = useState({
-    value: "",
-    label: "انتخاب کنید ...",
-  });
-  const [currentStatus, setCurrentStatus] = useState({
-    value: "",
-    label: "انتخاب کنید ...",
-    number: 0,
-  });
+ 
   const [show, setShow] = useState(false);
 
   const { data, isLoading, isError } = useBuilding(rowsPerPage);
   // if (isLoading) return <FullPageLoading />;
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
 
-  console.log(data);
+
+  const paginatedData =
+  data &&
+  data?.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+
+
+  
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
@@ -124,7 +96,7 @@ const BuildingList = () => {
 
   // ** Custom Pagination
   const CustomPagination = () => {
-    const count = Math.ceil(data?.totalCount / rowsPerPage);
+    const count = Math.ceil(data?.length / 16 );
 
     return (
       <ReactPaginate
@@ -182,37 +154,6 @@ const BuildingList = () => {
         </div>
       ),
     },
-    //  {
-    //       name: " عرض جغرافیایی ",
-    //       sortable: true,
-    //       maxWidth: "350x",
-    //       sortField: "role",
-    //       cell: (data) => (
-    //         <div className="d-flex justify-content-left align-items-center gap-1">
-    //           {/* <Avatar img={Logo} /> */}
-    //           <div className="d-flex flex-column">
-    //             <Link className="user_name text-truncate text-body  p-0">
-    //               <span className="fw-bolder">{data?.latitude.slice(0, 10)}</span>
-    //             </Link>
-    //           </div>
-    //         </div>
-    //       ),
-    //     },
-    // {
-    //   name: "  طول جغرافیایی",
-    //   sortable: true,
-    //   maxWidth: "350x",
-    //   sortField: "role",
-    //   cell: (data) => (
-    //     <div className="d-flex justify-content-left align-items-center gap-1">
-    //       <div className="d-flex flex-column">
-    //         <Link className="user_name text-truncate text-body  p-0">
-    //           <span className="fw-bolder">{data?.longitude.slice(0, 10)}</span>
-    //         </Link>
-    //       </div>
-    //     </div>
-    //   ),
-    // },
     {
       name: "عملیات",
       center: true,
@@ -275,12 +216,6 @@ const BuildingList = () => {
     lat: 51.505,
     lng: -0.1,
   });
-
-  // const markerData = [
-  //   { id: 1, position: [51.505, -0.09], name: "Marker 1" },
-  //   { id: 2, position: [51.515, -0.1], name: "Marker 2" },
-  //   { id: 3, position: [51.525, -0.08], name: "Marker 3" },
-  // ];
 
   const markerData = data?.map((option) => ({
     // value: option?.longitude,
@@ -387,13 +322,12 @@ const BuildingList = () => {
             columns={column}
             className="react-dataTable"
             paginationComponent={CustomPagination}
-            data={data}
+            data={paginatedData}
           />
         </div>
       </Card>
       
 
-      {/* <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} /> */}
     </div>
   );
 };

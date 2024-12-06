@@ -1,14 +1,6 @@
 // ** React Imports
 import { Fragment, useState, useEffect } from "react";
 
-import Avatar from "@components/avatar";
-
-import Pic from "@src/assets/images/avatars/1.png";
-import Pic2 from "@src/assets/images/raty/star-on-2.png";
-
-import Logo from "@src/assets/images/logo/reactdeluxe.png";
-// ** Invoice List Sidebar
-import Sidebar from "./Sidebar";
 
 // ** Table Columns
 import { columns } from "./columns";
@@ -60,13 +52,14 @@ import {
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { useTerms } from "../../../../core/services/api/Term";
-
-
-import CardBrowserState from "./progress";
-
 import AddCatForm from "./AddCatForm";
 import { Link } from "react-router-dom";
-import { DashboardSquareEditIcon } from "hugeicons-react";
+import { EditTerms } from "./EditTerm/EditTerms";
+import { DetailTerms } from "./DetailTerm/DetailTerms";
+
+import {
+  LicenseIcon 
+} from "hugeicons-react";
 
 const Term = () => {
   // ** States
@@ -96,6 +89,11 @@ const Term = () => {
   // if (isLoading) return <FullPageLoading />;
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
 
+  const paginatedData =
+  data &&
+  data?.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+
+
   console.log(data);
 
   // ** Function to toggle sidebar
@@ -116,8 +114,21 @@ const Term = () => {
   };
 
   // ** Custom Pagination
+  // const CustomPagination = () => {
+  //   const count = Math.ceil(data?.totalCount / rowsPerPage);
+
+
+  // const CustomPagination = ({
+  //     total,
+  //     currentPage,
+  //     setCurrentPage,
+  //     rowsPerPage,
+  //   }) => {
+  //     const count = Number(Math.ceil(total / rowsPerPage));
+    
   const CustomPagination = () => {
-    const count = Math.ceil(data?.totalCount / rowsPerPage);
+    const count = Math.ceil(data?.length / 5);
+
 
     return (
       <ReactPaginate
@@ -126,8 +137,9 @@ const Term = () => {
         pageCount={count || 1}
         activeClassName="active"
         // forcePage={currentPage !== 0 ? currentPage - 1 : 0}
-        forcePage={currentPage > 0 ? currentPage - 1 : 0} // Adjust for zero-based indexing
-        onPageChange={(page) => handlePagination(page)}
+        forcePage={currentPage !== 0 ? currentPage - 1 : 0} // Adjust for zero-based indexing
+        // onPageChange={(page) => handlePagination(page)}
+      onPageChange={(page) => setCurrentPage(page.selected + 1)}
         pageClassName={"page-item"}
         nextLinkClassName={"page-link"}
         nextClassName={"page-item next"}
@@ -141,7 +153,6 @@ const Term = () => {
     );
   };
 
-  // const handleDelete = useUserHandleDelete();
 
   const column = [
     {
@@ -230,7 +241,7 @@ const Term = () => {
       center:true,
       cell: (row) => (
         <div className="column-action">
-            <div className="btn btn-sm">
+            <div className="btn btn-sm" onClick={() => toggleModal(row?.id)}>
               <FileText
                 className="cursor-pointer"
                 size={17}
@@ -244,8 +255,8 @@ const Term = () => {
                 ویرایش
               </UncontrolledTooltip>
             </div>
-          <div className="btn btn-sm" onClick={() => handleDelete(row?.id)}>
-            <DashboardSquareEditIcon size={17} className="" id={`pw-tooltip-${row.id}`} />
+          <div className="btn btn-sm" onClick={() => toggleModals(row?.id)}>
+            <LicenseIcon  size={17} className="" id={`pw-tooltip-${row.id}`} />
             <UncontrolledTooltip
               placement="top"
               target={`pw-tooltip-${row.id}`}
@@ -253,10 +264,72 @@ const Term = () => {
                 جزییات
             </UncontrolledTooltip>
           </div>
+          <Modal
+
+            isOpen={openModalId === row?.id}
+            toggle={() => toggleModal(row?.id)}
+            style={{width:"450px"}}
+            className="modal-dialog-centered modal-lg d-flex"
+            
+          >
+            <ModalHeader
+              className="bg-transparent text-center fs-8 mt-2"
+              style={{ marginRight: "330px" }}
+              toggle={() => toggleModal(row?.id)}
+            ></ModalHeader>
+            <ModalBody className="px-sm-5 pt-50 pb-5 d-flex"
+        style={{width:"450px"}}
+            
+            >
+              {openModalId === row?.id && (
+                <EditTerms
+                rowId={row?.id}
+               
+                />
+              )}
+            </ModalBody>
+          </Modal>
+          <Modal
+
+isOpen={openModalId2 === row?.id}
+toggle={() => toggleModals(row?.id)}
+style={{width:"450px"}}
+className="modal-dialog-centered modal-lg d-flex"
+
+>
+<ModalHeader
+  className="bg-transparent text-center fs-8 mt-2"
+  style={{ marginRight: "330px" }}
+  toggle={() => toggleModals(row?.id)}
+></ModalHeader>
+<ModalBody className="px-sm-5 pt-50 pb-5 d-flex"
+style={{width:"450px"}}
+
+>
+  {openModalId2 === row?.id && (
+    <DetailTerms
+    rowId={row?.id}
+   
+    />
+  )}
+</ModalBody>
+</Modal>
         </div>
       ),
     },
   ];
+
+  const [openModalId, setOpenModalId] = useState(null); 
+
+  const toggleModal = (id) => {
+    setOpenModalId((prevId) => (prevId === id ? null : id));
+  };
+
+  const [openModalId2, setOpenModalId2] = useState(null); 
+
+  const toggleModals = (id) => {
+    setOpenModalId2((prevId) => (prevId === id ? null : id));
+  };
 
   return (
     <Fragment>
@@ -355,8 +428,11 @@ const Term = () => {
             // sortIcon={<ChevronDown />}
             className="react-dataTable"
             paginationComponent={CustomPagination}
-            data={data}
+            data={paginatedData}
 
+
+
+            
             // subHeaderComponent={
             //   <CustomHeader
             //     store={store}

@@ -1,17 +1,5 @@
 // ** React Imports
 import { Fragment, useState, useEffect } from "react";
-
-import Avatar from "@components/avatar";
-
-import Pic from "@src/assets/images/avatars/1.png";
-import Pic2 from "@src/assets/images/raty/star-on-2.png";
-
-import Logo from "@src/assets/images/logo/reactdeluxe.png";
-// ** Invoice List Sidebar
-import Sidebar from "./Sidebar";
-
-// ** Table Columns
-import { columns } from "./columns";
 import { DatePersianizer } from "../../../../utility/utils/DatePersianizer";
 
 // ** Third Party Components
@@ -62,12 +50,11 @@ import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { useCourseCat } from "../../../../core/services/api/CourseCat";
 
-import CardBrowserState from "./progress";
-
 import AddCatForm from "./AddCatForm";
 import { Link } from "react-router-dom";
 import { EditCatForm } from "./EditCatForm/EditCatForm";
 import {DetailCatForm} from "./DetailCatForm/DetailCatForm"
+import { LicenseIcon } from "hugeicons-react";
 
 const CourseCategory = () => {
   // ** States
@@ -93,14 +80,15 @@ const CourseCategory = () => {
   });
   const [show, setShow] = useState(false);
 
+
   const { data, isLoading, isError } = useCourseCat(rowsPerPage);
-  // if (isLoading) return <FullPageLoading />;
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
 
-  console.log(data);
 
-  // ** Function to toggle sidebar
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+  const paginatedData =
+  data &&
+  data?.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
+
 
   // ** Function in get data on page change
   const handlePagination = (page) => {
@@ -118,7 +106,7 @@ const CourseCategory = () => {
 
   // ** Custom Pagination
   const CustomPagination = () => {
-    const count = Math.ceil(data?.totalCount / rowsPerPage);
+    const count = Math.ceil(data?.length / 16);
 
     return (
       <ReactPaginate
@@ -126,7 +114,6 @@ const CourseCategory = () => {
         nextLabel={""}
         pageCount={count || 1}
         activeClassName="active"
-        // forcePage={currentPage !== 0 ? currentPage - 1 : 0}
         forcePage={currentPage > 0 ? currentPage - 1 : 0} // Adjust for zero-based indexing
         onPageChange={(page) => handlePagination(page)}
         pageClassName={"page-item"}
@@ -142,7 +129,6 @@ const CourseCategory = () => {
     );
   };
 
-  // const handleDelete = useUserHandleDelete();
 
   const column = [
     {
@@ -183,7 +169,6 @@ const CourseCategory = () => {
       sortField: "role",
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
-          {/* <Avatar img={Logo} /> */}
           <div className="d-flex flex-column">
             <Link className="user_name text-truncate text-body  p-0">
               <span className="fw-bolder">{data?.googleTitle}</span>
@@ -214,9 +199,9 @@ const CourseCategory = () => {
             </UncontrolledTooltip>
           </div>
 
-          <div className="btn btn-sm" onClick={() => handleDelete(row?.id)}>
-            <Edit size={17} className="" id={`pw-tooltip-${row.id}`} />
-            <UncontrolledTooltip
+          <div className="btn btn-sm" onClick={() => toggleModals(row?.id)}>
+            <LicenseIcon size={17} className="" id={`pw-tooltip-${row.id}`} />
+            <UncontrolledTooltip  
               placement="top"
               target={`pw-tooltip-${row.id}`}
             >
@@ -237,28 +222,24 @@ const CourseCategory = () => {
               {openModalId === row?.id && (
                 <EditCatForm
                 rowId={row?.id}
-                // setGroupId={setGroupId}
-                // groupId={groupId}
                 />
               )}
             </ModalBody>
           </Modal>
           <Modal
-            isOpen={openModalId === row?.id}
-            toggle={() => toggleModal(row?.id)}
+            isOpen={openModalId2 === row?.id}
+            toggle={() => toggleModals(row?.id)}
             className="modal-dialog-centered modal-lg"
           >
             <ModalHeader
               className="bg-transparent text-center fs-8 mt-2"
               style={{ marginRight: "330px" }}
-              toggle={() => toggleModal(row?.id)}
+              toggle={() => toggleModals(row?.id)}
             ></ModalHeader>
             <ModalBody className="px-sm-5 pt-50 pb-5">
-              {openModalId === row?.id && (
+              {openModalId2 === row?.id && (
                 <DetailCatForm
                 rowId={row?.id}
-                // setGroupId={setGroupId}
-                // groupId={groupId}
                 />
               )}
             </ModalBody>
@@ -273,6 +254,11 @@ const CourseCategory = () => {
   const toggleModal = (id) => {
     setOpenModalId((prevId) => (prevId === id ? null : id));
   };
+  const [openModalId2, setOpenModalId2] = useState(null); // Track which modal is open
+
+  const toggleModals = (id) => {
+    setOpenModalId2((prevId) => (prevId === id ? null : id));
+  };
 
   return (
     <Fragment>
@@ -282,7 +268,6 @@ const CourseCategory = () => {
         className="modal-dialog-centered modal-lg"
       >
         <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}>
-          {/* <div>header</div> */}
         </ModalHeader>
         <ModalBody className="px-sm-5 pt-50 pb-5">
           <AddCatForm />
@@ -291,28 +276,6 @@ const CourseCategory = () => {
 
       <Card className="overflow-hidden">
         <Row className="ltr px-2 py-1">
-          {/* <Col xl="6" className="d-flex align-items-center p-0">
-            <div className="d-flex align-items-center w-100">
-              <label htmlFor="rows-per-page" style={{ marginRight: "25px" }}>
-                نمایش
-              </label>
-              <Input
-                className="mx-50"
-                type="select"
-                id="rows-per-page"
-                value={rowsPerPage}
-                onChange={handlePerPage}
-                style={{ width: "5rem" }}
-              >
-                <option value="10">۱۰</option>
-                <option value="15">۱۵</option>
-                <option value="25">۲۵</option>
-                <option value="50">۵۰</option>
-                <option value="75">۷۵</option>
-                <option value="100">۱۰۰</option>
-              </Input>
-            </div>
-          </Col> */}
           <Col
             xl="6"
             // className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
@@ -349,7 +312,6 @@ const CourseCategory = () => {
               <Button
                 className="add-new-user"
                 color="primary"
-                // onClick={toggleSidebar}
                 onClick={() => setShow(true)}
               >
                 افزودن دسته بندی جدید
@@ -366,27 +328,15 @@ const CourseCategory = () => {
             responsive
             paginationServer
             columns={column}
-            // onSort={handleSort}
-            // sortIcon={<ChevronDown />}
+
             className="react-dataTable"
             paginationComponent={CustomPagination}
-            data={data}
+            data={paginatedData}
 
-            // subHeaderComponent={
-            //   <CustomHeader
-            //     store={store}
-            //     searchTerm={searchTerm}
-            //     rowsPerPage={rowsPerPage}
-            //     handleFilter={handleFilter}
-            //     handlePerPage={handlePerPage}
-            //     toggleSidebar={toggleSidebar}
-            //   />
-            // }
           />
         </div>
       </Card>
 
-      {/* <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} /> */}
     </Fragment>
   );
 };
