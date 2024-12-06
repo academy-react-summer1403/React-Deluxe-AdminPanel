@@ -55,6 +55,8 @@ import { useTerms } from "../../../../core/services/api/Term";
 import AddCatForm from "./AddCatForm";
 import { Link } from "react-router-dom";
 import { EditTerms } from "./EditTerm/EditTerms";
+import { DetailTerms } from "./DetailTerm/DetailTerms";
+
 import {
   LicenseIcon 
 } from "hugeicons-react";
@@ -244,7 +246,7 @@ const Term = () => {
                 ویرایش
               </UncontrolledTooltip>
             </div>
-          <div className="btn btn-sm" onClick={() => handleDelete(row?.id)}>
+          <div className="btn btn-sm" onClick={() => toggleModals(row?.id)}>
             <LicenseIcon  size={17} className="" id={`pw-tooltip-${row.id}`} />
             <UncontrolledTooltip
               placement="top"
@@ -278,6 +280,31 @@ const Term = () => {
               )}
             </ModalBody>
           </Modal>
+          <Modal
+
+isOpen={openModalId2 === row?.id}
+toggle={() => toggleModals(row?.id)}
+style={{width:"450px"}}
+className="modal-dialog-centered modal-lg d-flex"
+
+>
+<ModalHeader
+  className="bg-transparent text-center fs-8 mt-2"
+  style={{ marginRight: "330px" }}
+  toggle={() => toggleModals(row?.id)}
+></ModalHeader>
+<ModalBody className="px-sm-5 pt-50 pb-5 d-flex"
+style={{width:"450px"}}
+
+>
+  {openModalId2 === row?.id && (
+    <DetailTerms
+    rowId={row?.id}
+   
+    />
+  )}
+</ModalBody>
+</Modal>
         </div>
       ),
     },
@@ -287,6 +314,12 @@ const Term = () => {
 
   const toggleModal = (id) => {
     setOpenModalId((prevId) => (prevId === id ? null : id));
+  };
+
+  const [openModalId2, setOpenModalId2] = useState(null); 
+
+  const toggleModals = (id) => {
+    setOpenModalId2((prevId) => (prevId === id ? null : id));
   };
 
   return (
@@ -387,6 +420,7 @@ const Term = () => {
             className="react-dataTable"
             paginationComponent={CustomPagination}
             data={data}
+
 
 
             
