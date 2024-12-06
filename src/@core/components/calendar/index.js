@@ -8,6 +8,9 @@ const CalendarComponent = () => {
   const [addSidebarOpen, setAddSidebarOpen] = useState(false);
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(false);
 
+  const [EventStart, setEventStart] = useState()
+  console.log(EventStart)
+
   const handleAddEventSidebar = () => setAddSidebarOpen(!addSidebarOpen);
   const toggleSidebar = (val) => setLeftSidebarOpen(val);
 
@@ -21,10 +24,10 @@ const CalendarComponent = () => {
           />
         </Col>
         <Col className='position-relative'>
-          <Calendar />
+          <Calendar handleAddEventSidebar={handleAddEventSidebar} setEventStart={setEventStart} />
         </Col>
       </Row>
-      <AddEventSidebar open={addSidebarOpen} handleAddEventSidebar={handleAddEventSidebar} />
+      <AddEventSidebar open={addSidebarOpen} handleAddEventSidebar={handleAddEventSidebar} EventStart={EventStart} />
     </div>
   );
 };

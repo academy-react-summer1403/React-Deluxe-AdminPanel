@@ -17,8 +17,9 @@ import { useSchedualAdmin } from "../../../core/services/api/SchedualAdmin";
 import { useCourseGroupDetail } from "../../../core/services/api/CourseGroupDetail";
 import http from "../../../core/services/interceptor";
 
-const Calendar = () => {
-  const { data } = useSchedualAdmin();
+const Calendar = ({handleAddEventSidebar, setEventStart}) => {
+  const [curMonth, setCurMonth] = useState()
+  const { data } = useSchedualAdmin(curMonth);
 
   const formatEventDateTime = (startDate, startTime) => {
     const date = new Date(startDate); // Parse the startDate
@@ -100,7 +101,12 @@ const Calendar = () => {
     },
     editable: true,
     eventClick: ({ event: clickedEvent }) => {
-      console.log("Event clicked:", clickedEvent);
+      // console.log("Event clicked:", clickedEvent);
+        handleAddEventSidebar() // Close sidebar
+    },
+    dateClick(info) {
+      setEventStart(info.dateStr)
+      handleAddEventSidebar()
     },
     customButtons: {
       sidebarToggle: {
@@ -112,13 +118,18 @@ const Calendar = () => {
     },
     locale: "fa-IR",
     firstDay: 6,
-    
+    // validRange: {
+    //   start: new Date(new Date().getFullYear(), new Date().getMonth(), 10, 16), // 1st day of current month
+    //   end: new Date(new Date().getFullYear(), new Date().getMonth() + 21, 0),
+    // }
   };
 
   return (
     <Card className="shadow-none border-0 mb-0 rounded-0">
       <CardBody className="pb-0">
-        <FullCalendar {...calendarOptions} ref={calendarRef} />
+        <FullCalendar {...calendarOptions} ref={calendarRef} datesSet={(arg) => {
+          setCurMonth(arg)
+          }} />
       </CardBody>
     </Card>
   );

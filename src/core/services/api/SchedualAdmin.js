@@ -1,18 +1,20 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import http from "../interceptor";
 
-export const useSchedualAdmin = (data, isError, rowsPerPage) => {
+export const useSchedualAdmin = (curMonth) => {
   const SchedualAdmin = async () => {
     try {
-      // const res = await http.get("/Schedual/GetAdminScheduals?startDate=2020-01-01&endDate=2026-01-01");
-      // return res;
+      const res = await http.get(
+        `/Schedual/GetAdminScheduals?startDate=${curMonth.startStr.slice(0,10)}&endDate=${curMonth.endStr.slice(0,10)}`
+      );
+      return res;
     } catch (error) {
       console.log("Error in Status: ", error);
       throw error;
     }
   };
   return useQuery({
-    queryKey: ["SchedualAdmin"],
+    queryKey: ["SchedualAdmin", curMonth],
     queryFn: SchedualAdmin,
   });
 };
