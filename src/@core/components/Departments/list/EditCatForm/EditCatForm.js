@@ -21,9 +21,10 @@ import { useEditUser } from "../../../../../core/services/api/EditUser";
 import { useEditDepatment } from "../../../../../core/services/api/EditDepartment";
 import { useDepartmentDetail } from "../../../../../core/services/api/DepartmentDetail";
 
-const EditCatForm = ({ id }) => {
+const EditCatForm = ({ rowId }) => {
   const formRef = useRef(null);
-  const { data } = useDepartmentDetail(id);
+  console.log(rowId)
+  const { data } = useDepartmentDetail(rowId);
   console.log(data);
 
   const [formValues, setFormValues] = useState({
@@ -71,19 +72,19 @@ const EditCatForm = ({ id }) => {
     console.log("Form Submitted:", formValues);
     // console.log("Form Ref: ", formRef);
     const formData = new FormData();
-    formData.append("Id", id);
+    formData.append("Id", formValues.id);
     formData.append("depName", formValues.depName);
     formData.append("buildingId", formValues.buildingId);    
     console.log(formData);
 
-    const userToast = toast.loading("درحال افزودن دپارتمان");
+    const userToast = toast.loading("درحال ویرایش دپارتمان");
     try {
       await mutation.mutateAsync(formValues);
-      toast.success("دپارتمان با موفقیت اضافه شد!", { id: userToast });
+      toast.success("دپارتمان با موفقیت ویرایش شد!", { id: userToast });
       queryClient.invalidateQueries("CourseCat");
     } catch (error) {
       toast.error(
-        `ساخت دپارتمان با مشکل مواجه شد: 
+        `ویرایش دپارتمان با مشکل مواجه شد: 
         ${error.response.data.ErrorMessage}`,
         { id: userToast }
       );
@@ -137,7 +138,7 @@ const EditCatForm = ({ id }) => {
                 name="buildingId"
                 id="buildingId"
                 placeholder="شماره ساختمان را وارد کنید"
-                value={formValues?.GoogleTitle}
+                value={formValues?.buildingId}
                 onChange={handleInputChange}
               />
             </Col>

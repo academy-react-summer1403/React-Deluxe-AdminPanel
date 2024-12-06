@@ -61,12 +61,19 @@ import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { useBuilding } from "../../../../core/services/api/Building";
 
-
 import CardBrowserState from "./progress";
 
 import AddCatForm from "./AddCatForm";
 import { Link } from "react-router-dom";
 import { DashboardSquareEditIcon } from "hugeicons-react";
+import {
+  MapContainer,
+  TileLayer,
+  useMapEvents,
+  Marker,
+  Popup,
+} from "react-leaflet";
+import "leaflet/dist/leaflet.css";
 
 const BuildingList = () => {
   // ** States
@@ -168,9 +175,7 @@ const BuildingList = () => {
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
           <div className="d-flex flex-column">
-            <span className="fw-bolder">
-              {DatePersianizer(data?.workDate)}
-            </span>
+            <span className="fw-bolder">{DatePersianizer(data?.workDate)}</span>
           </div>
         </div>
       ),
@@ -190,22 +195,22 @@ const BuildingList = () => {
         </div>
       ),
     },
-//  {
-//       name: " عرض جغرافیایی ",
-//       sortable: true,
-//       maxWidth: "350x",
-//       sortField: "role",
-//       cell: (data) => (
-//         <div className="d-flex justify-content-left align-items-center gap-1">
-//           {/* <Avatar img={Logo} /> */}
-//           <div className="d-flex flex-column">
-//             <Link className="user_name text-truncate text-body  p-0">
-//               <span className="fw-bolder">{data?.latitude.slice(0, 10)}</span>
-//             </Link>
-//           </div>
-//         </div>
-//       ),
-//     },
+    //  {
+    //       name: " عرض جغرافیایی ",
+    //       sortable: true,
+    //       maxWidth: "350x",
+    //       sortField: "role",
+    //       cell: (data) => (
+    //         <div className="d-flex justify-content-left align-items-center gap-1">
+    //           {/* <Avatar img={Logo} /> */}
+    //           <div className="d-flex flex-column">
+    //             <Link className="user_name text-truncate text-body  p-0">
+    //               <span className="fw-bolder">{data?.latitude.slice(0, 10)}</span>
+    //             </Link>
+    //           </div>
+    //         </div>
+    //       ),
+    //     },
     // {
     //   name: "  طول جغرافیایی",
     //   sortable: true,
@@ -247,12 +252,16 @@ const BuildingList = () => {
             </div>
           </Link>
           <div className="btn btn-sm" onClick={() => handleDelete(row?.id)}>
-            <DashboardSquareEditIcon size={17} className="" id={`pw-tooltip-${row.id}`} />
+            <DashboardSquareEditIcon
+              size={17}
+              className=""
+              id={`pw-tooltip-${row.id}`}
+            />
             <UncontrolledTooltip
               placement="top"
               target={`pw-tooltip-${row.id}`}
             >
-                جزییات
+              جزییات
             </UncontrolledTooltip>
           </div>
         </div>
@@ -260,8 +269,42 @@ const BuildingList = () => {
     },
   ];
 
+  const GetCoordinates = ({ setCoords, setCortinate }) => {
+    useMapEvents({
+      click: (e) => {
+        // const { lat, lng } = e.latlng;
+        // setCoords({ lat, lng });
+        // setCortinate({ lat, lng });
+      },
+    });
+
+    return null;
+  };
+
+  const [coords, setCoords] = useState({
+    // lat: data?.latitude,
+    // lng: data?.longitude,
+    lat: 51.505,
+    lng: -0.1,
+  });
+
+  // const markerData = [
+  //   { id: 1, position: [51.505, -0.09], name: "Marker 1" },
+  //   { id: 2, position: [51.515, -0.1], name: "Marker 2" },
+  //   { id: 3, position: [51.525, -0.08], name: "Marker 3" },
+  // ];
+
+  const markerData = data?.map((option) => ({
+    // value: option?.longitude,
+    // label: option?.latitude,
+    id: option.id,
+    position: [option?.latitude, option?.longitude],
+    name: option?.buildingName,
+  }));
+  console.log(markerData)
+
   return (
-    <Fragment>
+    <div className="d-flex">
       <Modal
         isOpen={show}
         toggle={() => setShow(!show)}
@@ -275,37 +318,9 @@ const BuildingList = () => {
         </ModalBody>
       </Modal>
 
-      <Card className="overflow-hidden"
-    style={{width:"600px"}}
-      
-      >
+      <Card className="overflow-hidden" style={{ width: "50%" }}>
         <Row className="ltr px-2 py-1">
-          {/* <Col xl="6" className="d-flex align-items-center p-0">
-            <div className="d-flex align-items-center w-100">
-              <label htmlFor="rows-per-page" style={{ marginRight: "25px" }}>
-                نمایش
-              </label>
-              <Input
-                className="mx-50"
-                type="select"
-                id="rows-per-page"
-                value={rowsPerPage}
-                onChange={handlePerPage}
-                style={{ width: "5rem" }}
-              >
-                <option value="10">۱۰</option>
-                <option value="15">۱۵</option>
-                <option value="25">۲۵</option>
-                <option value="50">۵۰</option>
-                <option value="75">۷۵</option>
-                <option value="100">۱۰۰</option>
-              </Input>
-            </div>
-          </Col> */}
-          <Col
-            xl="6"
-            // className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
-          >
+          <Col xl="6">
             <div className="d-flex align-items-center table-header-actions">
               <UncontrolledDropdown className="me-1">
                 <DropdownMenu>
@@ -341,12 +356,12 @@ const BuildingList = () => {
                 // onClick={toggleSidebar}
                 onClick={() => setShow(true)}
               >
-                افزودن  ساختمان جدید
+                افزودن ساختمان جدید
               </Button>
             </div>
           </Col>
         </Row>
-        <div className="react-dataTable m-1" >
+        <div className="react-dataTable m-1">
           <DataTable
             noHeader
             // subHeader
@@ -355,28 +370,39 @@ const BuildingList = () => {
             responsive
             paginationServer
             columns={column}
-            // onSort={handleSort}
-            // sortIcon={<ChevronDown />}
             className="react-dataTable"
             paginationComponent={CustomPagination}
             data={data}
-
-            // subHeaderComponent={
-            //   <CustomHeader
-            //     store={store}
-            //     searchTerm={searchTerm}
-            //     rowsPerPage={rowsPerPage}
-            //     handleFilter={handleFilter}
-            //     handlePerPage={handlePerPage}
-            //     toggleSidebar={toggleSidebar}
-            //   />
-            // }
           />
         </div>
       </Card>
+      <MapContainer
+        center={coords}
+        zoom={3}
+        style={{ height: "100vh", width: "50%", zIndex: "0" }}
+      >
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+        <GetCoordinates
+          setCoords={setCoords}
+          // setCortinate={setCortinate}
+        />
+
+        {/* <Marker position={coords}>
+            <Popup>A popup for the marker.</Popup>
+          </Marker> */}
+        {markerData &&
+          markerData?.map((marker) => (
+            <Marker key={marker.id} position={marker.position}>
+              <Popup>{marker.name}</Popup>
+            </Marker>
+          ))}
+      </MapContainer>
 
       {/* <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} /> */}
-    </Fragment>
+    </div>
   );
 };
 
