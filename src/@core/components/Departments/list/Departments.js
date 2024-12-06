@@ -272,6 +272,9 @@ const Department = () => {
   const toggleModal = (id) => {
     setOpenModalId((prevId) => (prevId === id ? null : id));
   };
+
+  
+
   return (
     <Fragment>
       <Modal

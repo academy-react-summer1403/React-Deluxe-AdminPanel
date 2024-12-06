@@ -1,25 +1,11 @@
 // ** React Imports
-import { Fragment, useState, useEffect } from "react";
-
-import Avatar from "@components/avatar";
-
-import Pic from "@src/assets/images/avatars/1.png";
-import Pic2 from "@src/assets/images/raty/star-on-2.png";
-
-import Logo from "@src/assets/images/logo/reactdeluxe.png";
-// ** Invoice List Sidebar
-import Sidebar from "./Sidebar";
-
-// ** Table Columns
-import { columns } from "./columns";
+import { Fragment, useState } from "react";
 import { DatePersianizer } from "../../../../utility/utils/DatePersianizer";
 
 // ** Third Party Components
 import ReactPaginate from "react-paginate";
 import DataTable from "react-data-table-component";
 import {
-  ChevronDown,
-  Share,
   Printer,
   FileText,
   File,
@@ -53,16 +39,13 @@ import {
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { useClassRooms } from "../../../../core/services/api/ClassRooms";
-
-
-import CardBrowserState from "./progress";
-
 import AddCatForm from "./AddCatForm";
 
 
 import { Link } from "react-router-dom";
 import { LicenseIcon  } from "hugeicons-react";
 import { EditClassRooms } from "./EditClassRoom/EditClass";
+import { DetailClassRoom } from "./DetailClassRoom/DetailClassRoom";
 
 
 const ClassRooms = () => {
@@ -104,14 +87,7 @@ const ClassRooms = () => {
     console.log("Page Selected:", page.selected > 0 ? page.selected + 1 : 1);
   };
 
-  // ** Function in get data on rows per page
-  const handlePerPage = (e) => {
-    const value = parseInt(e.currentTarget.value);
-
-    setRowsPerPage(value);
-    console.log(value);
-  };
-
+ 
   // ** Custom Pagination
   const CustomPagination = () => {
     const count = Math.ceil(data?.totalCount / rowsPerPage);
@@ -226,7 +202,7 @@ const ClassRooms = () => {
                 ویرایش
               </UncontrolledTooltip>
             </div>
-          <div className="btn btn-sm" onClick={() => handleDelete(row?.id)}>
+          <div className="btn btn-sm" onClick={() => toggleModals(row?.id)}>
             <LicenseIcon  size={17} className="" id={`pw-tooltip-${row.id}`} />
             <UncontrolledTooltip
               placement="top"
@@ -259,16 +235,47 @@ const ClassRooms = () => {
               )}
             </ModalBody>
           </Modal>
+          <Modal
+
+isOpen={openModalId2 === row?.id}
+toggle={() => toggleModals(row?.id)}
+style={{width:"450px"}}
+className="modal-dialog-centered modal-lg d-flex"
+
+>
+<ModalHeader
+  className="bg-transparent text-center fs-8 mt-2"
+  style={{ marginRight: "330px" }}
+  toggle={() => toggleModals(row?.id)}
+></ModalHeader>
+<ModalBody className="px-sm-5 pt-50 pb-5 d-flex"
+style={{width:"450px"}}
+
+>
+  {openModalId2 === row?.id && (
+    <DetailClassRoom
+    rowId={row?.id}
+   
+    />
+  )}
+</ModalBody>
+</Modal>
         </div>
       ),
     },
   ];
 
-  const [openModalId, setOpenModalId] = useState(null); // Track which modal is open
+  const [openModalId, setOpenModalId] = useState(null); 
 
   const toggleModal = (id) => {
     setOpenModalId((prevId) => (prevId === id ? null : id));
   };
+  const [openModalId2, setOpenModalId2] = useState(null); 
+
+  const toggleModals = (id) => {
+    setOpenModalId2((prevId) => (prevId === id ? null : id));
+  };
+
 
   return (
     <Fragment>
