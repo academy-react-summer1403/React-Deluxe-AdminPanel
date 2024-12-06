@@ -65,7 +65,7 @@ import { useClassRooms } from "../../../../core/services/api/ClassRooms";
 import CardBrowserState from "./progress";
 
 import AddCatForm from "./AddCatForm";
-import ClassStatus from "./ClassStatus";
+// import ClassStatus from "./ClassStatus";
 
 import { Link } from "react-router-dom";
 import { DashboardSquareEditIcon } from "hugeicons-react";
@@ -280,18 +280,18 @@ const ClassRooms = () => {
           <AddCatForm />
         </ModalBody>
       </Modal>
-  <Modal
+  {/* <Modal
         isOpen={show}
         toggle={() => setShow(!show)}
         className="modal-dialog-centered modal-lg" style={{width:"450px"}}
-      >
-        <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}>
+      > */}
+        {/* <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}> */}
           {/* <div>header</div> */}
-        </ModalHeader>
+        {/* </ModalHeader> */}
         {/* <ModalBody className="px-sm-5 pt-50 pb-5 d-flex gap-5">
           <ClassStatus />
         </ModalBody> */}
-      </Modal>
+      {/* </Modal> */}
    </div>
       <Card className="overflow-hidden">
         <Row className="ltr px-2 py-1">
@@ -352,7 +352,7 @@ const ClassRooms = () => {
 
               <Button
                 className="add-new-user"
-                color="primary"
+                color="success"
                 // onClick={toggleSidebar}
                 onClick={() => setShow(true)}
               >

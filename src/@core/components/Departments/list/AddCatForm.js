@@ -38,7 +38,7 @@ const AddCatForm = () => {
     }
   };
   return (
-    <Card style={{width:"350px"}}>
+    <Card>
       <CardHeader>
         <CardTitle tag="h4">افزودن دپارتمان جدید</CardTitle>
       </CardHeader>

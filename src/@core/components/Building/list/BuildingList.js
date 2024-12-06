@@ -337,7 +337,7 @@ const BuildingList = () => {
 
               <Button
                 className="add-new-user"
-                color="primary"
+                color="succes"
                 // onClick={toggleSidebar}
                 onClick={() => setShow(true)}
               >

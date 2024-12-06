@@ -216,7 +216,7 @@ const Department = () => {
       minWidth: "200px",
       cell: (row) => (
         <div className="column-action">
-            <div className="btn btn-sm">
+            <div className="btn btn-sm" onClick={() => toggleModal(row?.id)}>
               <FileText
                 className="cursor-pointer"
                 size={17}
@@ -242,14 +242,19 @@ const Department = () => {
           <Modal
             isOpen={openModalId === row?.id}
             toggle={() => toggleModal(row?.id)}
-            className="modal-dialog-centered modal-lg"
+            style={{width:"450px"}}
+            className="modal-dialog-centered modal-lg d-flex"
+            
           >
             <ModalHeader
               className="bg-transparent text-center fs-8 mt-2"
               style={{ marginRight: "330px" }}
               toggle={() => toggleModal(row?.id)}
             ></ModalHeader>
-            <ModalBody className="px-sm-5 pt-50 pb-5">
+            <ModalBody className="px-sm-5 pt-50 pb-5 d-flex"
+        style={{width:"450px"}}
+            
+            >
               {openModalId === row?.id && (
                 <EditCatForm
                 rowId={row?.id}
@@ -272,10 +277,12 @@ const Department = () => {
       <Modal
         isOpen={show}
         toggle={() => setShow(!show)}
-        style={{width:"450px"}}
-        className="modal-dialog-centered modal-lg"
+        style={{width:"400px"}}
+        className="modal-dialog-centered modal-md" 
       >
-        <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}>
+        <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}
+          
+          >
           {/* <div>header</div> */}
         </ModalHeader>
         <ModalBody className="px-sm-5 pt-50 pb-5">

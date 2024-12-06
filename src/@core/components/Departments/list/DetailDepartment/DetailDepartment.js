@@ -12,16 +12,13 @@ import {
   Label,
 } from "reactstrap";
 import toast from "react-hot-toast";
-import Select from "react-select";
 import { selectThemeColors } from "@utils";
 import { Formik } from "formik";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
-import { useEditUser } from "../../../../../core/services/api/EditUser";
-import { useEditDepatment } from "../../../../../core/services/api/EditDepartment";
 import { useDepartmentDetail } from "../../../../../core/services/api/DepartmentDetail";
+import { useEditDepatment } from "../../../../../core/services/api/EditDepatment";
 
-const EditCatForm = ({ id }) => {
+const DetailDepartment = ({ id }) => {
   const formRef = useRef(null);
   const { data } = useDepartmentDetail(id);
   console.log(data);
@@ -29,7 +26,7 @@ const EditCatForm = ({ id }) => {
   const [formValues, setFormValues] = useState({
     depName: "",
     buildingId: "",
-    id: "1",
+    id: "1"
   });
 
   useEffect(() => {
@@ -42,7 +39,21 @@ const EditCatForm = ({ id }) => {
     }
   }, [data]);
 
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setFormValues({ fName: "Jane", lName: "Smith" });
+  //   }, 3000);
+  // }, []);
 
+  // const handleInputChange = (e) => {
+  //   console.log(e.target);
+  //   const { name, type, checked, value } = e.target;
+  //   setFormValues({
+  //     ...formValues,
+  //     [name]: type === "checkbox" ? checked : value,
+  //   });
+  //   console.log("Form Values:", formValues);
+  // };
 
   const handleInputChange = (eOrName, valueOrNull) => {
     if (eOrName?.target) {
@@ -73,17 +84,21 @@ const EditCatForm = ({ id }) => {
     const formData = new FormData();
     formData.append("Id", id);
     formData.append("depName", formValues.depName);
-    formData.append("buildingId", formValues.buildingId);    
-    console.log(formData);
+    formData.append("buildingId", formValues.buildingId);
+  
 
-    const userToast = toast.loading("درحال افزودن دپارتمان");
+
+    console.log(formData);
+    // mutation.mutateAsync(formData);
+
+    const userToast = toast.loading("درحال افزودن ساختمان");
     try {
-      await mutation.mutateAsync(formValues);
-      toast.success("دپارتمان با موفقیت اضافه شد!", { id: userToast });
+      await mutation.mutateAsync(formData);
+      toast.success("ساختمان با موفقیت اضافه شد!", { id: userToast });
       queryClient.invalidateQueries("CourseCat");
     } catch (error) {
       toast.error(
-        `ساخت دپارتمان با مشکل مواجه شد: 
+        `اضافه کردن ساختمان با مشکل مواجه شد: 
         ${error.response.data.ErrorMessage}`,
         { id: userToast }
       );
@@ -109,7 +124,7 @@ const EditCatForm = ({ id }) => {
   return (
     <Card>
       <CardHeader>
-        <CardTitle tag="h4">ویرایش دپارتمان</CardTitle>
+        <CardTitle tag="h4">ویرایش  ساختمان</CardTitle>
       </CardHeader>
 
       <CardBody>
@@ -117,33 +132,35 @@ const EditCatForm = ({ id }) => {
           <Row>
             <Col md="12" sm="12" className="mb-1">
               <Label className="form-label" for="depName">
-                نام دپارتمان 
+                نام ساختمان  
               </Label>
               <Input
                 type="text"
                 name="depName"
                 id="depName"
-                placeholder="نام دپارتمان را یادداشت کنید"
+                placeholder="نام ساختمان را انتخاب کنید"
                 value={formValues?.depName}
                 onChange={handleInputChange}
               />
             </Col>
             <Col md="12" sm="12" className="mb-1">
               <Label className="form-label" for="buildingId">
-                 شماره ساختمان 
+                عنوان در گوگل
               </Label>
               <Input
                 type="text"
                 name="buildingId"
                 id="buildingId"
-                placeholder="شماره ساختمان را وارد کنید"
-                value={formValues?.GoogleTitle}
+                placeholder="    شماره ساختمان را یادداشت کنید"
+                value={formValues?.buildingId}
                 onChange={handleInputChange}
               />
             </Col>
+          
+
             <Col sm="12">
-              <div className="d-flex justify-content-center">
-                <Button className="me-1" color="success" type="submit">
+              <div className="d-flex">
+                <Button className="me-1" color="succes" type="submit">
                   افزودن
                 </Button>
                 <Button outline color="danger" type="reset">
@@ -157,4 +174,4 @@ const EditCatForm = ({ id }) => {
     </Card>
   );
 };
-export { EditCatForm };
+export { DetailDepartment };
