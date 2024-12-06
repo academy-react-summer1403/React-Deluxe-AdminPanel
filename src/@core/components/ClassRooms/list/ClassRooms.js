@@ -166,6 +166,7 @@ const ClassRooms = () => {
       name: "تاریخ  برگزاری",
       sortable: true,
       width: "150px",
+      center:true,
       sortField: "insertDate",
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
@@ -181,6 +182,7 @@ const ClassRooms = () => {
       name: " ظرفیت ",
       sortable: true,
       width: "100x",
+      center:true,
       sortField: "role",
       cell: (data) => (
         <div className="d-flex justify-content-left align-items-center gap-1">
@@ -213,6 +215,8 @@ const ClassRooms = () => {
     {
       name: "نام ساختمان",
       sortable: true,
+      center:true,
+
       maxWidth: "350x",
       sortField: "role",
       cell: (data) => (
@@ -231,10 +235,6 @@ const ClassRooms = () => {
       minWidth: "200px",
       cell: (row) => (
         <div className="column-action">
-          <Link
-            className="user_name text-truncate text-body p-0"
-            to={`/userdetail/${row?.id}`}
-          >
             <div className="btn btn-sm">
               <FileText
                 className="cursor-pointer"
@@ -243,13 +243,12 @@ const ClassRooms = () => {
               />
               <UncontrolledTooltip
                 placement="top"
-                target={`send-tooltip-${row.id}`}
-                // className="mb-1"
+                target={`send-tooltip-${row.id}`
+              }
               >
                 ویرایش
               </UncontrolledTooltip>
             </div>
-          </Link>
           <div className="btn btn-sm" onClick={() => handleDelete(row?.id)}>
             <DashboardSquareEditIcon size={17} className="" id={`pw-tooltip-${row.id}`} />
             <UncontrolledTooltip
@@ -352,7 +351,7 @@ const ClassRooms = () => {
 
               <Button
                 className="add-new-user"
-                color="success"
+                color="primary"
                 // onClick={toggleSidebar}
                 onClick={() => setShow(true)}
               >
