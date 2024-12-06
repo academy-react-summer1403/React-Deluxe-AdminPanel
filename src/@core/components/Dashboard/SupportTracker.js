@@ -26,8 +26,10 @@ const SupportTracker = ({Report}) => {
   const [data, setData] = useState(null)
  const context = useContext(ThemeColors)
 console.log(Report)
- const percentage = Report?.reserveAcceptPercent;
+ const percentage = parseInt(Report?.activeUserPercent);
 console.log(percentage)
+
+
   const options = {
       plotOptions: {
         radialBar: {
@@ -73,14 +75,14 @@ console.log(percentage)
       stroke: {
         dashArray: 8
       },
-      labels: ['Completed Tickets']
+      labels: ['کاربر های فعال']
     },
     series = [percentage]
 
   return(
     <Card>
       <CardHeader className='pb-0'>
-        <CardTitle tag='h4'>moz</CardTitle>
+        <CardTitle tag='h3'>آمار کل کاربران</CardTitle>
         {/* <UncontrolledDropdown className='chart-dropdown'>
           <DropdownToggle color='' className='bg-transparent btn-sm border-0 p-50'>
             Last 7 days
@@ -97,25 +99,25 @@ console.log(percentage)
       <CardBody>
         <Row>
           <Col sm='2' className='d-flex flex-column flex-wrap text-center'>
-            <h1 className='font-large-2 fw-bolder mt-2 mb-0'>moz</h1>
-            <CardText>Tickets</CardText>
+            <h3 className='font-large-2 fw-bolder mt-2 mb-0'></h3>
+            {/* <CardText>Tickets</CardText> */}
           </Col>
           <Col sm='10' className='d-flex justify-content-center'>
             <Chart options={options} series={series} type='radialBar' height={270} id='support-tracker-card' />
           </Col>
         </Row>
-        <div className='d-flex justify-content-between mt-1'>
-          <div className='text-center'>
+        <div className='d-flex justify-content-around mt-1'>
+          {/* <div className='text-center'>
             <CardText className='mb-50'>New Tickets</CardText>
             <span className='font-large-1 fw-bold'>moz</span>
+          </div> */}
+          <div className='text-center'>
+            <CardText className='mb-50'>تعداد کل کاربران</CardText>
+            <span className='font-large-1 fw-bold'>{Report?.allUser}</span>
           </div>
           <div className='text-center'>
-            <CardText className='mb-50'>Open Tickets</CardText>
-            <span className='font-large-1 fw-bold'>moz</span>
-          </div>
-          <div className='text-center'>
-            <CardText className='mb-50'>Response Time</CardText>
-            <span className='font-large-1 fw-bold'>mozzzz</span>
+            <CardText className='mb-50'>درصد کاربران غیرفعال</CardText>
+            <span className='font-large-1 fw-bold'>{parseInt(Report?.interActiveUserPercent)}%</span>
           </div>
         </div>
       </CardBody>

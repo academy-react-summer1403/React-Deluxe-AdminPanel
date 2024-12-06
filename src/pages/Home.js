@@ -23,6 +23,8 @@ import Earnings from "../@core/components/Dashboard/Earnings";
 import CardTransactions from "../@core/components/Dashboard/CardTransactions";
 import { useAdminDashboardReport } from "../core/services/api/AdminDashboardReport";
 import SupportTracker from "../@core/components/Dashboard/SupportTracker";
+import SubscribersGained from "../@core/components/Dashboard/SubscribersGained";
+import RevenueReport from "../@core/components/Dashboard/RevenueReport";
 
 const Home = () => {
   const { data } = useQuery({
@@ -31,9 +33,12 @@ const Home = () => {
   console.log(data);
   const { colors } = useContext(ThemeColors);
   
-  const { data: Report } = useAdminDashboardReport();
+  const { data: Report,isLoading } = useAdminDashboardReport();
+  if (isLoading) {
+    return <div>Loading...</div>;
+}
   console.log(Report);
-  // const context = useContext(ThemeColors)
+  const context = useContext(ThemeColors)
   return (
     <div>
       {/* <Card>
@@ -103,23 +108,26 @@ const Home = () => {
           <GoalOverview Report={Report} />
         </Col>
       </Row>
-      <Row>
+      <Row className="match-height">
         <Col lg="4" md="6" xs="12">
           <CardBrowserState success={colors.success.main} />
         </Col>
         <Col lg="4" md="6" xs="12">
           <Earnings Report={Report} success={colors.success.main} />
         </Col>
-        <Col lg="4" md="6" xs="12">
-          <CardTransactions success={colors.success.main} />
+        <Col lg='3' sm='6'>
+          <SubscribersGained Report={Report} />
         </Col>
       </Row>
       <Row>
-        <Col lg="6" sm="12">
+        <Col lg="4" sm="12">
           <SupportTracker
             Report={Report}
           />
         </Col>
+        {/* <Col lg='8' sm='12'>
+          <RevenueReport primary={context.colors.primary.main} warning={context.colors.warning.main} />
+        </Col> */}
       </Row>
     </div>
   );

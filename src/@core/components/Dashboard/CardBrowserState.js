@@ -21,13 +21,26 @@ import safariIcon from '@src/assets/images/icons/apple-safari.png'
 import IEIcon from '@src/assets/images/icons/internet-explorer.png'
 import chromeIcon from '@src/assets/images/icons/google-chrome.png'
 import firefoxIcon from '@src/assets/images/icons/mozila-firefox.png'
+import { useUserList } from '../../../core/services/api/userList'
+import { useUserManageInfo } from '../../../core/services/api/UserManageInfo'
+import Admin from "../../../assets/images/avatars/Admin.png"
+import Teacher from "../../../assets/images/avatars/Teacher.png"
+import Student from "../../../assets/images/avatars/Student.png"
+import Mentor from "../../../assets/images/avatars/Male.png"
+
 
 const CardBrowserState = ({ colors, trackBgColor }) => {
+  const { data: data2 } = useUserList();
+  const { data } = useUserManageInfo("1");
+  const { data: data3 } = useUserManageInfo("2");
+  const { data: data4 } = useUserManageInfo("5");
+  const { data: data5 } = useUserManageInfo("9");
+
   const statesArr = [
     {
-      avatar: chromeIcon,
-      title: 'Google Chrome',
-      value: '54.4%',
+      avatar: Admin,
+      title: 'ادمین',
+      value: data?.totalCount,
       chart: {
         type: 'radialBar',
         series: [54.4],
@@ -70,9 +83,9 @@ const CardBrowserState = ({ colors, trackBgColor }) => {
       }
     },
     {
-      avatar: firefoxIcon,
-      title: 'Mozila Firefox',
-      value: '6.1%',
+      avatar: Teacher,
+      title: 'اساتید',
+      value: data3?.totalCount,
       chart: {
         type: 'radialBar',
         series: [6.1],
@@ -115,9 +128,9 @@ const CardBrowserState = ({ colors, trackBgColor }) => {
       }
     },
     {
-      avatar: safariIcon,
-      title: 'Apple Safari',
-      value: '14.6%',
+      avatar: Student,
+      title: 'دانشجو ها',
+      value: data4?.totalCount,
       chart: {
         type: 'radialBar',
         series: [14.6],
@@ -160,9 +173,9 @@ const CardBrowserState = ({ colors, trackBgColor }) => {
       }
     },
     {
-      avatar: IEIcon,
-      title: 'Internet Explorer',
-      value: '4.2%',
+      avatar: Mentor,
+      title: 'منتور ها',
+      value: data5?.totalCount,
       chart: {
         type: 'radialBar',
         series: [4.2],
@@ -204,51 +217,51 @@ const CardBrowserState = ({ colors, trackBgColor }) => {
         }
       }
     },
-    {
-      avatar: operaIcons,
-      title: 'Opera Mini',
-      value: '8.4%',
-      chart: {
-        type: 'radialBar',
-        series: [8.4],
-        height: 30,
-        width: 30,
-        options: {
-          grid: {
-            show: false,
-            padding: {
-              left: -15,
-              right: -15,
-              top: -12,
-              bottom: -15
-            }
-          },
-          // colors: [colors.danger.main],
-          plotOptions: {
-            radialBar: {
-              hollow: {
-                size: '22%'
-              },
-              track: {
-                background: trackBgColor
-              },
-              dataLabels: {
-                showOn: 'always',
-                name: {
-                  show: false
-                },
-                value: {
-                  show: false
-                }
-              }
-            }
-          },
-          stroke: {
-            lineCap: 'round'
-          }
-        }
-      }
-    }
+    // {
+    //   avatar: operaIcons,
+    //   title: 'Opera Mini',
+    //   value: '8.4%',
+    //   chart: {
+    //     type: 'radialBar',
+    //     series: [8.4],
+    //     height: 30,
+    //     width: 30,
+    //     options: {
+    //       grid: {
+    //         show: false,
+    //         padding: {
+    //           left: -15,
+    //           right: -15,
+    //           top: -12,
+    //           bottom: -15
+    //         }
+    //       },
+    //       // colors: [colors.danger.main],
+    //       plotOptions: {
+    //         radialBar: {
+    //           hollow: {
+    //             size: '22%'
+    //           },
+    //           track: {
+    //             background: trackBgColor
+    //           },
+    //           dataLabels: {
+    //             showOn: 'always',
+    //             name: {
+    //               show: false
+    //             },
+    //             value: {
+    //               show: false
+    //             }
+    //           }
+    //         }
+    //       },
+    //       stroke: {
+    //         lineCap: 'round'
+    //       }
+    //     }
+    //   }
+    // }
   ]
 
   const renderStates = () => {
