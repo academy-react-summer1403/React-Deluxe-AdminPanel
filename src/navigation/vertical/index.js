@@ -6,7 +6,8 @@ import {
   Mortarboard01Icon,
   PlusSignCircleIcon,
   UserListIcon,
-  MeetingRoomIcon
+  MeetingRoomIcon,
+  Time04Icon
 } from "hugeicons-react";
 import {
   Mail,
@@ -143,7 +144,7 @@ export default [
   {
     id: "userManage",
     title: "مدیریت زمان بندی",
-    icon: <User size={20} />,
+    icon: <Time04Icon size={20} />,
     navLink: "/Schedual",
   },
   

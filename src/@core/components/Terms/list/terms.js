@@ -1,14 +1,6 @@
 // ** React Imports
 import { Fragment, useState, useEffect } from "react";
 
-import Avatar from "@components/avatar";
-
-import Pic from "@src/assets/images/avatars/1.png";
-import Pic2 from "@src/assets/images/raty/star-on-2.png";
-
-import Logo from "@src/assets/images/logo/reactdeluxe.png";
-// ** Invoice List Sidebar
-import Sidebar from "./Sidebar";
 
 // ** Table Columns
 import { columns } from "./columns";
@@ -60,17 +52,12 @@ import {
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { useTerms } from "../../../../core/services/api/Term";
-
-
-import CardBrowserState from "./progress";
-
 import AddCatForm from "./AddCatForm";
 import { Link } from "react-router-dom";
-import { DashboardSquareEditIcon } from "hugeicons-react";
-import { TermEdit } from "./EditTerm/EditTerms";
-// import { TermEdit } from "./EditTerm/EditTerms";
-// import { EditTerms } from "./EditTerm/EditTerms";
-
+import { EditTerms } from "./EditTerm/EditTerms";
+import {
+  LicenseIcon 
+} from "hugeicons-react";
 
 const Term = () => {
   // ** States
@@ -120,9 +107,18 @@ const Term = () => {
   };
 
   // ** Custom Pagination
-  const CustomPagination = () => {
-    const count = Math.ceil(data?.totalCount / rowsPerPage);
+  // const CustomPagination = () => {
+  //   const count = Math.ceil(data?.totalCount / rowsPerPage);
 
+
+  const CustomPagination = ({
+      total,
+      currentPage,
+      setCurrentPage,
+      rowsPerPage,
+    }) => {
+      const count = Number(Math.ceil(total / rowsPerPage));
+    
     return (
       <ReactPaginate
         previousLabel={""}
@@ -130,8 +126,9 @@ const Term = () => {
         pageCount={count || 1}
         activeClassName="active"
         // forcePage={currentPage !== 0 ? currentPage - 1 : 0}
-        forcePage={currentPage > 0 ? currentPage - 1 : 0} // Adjust for zero-based indexing
-        onPageChange={(page) => handlePagination(page)}
+        forcePage={currentPage !== 0 ? currentPage - 1 : 0} // Adjust for zero-based indexing
+        // onPageChange={(page) => handlePagination(page)}
+      onPageChange={(page) => setCurrentPage(page.selected + 1)}
         pageClassName={"page-item"}
         nextLinkClassName={"page-link"}
         nextClassName={"page-item next"}
@@ -145,7 +142,6 @@ const Term = () => {
     );
   };
 
-  // const handleDelete = useUserHandleDelete();
 
   const column = [
     {
@@ -249,7 +245,7 @@ const Term = () => {
               </UncontrolledTooltip>
             </div>
           <div className="btn btn-sm" onClick={() => handleDelete(row?.id)}>
-            <DashboardSquareEditIcon size={17} className="" id={`pw-tooltip-${row.id}`} />
+            <LicenseIcon  size={17} className="" id={`pw-tooltip-${row.id}`} />
             <UncontrolledTooltip
               placement="top"
               target={`pw-tooltip-${row.id}`}
@@ -275,7 +271,7 @@ const Term = () => {
             
             >
               {openModalId === row?.id && (
-                <TermEdit
+                <EditTerms
                 rowId={row?.id}
                
                 />
@@ -392,6 +388,8 @@ const Term = () => {
             paginationComponent={CustomPagination}
             data={data}
 
+
+            
             // subHeaderComponent={
             //   <CustomHeader
             //     store={store}

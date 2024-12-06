@@ -15,13 +15,12 @@ import toast from "react-hot-toast";
 import Select from "react-select";
 import { selectThemeColors } from "@utils";
 import { Formik } from "formik";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useEditUser } from "../../../../../core/services/api/EditUser";
-// import { useEdiClassRoom } from "../../../../../core/services/api/EdiClassRoom";
+import {  useQueryClient } from "@tanstack/react-query";
+import { useEditTerm } from "../../../../../core/services/api/EditTerm";
 import { useDetailTerm } from "../../../../../core/services/api/DetailTerm";
 
 
-const TermEdit = ({ rowId }) => {
+const EditTerms = ({ rowId }) => {
   const formRef = useRef(null);
   console.log(rowId)
   const { data } = useDetailTerm(rowId);
@@ -70,7 +69,7 @@ const TermEdit = ({ rowId }) => {
   };
 
   const queryClient = useQueryClient();
-  const mutation = useEdiClassRoom();
+  const mutation = useEditTerm();
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -80,11 +79,9 @@ const TermEdit = ({ rowId }) => {
     formData.append("Id", formValues.id);
     formData.append("termName", formValues.termName);
     formData.append("departmentId", formValues.departmentId); 
-    formData.append("insertDate", formValues.insertDate);
     formData.append("startDate", formValues.startDate); 
     formData.append("endDate", formValues.endDate);
     formData.append("expire", formValues.expire); 
-    formData.append("departmentName", formValues.departmentName);    
 
     console.log(formData);
 
@@ -136,8 +133,9 @@ const TermEdit = ({ rowId }) => {
                 name="termName"
                 id="termName"
                 placeholder="نام ترم را یادداشت کنید"
-                value={formValues?.termName}
+                value={formValues?.termName} 
                 onChange={handleInputChange}
+                required
               />
             </Col>
             <Col md="12" sm="12" className="mb-1">
@@ -151,9 +149,11 @@ const TermEdit = ({ rowId }) => {
                 placeholder="شماره ساختمان را وارد کنید"
                 value={formValues?.departmentId}
                 onChange={handleInputChange}
+                required
+
               />
             </Col>
-            <Col md="12" sm="12" className="mb-1">
+            {/* <Col md="12" sm="12" className="mb-1">
               <Label className="form-label" for="insertDate">
                   تاریخ 
               </Label>
@@ -164,6 +164,8 @@ const TermEdit = ({ rowId }) => {
                 placeholder=" تاریخ را وارد کنید"
                 value={formValues?.insertDate}
                 onChange={handleInputChange}
+                required
+
               />
             </Col>
              <Col md="12" sm="12" className="mb-1">
@@ -177,6 +179,8 @@ const TermEdit = ({ rowId }) => {
                 placeholder=" تاریخ شروع را وارد کنید"
                 value={formValues?.startDate}
                 onChange={handleInputChange}
+                required
+
               />
             </Col>
             <Col md="12" sm="12" className="mb-1">
@@ -190,34 +194,12 @@ const TermEdit = ({ rowId }) => {
                 placeholder=" تاریخ پایان را وارد کنید"
                 value={formValues?.endDate}
                 onChange={handleInputChange}
+                required
+
               />
-            </Col>
-             <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="expire">
-                  تاریخ  
-              </Label>
-              <Input
-                type="date"
-                name="expire"
-                id="expire"
-                placeholder=" تاریخ  را وارد کنید"
-                value={formValues?.expire}
-                onChange={handleInputChange}
-              />
-            </Col> 
-            <Col md="12" sm="12" className="mb-1">
-              <Label className="form-label" for="departmentName">
-                  نام دپارتمان  
-              </Label>
-              <Input
-                type="date"
-                name="departmentName"
-                id="departmentName"
-                placeholder=" نام دپارتمان  را وارد کنید"
-                value={formValues?.departmentName}
-                onChange={handleInputChange}
-              />
-            </Col>
+            </Col> */}
+ 
+           
             <Col sm="12">
               <div className="d-flex justify-content-center">
                 <Button className="me-1" color="success" type="submit">
@@ -234,4 +216,4 @@ const TermEdit = ({ rowId }) => {
     </Card>
   );
 };
-export { TermEdit };
+export { EditTerms };

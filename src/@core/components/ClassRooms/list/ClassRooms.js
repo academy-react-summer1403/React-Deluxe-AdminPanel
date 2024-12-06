@@ -15,7 +15,6 @@ import { columns } from "./columns";
 import { DatePersianizer } from "../../../../utility/utils/DatePersianizer";
 
 // ** Third Party Components
-import Select from "react-select";
 import ReactPaginate from "react-paginate";
 import DataTable from "react-data-table-component";
 import {
@@ -26,13 +25,7 @@ import {
   File,
   Grid,
   Copy,
-  MoreVertical,
-  Trash2,
-  Archive,
 } from "react-feather";
-
-// ** Utils
-import { selectThemeColors } from "@utils";
 
 // ** Reactstrap Imports
 import {
@@ -65,12 +58,12 @@ import { useClassRooms } from "../../../../core/services/api/ClassRooms";
 import CardBrowserState from "./progress";
 
 import AddCatForm from "./AddCatForm";
-// import ClassStatus from "./ClassStatus";
+
 
 import { Link } from "react-router-dom";
-import { DashboardSquareEditIcon } from "hugeicons-react";
-// import { EditClassRooms } from "./EditClassRoom/EditClass";
-// import { EditClassRooms } from "./EditClassRoom/EditClass";
+import { LicenseIcon  } from "hugeicons-react";
+import { EditClassRooms } from "./EditClassRoom/EditClass";
+
 
 const ClassRooms = () => {
   // ** States
@@ -234,7 +227,7 @@ const ClassRooms = () => {
               </UncontrolledTooltip>
             </div>
           <div className="btn btn-sm" onClick={() => handleDelete(row?.id)}>
-            <DashboardSquareEditIcon size={17} className="" id={`pw-tooltip-${row.id}`} />
+            <LicenseIcon  size={17} className="" id={`pw-tooltip-${row.id}`} />
             <UncontrolledTooltip
               placement="top"
               target={`pw-tooltip-${row.id}`}
