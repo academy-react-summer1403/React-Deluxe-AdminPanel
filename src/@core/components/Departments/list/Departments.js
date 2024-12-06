@@ -47,7 +47,7 @@ import AddCatForm from "./AddCatForm";
 import { Link } from "react-router-dom";
 import { LicenseIcon   } from "hugeicons-react";
 import { EditCatForm } from "./EditCatForm/EditCatForm";
-
+import { DetailDepartment } from "./DetailDepartment/DetailDepartment";
 const Department = () => {
   // ** States
   const [sort, setSort] = useState("desc");
@@ -199,7 +199,7 @@ const Department = () => {
                 ویرایش
               </UncontrolledTooltip>
             </div>
-          <div className="btn btn-sm" onClick={() => handleDelete(row?.id)}>
+          <div className="btn btn-sm" onClick={() => toggleModals(row?.id)}>
             <LicenseIcon   size={17} className="" id={`pw-tooltip-${row.id}`} />
             <UncontrolledTooltip
               placement="top"
@@ -232,6 +232,30 @@ const Department = () => {
               )}
             </ModalBody>
           </Modal>
+          <Modal
+            isOpen={openModalId2 === row?.id}
+            toggle={() => toggleModals(row?.id)}
+            style={{width:"450px"}}
+            className="modal-dialog-centered modal-lg d-flex"
+            
+          >
+            <ModalHeader
+              className="bg-transparent text-center fs-8 mt-2"
+              style={{ marginRight: "330px" }}
+              toggle={() => toggleModals(row?.id)}
+            ></ModalHeader>
+            <ModalBody className="px-sm-5 pt-50 pb-5 d-flex"
+        style={{width:"450px"}}
+            
+            >
+              {openModalId2 === row?.id && (
+                <DetailDepartment
+                rowId={row?.id}
+               
+                />
+              )}
+            </ModalBody>
+          </Modal>
         </div>
       ),
     },
@@ -240,6 +264,11 @@ const Department = () => {
 
   const toggleModal = (id) => {
     setOpenModalId((prevId) => (prevId === id ? null : id));
+  };
+  const [openModalId2, setOpenModalId2] = useState(null); // Track which modal is open
+
+  const toggleModals = (id) => {
+    setOpenModalId2((prevId) => (prevId === id ? null : id));
   };
 
   
