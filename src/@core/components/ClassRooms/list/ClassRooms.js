@@ -54,32 +54,24 @@ const ClassRooms = () => {
   const [searchTerm, setSearchTerm] = useState("");
   console.log(searchTerm);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortColumn, setSortColumn] = useState("id");
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [currentRole, setCurrentRole] = useState({
     value: "",
     label: "انتخاب کنید ...",
   });
-  const [isActive, setIsActive] = useState({
-    value: "",
-    label: "انتخاب کنید ...",
-  });
-  const [currentStatus, setCurrentStatus] = useState({
-    value: "",
-    label: "انتخاب کنید ...",
-    number: 0,
-  });
+ 
   const [show, setShow] = useState(false);
 
   const { data, isLoading, isError } = useClassRooms(rowsPerPage);
   // if (isLoading) return <FullPageLoading />;
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
 
-  console.log(data);
+  // Pagination-Static
+  const paginatedData =
+  data &&
+  data?.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
-  // ** Function to toggle sidebar
-  const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
 
   // ** Function in get data on page change
   const handlePagination = (page) => {
@@ -90,7 +82,7 @@ const ClassRooms = () => {
  
   // ** Custom Pagination
   const CustomPagination = () => {
-    const count = Math.ceil(data?.totalCount / rowsPerPage);
+    const count = Math.ceil(data?.length / 10);
 
     return (
       <ReactPaginate
@@ -114,7 +106,6 @@ const ClassRooms = () => {
     );
   };
 
-  // const handleDelete = useUserHandleDelete();
 
   const column = [
     {
@@ -293,43 +284,10 @@ style={{width:"450px"}}
           <AddCatForm />
         </ModalBody>
       </Modal>
-  {/* <Modal
-        isOpen={show}
-        toggle={() => setShow(!show)}
-        className="modal-dialog-centered modal-lg" style={{width:"450px"}}
-      > */}
-        {/* <ModalHeader className="bg-transparent" toggle={() => setShow(!show)}> */}
-          {/* <div>header</div> */}
-        {/* </ModalHeader> */}
-        {/* <ModalBody className="px-sm-5 pt-50 pb-5 d-flex gap-5">
-          <ClassStatus />
-        </ModalBody> */}
-      {/* </Modal> */}
+
    </div>
       <Card className="overflow-hidden">
         <Row className="ltr px-2 py-1">
-          {/* <Col xl="6" className="d-flex align-items-center p-0">
-            <div className="d-flex align-items-center w-100">
-              <label htmlFor="rows-per-page" style={{ marginRight: "25px" }}>
-                نمایش
-              </label>
-              <Input
-                className="mx-50"
-                type="select"
-                id="rows-per-page"
-                value={rowsPerPage}
-                onChange={handlePerPage}
-                style={{ width: "5rem" }}
-              >
-                <option value="10">۱۰</option>
-                <option value="15">۱۵</option>
-                <option value="25">۲۵</option>
-                <option value="50">۵۰</option>
-                <option value="75">۷۵</option>
-                <option value="100">۱۰۰</option>
-              </Input>
-            </div>
-          </Col> */}
           <Col
             xl="6"
             // className="d-flex align-items-sm-center justify-content-xl-end justify-content-start flex-xl-nowrap flex-wrap flex-sm-row flex-column pe-xl-1 p-0 mt-xl-0 mt-1"
@@ -371,48 +329,27 @@ style={{width:"450px"}}
               >
                 افزودن  کلاس جدید
               </Button>
-              {/* <Button
-                className="add-new-user"
-                color="primary"
-                marginRight="5px"
-                // onClick={toggleSidebar}
-                onClick={() => setShow(true)}
-              >
-                  وضعیت 
-              </Button> */}
+  
             </div>
           </Col>
         </Row>
         <div className="react-dataTable m-1">
           <DataTable
             noHeader
-            // subHeader
             sortServer
             pagination
             responsive
             paginationServer
             columns={column}
-            // onSort={handleSort}
-            // sortIcon={<ChevronDown />}
+  
             className="react-dataTable"
             paginationComponent={CustomPagination}
-            data={data}
+            data={paginatedData}
 
-            // subHeaderComponent={
-            //   <CustomHeader
-            //     store={store}
-            //     searchTerm={searchTerm}
-            //     rowsPerPage={rowsPerPage}
-            //     handleFilter={handleFilter}
-            //     handlePerPage={handlePerPage}
-            //     toggleSidebar={toggleSidebar}
-            //   />
-            // }
           />
         </div>
       </Card>
 
-      {/* <Sidebar open={sidebarOpen} toggleSidebar={toggleSidebar} /> */}
     </Fragment>
   );
 };
