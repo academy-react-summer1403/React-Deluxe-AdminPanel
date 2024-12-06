@@ -30,13 +30,6 @@ import Male from "../../../../assets/images/avatars/Male.png";
 import Female from "../../../../assets/images/avatars/Female.png";
 import { useDeleteUser } from "../../../../core/services/api/DeleteUser";
 
-const roleColors = {
-  editor: "light-info",
-  admin: "light-danger",
-  author: "light-warning",
-  maintainer: "light-success",
-  subscriber: "light-primary",
-};
 
 const statusColors = {
   active: "light-success",
@@ -44,27 +37,6 @@ const statusColors = {
   inactive: "light-secondary",
 };
 
-const statusOptions = [
-  { value: "active", label: "Active" },
-  { value: "inactive", label: "Inactive" },
-  { value: "suspended", label: "Suspended" },
-];
-
-const countryOptions = [
-  { value: "uk", label: "UK" },
-  { value: "usa", label: "USA" },
-  { value: "france", label: "France" },
-  { value: "russia", label: "Russia" },
-  { value: "canada", label: "Canada" },
-];
-
-const languageOptions = [
-  { value: "english", label: "English" },
-  { value: "spanish", label: "Spanish" },
-  { value: "french", label: "French" },
-  { value: "german", label: "German" },
-  { value: "dutch", label: "Dutch" },
-];
 
 const MySwal = withReactContent(Swal);
 

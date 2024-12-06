@@ -4,12 +4,12 @@ import {
   CardTitle,
   CardBody,
 } from "reactstrap";
-import { useDetailTerm } from "../../../../../core/services/api/DetailTerm";
+import { useClassRoomDetail } from "../../../../../core/services/api/DetailClassRoom";
 import { DatePersianizer } from "../../../../../utility/utils/DatePersianizer";
 
-const DetailTerms = ({rowId}) => {
+const DetailClassRoom = ({rowId}) => {
 
-  const { data, isError, isLoading } = useDetailTerm(rowId);
+  const { data, isError, isLoading } = useClassRoomDetail(rowId);
 
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>اطلاعات یافت نشد</div>;
@@ -17,31 +17,31 @@ const DetailTerms = ({rowId}) => {
   return (
     <Card className="w-100">
       <CardHeader>
-        <CardTitle tag="h4">جزییات کامل ترم</CardTitle>
+        <CardTitle tag="h4">جزییات کامل کلاس</CardTitle>
       </CardHeader>
       <CardBody className="w-100">
 
         <div className="info-container">
             <ul className="list-unstyled">
               <li className="mb-75">
-                <span className="fw-bolder me-25"> نام ترم :</span>
-                <span>{data?.termName}</span>
+                <span className="fw-bolder me-25"> نام کلاس :</span>
+                <span>{data?.classRoomName}</span>
               </li>
               <li className="mb-75">
                 <span className="fw-bolder me-25"> شماره ساختمان  :</span>
-                <span>{data?.departmentId}</span>
+                <span>{data?.buildingId}</span>
               </li>
               <li className="mb-75">
-                <span className="fw-bolder me-25"> نام ساختمان :</span>
-                <span>{data?.departmentName}</span>
+                <span className="fw-bolder me-25">  ظرفیت :</span>
+                <span>{data?.capacity}</span>
               </li>
               <li className="mb-75">
-                <span className="fw-bolder me-25">تاریخ شروع ترم :</span>
-                <span>{DatePersianizer(data?.endDate.slice(0, 10))}</span>
+                <span className="fw-bolder me-25">  نام ساختمان :</span>
+                <span>{data?.buildingName}</span>
               </li>
                <li className="mb-75">
-                <span className="fw-bolder me-25">تاریخ پایان ترم :</span>
-                <span>{DatePersianizer(data?.endDate.slice(0, 10))}</span>
+                <span className="fw-bolder me-25">تاریخ  برگزاری :</span>
+                <span>{DatePersianizer(data?.insertDate.slice(0, 10))}</span>
               </li>
             </ul>
           </div>
@@ -50,4 +50,4 @@ const DetailTerms = ({rowId}) => {
     </Card>
   );
 };
-export { DetailTerms };
+export { DetailClassRoom };
