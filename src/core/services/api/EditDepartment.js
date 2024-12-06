@@ -4,7 +4,7 @@ import http from "../interceptor";
 export const useEditDepatment = () => {
   const EditDepartment = async (formData) => {
     try {
-      const res = await http.put(`/News/UpdateNewsCategory`, formData);
+      const res = await http.put(`/Department`, formData);
       return res;
     } catch (error) {
       console.log("Error in useEditDepatment: ", error);

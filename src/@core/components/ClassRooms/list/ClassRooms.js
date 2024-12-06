@@ -69,6 +69,8 @@ import AddCatForm from "./AddCatForm";
 
 import { Link } from "react-router-dom";
 import { DashboardSquareEditIcon } from "hugeicons-react";
+// import { EditClassRooms } from "./EditClassRoom/EditClass";
+// import { EditClassRooms } from "./EditClassRoom/EditClass";
 
 const ClassRooms = () => {
   // ** States
@@ -194,24 +196,6 @@ const ClassRooms = () => {
         </div>
       ),
     },
-//  {
-//       name: "  شماره ساختمان ",
-//       sortable: true,
-//       width: "250x",
-//       center:true,
-
-//       sortField: "role",
-//       cell: (data) => (
-//         <div className="d-flex justify-content-left align-items-center gap-1">
-//           {/* <Avatar img={Logo} /> */}
-//           <div className="d-flex flex-column">
-//             <Link className="user_name text-truncate text-body  p-0">
-//               <span className="fw-bolder">{data?.buildingId}</span>
-//             </Link>
-//           </div>
-//         </div>
-//       ),
-//     },
     {
       name: "نام ساختمان",
       sortable: true,
@@ -235,7 +219,7 @@ const ClassRooms = () => {
       minWidth: "200px",
       cell: (row) => (
         <div className="column-action">
-            <div className="btn btn-sm">
+            <div className="btn btn-sm"  onClick={() => toggleModal(row?.id)}>
               <FileText
                 className="cursor-pointer"
                 size={17}
@@ -258,10 +242,40 @@ const ClassRooms = () => {
                 جزییات
             </UncontrolledTooltip>
           </div>
+          <Modal
+            isOpen={openModalId === row?.id}
+            toggle={() => toggleModal(row?.id)}
+            style={{width:"450px"}}
+            className="modal-dialog-centered modal-lg d-flex"
+            
+          >
+            <ModalHeader
+              className="bg-transparent text-center fs-8 mt-2"
+              style={{ marginRight: "330px" }}
+              toggle={() => toggleModal(row?.id)}
+            ></ModalHeader>
+            <ModalBody className="px-sm-5 pt-50 pb-5 d-flex"
+        style={{width:"450px"}}
+            
+            >
+              {openModalId === row?.id && (
+                <EditClassRooms
+                rowId={row?.id}
+               
+                />
+              )}
+            </ModalBody>
+          </Modal>
         </div>
       ),
     },
   ];
+
+  const [openModalId, setOpenModalId] = useState(null); // Track which modal is open
+
+  const toggleModal = (id) => {
+    setOpenModalId((prevId) => (prevId === id ? null : id));
+  };
 
   return (
     <Fragment>

@@ -67,6 +67,10 @@ import CardBrowserState from "./progress";
 import AddCatForm from "./AddCatForm";
 import { Link } from "react-router-dom";
 import { DashboardSquareEditIcon } from "hugeicons-react";
+import { TermEdit } from "./EditTerm/EditTerms";
+// import { TermEdit } from "./EditTerm/EditTerms";
+// import { EditTerms } from "./EditTerm/EditTerms";
+
 
 const Term = () => {
   // ** States
@@ -230,7 +234,7 @@ const Term = () => {
       center:true,
       cell: (row) => (
         <div className="column-action">
-            <div className="btn btn-sm">
+            <div className="btn btn-sm" onClick={() => toggleModal(row?.id)}>
               <FileText
                 className="cursor-pointer"
                 size={17}
@@ -253,10 +257,41 @@ const Term = () => {
                 جزییات
             </UncontrolledTooltip>
           </div>
+          <Modal
+
+            isOpen={openModalId === row?.id}
+            toggle={() => toggleModal(row?.id)}
+            style={{width:"450px"}}
+            className="modal-dialog-centered modal-lg d-flex"
+            
+          >
+            <ModalHeader
+              className="bg-transparent text-center fs-8 mt-2"
+              style={{ marginRight: "330px" }}
+              toggle={() => toggleModal(row?.id)}
+            ></ModalHeader>
+            <ModalBody className="px-sm-5 pt-50 pb-5 d-flex"
+        style={{width:"450px"}}
+            
+            >
+              {openModalId === row?.id && (
+                <TermEdit
+                rowId={row?.id}
+               
+                />
+              )}
+            </ModalBody>
+          </Modal>
         </div>
       ),
     },
   ];
+
+  const [openModalId, setOpenModalId] = useState(null); 
+
+  const toggleModal = (id) => {
+    setOpenModalId((prevId) => (prevId === id ? null : id));
+  };
 
   return (
     <Fragment>

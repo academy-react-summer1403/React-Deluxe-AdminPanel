@@ -140,5 +140,11 @@ export default [
       // },
     ],
   },
+  {
+    id: "userManage",
+    title: "مدیریت زمان بندی",
+    icon: <User size={20} />,
+    navLink: "/Schedual",
+  },
   
 ];

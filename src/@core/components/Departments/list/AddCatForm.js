@@ -23,6 +23,7 @@ const AddCatForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(formRef.current);
+    formData.append("id", 1)
     const formValues = Object.fromEntries(formData.entries());
     console.log(formData);
     const userToast = toast.loading("درحال ساختن دپارتمان جدید");
