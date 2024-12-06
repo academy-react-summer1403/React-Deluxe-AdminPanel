@@ -125,9 +125,9 @@ const Home = () => {
             Report={Report}
           />
         </Col>
-        {/* <Col lg='8' sm='12'>
+        <Col lg='8' sm='12'>
           <RevenueReport primary={context.colors.primary.main} warning={context.colors.warning.main} />
-        </Col> */}
+        </Col>
       </Row>
     </div>
   );
