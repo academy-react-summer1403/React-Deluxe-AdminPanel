@@ -21,26 +21,13 @@ import safariIcon from '@src/assets/images/icons/apple-safari.png'
 import IEIcon from '@src/assets/images/icons/internet-explorer.png'
 import chromeIcon from '@src/assets/images/icons/google-chrome.png'
 import firefoxIcon from '@src/assets/images/icons/mozila-firefox.png'
-import { useUserList } from '../../../core/services/api/userList'
-import { useUserManageInfo } from '../../../core/services/api/UserManageInfo'
-import Admin from "../../../assets/images/avatars/Admin.png"
-import Teacher from "../../../assets/images/avatars/Teacher.png"
-import Student from "../../../assets/images/avatars/Student.png"
-import Mentor from "../../../assets/images/avatars/Male.png"
-
 
 const CardBrowserState = ({ colors, trackBgColor }) => {
-  const { data: data2 } = useUserList();
-  const { data } = useUserManageInfo("1");
-  const { data: data3 } = useUserManageInfo("2");
-  const { data: data4 } = useUserManageInfo("5");
-  const { data: data5 } = useUserManageInfo("9");
-
   const statesArr = [
     {
-      avatar: Admin,
-      title: 'ادمین',
-      value: data?.totalCount,
+      avatar: chromeIcon,
+      title: 'Google Chrome',
+      value: '54.4%',
       chart: {
         type: 'radialBar',
         series: [54.4],
@@ -56,7 +43,7 @@ const CardBrowserState = ({ colors, trackBgColor }) => {
               bottom: -15
             }
           },
-          // colors: [colors.primary.main],
+          colors: [colors.primary.main],
           plotOptions: {
             radialBar: {
               hollow: {
@@ -83,9 +70,9 @@ const CardBrowserState = ({ colors, trackBgColor }) => {
       }
     },
     {
-      avatar: Teacher,
-      title: 'اساتید',
-      value: data3?.totalCount,
+      avatar: firefoxIcon,
+      title: 'Mozila Firefox',
+      value: '6.1%',
       chart: {
         type: 'radialBar',
         series: [6.1],
@@ -101,7 +88,7 @@ const CardBrowserState = ({ colors, trackBgColor }) => {
               bottom: -15
             }
           },
-          // colors: [colors.warning.main],
+          colors: [colors.warning.main],
           plotOptions: {
             radialBar: {
               hollow: {
@@ -128,9 +115,9 @@ const CardBrowserState = ({ colors, trackBgColor }) => {
       }
     },
     {
-      avatar: Student,
-      title: 'دانشجو ها',
-      value: data4?.totalCount,
+      avatar: safariIcon,
+      title: 'Apple Safari',
+      value: '14.6%',
       chart: {
         type: 'radialBar',
         series: [14.6],
@@ -146,7 +133,7 @@ const CardBrowserState = ({ colors, trackBgColor }) => {
               bottom: -15
             }
           },
-          // colors: [colors.secondary.main],
+          colors: [colors.secondary.main],
           plotOptions: {
             radialBar: {
               hollow: {
@@ -173,9 +160,9 @@ const CardBrowserState = ({ colors, trackBgColor }) => {
       }
     },
     {
-      avatar: Mentor,
-      title: 'منتور ها',
-      value: data5?.totalCount,
+      avatar: IEIcon,
+      title: 'Internet Explorer',
+      value: '4.2%',
       chart: {
         type: 'radialBar',
         series: [4.2],
@@ -191,7 +178,7 @@ const CardBrowserState = ({ colors, trackBgColor }) => {
               bottom: -15
             }
           },
-          // colors: [colors.info.main],
+          colors: [colors.info.main],
           plotOptions: {
             radialBar: {
               hollow: {
@@ -217,51 +204,51 @@ const CardBrowserState = ({ colors, trackBgColor }) => {
         }
       }
     },
-    // {
-    //   avatar: operaIcons,
-    //   title: 'Opera Mini',
-    //   value: '8.4%',
-    //   chart: {
-    //     type: 'radialBar',
-    //     series: [8.4],
-    //     height: 30,
-    //     width: 30,
-    //     options: {
-    //       grid: {
-    //         show: false,
-    //         padding: {
-    //           left: -15,
-    //           right: -15,
-    //           top: -12,
-    //           bottom: -15
-    //         }
-    //       },
-    //       // colors: [colors.danger.main],
-    //       plotOptions: {
-    //         radialBar: {
-    //           hollow: {
-    //             size: '22%'
-    //           },
-    //           track: {
-    //             background: trackBgColor
-    //           },
-    //           dataLabels: {
-    //             showOn: 'always',
-    //             name: {
-    //               show: false
-    //             },
-    //             value: {
-    //               show: false
-    //             }
-    //           }
-    //         }
-    //       },
-    //       stroke: {
-    //         lineCap: 'round'
-    //       }
-    //     }
-    //   }
-    // }
+    {
+      avatar: operaIcons,
+      title: 'Opera Mini',
+      value: '8.4%',
+      chart: {
+        type: 'radialBar',
+        series: [8.4],
+        height: 30,
+        width: 30,
+        options: {
+          grid: {
+            show: false,
+            padding: {
+              left: -15,
+              right: -15,
+              top: -12,
+              bottom: -15
+            }
+          },
+          colors: [colors.danger.main],
+          plotOptions: {
+            radialBar: {
+              hollow: {
+                size: '22%'
+              },
+              track: {
+                background: trackBgColor
+              },
+              dataLabels: {
+                showOn: 'always',
+                name: {
+                  show: false
+                },
+                value: {
+                  show: false
+                }
+              }
+            }
+          },
+          stroke: {
+            lineCap: 'round'
+          }
+        }
+      }
+    }
   ]
 
   const renderStates = () => {
@@ -291,10 +278,10 @@ const CardBrowserState = ({ colors, trackBgColor }) => {
     <Card className='card-browser-states'>
       <CardHeader>
         <div>
-          <CardTitle tag='h4'>کاربران به تفکیک نقش</CardTitle>
-          {/* <CardText className='font-small-2'>Counter August 2020</CardText> */}
+          <CardTitle tag='h4'>Browser States</CardTitle>
+          <CardText className='font-small-2'>Counter August 2020</CardText>
         </div>
-        {/* <UncontrolledDropdown className='chart-dropdown'>
+        <UncontrolledDropdown className='chart-dropdown'>
           <DropdownToggle color='' className='bg-transparent btn-sm border-0 p-50'>
             <MoreVertical size={18} className='cursor-pointer' />
           </DropdownToggle>
@@ -303,7 +290,7 @@ const CardBrowserState = ({ colors, trackBgColor }) => {
             <DropdownItem className='w-100'>Last Month</DropdownItem>
             <DropdownItem className='w-100'>Last Year</DropdownItem>
           </DropdownMenu>
-        </UncontrolledDropdown> */}
+        </UncontrolledDropdown>
       </CardHeader>
       <CardBody>{renderStates()}</CardBody>
     </Card>

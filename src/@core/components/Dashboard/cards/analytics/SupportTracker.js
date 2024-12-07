@@ -1,5 +1,5 @@
 // ** React Imports
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // ** Third Party Components
 import axios from 'axios'
@@ -19,16 +19,15 @@ import {
   DropdownToggle,
   UncontrolledDropdown
 } from 'reactstrap'
-import { ThemeColors } from '../../../utility/context/ThemeColors'
 
-const SupportTracker = ({Report}) => {
+const SupportTracker = props => {
   // ** State
   const [data, setData] = useState(null)
- const context = useContext(ThemeColors)
-console.log(Report)
- const percentage = parseInt(Report?.activeUserPercent);
-console.log(percentage)
 
+  useEffect(() => {
+    axios.get('/card/card-analytics/support-tracker').then(res => setData(res.data))
+    return () => setData(null)
+  }, [])
 
   const options = {
       plotOptions: {
@@ -58,14 +57,14 @@ console.log(percentage)
           }
         }
       },
-      colors: [context.colors.danger.main],
+      colors: [props.danger],
       fill: {
         type: 'gradient',
         gradient: {
           shade: 'dark',
           type: 'horizontal',
           shadeIntensity: 0.5,
-          gradientToColors: [context.colors.primary.main],
+          gradientToColors: [props.primary],
           inverseColors: true,
           opacityFrom: 1,
           opacityTo: 1,
@@ -75,15 +74,15 @@ console.log(percentage)
       stroke: {
         dashArray: 8
       },
-      labels: ['کاربر های فعال']
+      labels: ['Completed Tickets']
     },
-    series = [percentage]
+    series = [83]
 
-  return(
+  return data !== null ? (
     <Card>
       <CardHeader className='pb-0'>
-        <CardTitle tag='h3'>آمار کل کاربران</CardTitle>
-        {/* <UncontrolledDropdown className='chart-dropdown'>
+        <CardTitle tag='h4'>{data.title}</CardTitle>
+        <UncontrolledDropdown className='chart-dropdown'>
           <DropdownToggle color='' className='bg-transparent btn-sm border-0 p-50'>
             Last 7 days
           </DropdownToggle>
@@ -94,34 +93,34 @@ console.log(percentage)
               </DropdownItem>
             ))}
           </DropdownMenu>
-        </UncontrolledDropdown> */}
+        </UncontrolledDropdown>
       </CardHeader>
       <CardBody>
         <Row>
           <Col sm='2' className='d-flex flex-column flex-wrap text-center'>
-            <h3 className='font-large-2 fw-bolder mt-2 mb-0'></h3>
-            {/* <CardText>Tickets</CardText> */}
+            <h1 className='font-large-2 fw-bolder mt-2 mb-0'>{data.totalTicket}</h1>
+            <CardText>Tickets</CardText>
           </Col>
           <Col sm='10' className='d-flex justify-content-center'>
             <Chart options={options} series={series} type='radialBar' height={270} id='support-tracker-card' />
           </Col>
         </Row>
-        <div className='d-flex justify-content-around mt-1'>
-          {/* <div className='text-center'>
-            <CardText className='mb-50'>New Tickets</CardText>
-            <span className='font-large-1 fw-bold'>moz</span>
-          </div> */}
+        <div className='d-flex justify-content-between mt-1'>
           <div className='text-center'>
-            <CardText className='mb-50'>تعداد کل کاربران</CardText>
-            <span className='font-large-1 fw-bold'>{Report?.allUser}</span>
+            <CardText className='mb-50'>New Tickets</CardText>
+            <span className='font-large-1 fw-bold'>{data.newTicket}</span>
           </div>
           <div className='text-center'>
-            <CardText className='mb-50'>درصد کاربران غیرفعال</CardText>
-            <span className='font-large-1 fw-bold'>{parseInt(Report?.interActiveUserPercent)}%</span>
+            <CardText className='mb-50'>Open Tickets</CardText>
+            <span className='font-large-1 fw-bold'>{data.openTicket}</span>
+          </div>
+          <div className='text-center'>
+            <CardText className='mb-50'>Response Time</CardText>
+            <span className='font-large-1 fw-bold'>{data.responseTime}d</span>
           </div>
         </div>
       </CardBody>
     </Card>
-  )
+  ) : null
 }
 export default SupportTracker
