@@ -30,6 +30,7 @@ import { useQueryClient } from "@tanstack/react-query";
 // import { convertIsoToJalali } from "../../../core/utils/dateUtils";
 import EditCourseAssistance from "./modal/EditCourseAssistance";
 import { useState } from "react";
+import { DatePersianizer } from './../../../../utility/utils/DatePersianizer';
 
 export const CustomColumnsForListCourse = (toggleSidebar2) => [
   {
@@ -44,7 +45,7 @@ export const CustomColumnsForListCourse = (toggleSidebar2) => [
           {" "}
           <h5 className="text-truncate text-muted mb-0">
             {
-            row?.inserDate 
+            DatePersianizer(row?.inserDate)
             // ? convertIsoToJalali(row?.inserDate) : ""
             }
           </h5>
@@ -74,7 +75,7 @@ export const CustomColumnsForListCourse = (toggleSidebar2) => [
   },
 
   {
-    name: " assistanceName ",
+    name: " نام منتور ها ",
     sortable: true,
     minWidth: "172px",
     sortField: "userRoles",

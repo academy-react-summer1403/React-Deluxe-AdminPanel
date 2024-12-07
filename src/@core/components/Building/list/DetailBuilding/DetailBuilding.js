@@ -31,10 +31,10 @@ const DetailBuilding = ({rowId}) => {
                 <span className="fw-bolder me-25"> شماره ساختمان  :</span>
                 <span>{data?.floor}</span>
               </li>
-              <li className="mb-75">
+              {/* <li className="mb-75">
                 <span className="fw-bolder me-25"> نام ساختمان :</span>
                 <span>{data?.departmentName}</span>
-              </li>
+              </li> */}
               <li className="mb-75">
                 <span className="fw-bolder me-25">تاریخ  تاسیس :</span>
                 <span>{DatePersianizer(data?.workDate.slice(0, 10))}</span>

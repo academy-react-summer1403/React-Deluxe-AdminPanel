@@ -153,7 +153,7 @@ const BuildingList = () => {
     {
       name: "عملیات",
       center: true,
-      minWidth: "150px",
+      minWidth: "110px",
       cell: (row) => (
         <div className="column-action">
             <div className="btn btn-sm" onClick={() => toggleModal(row?.id)}>
@@ -267,8 +267,8 @@ style={{width:"450px"}}
 
       <MapContainer
         // center={coords}
-        center={[51, 0]}
-        zoom={13}
+        center={[36.56394435112872, 53.058568057992765]}
+        zoom={3}
         style={{ height: "100vh", width: "70%", zIndex: "0", direction: "ltr" }}
       >
         <TileLayer
