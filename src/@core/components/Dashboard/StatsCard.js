@@ -20,6 +20,8 @@ import {
   Book02Icon,
   Building02Icon,
   CommentAdd02Icon,
+  DepartementIcon,
+  LassoTool02Icon,
   LicenseDraftIcon,
   MeetingRoomIcon,
   UserAccountIcon,
@@ -84,14 +86,14 @@ const StatsCard = ({ Report, cols }) => {
     {
       title: Buildings?.length,
       subtitle: "ساختمان ها",
-      color: "light-success",
+      color: "light-primary",
       icon: <Building02Icon size={36} />,
     },
     {
       title: Departments?.length,
       subtitle: "دپارتمان ها",
-      color: "light-success",
-      icon: <Book02Icon size={36} />,
+      color: "light-danger",
+      icon: <DepartementIcon size={36} />,
     },
     {
       title: ClassRooms?.length,
@@ -102,8 +104,8 @@ const StatsCard = ({ Report, cols }) => {
     {
       title: Terms?.length,
       subtitle: "ترم ها",
-      color: "light-success",
-      icon: <Book02Icon size={36} />,
+      color: "light-info",
+      icon: <LassoTool02Icon size={36} />,
     },
     // {
     //   title: Report?.allReserveAccept,

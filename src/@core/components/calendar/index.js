@@ -8,26 +8,38 @@ const CalendarComponent = () => {
   const [addSidebarOpen, setAddSidebarOpen] = useState(false);
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(false);
 
-  const [EventStart, setEventStart] = useState()
-  console.log(EventStart)
+  const [EventStart, setEventStart] = useState();
+  console.log(EventStart);
 
   const handleAddEventSidebar = () => setAddSidebarOpen(!addSidebarOpen);
   const toggleSidebar = (val) => setLeftSidebarOpen(val);
 
   return (
-    <div className='app-calendar overflow-hidden border'>
-      <Row className='g-0'>
-        <Col id='app-calendar-sidebar' className={`col app-calendar-sidebar flex-grow-0 ${leftSidebarOpen ? 'show' : ''}`}>
+    <div className="app-calendar overflow-hidden border">
+      <Row className="g-0">
+        <Col
+          id="app-calendar-sidebar"
+          className={`col app-calendar-sidebar flex-grow-0 ${
+            leftSidebarOpen ? "show" : ""
+          }`}
+        >
           <SidebarLeft
             handleAddEventSidebar={handleAddEventSidebar}
             toggleSidebar={toggleSidebar}
           />
         </Col>
-        <Col className='position-relative'>
-          <Calendar handleAddEventSidebar={handleAddEventSidebar} setEventStart={setEventStart} />
+        <Col className="position-relative">
+          <Calendar
+            handleAddEventSidebar={handleAddEventSidebar}
+            setEventStart={setEventStart}
+          />
         </Col>
       </Row>
-      <AddEventSidebar open={addSidebarOpen} handleAddEventSidebar={handleAddEventSidebar} EventStart={EventStart} />
+      <AddEventSidebar
+        open={addSidebarOpen}
+        handleAddEventSidebar={handleAddEventSidebar}
+        EventStart={EventStart}
+      />
     </div>
   );
 };

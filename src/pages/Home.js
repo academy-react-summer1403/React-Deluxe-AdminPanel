@@ -32,13 +32,13 @@ const Home = () => {
   });
   console.log(data);
   const { colors } = useContext(ThemeColors);
-  
-  const { data: Report,isLoading } = useAdminDashboardReport();
+
+  const { data: Report, isLoading } = useAdminDashboardReport();
   if (isLoading) {
     return <div>Loading...</div>;
-}
+  }
   console.log(Report);
-  const context = useContext(ThemeColors)
+  const context = useContext(ThemeColors);
   return (
     <div>
       {/* <Card>
@@ -115,18 +115,20 @@ const Home = () => {
         <Col lg="4" md="6" xs="12">
           <Earnings Report={Report} success={colors.success.main} />
         </Col>
-        <Col lg='3' sm='6'>
+        {/* <Col lg="3" sm="6">
           <SubscribersGained Report={Report} />
+        </Col> */}
+        <Col lg="4" sm="12">
+          <SupportTracker Report={Report} />
         </Col>
       </Row>
-      <Row>
-        <Col lg="4" sm="12">
-          <SupportTracker
+      <Row className="d-flex justify-content-center align-items-center">
+        <Col lg="8" sm="12" className="w-100">
+          <RevenueReport
+            primary={context.colors.primary.main}
+            warning={context.colors.warning.main}
             Report={Report}
           />
-        </Col>
-        <Col lg='8' sm='12'>
-          <RevenueReport primary={context.colors.primary.main} warning={context.colors.warning.main} />
         </Col>
       </Row>
     </div>

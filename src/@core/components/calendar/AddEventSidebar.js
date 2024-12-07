@@ -12,21 +12,33 @@ import {
 } from "reactstrap";
 import { useCourseGroupsAll } from "../../../core/services/api/CourseGroupsAll";
 import Select from "react-select";
+import { useCourseAll } from "../../../core/services/api/CourseAll";
+import { useCourseDetail } from "../../../core/services/api/CourseDetail";
+import { useCourseGroups } from "../../../core/services/api/CourseGroups";
+import { useAddSchedual } from "../../../core/services/api/AddSchedual";
+import toast from "react-hot-toast";
+import { QueryClient, useQueryClient } from "@tanstack/react-query";
 
 const AddEventSidebar = ({ open, handleAddEventSidebar, EventStart }) => {
   const [groupId, setGroupId] = useState();
   const [eventDetails, setEventDetails] = useState({
-    title: "",
+    // title: "",
     startDate: EventStart,
-    end: EventStart,
-    description: "",
+    startTime: "",
+    endTime: "",
+    weekNumber: "",
+    rowEffect: "",
+    // end: EventStart,
+    // description: "",
   });
+  const [courseId, setCourseId] = useState(null);
+  const [teacherId, setTeacherId] = useState(null);
 
   useEffect(() => {
     setEventDetails((prevDetails) => ({
       ...prevDetails,
       startDate: EventStart,
-      end: EventStart,
+      // end: EventStart,
     }));
   }, [EventStart]);
 
@@ -38,18 +50,49 @@ const AddEventSidebar = ({ open, handleAddEventSidebar, EventStart }) => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const mutation = useAddSchedual();
+
+  const queryClient = useQueryClient();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const userToast = toast.loading("درحال افزودن رویداد");
+    try {
+      await mutation.mutateAsync({ courseId, groupId, eventDetails });
+      toast.success("رویداد با موفقیت افزوده شد!", { id: userToast });
+      queryClient.invalidateQueries("SchedualAdmin");
+    } catch (error) {
+      toast.error(`افزودن رویداد با مشکل مواجه شد!`, { id: userToast });
+      console.log(error);
+    }
     console.log("Event added:", eventDetails);
-    console.log(groupId);
     handleAddEventSidebar(); // Close sidebar
   };
 
-  const { data } = useCourseGroupsAll();
+  const { data: courses } = useCourseAll();
 
+  console.log(courses);
+  const CourseOptions = courses?.courseDtos.map((option) => ({
+    value: option?.courseId,
+    label: option?.title,
+  }));
+
+  const handleCourseSelect = (e) => {
+    console.log(e);
+    setCourseId(e.value);
+  };
+
+  const { data } = useCourseDetail(courseId);
   console.log(data);
+  // setTeacherId(data?.teacherId)
 
-  const GroupOptions = data?.courseGroupDtos.map((option) => ({
+  const { data: CourseGroups } = useCourseGroups(courseId, data?.teacherId);
+  console.log(CourseGroups);
+  // const { data } = useCourseGroupsAll();
+
+  // console.log(data);
+
+  const GroupOptions = CourseGroups?.map((option) => ({
     value: option?.groupId,
     label: option?.groupName,
   }));
@@ -70,6 +113,24 @@ const AddEventSidebar = ({ open, handleAddEventSidebar, EventStart }) => {
         <Card>
           <CardBody>
             <Form onSubmit={handleSubmit}>
+              <FormGroup>
+                <Label for="courseGroupId">گروه</Label>
+                <Select
+                  theme={selectThemeColors}
+                  isClearable={true}
+                  // isOptionSelected={(e) => console.log(e)}
+                  id={"courseGroupId"}
+                  className="react-select"
+                  classNamePrefix="select"
+                  options={CourseOptions}
+                  name={"courseGroupId"}
+                  placeholder="انتخاب کنید"
+                  onChange={(e) => handleCourseSelect(e)}
+
+                  // onChange={(e) => setGroupId(e)}
+                  // defaultValue={countryOptions[0]}
+                />
+              </FormGroup>
               <FormGroup>
                 <Label for="courseGroupId">گروه</Label>
                 <Select
@@ -99,11 +160,11 @@ const AddEventSidebar = ({ open, handleAddEventSidebar, EventStart }) => {
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="startDate">ساعت شروع</Label>
+                <Label for="startTime">ساعت شروع</Label>
                 <Input
                   type=""
-                  name="startDate"
-                  id="startDate"
+                  name="startTime"
+                  id="startTime"
                   // value={eventDetails.startDate}
                   onChange={handleInputChange}
                   required
@@ -111,11 +172,11 @@ const AddEventSidebar = ({ open, handleAddEventSidebar, EventStart }) => {
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="startDate">ساعت پایان</Label>
+                <Label for="endTime">ساعت پایان</Label>
                 <Input
                   type="text"
-                  name="startDate"
-                  id="startDate"
+                  name="endTime"
+                  id="endTime"
                   // value={eventDetails.startDate}
                   onChange={handleInputChange}
                   required
