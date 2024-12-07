@@ -22,10 +22,10 @@ const RevenueReport = props => {
   // ** State
   const [data, setData] = useState(null)
 
-  // useEffect(() => {
-  //   axios.get('/card/card-analytics/revenue-report').then(res => setData(res.data))
-  //   return () => setData(null)
-  // }, [])
+  useEffect(() => {
+    axios.get('/card/card-analytics/revenue-report').then(res => setData(res.data))
+    return () => setData(null)
+  }, [])
 
   const revenueOptions = {
       chart: {
@@ -119,7 +119,7 @@ const RevenueReport = props => {
       }
     }
 
-  return (
+  return data !== null ? (
     <Card className='card-revenue-budget'>
       <Row className='mx-0'>
         <Col className='revenue-report-wrapper' md='8' xs='12'>
@@ -139,7 +139,7 @@ const RevenueReport = props => {
           <Chart id='revenue-report-chart' type='bar' height='230' options={revenueOptions} series={revenueSeries} />
         </Col>
         <Col className='budget-wrapper' md='4' xs='12'>
-          {/* <UncontrolledButtonDropdown>
+          <UncontrolledButtonDropdown>
             <DropdownToggle className='budget-dropdown' outline color='primary' size='sm' caret>
               2020
             </DropdownToggle>
@@ -150,18 +150,18 @@ const RevenueReport = props => {
                 </DropdownItem>
               ))}
             </DropdownMenu>
-          </UncontrolledButtonDropdown> */}
-          <h2 className='mb-25'>hello</h2>
+          </UncontrolledButtonDropdown>
+          <h2 className='mb-25'>${data.price}</h2>
           <div className='d-flex justify-content-center'>
             <span className='fw-bolder me-25'>Budget:</span>
-            <span>hello</span>
+            <span>{data.budget}</span>
           </div>
           <Chart id='budget-chart' type='line' height='80' options={budgetOptions} series={budgetSeries} />
           <Button color='primary'>Increase Budget</Button>
         </Col>
       </Row>
     </Card>
-  )
+  ) : null
 }
 
 export default RevenueReport
