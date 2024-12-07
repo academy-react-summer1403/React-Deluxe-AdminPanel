@@ -25,11 +25,11 @@ const SidebarLeft = () => {
     <Fragment>
       <Card className='sidebar-wrapper shadow-none'>
         <CardBody className='card-body d-flex justify-content-center my-sm-0 mb-3'>
-          <Button color='primary' block onClick={() => console.log('Add Event Clicked')}>
-            <span className='align-middle'>Add Event</span>
-          </Button>
+          {/* <Button color='primary' block onClick={() => console.log('Add Event Clicked')}>
+            <span className='align-middle'>برای افزودن رویداد روی روز موردن</span>
+          </Button> */}
         </CardBody>
-        <CardBody>
+        {/* <CardBody>
           <h5 className='section-label mb-1'>
             <span className='align-middle'>Filter</span>
           </h5>
@@ -48,11 +48,11 @@ const SidebarLeft = () => {
               </div>
             ))}
           </div>
-        </CardBody>
+        </CardBody> */}
       </Card>
-      <div className='mt-auto'>
+      {/* <div className='mt-auto'>
         <img className='img-fluid' src={illustration} alt='illustration' />
-      </div>
+      </div> */}
     </Fragment>
   )
 }

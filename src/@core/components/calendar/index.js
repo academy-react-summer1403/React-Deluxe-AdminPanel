@@ -17,7 +17,7 @@ const CalendarComponent = () => {
   return (
     <div className="app-calendar overflow-hidden border">
       <Row className="g-0">
-        <Col
+        {/* <Col
           id="app-calendar-sidebar"
           className={`col app-calendar-sidebar flex-grow-0 ${
             leftSidebarOpen ? "show" : ""
@@ -27,7 +27,7 @@ const CalendarComponent = () => {
             handleAddEventSidebar={handleAddEventSidebar}
             toggleSidebar={toggleSidebar}
           />
-        </Col>
+        </Col> */}
         <Col className="position-relative">
           <Calendar
             handleAddEventSidebar={handleAddEventSidebar}
