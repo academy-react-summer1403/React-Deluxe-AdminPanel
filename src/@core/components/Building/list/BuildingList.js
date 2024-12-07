@@ -36,7 +36,7 @@ import {
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
 import { useBuilding } from "../../../../core/services/api/Building";
-
+import { DetailBuilding } from "./DetailBuilding/DetailBuilding";
 import CardBrowserState from "./progress";
 
 import AddCatForm from "./AddCatForm";
@@ -156,11 +156,7 @@ const BuildingList = () => {
       minWidth: "150px",
       cell: (row) => (
         <div className="column-action">
-          <Link
-            className="user_name text-truncate text-body p-0"
-            to={`/userdetail/${row?.id}`}
-          >
-            <div className="btn btn-sm">
+            <div className="btn btn-sm" onClick={() => toggleModal(row?.id)}>
               <FileText
                 className="cursor-pointer"
                 size={17}
@@ -171,11 +167,10 @@ const BuildingList = () => {
                 target={`send-tooltip-${row.id}`}
                 // className="mb-1"
               >
-                ویرایش
+                جزییات
               </UncontrolledTooltip>
             </div>
-          </Link>
-          <div className="btn btn-sm" onClick={() => handleDelete(row?.id)}>
+          {/* <div className="btn btn-sm" onClick={() => toggleModals(row?.id)}>
             <DashboardSquareEditIcon
               size={17}
               className=""
@@ -187,11 +182,43 @@ const BuildingList = () => {
             >
               جزییات
             </UncontrolledTooltip>
-          </div>
+          </div> */}
+          <Modal
+
+isOpen={openModalId === row?.id}
+toggle={() => toggleModal(row?.id)}
+style={{width:"450px"}}
+className="modal-dialog-centered modal-lg d-flex"
+
+>
+<ModalHeader
+  className="bg-transparent text-center fs-8 mt-2"
+  style={{ marginRight: "330px" }}
+  toggle={() => toggleModal(row?.id)}
+></ModalHeader>
+<ModalBody className="px-sm-5 pt-50 pb-5 d-flex"
+style={{width:"450px"}}
+
+>
+  {openModalId === row?.id && (
+    <DetailBuilding
+    rowId={row?.id}
+   
+    />
+  )}
+</ModalBody>
+</Modal>
         </div>
       ),
     },
   ];
+
+  const [openModalId, setOpenModalId] = useState(null); 
+
+  const toggleModal = (id) => {
+    setOpenModalId((prevId) => (prevId === id ? null : id));
+  };
+
 
   const GetCoordinates = ({ setCoords, setCortinate }) => {
     useMapEvents({

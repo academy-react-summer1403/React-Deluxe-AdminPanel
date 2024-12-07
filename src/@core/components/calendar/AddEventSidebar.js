@@ -206,7 +206,7 @@ const AddEventSidebar = ({ open, handleAddEventSidebar, EventStart }) => {
                 />
               </FormGroup>
               <Button color="primary" type="submit">
-                Add Event
+                افزودن 
               </Button>
             </Form>
           </CardBody>

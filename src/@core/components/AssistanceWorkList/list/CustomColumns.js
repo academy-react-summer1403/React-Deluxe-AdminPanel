@@ -27,6 +27,7 @@ import { useActiveCourse } from "../../../core/services/api/Admin/handelreserve"
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import { convertIsoToJalali } from "../../../core/utils/dateUtils";
+import { DatePersianizer } from "../../../../utility/utils/DatePersianizer";
 
 export const CustomColumnsForListCourse = (toggleSidebar2) => [
   {
@@ -86,14 +87,14 @@ export const CustomColumnsForListCourse = (toggleSidebar2) => [
     sortable: true,
     minWidth: "72px",
     sortField: "userRoles",
-    selector: (row) => row.inserDate,
+    selector: (row) => {DatePersianizer(row.inserDate)},
     cell: (row) => {
       return (
         <>
           {" "}
           <h5 className="text-truncate text-muted mb-0">
             {" "}
-            {row?.inserDate ? convertIsoToJalali(row?.inserDate) : ""}
+            {DatePersianizer(row?.inserDate) ? convertIsoToJalali(row?.inserDate) : ""}
           </h5>
         </>
       );
@@ -121,11 +122,11 @@ export const CustomColumnsForListCourse = (toggleSidebar2) => [
   },
 
   {
-    name: " assistanceName ",
+    name: " نام  منتور ",
     sortable: true,
     minWidth: "172px",
     sortField: "userRoles",
-    selector: (row) => row.assistanceName,
+    // selector: (row) => row.assistanceName,
     cell: (row) => {
       return (
         <>
@@ -157,7 +158,7 @@ export const CustomColumnsForListCourse = (toggleSidebar2) => [
             onSuccess: (data) => {
               if (data.success === true) {
                 queryClient.invalidateQueries("GetAllCourses");
-                toast.success("دوره با موفق فعال شد");
+                toast.success("دوره با موفقیت فعال شد");
               }
             },
           }

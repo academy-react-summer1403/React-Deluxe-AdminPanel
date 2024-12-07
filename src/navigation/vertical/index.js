@@ -1,4 +1,4 @@
-import { Building02Icon, Menu07Icon, NewsIcon } from "hugeicons-react";
+import { Building02Icon, Menu07Icon, NewsIcon, UserAccountIcon } from "hugeicons-react";
 import {
   BloggerIcon,
   Comment01Icon,
@@ -149,7 +149,7 @@ export default [
   },
   {
     id: "userManage",
-    title: "مدیریت زمان بندی",
+    title: "منتورها",
     icon: <User size={20} />,
     navLink: "/AssistanceWork",
   },

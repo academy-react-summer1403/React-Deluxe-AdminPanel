@@ -46,13 +46,6 @@ import {
 // ** Styles
 import "@styles/react/libs/react-select/_react-select.scss";
 import "@styles/react/libs/tables/react-dataTable-component.scss";
-// import {
-//   useGetAllCourses,
-//   useGetAllUsers,
-// } from "../../../core/services/api/Admin/handelUsers";
-
-import { renderClient, renderRole } from "./columns";
-import { Link } from "react-router-dom";
 
 import Avatar from "@components/avatar";
 // import NoProfile from "../../../images/profile.png";
@@ -202,7 +195,7 @@ const CustomHeader = ({
   );
 };
 
-const AssistanceCourseTable = () => {
+const   AssistanceCourseTable = () => {
   //API
 
   const store = useSelector((state) => state.users);

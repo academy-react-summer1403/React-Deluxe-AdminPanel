@@ -127,7 +127,7 @@ const Term = () => {
   //     const count = Number(Math.ceil(total / rowsPerPage));
     
   const CustomPagination = () => {
-    const count = Math.ceil(data?.length / 5);
+    const count = Math.ceil(data?.length / 16);
 
 
     return (
@@ -428,7 +428,7 @@ style={{width:"450px"}}
             // sortIcon={<ChevronDown />}
             className="react-dataTable"
             paginationComponent={CustomPagination}
-            data={paginatedData}
+            data={data}
 
 
 

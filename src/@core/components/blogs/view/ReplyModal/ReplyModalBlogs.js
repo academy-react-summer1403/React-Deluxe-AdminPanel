@@ -6,15 +6,10 @@ import { DatePersianizer } from "../../../../../utility/utils/DatePersianizer";
 import { useBlogCommentReply } from "../../../../../core/services/api/BlogCommentReply";
 
 export const ReplyModalBlogs = (
-  //   toggleModal,
-  //   data,
-  //   replyColumns,
   {
     rowId,
-    // courseId
   }
 ) =>
-  //   openModalId
   {
     console.log("blog comment id:", rowId);
     const replyColumns = [
