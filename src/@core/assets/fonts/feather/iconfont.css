@@ -23,6 +23,14 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.leaflet-container {
+  direction: ltr !important;
+}
+
+.leaflet-control {
+  text-align: left !important;
+}
+
 .icon-alert-octagon:before { content: "\e81b"; }
 
 .icon-alert-circle:before { content: "\e81c"; }

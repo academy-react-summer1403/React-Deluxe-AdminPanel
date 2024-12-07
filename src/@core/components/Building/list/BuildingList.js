@@ -62,8 +62,8 @@ const BuildingList = () => {
     value: "",
     label: "انتخاب کنید ...",
   });
-
   const [show, setShow] = useState(false);
+  const [selectedMarker, setSelectedMarker] = useState(null);
 
   const { data, isLoading, isError } = useBuilding(rowsPerPage);
   // if (isLoading) return <FullPageLoading />;
@@ -222,6 +222,7 @@ const BuildingList = () => {
   }));
   console.log(markerData);
 
+  console.log(selectedMarker)
   return (
     <div className="d-flex">
       <Modal
@@ -258,7 +259,13 @@ const BuildingList = () => {
         {
           // markerData &&
           markerData?.map((marker) => (
-            <Marker key={marker?.id} position={marker?.position}>
+            <Marker
+              key={marker?.id}
+              position={marker?.position}
+              eventHandlers={{
+                click: () => setSelectedMarker(marker), // Update state on click
+              }}
+            >
               <Popup>{marker?.name}</Popup>
             </Marker>
           ))
@@ -269,34 +276,6 @@ const BuildingList = () => {
         <Row className="ltr px-2 py-1 d-flex justify-content-center">
           <Col xl="6" className="w-75">
             <div className="d-flex align-items-center justify-content-center table-header-actions">
-              {/* <UncontrolledDropdown className="me-1">
-                <DropdownMenu>
-                  <DropdownItem className="w-100">
-                    <Printer className="font-small-4 me-50" />
-                    <span className="align-middle">Print</span>
-                  </DropdownItem>
-                  <DropdownItem
-                    className="w-100"
-                    onClick={() => downloadCSV(store.data)}
-                  >
-                    <FileText className="font-small-4 me-50" />
-                    <span className="align-middle">CSV</span>
-                  </DropdownItem>
-                  <DropdownItem className="w-100">
-                    <Grid className="font-small-4 me-50" />
-                    <span className="align-middle">Excel</span>
-                  </DropdownItem>
-                  <DropdownItem className="w-100">
-                    <File className="font-small-4 me-50" />
-                    <span className="align-middle">PDF</span>
-                  </DropdownItem>
-                  <DropdownItem className="w-100">
-                    <Copy className="font-small-4 me-50" />
-                    <span className="align-middle">Copy</span>
-                  </DropdownItem>
-                </DropdownMenu>
-              </UncontrolledDropdown> */}
-
               <Button
                 className="add-new-user"
                 color="primary"
