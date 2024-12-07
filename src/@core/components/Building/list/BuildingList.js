@@ -62,20 +62,16 @@ const BuildingList = () => {
     value: "",
     label: "انتخاب کنید ...",
   });
- 
+
   const [show, setShow] = useState(false);
 
   const { data, isLoading, isError } = useBuilding(rowsPerPage);
   // if (isLoading) return <FullPageLoading />;
   if (isError) return <div>Error while fetching¯\_(ツ)_/¯</div>;
 
-
   const paginatedData =
-  data &&
-  data?.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
-
-
-  
+    data &&
+    data?.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
 
   // ** Function to toggle sidebar
   const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
@@ -96,7 +92,7 @@ const BuildingList = () => {
 
   // ** Custom Pagination
   const CustomPagination = () => {
-    const count = Math.ceil(data?.length / 16 );
+    const count = Math.ceil(data?.length / 16);
 
     return (
       <ReactPaginate
@@ -200,7 +196,7 @@ const BuildingList = () => {
   const GetCoordinates = ({ setCoords, setCortinate }) => {
     useMapEvents({
       click: (e) => {
-        console.log(e)
+        console.log(e);
         // const { lat, lng } = e.latlng;
         // setCoords({ lat, lng });
         // setCortinate({ lat, lng });
@@ -224,7 +220,7 @@ const BuildingList = () => {
     position: [option?.latitude, option?.longitude],
     name: option?.buildingName,
   }));
-  console.log(markerData)
+  console.log(markerData);
 
   return (
     <div className="d-flex">
@@ -243,9 +239,9 @@ const BuildingList = () => {
 
       <MapContainer
         // center={coords}
-        center={[ 51, 0]}
+        center={[51, 0]}
         zoom={13}
-        style={{ height: "100vh", width: "70%", zIndex: "0" }}
+        style={{ height: "100vh", width: "70%", zIndex: "0", direction: "ltr" }}
       >
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -260,12 +256,13 @@ const BuildingList = () => {
             <Popup>A popup for the marker.</Popup>
           </Marker> */}
         {
-        // markerData &&
+          // markerData &&
           markerData?.map((marker) => (
             <Marker key={marker?.id} position={marker?.position}>
               <Popup>{marker?.name}</Popup>
             </Marker>
-          ))}
+          ))
+        }
       </MapContainer>
 
       <Card className="overflow-hidden" style={{ width: "30%" }}>
@@ -326,8 +323,6 @@ const BuildingList = () => {
           />
         </div>
       </Card>
-      
-
     </div>
   );
 };
