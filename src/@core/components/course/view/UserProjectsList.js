@@ -49,29 +49,29 @@ const UserProjectsList = () => {
       name: "معدل کاربر",
       selector: (row) => row.courseGrade,
     },
-    {
-      name: "وضعیت پرداخت",
-      selector: (row) => row.peymentDone,
-      cell: (row) => {
-        return row?.peymentDone ? (
-          <Badge
-            color="light-success"
-            className="fs-5"
-            style={{ width: "auto", textAlign: "center" }}
-          >
-            پرداخت شده
-          </Badge>
-        ) : (
-          <Badge
-            color="light-danger"
-            className="fs-5"
-            style={{ width: "auto", textAlign: "center" }}
-          >
-            پرداخت نشده
-          </Badge>
-        );
-      },
-    },
+    // {
+    //   name: "وضعیت پرداخت",
+    //   selector: (row) => row.peymentDone,
+    //   cell: (row) => {
+    //     return row?.peymentDone ? (
+    //       <Badge
+    //         color="light-success"
+    //         className="fs-5"
+    //         style={{ width: "auto", textAlign: "center" }}
+    //       >
+    //         پرداخت شده
+    //       </Badge>
+    //     ) : (
+    //       <Badge
+    //         color="light-danger"
+    //         className="fs-5"
+    //         style={{ width: "auto", textAlign: "center" }}
+    //       >
+    //         پرداخت نشده
+    //       </Badge>
+    //     );
+    //   },
+    // },
     {
       name: "شماره دانشجو",
       selector: (row) => row.studentId,
