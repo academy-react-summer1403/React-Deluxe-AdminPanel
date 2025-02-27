@@ -6,7 +6,7 @@ import logo from "@src/assets/images/logo/logo.svg";
 //Template config options
 const themeConfig = {
   app: {
-    appName: "React Deluxe",
+    appName: "پنل مدیریت",
     appLogoImage: logo,
   },
   layout: {
